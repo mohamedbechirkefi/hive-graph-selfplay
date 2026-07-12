@@ -1,0 +1,13 @@
+[package]
+name = "hive-core"
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+
+[dependencies]
+smallvec.workspace = true
+
+[dev-dependencies]
+rayon.workspace = true
+rand.workspace = true
+rand_chacha.workspace = true

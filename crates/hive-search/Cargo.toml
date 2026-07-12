@@ -1,0 +1,10 @@
+[package]
+name = "hive-search"
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+
+[dependencies]
+hive-core.workspace = true
+hive-uhp.workspace = true
+hive-eval = { path = "../hive-eval" }

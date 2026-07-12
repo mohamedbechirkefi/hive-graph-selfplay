@@ -1,0 +1,35 @@
+[workspace]
+resolver = "2"
+exclude = ["opponents"]
+members = [
+    "crates/hive-core",
+    "crates/hive-uhp",
+    "crates/hive-eval",
+    "crates/hive-search",
+    "crates/hive-arena",
+    "crates/hive-engine",
+]
+
+[workspace.package]
+edition = "2024"
+version = "0.1.0"
+license = "MIT"
+
+[workspace.dependencies]
+hive-core = { path = "crates/hive-core" }
+hive-uhp = { path = "crates/hive-uhp" }
+rayon = "1.10"
+smallvec = "1.13"
+ahash = "0.8"
+rand = "0.8"
+rand_chacha = "0.3"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+
+[profile.release-dbg]
+inherits = "release"
+debug = true
+panic = "unwind"

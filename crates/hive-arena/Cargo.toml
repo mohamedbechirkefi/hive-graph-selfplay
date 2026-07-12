@@ -1,0 +1,13 @@
+[package]
+name = "hive-arena"
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "hive-arena"
+path = "src/main.rs"
+
+[dependencies]
+hive-core.workspace = true
+hive-uhp.workspace = true
