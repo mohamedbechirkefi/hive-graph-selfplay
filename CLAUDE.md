@@ -52,6 +52,17 @@ Every search/eval change must not regress the gauntlet score.
   MUST stay identical — verified by `dump_planes` +
   `scripts/crosscheck_planes.py` (runs in nightly.sh). If you change one,
   change the other and re-run the crosscheck.
-- Training data: `./target/release/selfplay --games N --depth 4 --out data/selfplay/run`;
-  train with `python/.venv/bin/python -m hivenet.train --data 'data/selfplay/run-*.bin'`
-  (run from python/ dir); export ONNX with `-m hivenet.export_onnx`.
+- Training data: `./target/release/selfplay --games N --depth 4 --out data/selfplay/run`
+  (v1 records, one-hot policy) or `./target/release/selfplay-mcts --net models/best-b1.onnx ...`
+  (v2 records with MCTS visit-distribution targets; shards start with the
+  HIVEREC2 magic header). Train with
+  `python/.venv/bin/python -m hivenet.train --data '<globs>'` (from python/;
+  handles both record versions); export ONNX with `-m hivenet.export_onnx`.
+- NN play: `hive-engine --mcts --net models/best-b1.onnx` (CoreML EP;
+  `--cpu` to force CPU). Inference lives in hive-mcts/src/ort_eval.rs
+  behind the default `nn` feature (ort crate downloads the ONNX Runtime
+  binary at first build — needs network).
+- The full unattended pipelines: `scripts/overnight.sh` (bootstrap:
+  gauntlets → supervised dataset → train → export) and `scripts/rl_loop.sh`
+  (AlphaZero loop: self-play → train → export → gate → promote; needs the
+  bootstrap model in models/ first).

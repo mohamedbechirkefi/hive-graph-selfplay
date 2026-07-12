@@ -32,6 +32,10 @@ import torch
 from torch.utils.data import Dataset
 
 RECORD_SIZE = 112
+RECORD_V2_SIZE = 176
+RECORD_V2_TOPK = 15
+V2_MAGIC = b"HIVEREC2"
+POLICY_SIZE = 28 * 32 * 32 + 1
 FRAME = 32
 PLANES = 77
 PIECES_PER_COLOR = 14
@@ -42,14 +46,33 @@ ROSTER_BUG = np.array([0, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 6, 7], dtype=np.int64
 HEX_DELTAS = [(1, 0), (1, -1), (0, -1), (-1, 0), (-1, 1), (0, 1)]
 
 
+def _load_shard(path: str) -> np.ndarray:
+    """Load one shard as an array of v2-sized records.
+
+    v1 shards (headerless, 112-byte one-hot records) are widened to the v2
+    layout with a single full-weight distribution entry, so training code
+    handles one format.
+    """
+    raw = np.fromfile(path, dtype=np.uint8)
+    if len(raw) >= 16 and bytes(raw[:8]) == V2_MAGIC:
+        body = raw[16:]
+        assert len(body) % RECORD_V2_SIZE == 0, f"{path}: truncated v2 shard"
+        return body.reshape(-1, RECORD_V2_SIZE)
+    assert len(raw) % RECORD_SIZE == 0, f"{path}: truncated v1 shard"
+    v1 = raw.reshape(-1, RECORD_SIZE)
+    out = np.zeros((len(v1), RECORD_V2_SIZE), dtype=np.uint8)
+    out[:, :RECORD_SIZE] = v1
+    # Distribution = the one-hot played move with weight 1.
+    out[:, RECORD_SIZE] = v1[:, 96]
+    out[:, RECORD_SIZE + 1] = v1[:, 97]
+    out[:, RECORD_SIZE + 2] = 1
+    out[:, RECORD_V2_SIZE - 4] = 1
+    return out
+
+
 class HiveRecordDataset(Dataset):
     def __init__(self, shard_paths: list[str]):
-        self.records = np.concatenate(
-            [
-                np.fromfile(p, dtype=np.uint8).reshape(-1, RECORD_SIZE)
-                for p in sorted(shard_paths)
-            ]
-        )
+        self.records = np.concatenate([_load_shard(p) for p in sorted(shard_paths)])
 
     def __len__(self) -> int:
         return len(self.records)
@@ -57,11 +80,21 @@ class HiveRecordDataset(Dataset):
     def __getitem__(self, idx: int):
         rec = self.records[idx]
         planes = decode_planes(rec)
-        policy = int(rec[96]) | (int(rec[97]) << 8)
+        # Dense soft policy target from the stored visit distribution.
+        target = np.zeros(POLICY_SIZE, dtype=np.float32)
+        entries = rec[RECORD_SIZE : RECORD_SIZE + RECORD_V2_TOPK * 4].reshape(-1, 2, 2)
+        idxs = entries[:, 0, 0].astype(np.int64) | (entries[:, 0, 1].astype(np.int64) << 8)
+        weights = entries[:, 1, 0].astype(np.float32) + entries[:, 1, 1].astype(np.float32) * 256.0
+        mask = weights > 0
+        if mask.any():
+            target[idxs[mask]] = weights[mask]
+            target /= target.sum()
+        else:  # degenerate: fall back to the played move
+            target[int(rec[96]) | (int(rec[97]) << 8)] = 1.0
         wdl = int(rec[98])
         return (
             torch.from_numpy(planes),
-            torch.tensor(policy, dtype=torch.long),
+            torch.from_numpy(target),
             torch.tensor(wdl, dtype=torch.long),
         )
 
@@ -132,10 +165,15 @@ if __name__ == "__main__":
 
     paths = glob.glob(sys.argv[1] if len(sys.argv) > 1 else "/tmp/hive_smoke/run-*.bin")
     ds = HiveRecordDataset(paths)
-    planes, policy, wdl = ds[0]
-    print(f"{len(ds)} records; planes {tuple(planes.shape)}, policy {policy}, wdl {wdl}")
+    planes, target, wdl = ds[0]
+    print(
+        f"{len(ds)} records; planes {tuple(planes.shape)}, "
+        f"target sum {float(target.sum()):.3f} nonzero {int((target > 0).sum())}, wdl {wdl}"
+    )
     assert planes.shape == (PLANES, FRAME, FRAME)
-    # Sanity: some piece planes are set, policy in range.
-    assert planes[:64].sum() > 0
-    assert 0 <= int(policy) <= 28 * FRAME * FRAME
+    # Piece planes may be empty only for the initial position (ply 0).
+    assert planes.sum() > 0
+    assert abs(float(target.sum()) - 1.0) < 1e-5
+    # At least one record deeper into a game must have pieces on board.
+    assert any(ds[i][0][:64].sum() > 0 for i in range(min(len(ds), 50)))
     print("dataset OK")

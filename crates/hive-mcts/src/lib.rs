@@ -11,6 +11,11 @@
 //! needed, used for testing and as a fallback) and, behind the `ort` feature
 //! later, the ONNX network.
 
+#[cfg(feature = "nn")]
+pub mod ort_eval;
+#[cfg(feature = "nn")]
+pub use ort_eval::OrtEvaluator;
+
 use hive_core::game::Game;
 use hive_core::state::{GameResult, GameState, Move};
 use hive_uhp::server::{SearchLimit, Searcher};

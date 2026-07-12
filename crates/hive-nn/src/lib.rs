@@ -28,8 +28,15 @@
 //!  92..96  pinned-piece bitmask u32 (bit = absolute PieceId)
 //!  96,97   policy target u16 (played move, frame coords)
 //!  98      WDL outcome from side-to-move perspective (0 L, 1 D, 2 W)
-//!  99..112 reserved (zero)
+//!  99      record version (0 = v1 one-hot policy)
+//!  100..112 reserved (zero)
 //! ```
+//!
+//! # Record v2 (176 bytes): AlphaZero-style soft policy targets
+//! Same first 112 bytes with version byte 2, then the root visit
+//! distribution from MCTS: 15 x (policy index u16, visit weight u16),
+//! then u32 total stored visits. Files of v2 records begin with the
+//! 16-byte magic header `HIVEREC2????????` (8 magic + 8 reserved).
 
 use hive_core::bug::{Color, PIECES_PER_COLOR, PieceId};
 use hive_core::hex::{ALL_DIRS, Cell, neighbor, neighbors};
@@ -41,6 +48,9 @@ pub const PLANES: usize = 77;
 pub const POLICY_PASS: usize = 28 * FRAME * FRAME;
 pub const POLICY_SIZE: usize = POLICY_PASS + 1;
 pub const RECORD_SIZE: usize = 112;
+pub const RECORD_V2_SIZE: usize = 176;
+pub const RECORD_V2_TOPK: usize = 15;
+pub const V2_MAGIC: &[u8; 8] = b"HIVEREC2";
 
 /// Mapping from grid cells to frame coordinates for one position.
 pub struct Frame {
@@ -190,6 +200,38 @@ pub fn encode_record(s: &GameState, played: Move, wdl: u8) -> [u8; RECORD_SIZE] 
     let pol = policy_index(s, &frame, played).expect("played move must encode") as u16;
     rec[96..98].copy_from_slice(&pol.to_le_bytes());
     rec[98] = wdl;
+    rec
+}
+
+/// Encode a v2 record with the MCTS root visit distribution as the policy
+/// target. `played` is the move actually chosen (may differ from argmax
+/// under temperature sampling); `dist` is (move, visits) over root children.
+pub fn encode_record_v2(
+    s: &GameState,
+    played: Move,
+    wdl: u8,
+    dist: &[(Move, u32)],
+) -> [u8; RECORD_V2_SIZE] {
+    let base = encode_record(s, played, wdl);
+    let mut rec = [0u8; RECORD_V2_SIZE];
+    rec[..RECORD_SIZE].copy_from_slice(&base);
+    rec[99] = 2;
+
+    let frame = Frame::new(s);
+    // Top-K children by visits.
+    let mut sorted: Vec<(Move, u32)> = dist.iter().copied().filter(|&(_, n)| n > 0).collect();
+    sorted.sort_by_key(|&(_, n)| std::cmp::Reverse(n));
+    sorted.truncate(RECORD_V2_TOPK);
+    let mut total: u32 = 0;
+    for (slot, &(mv, n)) in sorted.iter().enumerate() {
+        let idx = policy_index(s, &frame, mv).expect("legal move must encode") as u16;
+        let w = n.min(u16::MAX as u32) as u16;
+        let off = RECORD_SIZE + slot * 4;
+        rec[off..off + 2].copy_from_slice(&idx.to_le_bytes());
+        rec[off + 2..off + 4].copy_from_slice(&w.to_le_bytes());
+        total += w as u32;
+    }
+    rec[RECORD_V2_SIZE - 4..].copy_from_slice(&total.to_le_bytes());
     rec
 }
 

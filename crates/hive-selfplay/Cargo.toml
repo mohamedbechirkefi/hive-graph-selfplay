@@ -8,9 +8,14 @@ license.workspace = true
 name = "selfplay"
 path = "src/main.rs"
 
+[[bin]]
+name = "selfplay-mcts"
+path = "src/bin/selfplay_mcts.rs"
+
 [dependencies]
 hive-core.workspace = true
 hive-uhp.workspace = true
 hive-nn = { path = "../hive-nn" }
 hive-search = { path = "../hive-search" }
 hive-eval = { path = "../hive-eval" }
+hive-mcts = { path = "../hive-mcts" }

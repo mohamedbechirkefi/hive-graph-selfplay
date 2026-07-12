@@ -114,14 +114,30 @@ Full command set, capabilities `Mosquito;Ladybug;Pillbug`, `err`/`invalidmove` s
 - M6 STARTED: hive-mcts (batched PUCT, Evaluator trait, EvalNet fallback)
   tested; `hive-engine --mcts` works.
 
+## Codebase status: FEATURE-COMPLETE for training (2026-07-12, session 1 end)
+
+Everything through the M6 loop is now implemented and smoke-tested:
+- ort/CoreML evaluator (`hive-mcts/src/ort_eval.rs`); `hive-engine --mcts
+  --net model.onnx` plays over UHP.
+- Record v2 (MCTS visit-distribution policy targets, HIVEREC2 shards);
+  Python dataset/training handle v1+v2, soft-CE loss, `--init` warm starts.
+- `selfplay-mcts`: NN self-play with Dirichlet noise, temperature,
+  playout-cap randomization, resignation + audit fraction.
+- `scripts/rl_loop.sh`: generation loop self-play → train → export → gate
+  (promote at ≥55%), training window over recent generations.
+
 ## Remaining work, in order
-1. Read overnight results (logs/gauntlet_*.log, logs/train.log): confirm v0.3
-   ≥65% vs nokamute at 5s; bootstrap net policy top-1 (target ≥40%).
-2. Rust ort (ONNX Runtime, CoreML EP) evaluator in hive-mcts implementing
-   `Evaluator` with fixed-shape b1/b128 models from models/.
-3. Gating match: NN-MCTS vs alpha-beta via hive-arena (target ≥60% at equal
-   wall-clock) — Phase B exit bar is ≥80% vs Mzinga/nokamute.
-4. M6 self-play loop: MCTS self-play data (replace supervised bootstrap),
-   playout-cap randomization, gating per generation (see main plan §M6).
-5. M7: time management polish, `SearchBackend` UHP option, README Elo table.
-6. Ongoing: SPSA eval tuning, tactical suite growth, opening book.
+1. TRAINING (compute, not code): run scripts/overnight.sh to completion
+   (bootstrap net), then scripts/rl_loop.sh for days/weeks. Monitor gate
+   logs; anchor-check vs alpha-beta and nokamute every few generations:
+     ./target/release/hive-arena --games 40 --movetime 5 --threads 2 \
+       -- ./target/release/hive-engine --mcts --net models/best-b1.onnx \
+       -- ./opponents/nokamute uhp
+2. Read v0.3 gauntlet results (logs/gauntlet_*.log): confirm ≥65% vs
+   nokamute at 5s (Phase A exit).
+3. Perf when it becomes the bottleneck: b32 exports for self-play batching,
+   CoreML-friendly ops (9/64 nodes currently fall back to CPU), tree reuse
+   between moves, cross-thread inference batching.
+4. M7 polish: pondering, `SearchBackend` UHP option, README Elo table.
+5. Ongoing: SPSA eval tuning, tactical suite growth, opening book,
+   Base+MLP game-type curriculum in the RL loop (GAMETYPE env).
