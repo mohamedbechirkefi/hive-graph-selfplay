@@ -22,6 +22,16 @@ built in two stages:
 
 ## Quick start
 
+Fresh machine (installs toolchain, builds, tests, fetches opponents, sets up
+the Python env — add `--overnight` to also launch the unattended
+gauntlet→dataset→training pipeline):
+
+```sh
+./scripts/setup.sh                    # or: ./scripts/setup.sh --overnight
+```
+
+Manual steps, if you prefer:
+
 ```sh
 cargo build --release
 ./scripts/fetch_opponents.sh          # Mzinga (release) + nokamute (source)
