@@ -1,16 +1,16 @@
 [package]
-name = "hive-engine"
+name = "hive-selfplay"
 edition.workspace = true
 version.workspace = true
 license.workspace = true
 
 [[bin]]
-name = "hive-engine"
+name = "selfplay"
 path = "src/main.rs"
 
 [dependencies]
 hive-core.workspace = true
 hive-uhp.workspace = true
+hive-nn = { path = "../hive-nn" }
 hive-search = { path = "../hive-search" }
 hive-eval = { path = "../hive-eval" }
-hive-mcts = { path = "../hive-mcts" }

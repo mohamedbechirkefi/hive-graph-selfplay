@@ -46,3 +46,12 @@ Every search/eval change must not regress the gauntlet score.
   move (Hive has zugzwang-like pass states); quiescence = enemy-queen
   targeting moves only.
 - Eval weights live in `hive_eval::Weights` (tunable struct, SPSA planned).
+- NN interface (`hive-nn`): 32×32 frame (BFS-unwrapped, bbox-centered),
+  policy = (rel_piece, dest) 28,673-way, compact 112-byte training records.
+  The Rust `planes()` encoder and `python/hivenet/dataset.py::decode_planes`
+  MUST stay identical — verified by `dump_planes` +
+  `scripts/crosscheck_planes.py` (runs in nightly.sh). If you change one,
+  change the other and re-run the crosscheck.
+- Training data: `./target/release/selfplay --games N --depth 4 --out data/selfplay/run`;
+  train with `python/.venv/bin/python -m hivenet.train --data 'data/selfplay/run-*.bin'`
+  (run from python/ dir); export ONNX with `-m hivenet.export_onnx`.

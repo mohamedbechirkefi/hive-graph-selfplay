@@ -74,6 +74,7 @@ version = "0.1.0"
 dependencies = [
  "hive-core",
  "hive-eval",
+ "hive-mcts",
  "hive-search",
  "hive-uhp",
 ]
@@ -86,11 +87,41 @@ dependencies = [
 ]
 
 [[package]]
+name = "hive-mcts"
+version = "0.1.0"
+dependencies = [
+ "hive-core",
+ "hive-eval",
+ "hive-nn",
+ "hive-uhp",
+ "rand",
+ "rand_chacha",
+]
+
+[[package]]
+name = "hive-nn"
+version = "0.1.0"
+dependencies = [
+ "hive-core",
+]
+
+[[package]]
 name = "hive-search"
 version = "0.1.0"
 dependencies = [
  "hive-core",
  "hive-eval",
+ "hive-uhp",
+]
+
+[[package]]
+name = "hive-selfplay"
+version = "0.1.0"
+dependencies = [
+ "hive-core",
+ "hive-eval",
+ "hive-nn",
+ "hive-search",
  "hive-uhp",
 ]
 

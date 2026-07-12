@@ -7,6 +7,9 @@ members = [
     "crates/hive-eval",
     "crates/hive-search",
     "crates/hive-arena",
+    "crates/hive-nn",
+    "crates/hive-mcts",
+    "crates/hive-selfplay",
     "crates/hive-engine",
 ]
 

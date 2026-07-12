@@ -452,7 +452,7 @@ impl Worker {
         best_score
     }
 
-    fn iterate(&mut self, game: &Game, max_depth: u32, soft_deadline: Option<Instant>) -> Stats {
+    fn iterate(&mut self, game: &Game, max_depth: u32, hard_deadline: Option<Instant>) -> Stats {
         self.rep_stack.clear();
         self.rep_stack.extend_from_slice(game.repetition_keys());
         for h in self.history.iter_mut() {
@@ -462,12 +462,34 @@ impl Worker {
         let moves = hive_core::movegen::generate(&s);
         let mut best = moves[0];
         let mut stats = Stats::default();
+        let mut prev_score = 0i32;
 
         for depth in 1..=max_depth {
-            let score = self.negamax(&mut s, depth as i32, 0, -WIN - 1, WIN + 1);
+            let iter_start = Instant::now();
+
+            // Aspiration windows from depth 4 on: try a narrow window around
+            // the previous score, widening on fail.
+            let score = if depth >= 4 {
+                let mut delta = 60;
+                loop {
+                    let alpha = (prev_score - delta).max(-WIN - 1);
+                    let beta = (prev_score + delta).min(WIN + 1);
+                    let sc = self.negamax(&mut s, depth as i32, 0, alpha, beta);
+                    if self.stopped() || (sc > alpha && sc < beta) {
+                        break sc;
+                    }
+                    delta *= 4;
+                    if delta > 2000 {
+                        break self.negamax(&mut s, depth as i32, 0, -WIN - 1, WIN + 1);
+                    }
+                }
+            } else {
+                self.negamax(&mut s, depth as i32, 0, -WIN - 1, WIN + 1)
+            };
             if self.stopped() {
                 break;
             }
+            prev_score = score;
             if let Some(e) = self.tt.probe(s.hash()) {
                 best = unpack_move(e.mv);
             }
@@ -481,11 +503,16 @@ impl Worker {
             if score.abs() >= WIN_THRESHOLD {
                 break;
             }
+            // Adaptive time management (main thread only): don't start an
+            // iteration that will likely blow the deadline. Deeper
+            // iterations cost ~2-4x the previous one; require room for 2x.
             if self.is_main
-                && let Some(sd) = soft_deadline
-                && Instant::now() >= sd
+                && let Some(hd) = hard_deadline
             {
-                break;
+                let last_iter = iter_start.elapsed();
+                if Instant::now() + last_iter * 2 >= hd {
+                    break;
+                }
             }
         }
         stats
@@ -516,7 +543,6 @@ impl AlphaBeta {
             SearchLimit::Default => (self.params.max_depth, Some(self.params.default_time)),
         };
         let deadline = time_budget.map(|t| start + t.saturating_sub(Duration::from_millis(30)));
-        let soft_deadline = time_budget.map(|t| start + t.mul_f32(0.6));
 
         let moves = game.valid_moves();
         if moves.len() == 1 {
@@ -551,7 +577,7 @@ impl AlphaBeta {
             }
             let mut main = Worker::new(self.tt.clone(), stop.clone(), node_counter.clone(), true);
             main.deadline = deadline;
-            main_stats = main.iterate(game, max_depth, soft_deadline);
+            main_stats = main.iterate(game, max_depth, deadline);
             node_counter.fetch_add(main.nodes % 4096, Ordering::Relaxed);
             stop.store(true, Ordering::Relaxed);
         });

@@ -1,16 +1,13 @@
 [package]
-name = "hive-engine"
+name = "hive-mcts"
 edition.workspace = true
 version.workspace = true
 license.workspace = true
 
-[[bin]]
-name = "hive-engine"
-path = "src/main.rs"
-
 [dependencies]
 hive-core.workspace = true
 hive-uhp.workspace = true
-hive-search = { path = "../hive-search" }
 hive-eval = { path = "../hive-eval" }
-hive-mcts = { path = "../hive-mcts" }
+hive-nn = { path = "../hive-nn" }
+rand.workspace = true
+rand_chacha.workspace = true

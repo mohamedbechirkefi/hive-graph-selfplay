@@ -19,3 +19,7 @@ echo "=== differential fuzz: 100 games/type vs Mzinga ==="
 ./target/release/fuzz ./opponents/MzingaEngine -- 100 "$(date +%s)"
 
 echo "nightly validation complete"
+
+echo "=== cross-language plane encoder golden test ==="
+./target/release/dump_planes /tmp/hive_planes.bin
+python/.venv/bin/python scripts/crosscheck_planes.py /tmp/hive_planes.bin

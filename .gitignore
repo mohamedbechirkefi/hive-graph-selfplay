@@ -2,3 +2,10 @@ target/
 opponents/
 *.onnx
 data/
+python/.venv/
+checkpoints/
+models/
+__pycache__/
+*.pt
+data_gauntlet*.txt
+logs/
