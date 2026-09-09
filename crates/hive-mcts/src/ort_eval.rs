@@ -23,9 +23,18 @@ impl OrtEvaluator {
     pub fn new(path: &str, use_coreml: bool) -> Result<OrtEvaluator, String> {
         let mut builder = Session::builder().map_err(|e| e.to_string())?;
         if use_coreml {
+            // MLProgram, not the default legacy NeuralNetwork format: the
+            // legacy path fails on this model ("Unable to compute the
+            // prediction using a neural network model", H2 profiling
+            // finding, D-011c), while Python onnxruntime runs the same
+            // model on CoreML at ~2.6 ms/eval.
             builder = builder
                 .with_execution_providers([
-                    ort::execution_providers::CoreMLExecutionProvider::default().build(),
+                    ort::execution_providers::CoreMLExecutionProvider::default()
+                        .with_model_format(
+                            ort::execution_providers::coreml::ModelFormat::MLProgram,
+                        )
+                        .build(),
                 ])
                 .map_err(|e| e.to_string())?;
         }
