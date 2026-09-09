@@ -1,0 +1,12 @@
+# Baseline B-HEU — documented heuristic agent (H3 task 2)
+# Engine: hive-engine default backend (alpha-beta) pinned to depth 1 =
+# greedy argmax of the documented handcrafted evaluation, plus the
+# searcher's built-in quiescence on enemy-queen-targeting moves.
+# Features/weights: hive_eval::Weights::default(), documented in
+# docs/baselines.md and mirrored in heuristic-weights.toml; pinned by the
+# hive-eval test `weights_pinned_for_h3_baselines`.
+agent = "B-HEU"
+command = "./target/release/hive-engine"
+limit = "bestmove depth 1"
+env = { HIVE_THREADS = "1" }
+weights = "configs/baselines/heuristic-weights.toml (sha256 recorded there)"

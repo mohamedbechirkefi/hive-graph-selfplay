@@ -1,0 +1,19 @@
+# Frozen mirror of hive_eval::Weights::default() for the H3 baselines.
+# The hive-eval test `weights_pinned_for_h3_baselines` asserts the code
+# defaults equal these values: any tuning attempt breaks the suite and
+# must go through a decision entry (never after observing final tests -
+# plan ch. 5). Score convention: centipawn-like, positive = good for the
+# side to move (negamax).
+#
+# sha256 of this file is recorded in docs/baselines.md and the freeze
+# decision entry.
+
+queen_liberties = [-2000, -700, -350, -150, -50, 0, 20]  # by empty cells 0..6
+queen_enemy_neighbor = -90
+queen_friendly_neighbor = -20
+queen_covered = -180
+# Bug order: Q, S, B, G, A, M, L, P
+free = [15, 35, 55, 40, 80, 55, 50, 40]
+pinned = [0, 4, 8, 6, 10, 6, 6, 4]
+reserve = 6
+pillbug_defends_queen = 40

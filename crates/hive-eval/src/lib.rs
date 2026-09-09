@@ -144,6 +144,25 @@ mod tests {
         assert_eq!(evaluate(&s, &Weights::default()), 0);
     }
 
+    /// H3 task 2 (plan ch. 5): baseline weights are fixed during
+    /// development and never tuned after seeing final tests. This pins the
+    /// code defaults to the values documented in
+    /// configs/baselines/heuristic-weights.toml and docs/baselines.md —
+    /// any change must go through a decision entry (and, after the H3
+    /// population freeze, is a G-FREEZE event).
+    #[test]
+    fn weights_pinned_for_h3_baselines() {
+        let w = Weights::default();
+        assert_eq!(w.queen_liberties, [-2000, -700, -350, -150, -50, 0, 20]);
+        assert_eq!(w.queen_enemy_neighbor, -90);
+        assert_eq!(w.queen_friendly_neighbor, -20);
+        assert_eq!(w.queen_covered, -180);
+        assert_eq!(w.free, [15, 35, 55, 40, 80, 55, 50, 40]);
+        assert_eq!(w.pinned, [0, 4, 8, 6, 10, 6, 6, 4]);
+        assert_eq!(w.reserve, 6);
+        assert_eq!(w.pillbug_defends_queen, 40);
+    }
+
     /// Plan ch. 5 / H3 task 4: the value must flip perspective consistently
     /// as the player to move alternates — negamax identity: the same board
     /// evaluated with the side to move flipped is exactly negated.

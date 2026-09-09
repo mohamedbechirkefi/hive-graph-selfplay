@@ -1,0 +1,14 @@
+# Baseline B-MCTS — MCTS without network (H3 task 3)
+# Engine: hive-engine --mcts (PUCT MCTS, uniform priors, tanh-squashed
+# handcrafted eval as leaf value — hive_mcts::EvalNet; no ONNX).
+# Budget: 6400 simulations per decision, measured at ~27 ms/decision
+# single-thread on the study machine (journal
+# H2-2026-09-09-throughput-profile-01 methodology; measurement in
+# H3-2026-09-09-baselines-01). D-011's 128/32 applies to NN self-play;
+# the no-net baseline budget is set from its own measured cost — a
+# placeholder-free, reproducible budget per D-014.
+# No exploration noise: MctsParams default dirichlet_eps = 0 (match play).
+agent = "B-MCTS"
+command = "./target/release/hive-engine --mcts --sims 6400 --seed {seed}"
+limit = "bestmove depth 1"   # depth 1 x sims_per_depth = exactly 6400 sims
+seed_policy = "seed = characterisation run seed; per-match seeds journaled"

@@ -1,0 +1,7 @@
+# Baseline B-RND — legal-random agent (H3 task 1)
+# Engine: hive-engine (this repo), RandomSearcher via UHP.
+# Uniform over legal moves; deterministic given (seed, game history).
+agent = "B-RND"
+command = "./target/release/hive-engine --random --seed {seed}"
+limit = "bestmove depth 1"   # ignored by the agent; kept for arena symmetry
+seed_policy = "seed = characterisation run seed; per-match seeds journaled"
