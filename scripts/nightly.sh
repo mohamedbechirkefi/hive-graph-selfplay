@@ -12,6 +12,9 @@ for gt in Base Base+M Base+L Base+P Base+ML Base+MP Base+LP Base+MLP; do
     ./target/release/perft "$gt" 7 | tail -1
 done
 
+echo "=== deep random-game invariant sessions (H2 task 5) ==="
+cargo test --release -p hive-core --test random_invariants -- --ignored --nocapture
+
 echo "=== differential fuzz: 200 games/type vs nokamute ==="
 ./target/release/fuzz ./opponents/nokamute uhp -- 200 "$(date +%s)"
 
