@@ -1,0 +1,33 @@
+id = "T004"
+title = "Black mates in 1 by grasshopper jump over four pieces (W of wQ)"
+game_type = "Base"
+# Colour-mirror of T003: wQ(-2,0)... concretely, white surrounds its own
+# queen except due W; bG1 sits at the east cap of the occupied row
+# bQ,bS1,wS1,wQ and jumps west into the last liberty.
+# Cells: wS1(0,0), bS1(1,0) E, wQ(-1,0) W, bQ(2,0), bG1 at east cap (3,0).
+# White ring around own wQ: wG1(-2,-... — ring cells of wQ(-1,0):
+# wS1(0,0) E, (-1,-1) NW=wG1, (0,-1) NE=wG2, (-1,1) SE=wA1, (-2,1) SW=wA2;
+# gap: W (-2,0). Black to move after white's filler.
+# Black's ant tail anchors on bQ (SE column), not behind bG1, so the
+# grasshopper at the east cap is a leaf — One Hive permits its jump.
+setup = [
+  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wG1 \\wQ", "bG1 bQ-",
+  "wG2 \\wS1", "bA1 bQ\\", "wA1 wQ\\", "bA2 bA1\\", "wA2 /wQ", "bA3 bA2\\",
+  "wB1 \\wG1",
+]
+
+[expect]
+kind = "bestmove_to_cell"
+target = "-wQ"
+
+[annotation]
+rule = "Grasshopper / The End of the Game"
+source = "Gen42 Hive rulesheet pp. 6, 11"
+justification = """Alternation mirror of T003 with black jumping. The white
+queen's neighbours: E wS1, NW wG1 (placed NW of wQ), NE wG2 (placed NW of
+wS1 = NE of wQ), SE wA1, SW wA2 — five occupied, only W of wQ empty. Due
+east of that gap runs the unbroken row wQ, wS1, bS1, bQ with bG1 at the
+east cap (3,0): from bG1 the next unoccupied space westward along the row
+is exactly the gap, so the grasshopper jumps over four pieces and
+completes the surround (pp. 6, 11). Black's southern tail (bA1..bA3 SE of
+bG1) keeps black's earlier placements legal and away from white."""

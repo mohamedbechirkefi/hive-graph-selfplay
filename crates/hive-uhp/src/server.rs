@@ -148,15 +148,33 @@ pub fn run_server<R: BufRead, W: Write>(
     Ok(())
 }
 
-/// Baseline searcher until hive-search lands: picks a pseudo-random legal
-/// move (deterministic per position hash so games are reproducible).
-pub struct RandomSearcher;
+/// Uniform-over-legal-moves searcher. Deterministic given (seed, game
+/// history): the internal state advances per query, mixed with the position
+/// hash, so distinct seeds give distinct games while identical seeds replay
+/// identically (H3 baseline requirement).
+pub struct RandomSearcher {
+    state: u64,
+}
+
+impl Default for RandomSearcher {
+    fn default() -> Self {
+        RandomSearcher::new(0)
+    }
+}
+
+impl RandomSearcher {
+    pub fn new(seed: u64) -> Self {
+        RandomSearcher {
+            state: hive_core::zobrist::splitmix64(seed),
+        }
+    }
+}
 
 impl Searcher for RandomSearcher {
     fn best_move(&mut self, game: &Game, _limit: SearchLimit) -> Move {
         let moves = game.valid_moves();
-        let idx = (hive_core::zobrist::splitmix64(game.state.hash()) % moves.len() as u64) as usize;
-        moves[idx]
+        self.state = hive_core::zobrist::splitmix64(self.state ^ game.state.hash());
+        moves[(self.state % moves.len() as u64) as usize]
     }
 
     fn name(&self) -> String {
@@ -171,7 +189,7 @@ mod tests {
 
     fn run(script: &str) -> String {
         let mut out = Vec::new();
-        let mut searcher = RandomSearcher;
+        let mut searcher = RandomSearcher::default();
         run_server(Cursor::new(script.to_string()), &mut out, &mut searcher).unwrap();
         String::from_utf8(out).unwrap()
     }

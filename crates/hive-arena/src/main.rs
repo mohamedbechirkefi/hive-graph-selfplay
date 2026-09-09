@@ -104,6 +104,10 @@ struct GameOutcome {
     plies: usize,
     reason: String,
     game_string: String,
+    /// Ply-cap hit: reported separately, never folded into W/D/L
+    /// (invariant 7 / D-008). `score_a` then holds the 0.5 sensitivity
+    /// score used only by the truncations-as-draws sensitivity line.
+    truncated: bool,
 }
 
 fn play_game(cfg: &Config, a_is_white: bool, opening: &[String]) -> Result<GameOutcome, String> {
@@ -164,8 +168,9 @@ fn play_game(cfg: &Config, a_is_white: bool, opening: &[String]) -> Result<GameO
             return Ok(GameOutcome {
                 score_a: 0.5,
                 plies: referee.move_count(),
-                reason: "ply-cap draw".into(),
+                reason: "truncated (ply cap)".into(),
                 game_string: referee.game_string(),
+                truncated: true,
             });
         }
         let white_to_move = referee.state.to_move == hive_core::bug::Color::White;
@@ -190,6 +195,7 @@ fn play_game(cfg: &Config, a_is_white: bool, opening: &[String]) -> Result<GameO
                 plies: referee.move_count(),
                 reason: format!("illegal move '{mv_text}' ({e}) — forfeit"),
                 game_string: referee.game_string(),
+                truncated: false,
             });
         }
         white
@@ -222,6 +228,7 @@ fn play_game(cfg: &Config, a_is_white: bool, opening: &[String]) -> Result<GameO
         plies: referee.move_count(),
         reason: format!("{:?}", referee.state.result),
         game_string: referee.game_string(),
+        truncated: false,
     })
 }
 
@@ -246,7 +253,7 @@ fn main() {
 
     let pairs = cfg.games.div_ceil(2);
     let next_pair = AtomicUsize::new(0);
-    let results: Mutex<Vec<(f64, usize, String)>> = Mutex::new(vec![]);
+    let results: Mutex<Vec<(f64, usize, String, bool)>> = Mutex::new(vec![]);
     let pgn_log: Mutex<Vec<String>> = Mutex::new(vec![]);
 
     std::thread::scope(|scope| {
@@ -266,9 +273,9 @@ fn main() {
                         match play_game(&cfg, a_is_white, &opening) {
                             Ok(o) => {
                                 let mut r = results.lock().unwrap();
-                                r.push((o.score_a, o.plies, o.reason.clone()));
+                                r.push((o.score_a, o.plies, o.reason.clone(), o.truncated));
                                 let n = r.len();
-                                let sum: f64 = r.iter().map(|(s, _, _)| s).sum();
+                                let sum: f64 = r.iter().map(|(s, _, _, _)| s).sum();
                                 drop(r);
                                 eprintln!(
                                     "game {n}: A[{}] {} in {} plies ({}) | A score {:.1}/{}",
@@ -290,31 +297,48 @@ fn main() {
     });
 
     let results = results.into_inner().unwrap();
-    let n = results.len() as f64;
-    if n == 0.0 {
+    if results.is_empty() {
         eprintln!("no games completed");
         return;
     }
-    let wins = results.iter().filter(|(s, _, _)| *s == 1.0).count();
-    let draws = results.iter().filter(|(s, _, _)| *s == 0.5).count();
-    let losses = results.len() - wins - draws;
-    let p = results.iter().map(|(s, _, _)| s).sum::<f64>() / n;
-    // 95% CI on the score via normal approximation.
-    let var: f64 = results
+    // Truncated (ply-cap) games are their own outcome category: excluded
+    // from the primary score and W/D/L, reported as a separate rate, with
+    // a truncations-scored-0.5 sensitivity line (invariant 7 / D-008;
+    // protocol §3-4).
+    let total = results.len();
+    let truncations = results.iter().filter(|(_, _, _, t)| *t).count();
+    let decided: Vec<f64> = results
         .iter()
-        .map(|(s, _, _)| (s - p) * (s - p))
-        .sum::<f64>()
-        / n;
-    let se = (var / n).sqrt();
+        .filter(|(_, _, _, t)| !*t)
+        .map(|(s, _, _, _)| *s)
+        .collect();
+    let wins = decided.iter().filter(|s| **s == 1.0).count();
+    let draws = decided.iter().filter(|s| **s == 0.5).count();
+    let losses = decided.len() - wins - draws;
     println!(
-        "\n=== A vs B: +{wins} ={draws} -{losses}  score {:.1}%",
-        p * 100.0
+        "\n=== A vs B: +{wins} ={draws} -{losses}  truncated {truncations}/{total} ({:.1}%)",
+        truncations as f64 / total as f64 * 100.0
     );
+    if decided.is_empty() {
+        println!("all games truncated — no primary score");
+        return;
+    }
+    let n = decided.len() as f64;
+    let p = decided.iter().sum::<f64>() / n;
+    // 95% CI on the score via normal approximation.
+    let var: f64 = decided.iter().map(|s| (s - p) * (s - p)).sum::<f64>() / n;
+    let se = (var / n).sqrt();
+    println!("score {:.1}% over {} non-truncated games", p * 100.0, decided.len());
     println!(
-        "Elo diff: {:+.0} [{:+.0}, {:+.0}] (95%)",
+        "Elo diff (descriptive): {:+.0} [{:+.0}, {:+.0}] (95%)",
         elo_diff(p),
         elo_diff((p - 1.96 * se).max(0.001)),
         elo_diff((p + 1.96 * se).min(0.999))
+    );
+    let p_sens = results.iter().map(|(s, _, _, _)| s).sum::<f64>() / total as f64;
+    println!(
+        "sensitivity (truncations scored 0.5): {:.1}% over all {total} games",
+        p_sens * 100.0
     );
 
     if let Some(path) = &cfg.pgn {

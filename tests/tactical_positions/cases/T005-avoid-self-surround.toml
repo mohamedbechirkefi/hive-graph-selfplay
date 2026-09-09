@@ -1,0 +1,27 @@
+id = "T005"
+title = "Do not fill your own queen's last liberty"
+game_type = "Base"
+# T002's position one ply earlier: white to move, own queen wQ(1,0) at
+# five-sixths surrounded (all by white pieces), the SE cell open. Placing
+# there is legal (all-white adjacency) and loses instantly.
+setup = [
+  "wS1", "bS1 -wS1", "wQ wS1-", "bQ -bS1", "wG1 wQ-", "bG1 -bQ",
+  "wG2 wQ/", "bG2 -bG1", "wB1 \\wQ", "bA1 -bG2", "wA1 wS1\\", "bA2 -bA1",
+]
+
+[expect]
+kind = "bestmove_avoid_cell"
+target = "wQ\\"
+
+[annotation]
+rule = "The End of the Game"
+source = "Gen42 Hive rulesheet p. 11"
+justification = """The cell SE of wQ is the white queen's last liberty.
+White placing or moving any piece there completes the surround of White's
+own queen — 'the person whose Queen Bee is surrounded loses the game'
+(p. 11) regardless of who supplied the sixth piece. The placement is
+perfectly legal (the cell touches only white pieces), so only search
+judgment prevents it. Any move except one landing on that cell passes;
+the searcher must not play into it. (This does not assert White survives
+long-term — black threatens the same cell — only that the immediate
+self-kill is avoided.)"""

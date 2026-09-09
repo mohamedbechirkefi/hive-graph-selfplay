@@ -1,0 +1,27 @@
+id = "T003"
+title = "White mates in 1 by grasshopper jump over four pieces (E of bQ)"
+game_type = "Base"
+# bQ(2,0) is surrounded except due E (3,0). wG1 sits at the west cap
+# (-2,0) of the occupied row wQ,wS1,bS1,bQ.
+# White's ant tail hangs NW off the queen (not behind wG1), so the
+# grasshopper at the west cap is a leaf — One Hive permits its jump.
+setup = [
+  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wG1 -wQ", "bG2 bQ/",
+  "wA1 \\wQ", "bB1 \\bQ", "wA2 \\wA1", "bA1 bS1\\", "wA3 \\wA2", "bA2 bQ\\",
+]
+
+[expect]
+kind = "bestmove_to_cell"
+target = "bQ-"
+
+[annotation]
+rule = "Grasshopper / The End of the Game"
+source = "Gen42 Hive rulesheet pp. 6, 11"
+justification = """The black queen's only empty neighbour is the cell E of
+bQ. Due east from wG1 at the west cap runs the unbroken occupied row wQ,
+wS1, bS1, bQ; the next unoccupied space along that row is exactly the
+winning cell, so the grasshopper jumps over four pieces and completes the
+surround (p. 6: 'over any number of pieces … to the next unoccupied space
+along a straight row of joined pieces'; p. 11: surround ends the game).
+White ants can also walk in around the perimeter — the expectation is the
+destination cell, whichever piece the searcher sends."""

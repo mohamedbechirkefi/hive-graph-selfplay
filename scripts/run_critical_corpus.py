@@ -66,8 +66,9 @@ class Board:
 
 class Engine:
     def __init__(self, path):
+        argv = path.split() if isinstance(path, str) else list(path)
         self.p = subprocess.Popen(
-            [path], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True
+            argv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True
         )
         self._read()  # banner
 

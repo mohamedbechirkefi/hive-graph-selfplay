@@ -1,0 +1,25 @@
+id = "T001"
+title = "White mates in 1: occupy the black queen's last liberty (SE of bQ)"
+game_type = "Base"
+# C021's position two plies early: bQ(2,0) has five of six neighbours
+# occupied (bS1 W, bG1 E, bG2 NE, bB1 NW, bA1 SW); only SE of bQ is empty.
+# White to move; white ants sit on the western tail.
+setup = [
+  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wG1 -wQ", "bG1 bQ-",
+  "wA1 -wG1", "bG2 bQ/", "wA2 -wA1", "bB1 \\bQ", "wA3 -wA2", "bA1 bS1\\",
+]
+
+[expect]
+kind = "bestmove_to_cell"
+target = "bQ\\"
+
+[annotation]
+rule = "The End of the Game"
+source = "Gen42 Hive rulesheet pp. 1, 11"
+justification = """The black queen has exactly one empty neighbour, the
+cell SE of bQ. Any white piece landing there completes the surround and
+wins immediately ('the game ends as soon as one Queen Bee is completely
+surrounded by pieces of any colour', p. 11; mixture of colours allowed,
+p. 1). The cell is reachable: a white ant can walk the south perimeter in
+one move (entry past bA1 is not gated), so a winning move exists. No other
+single move ends the game. The searcher must play onto that cell."""
