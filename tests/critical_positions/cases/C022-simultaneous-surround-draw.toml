@@ -7,9 +7,16 @@ game_type = "Base"
 # over bS1 lands in (1,0) and completes BOTH surrounds at once.
 setup = [
   "wS1", "bS1 wS1/", "wQ wS1\\", "bB1 bS1-", "wA1 -wQ", "bQ bB1\\",
-  "wS2 /wQ", "bQ wQ-", "wG1 -wS2", "bG1 \\bS1", "wB1 -wA1", "bA1 bQ\\",
-  "wG1 wS2-", "bA2 bQ-", "wB1 \\wA1", "bA3 bB1\\", "wB1 \\wS1", "bG1 bS1\\",
+  "wS2 /wQ", "bQ /bB1", "wG1 -wS2", "bQ wQ-", "wB1 -wA1", "bA1 bQ\\",
+  "wG1 wS2-", "bG1 \\bS1", "wB1 \\wA1", "bA2 bQ-", "wB1 \\wS1", "bA3 bB1\\",
+  "wG2 -wB1", "bG1 bS1\\",
 ]
+# Setup correction (2026-09-09, first engine run): the original choreography
+# moved bQ (2,0)->(1,1) in one step with both flanking cells empty - the
+# hive is "left unlinked while the piece is in transit" (rulesheet p. 9),
+# so the engine rightly rejected it. The corpus setup was at fault, not the
+# engine; the queen now routes via (1,0), each step keeping an occupied
+# flanking cell. See journal/2026-09-09-corpus-run-01.md.
 
 [expect]
 kind = "game_over"
