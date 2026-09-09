@@ -144,6 +144,50 @@ mod tests {
         assert_eq!(evaluate(&s, &Weights::default()), 0);
     }
 
+    /// Plan ch. 5 / H3 task 4: the value must flip perspective consistently
+    /// as the player to move alternates — negamax identity: the same board
+    /// evaluated with the side to move flipped is exactly negated.
+    #[test]
+    fn value_negates_under_player_alternation() {
+        let w = Weights::default();
+        let mut s = GameState::new(GameType::BASE);
+        for (name, cell) in [
+            ("wS1", CENTER),
+            ("bS1", neighbor(CENTER, Dir::E)),
+            ("wQ", neighbor(CENTER, Dir::W)),
+            ("bQ", neighbor(neighbor(CENTER, Dir::E), Dir::E)),
+        ] {
+            s.make(Move::Place {
+                piece: hive_core::bug::PieceId::parse(name).unwrap(),
+                to: cell,
+            });
+        }
+        // Make it asymmetric: black pieces crowd the white queen.
+        s.board.put(
+            hive_core::bug::PieceId::parse("bA1").unwrap(),
+            neighbor(neighbor(CENTER, Dir::W), Dir::W),
+        );
+        s.board.put(
+            hive_core::bug::PieceId::parse("bA2").unwrap(),
+            neighbor(neighbor(CENTER, Dir::W), Dir::NW),
+        );
+        // Clear the stun state: last_moved interacts with to_move by design
+        // (a piece just thrown by the enemy pillbug is frozen for its owner,
+        // and both fields are part of the hashed position), so the pure
+        // alternation identity holds over (board, to_move) with no pending
+        // stun.
+        s.last_moved = None;
+        s.to_move = Color::White;
+        let as_white = evaluate(&s, &w);
+        s.to_move = Color::Black;
+        let as_black = evaluate(&s, &w);
+        assert_ne!(as_white, 0, "asymmetric position must not evaluate to 0");
+        assert_eq!(
+            as_white, -as_black,
+            "eval must negate when the player to move flips"
+        );
+    }
+
     #[test]
     fn crowded_queen_is_bad() {
         let mut s = GameState::new(GameType::BASE);

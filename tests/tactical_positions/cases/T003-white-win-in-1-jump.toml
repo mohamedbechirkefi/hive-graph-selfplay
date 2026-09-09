@@ -6,7 +6,7 @@ game_type = "Base"
 # White's ant tail hangs NW off the queen (not behind wG1), so the
 # grasshopper at the west cap is a leaf — One Hive permits its jump.
 setup = [
-  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wG1 -wQ", "bG2 bQ/",
+  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wG1 -wQ", "bG1 bQ/",
   "wA1 \\wQ", "bB1 \\bQ", "wA2 \\wA1", "bA1 bS1\\", "wA3 \\wA2", "bA2 bQ\\",
 ]
 
