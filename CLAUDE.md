@@ -1,8 +1,31 @@
-# HiveMind — Hive AI engine
+# hive-graph-selfplay — HiveMind engine (research project 1)
 
-UHP-compatible Hive engine (base + M/L/P expansions). Staged design:
-Phase A = Rust alpha-beta engine (done, iterating on strength);
-Phase B = AlphaZero-style MCTS + NN self-play (planned; see plan file).
+UHP-compatible Hive engine (base + M/L/P expansions), Rust alpha-beta core
+plus an MCTS + NN self-play stack. Now the vehicle for the representation
+study "Graph-Based Self-Play for Hive under Limited Compute".
+
+## Research mode — read this first
+
+This repo is **project 1 of the research OS**. The workspace `../CLAUDE.md`
+(operating model, gates, invariants) and `../state/STATUS.md` (routing) govern
+every session here — do not act from this file alone. Phases **H1–H8** live in
+`../pipelines/hive/H*.md`; execute the active phase's doc, not ad-hoc ideas.
+
+- **Local authorities:** `docs/inventory.md` (what exists, what counts as
+  evidence) and `docs/protocol.md` once H1 produces it. Where they refine the
+  plan, they win locally.
+- **Journal:** every experiment/measurement → `journal/YYYY-MM-DD-<slug>.md`
+  per `../templates/experiment.md`. Negative results included.
+- **Prior work (decision D-003):** the completed rl_loop (19 generations,
+  gen 20 crashed on StorageFull) is a **demonstration, not evidence** —
+  single-seed, single-architecture, no controlled budget. The new study
+  inherits the engine and its validation evidence, not the loop's results.
+  **Do not restart the loop from here** — that is a G-SPEND/G-DESTRUCTIVE
+  decision for the human. The gen-19 checkpoint is preserved at `models/best*`
+  (`best-b1.onnx`, `best-b128.onnx`, `best.pt`); never overwrite or delete it.
+- **Out of the new study's scope** (plan ch. 3; inventory): the M/L/P
+  expansions, MuZero-style extensions, `web/`, and `crates/hive-api` — the
+  last two are **frozen, not deleted**.
 
 ## Build & test
 
@@ -20,7 +43,9 @@ cargo test --release -p hive-core --test perft_tables -- --ignored  # perft d6
 3. `./target/release/fuzz ./opponents/MzingaEngine -- 25 <seed>` and same
    with `./opponents/nokamute uhp` — validmoves set-equality per ply.
 
-Opponents come from `./scripts/fetch_opponents.sh` (not in git).
+`opponents/` is **not in this copy** — fetch via `./scripts/fetch_opponents.sh`
+first. The binaries are third-party; check their licences before publishing
+anything derived from them (see `docs/inventory.md`, Rights).
 
 ## Strength testing
 
@@ -32,7 +57,12 @@ HIVE_THREADS=6 ./target/release/hive-arena --games 24 --movetime 1 --threads 2 \
 ```
 
 Set `HIVE_THREADS` so concurrent games don't oversubscribe cores.
-Every search/eval change must not regress the gauntlet score.
+Every search/eval change must not regress the gauntlet score. Concretely: run
+at least 100 paired games (planning proposal until `docs/protocol.md` fixes N
+at the H1 freeze) against the fixed nokamute gauntlet, journal the score, and
+treat any drop larger than the binomial confidence interval as a regression —
+the frozen protocol sets the final threshold. The 24-game command above is a
+smoke run only (binomial 95% CI ≈ ±20 pp at N=24), never a regression check.
 
 ## Architecture notes
 
@@ -65,4 +95,5 @@ Every search/eval change must not regress the gauntlet score.
 - The full unattended pipelines: `scripts/overnight.sh` (bootstrap:
   gauntlets → supervised dataset → train → export) and `scripts/rl_loop.sh`
   (AlphaZero loop: self-play → train → export → gate → promote; needs the
-  bootstrap model in models/ first).
+  bootstrap model in models/ first). Both are **prior work** — see D-003
+  above before touching either.

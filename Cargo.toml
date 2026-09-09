@@ -11,6 +11,7 @@ members = [
     "crates/hive-mcts",
     "crates/hive-selfplay",
     "crates/hive-engine",
+    "crates/hive-api",
 ]
 
 [workspace.package]

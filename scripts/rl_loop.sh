@@ -26,7 +26,7 @@ GAMETYPE="${GAMETYPE:-Base}"
 WINDOW_GENS="${WINDOW_GENS:-5}"   # train on the last N generations of data
 
 mkdir -p data/rl models logs
-PY=python/.venv/bin/python
+PY=.venv/bin/python
 
 # Seed: best model = latest bootstrap/promoted export.
 if [ ! -f models/best-b1.onnx ]; then
@@ -40,15 +40,18 @@ if [ ! -f models/best-b1.onnx ]; then
     echo "seeded best model from $latest"
 fi
 
-gen=$(ls -d data/rl/gen* 2>/dev/null | sed 's/.*gen0*//' | sort -n | tail -1)
-gen=$(( ${gen:-0} + 1 ))
+# Detect latest completed generation from non-empty data files.
+last_gen=$(ls -l data/rl/gen*-*.bin 2>/dev/null | awk '$5 > 0 {print $NF}' | sed 's/.*gen0*//; s/-.*//' | sort -n | tail -1)
+gen=$(( ${last_gen:-0} + 1 ))
 
 while true; do
     tag=$(printf 'gen%03d' "$gen")
     echo "[rl] === generation $gen ($tag) $(date '+%F %T') ==="
 
     echo "[rl] self-play: $GAMES_PER_GEN games, sims $SIMS_FULL/$SIMS_CHEAP"
-    ./target/release/selfplay-mcts --net models/best-b1.onnx \
+    selfplay_net="models/best-b128.onnx"
+    [ -f "$selfplay_net" ] || selfplay_net="models/best-b1.onnx"
+    ./target/release/selfplay-mcts --net "$selfplay_net" \
         --games "$GAMES_PER_GEN" --threads "$THREADS" \
         --sims-full "$SIMS_FULL" --sims-cheap "$SIMS_CHEAP" \
         --gametype "$GAMETYPE" --seed "$gen" \
@@ -57,14 +60,16 @@ while true; do
 
     # Training window: last WINDOW_GENS generations (plus bootstrap data for
     # the first generations so the net doesn't forget basics early).
-    shards=$(ls -d data/rl/gen* | sort | tail -"$WINDOW_GENS" | sed 's/$/-*.bin/' | tr '\n' ' ')
+    data_args=""
+    for p in $(ls data/rl/gen*-*.bin 2>/dev/null | sed 's/-[0-9]*\.bin$//' | sort -u | tail -"$WINDOW_GENS"); do
+        data_args="$data_args ../${p}-*.bin"
+    done
     if [ "$gen" -le 2 ] && ls data/selfplay/boot-000.bin >/dev/null 2>&1; then
-        shards="$shards data/selfplay/boot-*.bin"
+        data_args="$data_args ../data/selfplay/boot-*.bin"
     fi
-    echo "[rl] train ($EPOCHS epochs) on: $shards"
+    echo "[rl] train ($EPOCHS epochs) on:$data_args"
     init_arg=""
     [ -f models/best.pt ] && init_arg="--init ../models/best.pt"
-    data_args=$(for s in $shards; do printf '../%s ' "$s"; done)
     (cd python && $PY -m hivenet.train --data $data_args \
         --out "checkpoints/$tag" --epochs "$EPOCHS" $init_arg) \
         > "logs/rl_${tag}_train.log" 2>&1
