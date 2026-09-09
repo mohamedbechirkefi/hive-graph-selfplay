@@ -86,11 +86,12 @@ observations that plain search/heuristics are strong in Hive. The
 population reads: R = floor; H and M a mid band ~90 Elo apart with
 different styles.
 
-## Freeze
+## Freeze record — FROZEN 2026-09-09 (G-FREEZE, D-017)
 
-The population freeze (G-FREEZE, human) is presented with: the three
-configs + weight hash, engine commit, this characterisation, the B-MCTS
-budget choice (6400 as configured and characterised, or 25,600 near-parity
-at 4× cost, needing re-characterisation), and the gen-19 question (D-016
-proposes exclusion). Freeze record lands in `state/decisions.md`; after
-it, no opponent is touched.
+**Population frozen by the user on 2026-09-09** ("freeze the population at
+6400, exclude gen-19"): B-RND / B-HEU / B-MCTS exactly as configured above
+(B-MCTS at 6400 sims), gen-19 excluded (D-016 confirmed). Config sha256:
+random f2fc4a06…14cd7, heuristic 7210a0a3…18999, mcts-nonet
+3fc8f75c…07364e, weights d0602f18…0b97a; engine code commit b94e7c1.
+**Any later touch of any opponent = a new study.** Full record: D-017 in
+`../../state/decisions.md`.
