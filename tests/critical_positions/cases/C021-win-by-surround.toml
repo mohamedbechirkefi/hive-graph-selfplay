@@ -1,0 +1,27 @@
+id = "C021"
+title = "Game ends when a queen is fully surrounded - even by its own colour"
+game_type = "Base"
+# Black surrounds its own queen at (2,0): bS1 W, bG1 E, bG2 NE, bB1 NW,
+# bA1 SW, bA2 SE. White builds a western tail. Black's own last placement
+# completes the surround; White wins.
+setup = [
+  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wG1 -wQ", "bG1 bQ-",
+  "wA1 -wG1", "bG2 bQ/", "wA2 -wA1", "bB1 \\bQ", "wA3 -wA2", "bA1 bS1\\",
+  "wS2 -wA3", "bA2 bQ\\",
+]
+
+[expect]
+kind = "game_over"
+state = "WhiteWins"
+
+[annotation]
+rule = "The Object of Hive / The End of the Game"
+source = "Gen42 Hive rulesheet pp. 1, 11"
+justification = """'The pieces surrounding the Queen Bee can be made up of a
+mixture of both your pieces and your opponent's.' (p. 1). 'The game ends as
+soon as one Queen Bee is completely surrounded by pieces of any colour. The
+person whose Queen Bee is surrounded loses the game.' (p. 11). Black's
+final placement (bA2, SE of its own queen) fills the sixth and last cell
+around bQ. The surrounding pieces are all black - irrelevant per p. 1 - and
+it is Black's own move that completes the surround: Black loses, the
+GameString state must read WhiteWins immediately after that move."""

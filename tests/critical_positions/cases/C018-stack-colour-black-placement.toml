@@ -1,0 +1,23 @@
+id = "C018"
+title = "Stack takes the beetle's colour: black may NOT place beside its own covered queen"
+game_type = "Base"
+# C017 position plus one white filler placement; black to move.
+setup = [
+  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wB1 \\wS1", "bA1 bS1\\",
+  "wB1 \\bS1", "bG1 bA1\\", "wB1 \\bQ", "bG2 bG1\\", "wB1 bQ", "bB1 bG2\\",
+  "wG1 -wQ",
+]
+
+[expect]
+kind = "move_illegal"
+move = "bB2 wB1-"
+
+[annotation]
+rule = "Beetle (stack colour) / Placing"
+source = "Gen42 Hive rulesheet pp. 2, 5"
+justification = """Mirror of C017: the stack bQ+wB1 counts as WHITE ('the
+stack takes on the colour of the Beetle', p. 5). The cell E of the stack
+touches only that stack, so for black it is adjacent to a white piece and
+'pieces may not be placed next to a piece of the opponent's colour'
+(p. 2). Black's attempt to place bB2 there must be rejected - even though
+the buried piece is black's own queen."""

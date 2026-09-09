@@ -1,0 +1,24 @@
+id = "C026"
+title = "Pillbug may not move the piece the opponent just moved (kernel guard)"
+game_type = "Base+P"
+# Same build as C025, stopping right after wA1 arrives beside bP: Black
+# immediately tries to throw the ant that just moved.
+setup = [
+  "wS1", "bP wS1-", "wQ -wS1", "bQ bP-", "wA1 \\wQ", "bG1 bQ-",
+  "wA1 \\bP",
+]
+
+[expect]
+kind = "move_illegal"
+move = "wA1 bP\\"
+
+[annotation]
+rule = "Pillbug special ability (exceptions)"
+source = "Gen42 Pillbug rulesheet (English section)"
+justification = """'The Pillbug may not move the piece which was just moved
+by the other player.' (Pillbug rulesheet, first exception). White's ant
+moved to the cell NW of bP on the immediately preceding ply; Black's
+attempt to use the pillbug's ability on that same ant - throwing it to SE
+of bP - must be rejected. (The identical throw becomes legal two plies
+later, which is case C025's setup.) Variant-tagged kernel-guard case
+(protocol §2)."""

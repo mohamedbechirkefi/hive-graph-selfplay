@@ -1,0 +1,24 @@
+id = "C024"
+title = "Pillbug special ability: moving an adjacent friendly piece (kernel guard)"
+game_type = "Base+P"
+# wP(0,0), bS1(1,0), wQ(-1,0), bQ(2,0). White to move: the pillbug throws
+# its own queen from W of itself to SE of itself.
+setup = ["wP", "bS1 wP-", "wQ -wP", "bQ bS1-"]
+
+[expect]
+kind = "move_legal"
+move = "wQ wP\\"
+
+[annotation]
+rule = "Pillbug special ability"
+source = "Gen42 Pillbug rulesheet (English section)"
+justification = """'The special ability allows the Pillbug to move an
+adjacent piece (friend or enemy) two spaces; up onto itself and then down
+into another empty space adjacent to itself.' (Pillbug rulesheet). wQ is
+adjacent to wP; the target cell SE of wP is empty and adjacent to wP. None
+of the four exceptions applies: wQ was not just moved by the other player
+(Black's last move was placing bQ), wQ is not in a stack, removing wQ does
+not split the hive (it is a leaf), and no stacked pieces form a gap on the
+up-and-over path. NOTE: this is a variant-tagged kernel-guard case
+(protocol §2) - the study variant is base game; Pillbug cases only protect
+the shared rules kernel."""

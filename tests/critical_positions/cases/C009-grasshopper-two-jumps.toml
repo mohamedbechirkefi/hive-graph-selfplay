@@ -1,0 +1,23 @@
+id = "C009"
+title = "Grasshopper: jumps only along occupied rows, no one-space slides"
+game_type = "Base"
+# wG1 at (0,-1) on the north shoulder, touching wS1 (SE) and wQ (SW).
+setup = ["wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wG1 \\wS1", "bG1 bQ-"]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wG1"
+moves = ["wG1 wS1\\", "wG1 /wQ"]
+
+[annotation]
+rule = "Grasshopper"
+source = "Gen42 Hive rulesheet p. 6"
+justification = """'It jumps from its space over any number of pieces (but
+at least one) to the next unoccupied space along a straight row of joined
+pieces.' (p. 6). The grasshopper touches occupied cells in exactly two of
+its six directions: SE (over wS1, landing in the next space, SE of wS1) and
+SW (over wQ, landing SW of wQ). In the other four directions the adjacent
+cell is empty, and a jump 'over at least one' piece is impossible - in
+particular the four adjacent empty cells are NOT destinations: the
+grasshopper 'does not move around the outside of the Hive like the other
+creatures'. Expected: exactly the two landing cells."""

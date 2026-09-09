@@ -1,0 +1,19 @@
+id = "C002"
+title = "Queen must be placed on the fourth turn if not placed before"
+game_type = "Base"
+# White line grows W, black line grows E; neither queen placed after 3 turns each.
+setup = ["wS1", "bS1 wS1-", "wG1 -wS1", "bG1 bS1-", "wA1 -wG1", "bA1 bG1-"]
+
+[expect]
+kind = "all_moves_place"
+piece = "wQ"
+
+[annotation]
+rule = "Placing your Queen Bee"
+source = "Gen42 Hive rulesheet p. 3"
+justification = """'You must place your Queen Bee on your fourth turn if you
+have not placed it before.' (p. 3). It is White's fourth turn and wQ is still
+in hand, so every legal move must be a placement of wQ. (Movement moves are
+additionally excluded by the Moving rule, p. 3: no moving before the queen
+is placed.) Setup legality: each white placement touches only white pieces,
+each black placement only black (Placing, p. 2)."""

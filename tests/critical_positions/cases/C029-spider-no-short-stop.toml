@@ -1,0 +1,20 @@
+id = "C029"
+title = "Spider may not stop after one step ('no more, no less')"
+game_type = "Base"
+# C008 position: line wQ(-1,0), wG1(0,0), bS1(1,0), bQ(2,0), bG1(3,0);
+# wS1 at (-1,-1). The cell NW of wG1 is one step from the spider.
+setup = ["wG1", "bS1 wG1-", "wQ -wG1", "bQ bS1-", "wS1 \\wQ", "bG1 bQ-"]
+
+[expect]
+kind = "move_illegal"
+move = "wS1 \\wG1"
+
+[annotation]
+rule = "Spider"
+source = "Gen42 Hive rulesheet p. 7"
+justification = """'The Spider moves three spaces per turn - no more, no
+less.' (p. 7). The cell NW of wG1 is exactly one sliding step from the
+spider's position, and no legal three-step non-backtracking path ends
+there (the two three-step walks end NE of bS1 and SE of wQ - case C008);
+a path through that cell passes it at step one and may not stop. The
+one-step move must be rejected."""

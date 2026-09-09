@@ -1,0 +1,23 @@
+id = "C030"
+title = "Queen between two pieces: two slides along the shoulder"
+game_type = "Base"
+# C013 position: line wQ(-1,0), wS1(0,0), bS1(1,0), bQ(2,0), bG1(3,0);
+# wB1 on the ground at (0,-1) touching both wQ and wS1.
+setup = ["wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wB1 \\wS1", "bG1 bQ-"]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wQ"
+moves = ["wQ -wB1", "wQ /wS1"]
+
+[annotation]
+rule = "Queen Bee / One Hive / Freedom to Move"
+source = "Gen42 Hive rulesheet pp. 4, 9, 10"
+justification = """The queen touches wS1 (E) and wB1 (NE). Removing her
+keeps the hive whole (wB1 still touches wS1), so One Hive allows a move.
+One-space slides (p. 4): of her four empty neighbours, only the cell W of
+wB1 (keeping contact with wB1) and the cell SW of wS1 (keeping contact
+with wS1) still touch the hive after she lifts; the two far-western cells
+touch nothing and are excluded (p. 3 NB). Neither slide is gated (each
+flanked by exactly one occupied cell). Expected: exactly those two
+destinations."""

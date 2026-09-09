@@ -1,0 +1,22 @@
+id = "C010"
+title = "Grasshopper jumps a full five-piece row to the first empty space"
+game_type = "Base"
+# wG1 at the west cap (-2,0) of the line wQ,wS1,bS1,bQ,bG1 (r=0).
+setup = ["wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wG1 -wQ", "bG1 bQ-"]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wG1"
+moves = ["wG1 bG1-"]
+
+[annotation]
+rule = "Grasshopper"
+source = "Gen42 Hive rulesheet p. 6"
+justification = """'…over any number of pieces (but at least one) to the
+next unoccupied space along a straight row of joined pieces.' (p. 6). Due
+east the grasshopper faces the unbroken row wQ, wS1, bS1, bQ, bG1; the
+first unoccupied space beyond it is the cell E of bG1 - the single
+destination. It must land there, not earlier (every nearer cell in the row
+is occupied). In all five other directions the adjacent cell is empty, so
+no jump exists. The grasshopper is a leaf of the hive, so One Hive does not
+restrict it."""

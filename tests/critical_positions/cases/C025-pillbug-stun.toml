@@ -1,0 +1,28 @@
+id = "C025"
+title = "A piece just moved by the enemy pillbug is stunned for one turn (kernel guard)"
+game_type = "Base+P"
+# wS1(0,0), bP(1,0), wQ(-1,0), bQ(2,0). wA1 walks to (1,-1) beside the
+# black pillbug; a turn later bP throws wA1 to SE of itself (1,1). White
+# then attempts to move the stunned ant.
+setup = [
+  "wS1", "bP wS1-", "wQ -wS1", "bQ bP-", "wA1 \\wQ", "bG1 bQ-",
+  "wA1 \\bP", "bG1 -wQ", "wG1 -wA1", "wA1 bP\\",
+]
+
+[expect]
+kind = "move_illegal"
+move = "wA1 bP/"
+
+[annotation]
+rule = "Pillbug special ability (immobility of the moved piece)"
+source = "Gen42 Pillbug rulesheet (English section); World Hive Tournaments Rules FAQ"
+justification = """'Furthermore, any piece moved by the Pillbug may not be
+moved at all (directly or via Pillbug action) on the next player's turn.'
+(Pillbug rulesheet); FAQ: 'any piece that just moved, in the turn of the
+other player immediately after is unable to: move, be moved or use the
+pillbug's ability.' Black's pillbug just threw wA1 up over itself and down
+to the cell SE of bP (a legal use: wA1 last moved two plies earlier, so the
+just-moved exception did not block the throw; removing it kept the hive
+whole since wG1 also touches wS1 and wQ). On White's very next turn the
+thrown ant is stunned: the attempted ant move to NE of bP must be
+rejected. Variant-tagged kernel-guard case (protocol §2)."""

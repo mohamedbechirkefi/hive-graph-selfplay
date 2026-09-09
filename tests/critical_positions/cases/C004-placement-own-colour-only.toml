@@ -1,0 +1,22 @@
+id = "C004"
+title = "After the first pieces, placements may not touch the opponent's colour"
+game_type = "Base"
+# wG1 at origin; bS1 to its NE.
+setup = ["wG1", "bS1 wG1/"]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wB1"
+moves = ["wB1 wG1\\", "wB1 /wG1", "wB1 -wG1"]
+
+[annotation]
+rule = "Placing"
+source = "Gen42 Hive rulesheet p. 2"
+justification = """'…with the exception of the first piece placed by each
+player, pieces may not be placed next to a piece of the opponent's colour.'
+(p. 2). wG1 sits at the origin with bS1 to its north-east. Of wG1's five
+empty neighbours (E, SE, SW, W, NW), the E and NW cells each also touch bS1
+(they are the two cells adjacent to both wG1 and its NE neighbour), so a new
+white piece may go only SE, SW or W of wG1. Expected wB1 placements: exactly
+those three cells. Hand geometry: axial E=(1,0), NE=(1,-1); neighbours of
+NE-cell (1,-1) include (1,0)=E-of-origin and (0,-1)=NW-of-origin."""

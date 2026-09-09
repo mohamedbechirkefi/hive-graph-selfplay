@@ -1,0 +1,18 @@
+id = "C028"
+title = "A beetle cannot be PLACED directly on top of the hive"
+game_type = "Base"
+setup = ["wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-"]
+
+[expect]
+kind = "move_illegal"
+move = "wB1 wS1"
+
+[annotation]
+rule = "Beetle (placement NB)"
+source = "Gen42 Hive rulesheet p. 5"
+justification = """'When it is first placed, the Beetle is placed in the
+same way as all the other pieces. It cannot be placed directly on top of
+the Hive, even though it can be moved there later.' (p. 5 NB). wB1 is
+still in hand; the attempt to introduce it on top of wS1 must be
+rejected. (C013/C014 verify that the same beetle may climb there by a
+move once placed.)"""

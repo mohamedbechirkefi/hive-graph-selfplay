@@ -1,0 +1,34 @@
+id = "C023"
+title = "A player who can neither place nor move must pass"
+game_type = "Base"
+# Black's entire force on the board is bS1 (covered by wB1, stack counts
+# white) and bQ, which ends 5/6-enclosed with its last open neighbour
+# (3,-1) behind a gate formed by wG1(2,-1) and wA3(3,0). Black's queen
+# shuttles (2,0)<->(2,-1) while white walks three ants around the south
+# side into (1,1), (2,1), (3,0), climbs wB1 onto bS1, and finally lands
+# wG1 in (2,-1) by a grasshopper jump over the stack.
+setup = [
+  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wB1 \\wS1", "bQ bS1/",
+  "wA1 /wQ", "bQ bS1-", "wB1 \\bS1", "bQ bS1/", "wB1 bS1", "bQ wB1-",
+  "wA1 /bQ", "bQ wB1/", "wA2 /wQ", "bQ wB1-", "wA2 bQ\\", "bQ wB1/",
+  "wA3 /wQ", "bQ wB1-", "wA3 bQ-", "bQ wB1/", "wG1 /wB1", "bQ wB1-",
+  "wG1 wB1/",
+]
+
+[expect]
+kind = "must_pass"
+
+[annotation]
+rule = "Unable to move or place"
+source = "Gen42 Hive rulesheet pp. 2, 5, 10, 11"
+justification = """'If a player can neither place a new piece or move an
+existing piece, the turn passes to their opponent who then takes their turn
+again.' (p. 11). After White's final move Black has: bS1 under wB1 - 'a
+piece with a beetle on top of it is unable to move' (p. 5), and the stack
+counts as white for placing (p. 5); and bQ, whose five neighbours are the
+stack, wG1, wA1, wA2 and wA3, with its single empty neighbour reachable
+only between wG1 and wA3 - a gate the queen 'cannot physically slide into'
+(p. 10). No placement is possible either: the only cell adjacent to a
+black-topped piece is that same gated cell, which also touches white
+pieces (p. 2). Black is not lost - bQ has an empty neighbour, so it is not
+surrounded - but must pass."""

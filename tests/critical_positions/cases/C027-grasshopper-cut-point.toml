@@ -1,0 +1,20 @@
+id = "C027"
+title = "One Hive binds even the grasshopper: a cut-point cannot jump"
+game_type = "Base"
+# wG1(0,0) is the only link between wQ(-1,0) and bS1(1,0)-bQ(2,0).
+setup = ["wG1", "bS1 wG1-", "wQ -wG1", "bQ bS1-"]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wG1"
+moves = []
+
+[annotation]
+rule = "One Hive rule / Grasshopper"
+source = "Gen42 Hive rulesheet pp. 3, 6, 9"
+justification = """The grasshopper is exempt from the sliding restriction
+(p. 10: it 'can jump into or out of a space'), but not from One Hive:
+'If a piece is the only connection between two parts of the Hive, it may
+not be moved.' (p. 3 NB). wG1 sits between wQ and the black pair; lifting
+it for any jump splits the hive in two, so despite having jump lines in
+both E and W directions the grasshopper has no legal move."""

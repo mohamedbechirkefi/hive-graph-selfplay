@@ -1,0 +1,30 @@
+id = "C012"
+title = "Ant reaches every cell of the hive perimeter (13 destinations)"
+game_type = "Base"
+# Line wQ(-1,0), wG1(0,0), bS1(1,0), bQ(2,0), bG1(3,0); wA1 on the NW
+# shoulder at (-1,-1). White to move.
+setup = ["wG1", "bS1 wG1-", "wQ -wG1", "bQ bS1-", "wA1 \\wQ", "bG1 bQ-"]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wA1"
+moves = [
+  "wA1 -wQ", "wA1 \\wG1", "wA1 \\bS1", "wA1 \\bQ", "wA1 \\bG1",
+  "wA1 bG1/", "wA1 bG1-", "wA1 bG1\\", "wA1 bQ\\", "wA1 bS1\\",
+  "wA1 wG1\\", "wA1 wQ\\", "wA1 /wQ",
+]
+
+[annotation]
+rule = "Soldier Ant / Freedom to Move"
+source = "Gen42 Hive rulesheet pp. 8, 10"
+justification = """'The Soldier Ant can move from its position to any other
+position around the Hive provided the restrictions are adhered to.' (p. 8).
+The hive minus the ant is a straight five-piece line; its boundary is a
+single 14-cell ring with no gates (every slide step is flanked by one line
+cell and one empty cell), and every ring cell touches the line. The ant
+starts on the ring at the cell NW of wQ, so it can stop on any of the other
+13 ring cells: the west cap (W of wQ), the five north-shoulder cells (NW of
+each line piece plus NE of bG1), the east cap (E of bG1), and the six
+south-shoulder cells (SE of each line piece plus SW of wQ). Cells off the
+ring touch no piece and are excluded (p. 3 NB: pieces must always touch at
+least one other piece)."""

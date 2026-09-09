@@ -1,0 +1,28 @@
+id = "C020"
+title = "Ring: a piece on a closed loop may move (not a cut point); the ring's eye is gated"
+game_type = "Base"
+# Six white pieces form a ring around the empty centre (1,0): wS1(0,0),
+# wG1(1,-1), wG2(2,-1), wS2(2,0), wA1(1,1), wQ(0,1). Black builds a
+# straight tail west from bS1(-1,0). White to move.
+setup = [
+  "wS1", "bS1 -wS1", "wG1 wS1/", "bQ -bS1", "wQ wS1\\", "bG1 -bQ",
+  "wG2 wG1-", "bG2 -bG1", "wA1 wQ-", "bA1 -bG2", "wS2 wG2\\", "bB1 -bA1",
+]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wQ"
+moves = ["wQ /wS1", "wQ /wA1"]
+
+[annotation]
+rule = "One Hive rule / Freedom to Move"
+source = "Gen42 Hive rulesheet pp. 9, 10"
+justification = """The six white pieces form a closed ring, so removing wQ
+leaves the other five connected around the loop (and the black tail hangs
+off wS1): One Hive permits the queen to move. Sliding one space (p. 4), the
+queen has three empty neighbours: the ring's eye and two outside cells.
+The eye is flanked by wS1 and wA1 - both occupied - so the queen 'may not
+move into a space that it cannot physically slide into' (p. 10). The two
+outside cells (SW of wS1, which touches wS1 and bS1; and SW of wA1, which
+touches wA1) are unobstructed slides keeping contact. Expected: exactly
+those two destinations."""

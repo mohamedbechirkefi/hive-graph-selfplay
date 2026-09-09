@@ -1,0 +1,24 @@
+id = "C013"
+title = "Beetle on the ground: two slides and two climbs"
+game_type = "Base"
+# Line wQ(-1,0), wS1(0,0), bS1(1,0), bQ(2,0), bG1(3,0); wB1 at (0,-1).
+setup = ["wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wB1 \\wS1", "bG1 bQ-"]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wB1"
+moves = ["wB1 wS1", "wB1 wQ", "wB1 \\bS1", "wB1 \\wQ"]
+
+[annotation]
+rule = "Beetle"
+source = "Gen42 Hive rulesheet pp. 4-5, 10"
+justification = """'The Beetle, like the Queen Bee, moves only one space per
+turn. Unlike any other creature though, it can also move on top of the
+Hive.' (p. 4). From (NW of wS1) the beetle may climb onto either adjacent
+piece - wS1 or wQ - or slide along the ground to the two empty cells that
+keep contact with the hive: NW of bS1 (touching wS1 and bS1) and NW of wQ
+(touching wQ). The two remaining empty neighbours touch no piece after the
+beetle lifts, so they are excluded (p. 3 NB). No gate blocks any of the
+four moves (each is flanked by at most one occupied cell, and for the
+climbs the flanking stacks are not taller than the destination). Exactly
+four moves - matching the rulesheet's own beetle example count."""

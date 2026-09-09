@@ -1,0 +1,25 @@
+id = "C017"
+title = "Stack takes the beetle's colour: white may place beside a covered black queen"
+game_type = "Base"
+# wB1 walks (0,-1) -> (1,-1) -> (2,-1) and climbs onto bQ(2,0). Black
+# develops a southern tail from bS1. The cell E of the stack (3,0) touches
+# nothing but the white-topped stack.
+setup = [
+  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wB1 \\wS1", "bA1 bS1\\",
+  "wB1 \\bS1", "bG1 bA1\\", "wB1 \\bQ", "bG2 bG1\\", "wB1 bQ", "bB1 bG2\\",
+]
+
+[expect]
+kind = "move_legal"
+move = "wG1 wB1-"
+
+[annotation]
+rule = "Beetle (stack colour) / Placing"
+source = "Gen42 Hive rulesheet pp. 2, 5"
+justification = """'…for the purposes of the placing rules on p. 2, the
+stack takes on the colour of the Beetle.' (p. 5). White's beetle sits on
+the black queen at the east end of the hive. The cell E of that stack
+touches no other piece, so a white placement there is adjacent only to a
+stack whose colour is - by the rule - white. Placing wG1 there must be
+accepted. (Without the stack-colour rule the cell would be adjacent to a
+black piece and the placement would be illegal, p. 2.)"""

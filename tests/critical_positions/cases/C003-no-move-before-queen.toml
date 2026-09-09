@@ -1,0 +1,16 @@
+id = "C003"
+title = "No piece may move before that player's queen is placed"
+game_type = "Base"
+setup = ["wS1", "bS1 wS1-"]
+
+[expect]
+kind = "all_moves_are_placements"
+
+[annotation]
+rule = "Moving"
+source = "Gen42 Hive rulesheet p. 3"
+justification = """'Once your Queen Bee has been placed (but not before), you
+can decide whether to use each turn after that to place another tile or to
+move one of the pieces that have already been placed.' (p. 3). White's queen
+is unplaced on turn 2, so wS1 must have no movement moves — only placements
+are offered."""

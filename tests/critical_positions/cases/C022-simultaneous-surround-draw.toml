@@ -1,0 +1,29 @@
+id = "C022"
+title = "One move surrounds both queens simultaneously: draw"
+game_type = "Base"
+# Queens adjacent: wQ(0,1), bQ(1,1). Their two shared neighbours (1,0) and
+# (0,2) are filled by grasshopper jumps (no placement can touch both
+# queens): wG1 jumps E over wS2 into (0,2) mid-game; bG1's final jump SE
+# over bS1 lands in (1,0) and completes BOTH surrounds at once.
+setup = [
+  "wS1", "bS1 wS1/", "wQ wS1\\", "bB1 bS1-", "wA1 -wQ", "bQ bB1\\",
+  "wS2 /wQ", "bQ wQ-", "wG1 -wS2", "bG1 \\bS1", "wB1 -wA1", "bA1 bQ\\",
+  "wG1 wS2-", "bA2 bQ-", "wB1 \\wA1", "bA3 bB1\\", "wB1 \\wS1", "bG1 bS1\\",
+]
+
+[expect]
+kind = "game_over"
+state = "Draw"
+
+[annotation]
+rule = "The End of the Game"
+source = "Gen42 Hive rulesheet p. 11"
+justification = """'The person whose Queen Bee is surrounded loses the game,
+unless the last piece to surround their Queen Bee also completes the
+surrounding of the other Queen Bee. In that case the game is drawn.'
+(p. 11). Before Black's last move, each queen has exactly one empty
+neighbour - the same cell (1,0), adjacent to both queens (the queens sit
+side by side, wQ NE-shoulder wS1, bQ beside it). Black's grasshopper at
+(1,-2) jumps SE over bS1 into that cell, filling the sixth neighbour of
+both queens with a single piece: the game must end as a Draw, not a win
+for either side."""

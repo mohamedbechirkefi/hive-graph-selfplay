@@ -1,0 +1,25 @@
+id = "C008"
+title = "Spider moves exactly three spaces along the hive edge - two destinations"
+game_type = "Base"
+# Line wQ(-1,0), wG1(0,0), bS1(1,0), bQ(2,0), bG1(3,0); wS1 on the tip's
+# NW shoulder at (-1,-1). White to move.
+setup = ["wG1", "bS1 wG1-", "wQ -wG1", "bQ bS1-", "wS1 \\wQ", "bG1 bQ-"]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wS1"
+moves = ["wS1 bS1/", "wS1 wQ\\"]
+
+[annotation]
+rule = "Spider"
+source = "Gen42 Hive rulesheet p. 7"
+justification = """'The Spider moves three spaces per turn - no more, no
+less. It must move in a direct path and cannot backtrack on itself. It may
+only move around pieces that it is in direct contact with on each step.'
+(p. 7). The hive minus the spider is a straight five-piece line whose
+boundary is a single 14-cell ring with no gates; each ring cell touches the
+line, and cells off the ring touch nothing (excluded by the contact
+requirement). From its ring position the spider therefore has exactly two
+three-step walks - three cells clockwise and three cells anticlockwise:
+the cell NE of bS1, and the cell SE of wQ. One- and two-step stops are
+excluded ('no less'), backtracking is excluded."""

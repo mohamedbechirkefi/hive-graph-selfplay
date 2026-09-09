@@ -1,0 +1,22 @@
+id = "C019"
+title = "One Hive: the only connection between two parts may not move"
+game_type = "Base"
+# Straight line wQ(-1,0), wS1(0,0), bS1(1,0), bQ(2,0). White to move.
+setup = ["wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-"]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wS1"
+moves = []
+
+[annotation]
+rule = "One Hive rule"
+source = "Gen42 Hive rulesheet pp. 3, 9"
+justification = """'All pieces must always touch at least one other piece.
+If a piece is the only connection between two parts of the Hive, it may not
+be moved.' (p. 3 NB); 'The pieces in play must be linked at all times. At
+no time can you leave a piece stranded (not joined to the Hive) or separate
+the Hive in two.' (p. 9). wS1 is the interior link between wQ on one side
+and bS1-bQ on the other: lifting it splits the hive, so the spider has no
+legal move at all - every destination, however valid as spider movement,
+is excluded by One Hive."""

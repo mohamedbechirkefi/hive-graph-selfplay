@@ -1,0 +1,31 @@
+id = "C015"
+title = "Beetle gate: drop between two height-2 stacks is blocked"
+game_type = "Base"
+# Final position: wS1(0,0) with wB1 on top; wG1(0,1) with wB2 on top;
+# bG1(1,-1) with bB1 on top; wQ(-1,1); bQ(2,-2); bA1(3,-3).
+# wB1 (on wS1) attempts to drop to the empty cell (1,0), which is flanked
+# by the two height-2 stacks at (1,-1) and (0,1).
+setup = [
+  "wS1", "bG1 wS1/", "wQ /wS1", "bQ bG1/", "wG1 wS1\\", "bB1 bQ/",
+  "wB1 -wS1", "bB1 bQ", "wB2 /wQ", "bB1 bG1", "wB1 wS1", "bQ bB1-",
+  "wB2 wQ", "bQ bB1/", "wB2 wG1", "bA1 bQ/",
+]
+
+[expect]
+kind = "move_illegal"
+move = "wB1 bB1\\"
+
+[annotation]
+rule = "Freedom to Move above ground level (beetle gate)"
+source = "World Hive Tournaments Rules FAQ; Gen42 Hive rulesheet p. 10"
+justification = """'When a piece climbs up or down the hive, or moves
+staying on top of the hive, it must be able to slide according to the
+freedom to move rule which applies to higher levels than the ground. If two
+stacks form a gate above the ground level (we call it beetle gate), pieces
+won't be able to slide through.' (WHT Rules FAQ). wB1 sits on wS1 (its own
+level: on top of a height-1 piece); the target cell SE of the bB1 stack is
+empty (height 0). The two cells adjacent to both origin and target carry
+the stacks bG1+bB1 and wG1+wB2, both height 2 - strictly taller than both
+the origin without the beetle (1) and the destination (0) - so the beetle
+cannot slide down between them. The drop must be rejected. (One Hive would
+allow it: wS1 stays in place; contact holds via the flanking stacks.)"""

@@ -1,0 +1,28 @@
+id = "C007"
+title = "Ant enclosed in a pocket: only exit is a gate, so it cannot move"
+game_type = "Base"
+# wA1 at origin, five neighbours occupied (bS1 E, bB1 NE, wQ NW, wG1 W,
+# wS1 SW); the sixth (SE) is empty but flanked by bS1 and wS1 - a gate.
+# The black beetle walks (3,-1)->(2,-1)->(1,-1) to close the ring.
+setup = [
+  "wA1", "bS1 wA1-", "wQ \\wA1", "bQ bS1-", "wG1 -wA1", "bB1 bQ/",
+  "wS1 /wA1", "bB1 bS1/", "wB1 \\wQ", "bB1 wA1/",
+]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wA1"
+moves = []
+
+[annotation]
+rule = "Freedom to Move"
+source = "Gen42 Hive rulesheet p. 10"
+justification = """'If a piece is surrounded to the point that it can no
+longer physically slide out of its position, it may not be moved.' (p. 10).
+Five of the ant's six neighbours are occupied. The only empty neighbour (SE
+of the ant) is flanked by bS1 (E of the ant) and wS1 (SW of the ant) - the
+two cells adjacent to both the ant and that space - so the ant cannot
+physically slide into it. Removing the ant would NOT split the hive (the
+ring bB1-wQ-wG1-wS1 plus bS1 stays connected), so the block is purely
+freedom-to-move, not One Hive. The Ant, normally the most mobile piece, has
+zero legal moves."""

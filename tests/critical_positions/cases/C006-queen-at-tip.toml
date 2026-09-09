@@ -1,0 +1,22 @@
+id = "C006"
+title = "Queen at the hive tip: exactly the two slides that keep contact"
+game_type = "Base"
+# Straight line W->E: wQ(-1,0), wS1(0,0), bS1(1,0), bQ(2,0). White to move.
+setup = ["wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-"]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wQ"
+moves = ["wQ \\wS1", "wQ /wS1"]
+
+[annotation]
+rule = "Queen Bee / Freedom to Move / One Hive (contact)"
+source = "Gen42 Hive rulesheet pp. 4, 9, 10"
+justification = """The Queen 'can move only one space per turn' (p. 4) in a
+sliding movement (p. 10), and 'all pieces must always touch at least one
+other piece' (p. 3 NB). wQ sits at the west tip of a straight line of four.
+Of its five empty neighbours, only the two cells that are also adjacent to
+its neighbour wS1 (the cells NW and SW of wS1) keep contact with the hive
+after the slide; the three cells further west touch nothing once the queen
+leaves. Neither destination is gated (each slide's two flanking cells are
+one occupied, one empty). Expected: exactly those two moves."""

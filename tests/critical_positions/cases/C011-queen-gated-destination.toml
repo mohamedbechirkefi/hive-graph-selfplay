@@ -1,0 +1,28 @@
+id = "C011"
+title = "Queen's only open neighbour is behind a gate: zero moves"
+game_type = "Base"
+# White horseshoe around wQ(2,-1): wB1(1,-1), wG1(2,-2), wS2(3,-2),
+# wA1(3,-1), wG2(2,0); the queen's single empty neighbour (1,0) is flanked
+# by wB1 and wG2. Black develops a chain far west as filler.
+setup = [
+  "wS1", "bS1 -wS1", "wB1 wS1/", "bQ -bS1", "wQ wB1-", "bG1 \\bQ",
+  "wS2 wQ/", "bA1 /bQ", "wG1 -wS2", "bS2 /bS1", "wA1 wS2\\", "bB1 \\bG1",
+  "wG2 wQ\\", "bG2 \\bB1",
+]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wQ"
+moves = []
+
+[annotation]
+rule = "Freedom to Move"
+source = "Gen42 Hive rulesheet p. 10"
+justification = """'Similarly, no piece may move into a space that it cannot
+physically slide into.' (p. 10). Five of the queen's six neighbours are
+white pieces; the sixth (the cell W of wG2, equally SE of wB1) is empty,
+but the two cells adjacent to both the queen and that space are wG2 and wB1
+- both occupied - so the queen cannot physically slide in. Removing the
+queen leaves the white horseshoe wS1-wB1-wG1-wS2-wA1-wG2 connected (and the
+black chain hangs off wS1 via bS1), so One Hive would allow the move; the
+block is purely Freedom to Move. Expected: the queen has no legal move."""

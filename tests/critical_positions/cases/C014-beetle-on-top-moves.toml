@@ -1,0 +1,29 @@
+id = "C014"
+title = "Beetle on top of the hive: all six neighbouring cells"
+game_type = "Base"
+# C013 position, then wB1 climbs onto wS1(0,0); black places a filler.
+setup = [
+  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wB1 \\wS1", "bG1 bQ-",
+  "wB1 wS1", "bA1 bG1-",
+]
+
+[expect]
+kind = "moves_for_piece"
+piece = "wB1"
+moves = [
+  "wB1 bS1", "wB1 wQ", "wB1 \\wS1", "wB1 \\bS1", "wB1 wS1\\", "wB1 wQ\\",
+]
+
+[annotation]
+rule = "Beetle"
+source = "Gen42 Hive rulesheet p. 5; beetle-gate ruling, World Hive Tournaments Rules FAQ"
+justification = """'From its position on top of the Hive, the Beetle can
+move from tile to tile across the top of the Hive. It can also drop into
+spaces that are surrounded and therefore not accessible to most other
+creatures.' (p. 5). Sitting on wS1, the beetle may move to every one of the
+six neighbouring cells: across onto bS1 or wQ (both height-1 stacks), or
+drop to any of the four empty cells around wS1 - each of which still
+touches wS1 itself, so contact holds. No pair of flanking stacks is taller
+than both origin (height 1 under the beetle) and destination, so no beetle
+gate applies (FAQ). One Hive cannot be violated: wS1 stays where it is.
+Exactly six destinations."""

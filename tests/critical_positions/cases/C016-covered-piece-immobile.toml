@@ -1,0 +1,20 @@
+id = "C016"
+title = "A piece with a beetle on top of it cannot move"
+game_type = "Base"
+# Same position as C014: wB1 sits on wS1(0,0). White to move.
+setup = [
+  "wS1", "bS1 wS1-", "wQ -wS1", "bQ bS1-", "wB1 \\wS1", "bG1 bQ-",
+  "wB1 wS1", "bA1 bG1-",
+]
+
+[expect]
+kind = "move_illegal"
+move = "wS1 bS1\\"
+
+[annotation]
+rule = "Beetle (stack immobility)"
+source = "Gen42 Hive rulesheet p. 5"
+justification = """'A piece with a beetle on top of it is unable to move'
+(p. 5). wS1 lies under wB1, so any attempt to move wS1 - here a spider
+move towards the cell SE of bS1 - must be rejected, regardless of whether
+the path would otherwise be legal for a spider."""
