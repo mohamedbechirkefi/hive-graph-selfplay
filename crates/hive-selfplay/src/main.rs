@@ -14,7 +14,7 @@ use hive_core::bug::GameType;
 use hive_core::game::Game;
 use hive_core::state::GameResult;
 use hive_core::zobrist::splitmix64;
-use hive_nn::{RECORD_SIZE, encode_record};
+use hive_nn::{RECORD_SIZE, encode_record, wdl_from_result};
 use hive_search::{AlphaBeta, SearchParams};
 use hive_uhp::server::SearchLimit;
 use std::io::Write;
@@ -65,7 +65,7 @@ fn parse_args() -> Config {
     cfg
 }
 
-fn play_one_game(cfg: &Config, seed: u64, ab: &mut AlphaBeta) -> (Vec<[u8; RECORD_SIZE]>, GameResult, usize) {
+fn play_one_game(cfg: &Config, seed: u64, ab: &mut AlphaBeta) -> (Vec<[u8; RECORD_SIZE]>, GameResult, usize, bool) {
     let mut game = Game::new(cfg.game_type);
     let mut rng = seed;
     for _ in 0..cfg.openings {
@@ -88,28 +88,17 @@ fn play_one_game(cfg: &Config, seed: u64, ab: &mut AlphaBeta) -> (Vec<[u8; RECOR
         pending.push((game.state.to_move, game.state.clone(), mv));
         game.play(mv).expect("searcher must return legal moves");
     }
-    let result = if game.move_count() >= 300 && !game.state.result.is_over() {
-        GameResult::Draw
-    } else {
-        game.state.result
-    };
+    // Ply-cap games are truncated, not drawn (invariant 7 / D-008):
+    // their records carry WDL = 3.
+    let truncated = game.move_count() >= 300 && !game.state.result.is_over();
+    let result = game.state.result;
     let records = pending
         .into_iter()
         .map(|(stm, state, mv)| {
-            let wdl = match result {
-                GameResult::Draw => 1,
-                GameResult::WhiteWins => {
-                    if stm == hive_core::bug::Color::White { 2 } else { 0 }
-                }
-                GameResult::BlackWins => {
-                    if stm == hive_core::bug::Color::Black { 2 } else { 0 }
-                }
-                _ => 1,
-            };
-            encode_record(&state, mv, wdl)
+            encode_record(&state, mv, wdl_from_result(result, stm, truncated))
         })
         .collect();
-    (records, result, game.move_count())
+    (records, result, game.move_count(), truncated)
 }
 
 fn main() {
@@ -119,7 +108,7 @@ fn main() {
     }
     let games_done = AtomicU64::new(0);
     let positions = AtomicU64::new(0);
-    let wins = [AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0)]; // W/D/B
+    let wins = [AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0)]; // W/D/B/Truncated
     let start = std::time::Instant::now();
 
     std::thread::scope(|scope| {
@@ -144,22 +133,27 @@ fn main() {
                         break;
                     }
                     let seed = splitmix64(cfg.seed ^ (g + 1).wrapping_mul(0x9E3779B9));
-                    let (records, result, plies) = play_one_game(cfg, seed, &mut ab);
+                    let (records, result, plies, truncated) = play_one_game(cfg, seed, &mut ab);
                     for r in &records {
                         out.write_all(r).expect("write record");
                     }
                     positions.fetch_add(records.len() as u64, Ordering::Relaxed);
-                    let wi = match result {
-                        GameResult::WhiteWins => 0,
-                        GameResult::Draw => 1,
-                        _ => 2,
+                    let wi = if truncated {
+                        3
+                    } else {
+                        match result {
+                            GameResult::WhiteWins => 0,
+                            GameResult::Draw => 1,
+                            _ => 2,
+                        }
                     };
                     wins[wi].fetch_add(1, Ordering::Relaxed);
                     if g % 50 == 0 {
                         let n = positions.load(Ordering::Relaxed);
                         eprintln!(
-                            "game {g}/{}: {plies} plies {result:?} | {n} positions | {:.1} games/min",
+                            "game {g}/{}: {plies} plies {} | {n} positions | {:.1} games/min",
                             cfg.games,
+                            if truncated { "Truncated".to_string() } else { format!("{result:?}") },
                             (g + 1) as f64 / start.elapsed().as_secs_f64() * 60.0
                         );
                     }
@@ -170,11 +164,12 @@ fn main() {
     });
 
     println!(
-        "done: {} games ({} W / {} D / {} B), {} positions, {:.0}s -> shards {}-*.bin",
+        "done: {} games ({} W / {} D / {} B / {} truncated), {} positions, {:.0}s -> shards {}-*.bin",
         cfg.games,
         wins[0].load(Ordering::Relaxed),
         wins[1].load(Ordering::Relaxed),
         wins[2].load(Ordering::Relaxed),
+        wins[3].load(Ordering::Relaxed),
         positions.load(Ordering::Relaxed),
         start.elapsed().as_secs_f64(),
         cfg.out

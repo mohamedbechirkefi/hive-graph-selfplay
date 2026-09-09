@@ -1,0 +1,18 @@
+# Pinned evaluation settings (H4 check 6; decision D-019).
+# Every independent evaluation of a trained arm runs with EXACTLY these
+# settings; changing them later is a G-FREEZE event (decision entry
+# required). The H1-frozen protocol is never edited to encode them.
+#
+# No exploration in evaluation: dirichlet_eps stays at the MctsParams
+# default 0.0 (asserted by the hive-mcts test `eval_defaults_carry_no_
+# exploration_noise`); the engine binary exposes no noise flag, so the
+# UHP eval path cannot enable it. Temperature: none (argmax = bestmove).
+[eval]
+sims_per_decision = 400        # bestmove depth 1 with --sims 400
+dirichlet_eps = 0.0            # no root noise (code default, tested)
+temperature = 0.0              # deterministic argmax via bestmove
+games_per_opponent = 30        # pilot volume; campaign volume set at H6
+opening_plies = 4              # arena default, common paired openings
+ply_cap = 300                  # truncation separate per D-008/D-011
+opponents = ["B-RND", "B-HEU", "B-MCTS"]   # the D-017 frozen population
+seed_policy = "arena seed journaled per eval run; never reused for training"

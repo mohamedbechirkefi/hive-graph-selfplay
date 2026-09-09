@@ -62,3 +62,16 @@ fn white_mover_sees_positive_value_on_win_in_one() {
 fn black_mover_sees_positive_value_on_win_in_one() {
     assert_winning_mover_value(T002, GameResult::BlackWins);
 }
+
+/// H4 check 6: the evaluation code path applies no exploration noise —
+/// MctsParams::default() (what match play / bestmove uses) has Dirichlet
+/// noise off, and eval settings are pinned in configs/eval-settings.toml
+/// (D-019). Self-play opts in explicitly (selfplay_mcts sets 0.25).
+#[test]
+fn eval_defaults_carry_no_exploration_noise() {
+    let p = MctsParams::default();
+    assert_eq!(
+        p.dirichlet_eps, 0.0,
+        "match-play/eval default must have no Dirichlet noise"
+    );
+}

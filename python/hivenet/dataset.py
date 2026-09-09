@@ -35,6 +35,11 @@ RECORD_SIZE = 112
 RECORD_V2_SIZE = 176
 RECORD_V2_TOPK = 15
 V2_MAGIC = b"HIVEREC2"
+RECORD_V3_LEGAL_CAP = 320
+RECORD_V3_SIZE = RECORD_V2_SIZE + 2 + RECORD_V3_LEGAL_CAP * 2
+V3_MAGIC = b"HIVEREC3"
+WDL_TRUNCATED = 3
+LEGAL_OVERFLOW = 0xFFFF
 POLICY_SIZE = 28 * 32 * 32 + 1
 FRAME = 32
 PLANES = 77
@@ -46,28 +51,57 @@ ROSTER_BUG = np.array([0, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 6, 7], dtype=np.int64
 HEX_DELTAS = [(1, 0), (1, -1), (0, -1), (-1, 0), (-1, 1), (0, 1)]
 
 
-def _load_shard(path: str) -> np.ndarray:
-    """Load one shard as an array of v2-sized records.
+def _widen(recs: np.ndarray) -> np.ndarray:
+    """Widen v1/v2 records to the v3 layout (legal_count 0 = list absent)."""
+    out = np.zeros((len(recs), RECORD_V3_SIZE), dtype=np.uint8)
+    out[:, : recs.shape[1]] = recs
+    if recs.shape[1] == RECORD_SIZE:
+        # v1: distribution = the one-hot played move with weight 1.
+        out[:, RECORD_SIZE] = recs[:, 96]
+        out[:, RECORD_SIZE + 1] = recs[:, 97]
+        out[:, RECORD_SIZE + 2] = 1
+        out[:, RECORD_V2_SIZE - 4] = 1
+    return out
 
-    v1 shards (headerless, 112-byte one-hot records) are widened to the v2
-    layout with a single full-weight distribution entry, so training code
-    handles one format.
-    """
+
+def _load_shard(path: str) -> np.ndarray:
+    """Load one shard as an array of v3-sized records (v1/v2 are widened;
+    v3 shards carry the model stamp and the legal-move index list)."""
     raw = np.fromfile(path, dtype=np.uint8)
+    if len(raw) >= 16 and bytes(raw[:8]) == V3_MAGIC:
+        body = raw[16:]
+        assert len(body) % RECORD_V3_SIZE == 0, f"{path}: truncated v3 shard"
+        return body.reshape(-1, RECORD_V3_SIZE)
     if len(raw) >= 16 and bytes(raw[:8]) == V2_MAGIC:
         body = raw[16:]
         assert len(body) % RECORD_V2_SIZE == 0, f"{path}: truncated v2 shard"
-        return body.reshape(-1, RECORD_V2_SIZE)
+        return _widen(body.reshape(-1, RECORD_V2_SIZE))
     assert len(raw) % RECORD_SIZE == 0, f"{path}: truncated v1 shard"
-    v1 = raw.reshape(-1, RECORD_SIZE)
-    out = np.zeros((len(v1), RECORD_V2_SIZE), dtype=np.uint8)
-    out[:, :RECORD_SIZE] = v1
-    # Distribution = the one-hot played move with weight 1.
-    out[:, RECORD_SIZE] = v1[:, 96]
-    out[:, RECORD_SIZE + 1] = v1[:, 97]
-    out[:, RECORD_SIZE + 2] = 1
-    out[:, RECORD_V2_SIZE - 4] = 1
-    return out
+    return _widen(raw.reshape(-1, RECORD_SIZE))
+
+
+def model_stamp(rec: np.ndarray) -> tuple[int, int]:
+    """(model generation, net hash) for a v3 record; (0, 0) = unstamped."""
+    gen = int.from_bytes(bytes(rec[100:104]), "little")
+    h = int.from_bytes(bytes(rec[104:108]), "little")
+    return gen, h
+
+
+def legal_mask(rec: np.ndarray) -> np.ndarray:
+    """Boolean POLICY_SIZE mask of legal actions from a v3 record.
+
+    Falls back to all-True when the record predates v3 or the legal list
+    overflowed (LEGAL_OVERFLOW) - unmasked training, exactly the pre-v3
+    behaviour. The target-support indices are OR-ed in by the caller.
+    """
+    count = int(rec[RECORD_V2_SIZE]) | (int(rec[RECORD_V2_SIZE + 1]) << 8)
+    if count == 0 or count == LEGAL_OVERFLOW:
+        return np.ones(POLICY_SIZE, dtype=bool)
+    off = RECORD_V2_SIZE + 2
+    idxs = rec[off : off + count * 2].view(np.uint16).astype(np.int64)
+    mask = np.zeros(POLICY_SIZE, dtype=bool)
+    mask[idxs] = True
+    return mask
 
 
 class HiveRecordDataset(Dataset):
@@ -92,10 +126,13 @@ class HiveRecordDataset(Dataset):
         else:  # degenerate: fall back to the played move
             target[int(rec[96]) | (int(rec[97]) << 8)] = 1.0
         wdl = int(rec[98])
+        mask = legal_mask(rec)
+        mask |= target > 0  # targets are legal by construction; belt & braces
         return (
             torch.from_numpy(planes),
             torch.from_numpy(target),
             torch.tensor(wdl, dtype=torch.long),
+            torch.from_numpy(mask),
         )
 
 
@@ -165,10 +202,10 @@ if __name__ == "__main__":
 
     paths = glob.glob(sys.argv[1] if len(sys.argv) > 1 else "/tmp/hive_smoke/run-*.bin")
     ds = HiveRecordDataset(paths)
-    planes, target, wdl = ds[0]
+    planes, target, wdl, mask = ds[0]
     print(
         f"{len(ds)} records; planes {tuple(planes.shape)}, "
-        f"target sum {float(target.sum()):.3f} nonzero {int((target > 0).sum())}, wdl {wdl}"
+        f"target sum {float(target.sum()):.3f} nonzero {int((target > 0).sum())}, wdl {wdl}, legal {int(mask.sum())}"
     )
     assert planes.shape == (PLANES, FRAME, FRAME)
     # Piece planes may be empty only for the initial position (ply 0).

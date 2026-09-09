@@ -52,6 +52,19 @@ pub const RECORD_V2_SIZE: usize = 176;
 pub const RECORD_V2_TOPK: usize = 15;
 pub const V2_MAGIC: &[u8; 8] = b"HIVEREC2";
 
+// --- Record v3 (H4 task 2; docs/action-decoder.md §4) ---------------------
+// Layout: bytes 0..100 as v1 with version byte 99 = 3; 100..104 model
+// generation u32 LE; 104..108 model config/net hash u32 LE (0 = unstamped);
+// 108..112 reserved; 112..176 visit distribution exactly as v2;
+// 176..178 legal-move count u16 (LEGAL_OVERFLOW = list unavailable);
+// 178..818 legal policy indices u16 × LEGAL_CAP (unused slots zero).
+// WDL byte 98 gains value 3 = truncated (D-008) alongside 0 L / 1 D / 2 W.
+pub const RECORD_V3_LEGAL_CAP: usize = 320; // max observed branching 213
+pub const RECORD_V3_SIZE: usize = RECORD_V2_SIZE + 2 + RECORD_V3_LEGAL_CAP * 2;
+pub const V3_MAGIC: &[u8; 8] = b"HIVEREC3";
+pub const WDL_TRUNCATED: u8 = 3;
+pub const LEGAL_OVERFLOW: u16 = 0xFFFF;
+
 /// Mapping from grid cells to frame coordinates for one position.
 pub struct Frame {
     /// (cell, x, y) for occupied cells and their 1-ring (every possible
@@ -126,6 +139,15 @@ impl Frame {
             .find(|&&(c, _, _)| c == cell)
             .map(|&(_, x, y)| (x, y))
     }
+
+    /// Inverse lookup: the cell at frame coordinates (x, y), if any cell of
+    /// the candidate set (occupied + 1-ring) maps there.
+    pub fn cell(&self, x: u8, y: u8) -> Option<Cell> {
+        self.map
+            .iter()
+            .find(|&&(_, cx, cy)| cx == x && cy == y)
+            .map(|&(c, _, _)| c)
+    }
 }
 
 /// Side-to-move-relative piece slot: own pieces 0..14, opponent 14..28.
@@ -143,6 +165,56 @@ pub fn policy_index(s: &GameState, frame: &Frame, mv: Move) -> Option<usize> {
             let (x, y) = frame.xy(to)?;
             Some(rel_piece(s.to_move, piece) * FRAME * FRAME + y as usize * FRAME + x as usize)
         }
+    }
+}
+
+/// Inverse of `policy_index` for this position's frame (H4 check 2):
+/// recovers the (piece, destination) move a policy id denotes. Returns the
+/// move as `Place`/`Move` according to whether the piece is on the board —
+/// the same rule the notation layer uses.
+pub fn policy_index_to_move(s: &GameState, frame: &Frame, idx: usize) -> Option<Move> {
+    if idx == POLICY_PASS {
+        return Some(Move::Pass);
+    }
+    if idx >= POLICY_SIZE {
+        return None;
+    }
+    let slot = idx / (FRAME * FRAME);
+    let rest = idx % (FRAME * FRAME);
+    let (y, x) = ((rest / FRAME) as u8, (rest % FRAME) as u8);
+    let color = if slot < PIECES_PER_COLOR {
+        s.to_move
+    } else {
+        s.to_move.other()
+    };
+    let piece = PieceId::new(color, (slot % PIECES_PER_COLOR) as u8);
+    let to = frame.cell(x, y)?;
+    Some(if s.board.on_board(piece) {
+        Move::Move { piece, to }
+    } else {
+        Move::Place { piece, to }
+    })
+}
+
+/// WDL byte from the game result, for the given side to move (H4 check 3;
+/// D-008: a truncated game is value 3, never a draw).
+pub fn wdl_from_result(
+    result: hive_core::state::GameResult,
+    stm: Color,
+    truncated: bool,
+) -> u8 {
+    use hive_core::state::GameResult;
+    if truncated {
+        return WDL_TRUNCATED;
+    }
+    match result {
+        GameResult::WhiteWins => {
+            if stm == Color::White { 2 } else { 0 }
+        }
+        GameResult::BlackWins => {
+            if stm == Color::Black { 2 } else { 0 }
+        }
+        _ => 1,
     }
 }
 
@@ -216,22 +288,64 @@ pub fn encode_record_v2(
     let mut rec = [0u8; RECORD_V2_SIZE];
     rec[..RECORD_SIZE].copy_from_slice(&base);
     rec[99] = 2;
-
     let frame = Frame::new(s);
-    // Top-K children by visits.
+    fill_dist_block(s, &frame, dist, &mut rec[RECORD_SIZE..RECORD_V2_SIZE]);
+    rec
+}
+
+/// Write the top-K visit distribution into a 64-byte block
+/// (15 × (idx u16, weight u16) + total u32) — shared by v2 and v3.
+fn fill_dist_block(s: &GameState, frame: &Frame, dist: &[(Move, u32)], out: &mut [u8]) {
+    debug_assert_eq!(out.len(), RECORD_V2_SIZE - RECORD_SIZE);
     let mut sorted: Vec<(Move, u32)> = dist.iter().copied().filter(|&(_, n)| n > 0).collect();
     sorted.sort_by_key(|&(_, n)| std::cmp::Reverse(n));
     sorted.truncate(RECORD_V2_TOPK);
     let mut total: u32 = 0;
     for (slot, &(mv, n)) in sorted.iter().enumerate() {
-        let idx = policy_index(s, &frame, mv).expect("legal move must encode") as u16;
+        let idx = policy_index(s, frame, mv).expect("legal move must encode") as u16;
         let w = n.min(u16::MAX as u32) as u16;
-        let off = RECORD_SIZE + slot * 4;
-        rec[off..off + 2].copy_from_slice(&idx.to_le_bytes());
-        rec[off + 2..off + 4].copy_from_slice(&w.to_le_bytes());
+        let off = slot * 4;
+        out[off..off + 2].copy_from_slice(&idx.to_le_bytes());
+        out[off + 2..off + 4].copy_from_slice(&w.to_le_bytes());
         total += w as u32;
     }
-    rec[RECORD_V2_SIZE - 4..].copy_from_slice(&total.to_le_bytes());
+    let n = out.len();
+    out[n - 4..].copy_from_slice(&total.to_le_bytes());
+}
+
+/// Encode a v3 record (H4 task 2): v2 content + model stamp + the legal
+/// policy-index list that lets training mask the softmax to legal actions
+/// (docs/action-decoder.md §3-4). `model` = (generation, config/net hash);
+/// (0, 0) marks an unstamped record.
+pub fn encode_record_v3(
+    s: &GameState,
+    played: Move,
+    wdl: u8,
+    dist: &[(Move, u32)],
+    legal: &[Move],
+    model: (u32, u32),
+) -> [u8; RECORD_V3_SIZE] {
+    let base = encode_record(s, played, wdl);
+    let mut rec = [0u8; RECORD_V3_SIZE];
+    rec[..RECORD_SIZE].copy_from_slice(&base);
+    rec[99] = 3;
+    rec[100..104].copy_from_slice(&model.0.to_le_bytes());
+    rec[104..108].copy_from_slice(&model.1.to_le_bytes());
+    let frame = Frame::new(s);
+    fill_dist_block(s, &frame, dist, &mut rec[RECORD_SIZE..RECORD_V2_SIZE]);
+
+    let count_off = RECORD_V2_SIZE;
+    let list_off = RECORD_V2_SIZE + 2;
+    if legal.len() > RECORD_V3_LEGAL_CAP {
+        rec[count_off..count_off + 2].copy_from_slice(&LEGAL_OVERFLOW.to_le_bytes());
+    } else {
+        rec[count_off..count_off + 2].copy_from_slice(&(legal.len() as u16).to_le_bytes());
+        for (i, &mv) in legal.iter().enumerate() {
+            let idx = policy_index(s, &frame, mv).expect("legal move must encode") as u16;
+            let off = list_off + i * 2;
+            rec[off..off + 2].copy_from_slice(&idx.to_le_bytes());
+        }
+    }
     rec
 }
 
@@ -373,6 +487,82 @@ mod tests {
                 }
             }
         }
+    }
+
+    /// H4 check 2: encode(move) -> id -> decode(id) is the identity on all
+    /// legal moves across many random positions and every game type.
+    #[test]
+    fn policy_index_roundtrips_to_move() {
+        for gt in GameType::ALL {
+            for seed in 0..10 {
+                for s in random_game_positions(gt, 60, 0xC2 + seed) {
+                    if s.result.is_over() {
+                        continue;
+                    }
+                    let frame = Frame::new(&s);
+                    for &mv in generate(&s).iter() {
+                        let idx = policy_index(&s, &frame, mv).expect("encodable");
+                        let back = policy_index_to_move(&s, &frame, idx)
+                            .unwrap_or_else(|| panic!("undecodable index {idx}"));
+                        assert_eq!(back, mv, "roundtrip failed in {gt:?} at idx {idx}");
+                    }
+                }
+            }
+        }
+    }
+
+    /// H4 check 3 + D-008: WDL is from the mover's perspective and a
+    /// truncated game is value 3, never a draw.
+    #[test]
+    fn wdl_perspective_and_truncation() {
+        use hive_core::state::GameResult;
+        for (result, white, black) in [
+            (GameResult::WhiteWins, 2, 0),
+            (GameResult::BlackWins, 0, 2),
+            (GameResult::Draw, 1, 1),
+        ] {
+            assert_eq!(wdl_from_result(result, Color::White, false), white);
+            assert_eq!(wdl_from_result(result, Color::Black, false), black);
+            assert_eq!(wdl_from_result(result, Color::White, true), WDL_TRUNCATED);
+            assert_eq!(wdl_from_result(result, Color::Black, true), WDL_TRUNCATED);
+        }
+    }
+
+    /// v3 layout: version byte, model stamp, dist block at the v2 offsets,
+    /// and a legal list that matches the generator exactly.
+    #[test]
+    fn record_v3_layout_and_legal_list() {
+        let mut s = GameState::new(GameType::BASE);
+        for name in ["wS1", "bS1", "wQ", "bQ"] {
+            let moves = generate(&s);
+            let target = hive_core::bug::PieceId::parse(name).unwrap();
+            let mv = *moves
+                .iter()
+                .find(|m| matches!(m, Move::Place { piece, .. } if *piece == target))
+                .expect("placement available");
+            s.make(mv);
+        }
+        let legal = generate(&s);
+        let played = legal[0];
+        let dist: Vec<(Move, u32)> = legal.iter().map(|&m| (m, 7)).collect();
+        let rec = encode_record_v3(&s, played, WDL_TRUNCATED, &dist, &legal, (5, 0xABCD));
+        assert_eq!(rec[99], 3);
+        assert_eq!(rec[98], WDL_TRUNCATED);
+        assert_eq!(u32::from_le_bytes(rec[100..104].try_into().unwrap()), 5);
+        assert_eq!(u32::from_le_bytes(rec[104..108].try_into().unwrap()), 0xABCD);
+        let count =
+            u16::from_le_bytes(rec[RECORD_V2_SIZE..RECORD_V2_SIZE + 2].try_into().unwrap());
+        assert_eq!(count as usize, legal.len());
+        let frame = Frame::new(&s);
+        for (i, &mv) in legal.iter().enumerate() {
+            let off = RECORD_V2_SIZE + 2 + i * 2;
+            let idx = u16::from_le_bytes(rec[off..off + 2].try_into().unwrap());
+            assert_eq!(idx as usize, policy_index(&s, &frame, mv).unwrap());
+        }
+        // The dist block sits at the v2 offsets with a valid total.
+        let total =
+            u32::from_le_bytes(rec[RECORD_V2_SIZE - 4..RECORD_V2_SIZE].try_into().unwrap());
+        assert_eq!(total, 7 * legal.len().min(RECORD_V2_TOPK) as u32);
     }
 
     /// Every occupied cell and every legal destination must sit inside the

@@ -17,7 +17,7 @@ use hive_core::game::Game;
 use hive_core::state::{GameResult, Move};
 use hive_core::zobrist::splitmix64;
 use hive_mcts::{Mcts, MctsParams, OrtEvaluator};
-use hive_nn::{RECORD_V2_SIZE, V2_MAGIC, encode_record_v2};
+use hive_nn::{RECORD_V3_SIZE, V3_MAGIC, encode_record_v3, wdl_from_result};
 use hive_uhp::server::SearchLimit;
 use std::io::Write;
 use std::sync::atomic::{AtomicU64, Ordering};
@@ -36,6 +36,7 @@ struct Config {
     seed: u64,
     out: String,
     coreml: bool,
+    model_gen: u32,
 }
 
 fn parse_args() -> Config {
@@ -54,6 +55,7 @@ fn parse_args() -> Config {
         seed: 0xA1FA,
         out: "data/rl/gen".to_string(),
         coreml: true,
+        model_gen: 0,
     };
     let mut it = args.iter();
     while let Some(a) = it.next() {
@@ -71,6 +73,7 @@ fn parse_args() -> Config {
                 cfg.game_type = GameType::from_uhp(it.next().unwrap()).expect("bad game type")
             }
             "--seed" => cfg.seed = it.next().unwrap().parse().unwrap(),
+            "--model-gen" => cfg.model_gen = it.next().unwrap().parse().unwrap(),
             "--out" => cfg.out = it.next().unwrap().clone(),
             "--cpu" => cfg.coreml = false,
             other => panic!("unknown arg {other}"),
@@ -98,14 +101,25 @@ fn sample_visits(dist: &[(Move, u32)], rng: &mut u64) -> Move {
 }
 
 #[allow(clippy::too_many_lines)]
+fn fnv1a32(data: &[u8]) -> u32 {
+    let mut h: u32 = 0x811c9dc5;
+    for &b in data {
+        h ^= b as u32;
+        h = h.wrapping_mul(0x01000193);
+    }
+    h
+}
+
 fn main() {
     let cfg = parse_args();
+    let net_hash = fnv1a32(&std::fs::read(&cfg.net).expect("read net file"));
     if let Some(dir) = std::path::Path::new(&cfg.out).parent() {
         std::fs::create_dir_all(dir).expect("create output dir");
     }
     let games_done = AtomicU64::new(0);
     let positions = AtomicU64::new(0);
     let resigns = AtomicU64::new(0);
+    let truncations = AtomicU64::new(0);
     let start = std::time::Instant::now();
 
     std::thread::scope(|scope| {
@@ -114,6 +128,7 @@ fn main() {
             let games_done = &games_done;
             let positions = &positions;
             let resigns = &resigns;
+            let truncations = &truncations;
             scope.spawn(move || {
                 let eval = OrtEvaluator::new(&cfg.net, cfg.coreml)
                     .unwrap_or_else(|e| panic!("load net: {e}"));
@@ -130,7 +145,7 @@ fn main() {
                 let mut out = std::io::BufWriter::new(
                     std::fs::File::create(&shard_path).expect("create shard"),
                 );
-                out.write_all(V2_MAGIC).unwrap();
+                out.write_all(V3_MAGIC).unwrap();
                 out.write_all(&[0u8; 8]).unwrap();
 
                 loop {
@@ -185,31 +200,37 @@ fn main() {
                         game.play(mv).expect("mcts must return legal moves");
                     }
 
+                    // Truncation (ply cap) is its own outcome, never a
+                    // draw (invariant 7 / D-008): records get WDL = 3.
+                    let truncated =
+                        resigned.is_none() && !game.state.result.is_over();
                     let result = match resigned {
                         Some(Color::White) => GameResult::BlackWins,
                         Some(Color::Black) => GameResult::WhiteWins,
-                        None if game.state.result.is_over() => game.state.result,
-                        None => GameResult::Draw, // ply cap
+                        None => game.state.result,
                     };
+                    if truncated {
+                        truncations.fetch_add(1, Ordering::Relaxed);
+                    }
                     for (stm, state, mv, dist) in &recorded {
-                        let wdl = match result {
-                            GameResult::WhiteWins => {
-                                if *stm == Color::White { 2 } else { 0 }
-                            }
-                            GameResult::BlackWins => {
-                                if *stm == Color::Black { 2 } else { 0 }
-                            }
-                            _ => 1,
-                        };
-                        let rec: [u8; RECORD_V2_SIZE] =
-                            encode_record_v2(state, *mv, wdl, dist);
+                        let wdl = wdl_from_result(result, *stm, truncated);
+                        let legal = hive_core::movegen::generate(state);
+                        let rec: [u8; RECORD_V3_SIZE] = encode_record_v3(
+                            state,
+                            *mv,
+                            wdl,
+                            dist,
+                            &legal,
+                            (cfg.model_gen, net_hash),
+                        );
                         out.write_all(&rec).unwrap();
                     }
                     positions.fetch_add(recorded.len() as u64, Ordering::Relaxed);
                     if g % 20 == 0 {
                         eprintln!(
-                            "game {g}/{}: {result:?} in {} plies | {} recorded positions | {:.1} games/min",
+                            "game {g}/{}: {} in {} plies | {} recorded positions | {:.1} games/min",
                             cfg.games,
+                            if truncated { "Truncated".to_string() } else { format!("{result:?}") },
                             game.move_count(),
                             positions.load(Ordering::Relaxed),
                             (g + 1) as f64 / start.elapsed().as_secs_f64() * 60.0,
@@ -222,11 +243,50 @@ fn main() {
     });
 
     println!(
-        "done: {} games ({} resigned), {} recorded positions, {:.0}s -> {}-*.bin",
+        "done: {} games ({} resigned, {} truncated), {} recorded positions, {:.0}s -> {}-*.bin",
         cfg.games,
         resigns.load(Ordering::Relaxed),
+        truncations.load(Ordering::Relaxed),
         positions.load(Ordering::Relaxed),
         start.elapsed().as_secs_f64(),
         cfg.out
     );
+
+    // Run manifest: dataset <-> model association (H4 task 2). Every shard
+    // set answers "which model generated this?" without opening records.
+    let shards: Vec<String> = (0..cfg.threads)
+        .map(|t| format!("{}-{:03}.bin", cfg.out, t))
+        .collect();
+    let manifest = format!(
+        concat!(
+            "{{\n",
+            "  \"net\": \"{}\",\n  \"net_fnv1a32\": {},\n  \"model_gen\": {},\n",
+            "  \"record_version\": 3,\n  \"game_type\": \"{}\",\n  \"seed\": {},\n",
+            "  \"games\": {},\n  \"sims_full\": {},\n  \"sims_cheap\": {},\n",
+            "  \"full_frac\": {},\n  \"temp_plies\": {},\n  \"resign\": {},\n",
+            "  \"no_resign_frac\": {},\n  \"resigned\": {},\n  \"truncated\": {},\n",
+            "  \"positions\": {},\n  \"shards\": [{}]\n}}\n"
+        ),
+        cfg.net,
+        net_hash,
+        cfg.model_gen,
+        cfg.game_type.to_uhp(),
+        cfg.seed,
+        cfg.games,
+        cfg.sims_full,
+        cfg.sims_cheap,
+        cfg.full_frac,
+        cfg.temp_plies,
+        cfg.resign,
+        cfg.no_resign_frac,
+        resigns.load(Ordering::Relaxed),
+        truncations.load(Ordering::Relaxed),
+        positions.load(Ordering::Relaxed),
+        shards
+            .iter()
+            .map(|s| format!("\"{s}\""))
+            .collect::<Vec<_>>()
+            .join(", ")
+    );
+    std::fs::write(format!("{}-manifest.json", cfg.out), manifest).expect("write manifest");
 }
