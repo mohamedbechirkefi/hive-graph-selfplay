@@ -122,9 +122,16 @@ impl Frame {
             .map(|(c, q, r)| {
                 let x = q + off_q;
                 let y = r + off_r;
-                debug_assert!(
+                // Overflow policy (H5 task 2): a 28-piece hive spans at most
+                // 28 cells per axis after BFS-unwrap, so bbox-centering the
+                // occupied cells leaves the 1-ring within 0..32 by
+                // construction. This is an always-on assert, NOT a
+                // debug_assert: no piece or candidate cell may ever vanish
+                // or alias silently in release builds (docs/representations/
+                // grid.md).
+                assert!(
                     (0..FRAME as i32).contains(&x) && (0..FRAME as i32).contains(&y),
-                    "frame overflow: ({x},{y})"
+                    "frame overflow: cell {c:?} maps to ({x},{y}) outside {FRAME}x{FRAME}"
                 );
                 (c, x as u8, y as u8)
             })
@@ -563,6 +570,52 @@ mod tests {
         let total =
             u32::from_le_bytes(rec[RECORD_V2_SIZE - 4..RECORD_V2_SIZE].try_into().unwrap());
         assert_eq!(total, 7 * legal.len().min(RECORD_V2_TOPK) as u32);
+    }
+
+    /// H5 task 2 (overflow policy): the theoretical worst case — all 28
+    /// pieces in a straight line along each axis — fits the 32x32 frame
+    /// with its full 1-ring, every cell maps, and no two cells alias to
+    /// the same frame coordinate (the torus wrap must never fold two
+    /// distinct cells together). The in-frame assert is always-on, so a
+    /// future regression fails loudly instead of dropping pieces.
+    #[test]
+    fn frame_extremal_line_positions_fit_without_aliasing() {
+        use hive_core::hex::{CENTER, Dir};
+        for dir in [Dir::E, Dir::SE, Dir::NE] {
+            let mut s = GameState::new(GameType::MLP);
+            let mut cell = CENTER;
+            for i in 0..28u8 {
+                s.board.put(PieceId(i), cell);
+                cell = neighbor(cell, dir);
+            }
+            let frame = Frame::new(&s);
+            let mut seen = HashSet::new();
+            let mut check = |c| {
+                let (x, y) = frame
+                    .xy(c)
+                    .unwrap_or_else(|| panic!("cell {c:?} missing from frame ({dir:?})"));
+                assert!(
+                    seen.insert((x, y)),
+                    "aliasing: two cells map to ({x},{y}) in {dir:?} line"
+                );
+            };
+            let mut cell = CENTER;
+            for _ in 0..28 {
+                check(cell);
+                cell = neighbor(cell, dir);
+            }
+            // The full 1-ring must map too (candidate destinations).
+            let mut cell = CENTER;
+            for _ in 0..28 {
+                for d in ALL_DIRS {
+                    let n = neighbor(cell, d);
+                    if !s.board.occupied(n) && frame.xy(n).is_none() {
+                        panic!("ring cell {n:?} missing from frame ({dir:?})");
+                    }
+                }
+                cell = neighbor(cell, dir);
+            }
+        }
     }
 
     /// Every occupied cell and every legal destination must sit inside the
