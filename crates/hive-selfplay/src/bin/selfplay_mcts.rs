@@ -16,7 +16,7 @@ use hive_core::bug::{Color, GameType};
 use hive_core::game::Game;
 use hive_core::state::{GameResult, Move};
 use hive_core::zobrist::splitmix64;
-use hive_mcts::{Mcts, MctsParams, OrtEvaluator};
+use hive_mcts::{Evaluator, GraphOrtEvaluator, Mcts, MctsParams, OrtEvaluator};
 use hive_nn::{RECORD_V3_SIZE, V3_MAGIC, encode_record_v3, wdl_from_result};
 use hive_uhp::server::SearchLimit;
 use std::io::Write;
@@ -37,6 +37,8 @@ struct Config {
     out: String,
     coreml: bool,
     model_gen: u32,
+    /// Use the graph-arm evaluator (GraphOrtEvaluator) instead of the grid one.
+    graph: bool,
 }
 
 fn parse_args() -> Config {
@@ -56,6 +58,7 @@ fn parse_args() -> Config {
         out: "data/rl/gen".to_string(),
         coreml: true,
         model_gen: 0,
+        graph: false,
     };
     let mut it = args.iter();
     while let Some(a) = it.next() {
@@ -76,6 +79,7 @@ fn parse_args() -> Config {
             "--model-gen" => cfg.model_gen = it.next().unwrap().parse().unwrap(),
             "--out" => cfg.out = it.next().unwrap().clone(),
             "--cpu" => cfg.coreml = false,
+            "--graph" => cfg.graph = true,
             other => panic!("unknown arg {other}"),
         }
     }
@@ -130,8 +134,33 @@ fn main() {
             let resigns = &resigns;
             let truncations = &truncations;
             scope.spawn(move || {
-                let eval = OrtEvaluator::new(&cfg.net, cfg.coreml)
-                    .unwrap_or_else(|e| panic!("load net: {e}"));
+                if cfg.graph {
+                    let eval = GraphOrtEvaluator::new(&cfg.net)
+                        .unwrap_or_else(|e| panic!("load graph net: {e}"));
+                    worker(t, eval, cfg, net_hash, games_done, positions, resigns, truncations, start);
+                } else {
+                    let eval = OrtEvaluator::new(&cfg.net, cfg.coreml)
+                        .unwrap_or_else(|e| panic!("load net: {e}"));
+                    worker(t, eval, cfg, net_hash, games_done, positions, resigns, truncations, start);
+                }
+            });
+        }
+    });
+    finish(&cfg, net_hash, &games_done, &positions, &resigns, &truncations, &start);
+}
+
+#[allow(clippy::too_many_arguments, clippy::too_many_lines)]
+fn worker<E: Evaluator>(
+    t: u32,
+    eval: E,
+    cfg: &Config,
+    net_hash: u32,
+    games_done: &AtomicU64,
+    positions: &AtomicU64,
+    resigns: &AtomicU64,
+    truncations: &AtomicU64,
+    start: std::time::Instant,
+) {
                 let mut mcts = Mcts::new(
                     eval,
                     MctsParams {
@@ -238,10 +267,18 @@ fn main() {
                     }
                 }
                 out.flush().unwrap();
-            });
-        }
-    });
+}
 
+#[allow(clippy::too_many_arguments)]
+fn finish(
+    cfg: &Config,
+    net_hash: u32,
+    _games_done: &AtomicU64,
+    positions: &AtomicU64,
+    resigns: &AtomicU64,
+    truncations: &AtomicU64,
+    start: &std::time::Instant,
+) {
     println!(
         "done: {} games ({} resigned, {} truncated), {} recorded positions, {:.0}s -> {}-*.bin",
         cfg.games,

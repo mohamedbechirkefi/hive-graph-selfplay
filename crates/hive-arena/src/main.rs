@@ -29,6 +29,13 @@ struct Config {
     seed: u64,
     threads: u32,
     pgn: Option<String>,
+    /// Fixed shared openings file (one opening per line, semicolon-separated
+    /// MoveStrings; '#' comments). Pair i uses line i — H6's frozen openings.
+    openings_file: Option<String>,
+    /// Per-game CSV records: opening id, colour, score, outcome, truncation.
+    records: Option<String>,
+    /// Free-text run label echoed into the records header (arm/seed/opponent).
+    label: String,
     engine_a: Vec<String>,
     engine_b: Vec<String>,
 }
@@ -44,6 +51,9 @@ fn parse_args() -> Config {
         seed: 0xA1FA,
         threads: 4,
         pgn: None,
+        openings_file: None,
+        records: None,
+        label: String::new(),
         engine_a: vec![],
         engine_b: vec![],
     };
@@ -61,6 +71,9 @@ fn parse_args() -> Config {
             "--seed" => cfg.seed = it.next().unwrap().parse().unwrap(),
             "--threads" => cfg.threads = it.next().unwrap().parse().unwrap(),
             "--pgn" => cfg.pgn = Some(it.next().unwrap().clone()),
+            "--openings-file" => cfg.openings_file = Some(it.next().unwrap().clone()),
+            "--records" => cfg.records = Some(it.next().unwrap().clone()),
+            "--label" => cfg.label = it.next().unwrap().clone(),
             "--" => {
                 let mut cmd = vec![];
                 while let Some(x) = it.peek() {
@@ -251,31 +264,58 @@ fn main() {
         }
     );
 
+    // Fixed shared openings (H6): pair i plays line i, both colours.
+    let fixed_openings: Option<Vec<Vec<String>>> = cfg.openings_file.as_ref().map(|path| {
+        std::fs::read_to_string(path)
+            .expect("read openings file")
+            .lines()
+            .map(str::trim)
+            .filter(|l| !l.is_empty() && !l.starts_with('#'))
+            .map(|l| l.split(';').map(|m| m.trim().to_string()).collect())
+            .collect()
+    });
+
     let pairs = cfg.games.div_ceil(2);
+    if let Some(list) = &fixed_openings {
+        assert!(
+            pairs as usize <= list.len(),
+            "openings file has {} openings but {} pairs requested — no reuse",
+            list.len(),
+            pairs
+        );
+    }
     let next_pair = AtomicUsize::new(0);
-    let results: Mutex<Vec<(f64, usize, String, bool)>> = Mutex::new(vec![]);
+    let results: Mutex<Vec<(f64, usize, String, bool, usize, bool)>> = Mutex::new(vec![]);
     let pgn_log: Mutex<Vec<String>> = Mutex::new(vec![]);
 
     std::thread::scope(|scope| {
         for _ in 0..cfg.threads {
-            scope.spawn(|| {
+            let fixed_openings = &fixed_openings;
+            let cfg = &cfg;
+            let next_pair = &next_pair;
+            let results = &results;
+            let pgn_log = &pgn_log;
+            scope.spawn(move || {
                 loop {
                     let pair = next_pair.fetch_add(1, Ordering::Relaxed);
                     if pair >= pairs as usize {
                         break;
                     }
-                    let opening = random_opening(
-                        cfg.game_type,
-                        cfg.opening_plies,
-                        splitmix64(cfg.seed ^ (pair as u64) << 20),
-                    );
+                    let opening = match fixed_openings {
+                        Some(list) => list[pair].clone(),
+                        None => random_opening(
+                            cfg.game_type,
+                            cfg.opening_plies,
+                            splitmix64(cfg.seed ^ (pair as u64) << 20),
+                        ),
+                    };
                     for a_is_white in [true, false] {
                         match play_game(&cfg, a_is_white, &opening) {
                             Ok(o) => {
                                 let mut r = results.lock().unwrap();
-                                r.push((o.score_a, o.plies, o.reason.clone(), o.truncated));
+                                r.push((o.score_a, o.plies, o.reason.clone(), o.truncated, pair, a_is_white));
                                 let n = r.len();
-                                let sum: f64 = r.iter().map(|(s, _, _, _)| s).sum();
+                                let sum: f64 = r.iter().map(|(s, _, _, _, _, _)| s).sum();
                                 drop(r);
                                 eprintln!(
                                     "game {n}: A[{}] {} in {} plies ({}) | A score {:.1}/{}",
@@ -306,11 +346,11 @@ fn main() {
     // a truncations-scored-0.5 sensitivity line (invariant 7 / D-008;
     // protocol §3-4).
     let total = results.len();
-    let truncations = results.iter().filter(|(_, _, _, t)| *t).count();
+    let truncations = results.iter().filter(|(_, _, _, t, _, _)| *t).count();
     let decided: Vec<f64> = results
         .iter()
-        .filter(|(_, _, _, t)| !*t)
-        .map(|(s, _, _, _)| *s)
+        .filter(|(_, _, _, t, _, _)| !*t)
+        .map(|(s, _, _, _, _, _)| *s)
         .collect();
     let wins = decided.iter().filter(|s| **s == 1.0).count();
     let draws = decided.iter().filter(|s| **s == 0.5).count();
@@ -335,11 +375,31 @@ fn main() {
         elo_diff((p - 1.96 * se).max(0.001)),
         elo_diff((p + 1.96 * se).min(0.999))
     );
-    let p_sens = results.iter().map(|(s, _, _, _)| s).sum::<f64>() / total as f64;
+    let p_sens = results.iter().map(|(s, _, _, _, _, _)| s).sum::<f64>() / total as f64;
     println!(
         "sensitivity (truncations scored 0.5): {:.1}% over all {total} games",
         p_sens * 100.0
     );
+
+    if let Some(path) = &cfg.records {
+        let mut f = std::fs::File::create(path).expect("create records file");
+        writeln!(f, "# label: {}", cfg.label).unwrap();
+        writeln!(f, "# engine_a: {}", cfg.engine_a.join(" ")).unwrap();
+        writeln!(f, "# engine_b: {}", cfg.engine_b.join(" ")).unwrap();
+        writeln!(f, "# seed: {} gametype: {}", cfg.seed, cfg.game_type.to_uhp()).unwrap();
+        writeln!(f, "opening_id,a_is_white,score_a,truncated,plies,outcome").unwrap();
+        for (score, plies, reason, truncated, pair, a_white) in &results {
+            writeln!(
+                f,
+                "{pair},{},{score},{},{plies},{}",
+                *a_white as u8,
+                *truncated as u8,
+                reason.replace(',', ";")
+            )
+            .unwrap();
+        }
+        println!("game records written to {path}");
+    }
 
     if let Some(path) = &cfg.pgn {
         let mut f = std::fs::File::create(path).expect("create pgn file");

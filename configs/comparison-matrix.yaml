@@ -1,0 +1,63 @@
+# H6 comparison matrix (pipeline H6 task 1) — PRE-REGISTERED DESIGN.
+# All numbers below are measured-derived planning proposals until the
+# G-SPEND approval; the pilot (task 4) may recalibrate game volume by a
+# logged decision. Justification journal: H6-2026-09-10-matrix-01.
+#
+# NOTE on the plan's "2 search budgets": collapsed by the frozen protocol
+# (v1.0, D-020) to ONE measured self-play budget (128/32, protocol §5)
+# and ONE pinned evaluation budget (400 sims, D-019). The two comparison
+# views come from the two BUDGET READINGS below (plan ch. 6), not from
+# varying search budgets — varying eval budgets now would be a G-FREEZE
+# event against D-019 and adds no information the readings don't give.
+
+arms:
+  grid:
+    train: hivenet.train           # c96 x b8, 1.44M params
+    channels: 96
+    blocks: 8
+    selfplay_flags: []             # OrtEvaluator, CoreML EP (2.62 ms/eval)
+  graph:
+    train: hivenet.train_graph     # h152 x L8, 1.47M params (+2.1%, reported)
+    hidden: 152
+    layers: 8
+    selfplay_flags: ["--graph"]    # GraphOrtEvaluator, CPU EP (3.67 ms/eval)
+
+seeds: [1, 2, 3]                   # per arm; 5 if budget allows (task 1)
+
+selfplay:                          # frozen protocol v1.0 §5 — not tunable
+  sims_full: 128
+  sims_cheap: 32
+  full_frac: 0.25
+  temp_plies: 12
+  resign: 0.92
+  no_resign_frac: 0.1
+  ply_cap: 300                     # truncation = WDL 3, never a draw
+
+training_per_generation:           # identical for both arms (plan ch. 6)
+  epochs: 2
+  batch: 256
+  lr: 0.02
+  masked_policy: true              # D-015 normalisation, both arms
+
+campaign:                          # proposal presented at G-SPEND
+  generations: 10
+  games_per_generation: 500
+  same_examples_target: "10 generations x 500 games per run (equal games,
+    equal generator settings => equal-example footing)"
+  same_wallclock_rule: "T* = median wall-clock of the three GRID runs at
+    their example target; every run (both arms) is ALSO evaluated at its
+    last checkpoint completed before T*. Pre-registered rule; T* is
+    measured, never chosen after seeing scores."
+  checkpoint_every_generation: true
+
+evaluation:                        # pinned D-019; population D-017
+  sims: 400
+  opponents: [B-RND, B-HEU, B-MCTS]
+  openings_file: results/comparison/openings-v1.txt   # G-FREEZE pending
+  intermediate: {at_generations: [4, 7], games_per_opponent: 20}
+  final: {games_per_opponent: 100}        # pilot volume, task 4 recalibrates
+  paired: colour-swapped, shared opening ids across ALL runs and arms
+
+guards:
+  min_free_disk_gb: 20             # halt cleanly before StorageFull
+  archive: "shards kept; per-gen checkpoints kept; stale ONNX pruned"
