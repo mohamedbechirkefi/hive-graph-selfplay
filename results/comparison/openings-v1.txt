@@ -1,6 +1,6 @@
 # H6 fixed shared openings v1 — 250 unique legal 4-ply base-game openings
 # generator: scripts-recorded python random.Random(20260910) over engine validmoves
-# PRESENTED FOR G-FREEZE; frozen only on human approval (see decisions.md)
+# FROZEN 2026-09-10 (G-FREEZE, D-025, user approval). Any touch = a new study.
 wS1;bB1 -wS1;wQ wS1-;bQ /bB1
 wG1;bA1 /wG1;wS1 wG1-;bG1 -bA1
 wG1;bS1 \wG1;wQ /wG1;bQ -bS1

@@ -27,11 +27,15 @@ They are engine-validation references only; no H6 result derives from
 them, so the A1 licence check (G-RIGHTS, still open) does not block this
 phase. It must still close before publication (A1 task 7).
 
-## Fixed shared openings — PRESENTED FOR G-FREEZE
+## Fixed shared openings — FROZEN 2026-09-10 (G-FREEZE, D-025)
 
 - File: `results/comparison/openings-v1.txt` — 250 unique legal 4-ply
-  base-game openings.
-- sha256: `45432416764a07bc6d5a18e13948bb8b0e3b148e5b5471ced4794d0e48af9386`
+  base-game openings. **Frozen by user approval; any touch = a new study.**
+- Content sha256 (250 opening lines, header-independent, authoritative):
+  `63b318d071dfc3ecfae3585636c8e6f7327ddc08e7aed86a466f915f8005af7b`
+- Frozen-file sha256:
+  `538497390a3787299c67c3ca138b8feacb369d55dc562881d1aee45200cbccb2`
+  (as-presented file hash was 4543…9386; only the header stamp changed)
 - Generator: seeded random walk over engine `validmoves`
   (python `random.Random(20260910)`, engine commit of 2026-09-10);
   reproducible from the documented seed.
@@ -42,6 +46,4 @@ phase. It must still close before publication (A1 task 7).
   task-4 recalibration decision, never exceeding the 250 without a new
   freeze.
 
-**On human approval this list freezes: no opening is added, removed or
-reordered afterwards — any touch = a new study.** Freeze record to be
-appended to `state/decisions.md` and STATUS.md's gate ledger.
+Freeze record: D-025 in `state/decisions.md`; gate ledger updated.
