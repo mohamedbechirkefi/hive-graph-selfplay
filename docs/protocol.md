@@ -1,10 +1,11 @@
 # Protocol — Graph-Based Self-Play for Hive under Limited Compute
 
-**Status: DRAFT (not frozen).** Version 0.2, 2026-09-09. This document is
-frozen only through G-FREEZE with explicit human approval (pipeline H1
-task 9). H2's measured values are now incorporated as labeled *measured
-proposals* (D-011) — the freeze review confirms them after the pilot; the
-frozen version contains no placeholders (D-004). Any number inherited from the research plan is labeled
+**Status: DRAFT v0.3 — PRESENTED FOR G-FREEZE (D-012 trigger met).**
+2026-09-10. The H4 pilot has re-measured D-011's proposals with a
+study-scale net (journal H4-2026-09-10-pilot-01): every value below is
+now measured or pilot-confirmed, no placeholders remain (D-004). This
+document freezes only through G-FREEZE with explicit human approval
+(pipeline H1 task 9); until then it stays editable. Any number inherited from the research plan is labeled
 *(planning proposal)*. After the freeze, any change to this document
 constitutes a new study.
 
@@ -53,10 +54,11 @@ involves an expansion.
 ## 3. Truncation convention
 
 Self-play and evaluation games are truncated at a move cap of **300
-plies** *(measured proposal, D-011: beyond the largest observed game — 202
-plies; median 39, p90 80 over 30 profiled games — journal
-H2-2026-09-09-throughput-profile-01; the G-FREEZE review confirms it after
-the pilot)*.
+plies** *(measured, D-011, pilot-confirmed: beyond the longest observed
+search-guided game — 202 plies — while gen-0 random-init self-play
+truncates 56.7% of games at this cap, which the separate truncation
+reporting below absorbs by design; journals
+H2-2026-09-09-throughput-profile-01, H4-2026-09-10-pilot-01)*.
 
 - A truncated game is **never an official draw** (invariant 7). Truncations
   form their own outcome category everywhere: in training-data generation
@@ -79,13 +81,14 @@ excluded from the mean score and reported via their separate rate (§3); a
 sensitivity check additionally scores truncations as 0.5 to bound their
 influence *(procedure: planning proposal)*.
 
-**Evaluation population:** the baseline opponents frozen in phase H3
-(legal-random, documented heuristic, MCTS-without-network — inventory task
-classification), plus any checkpoints explicitly frozen for evaluation (plan
-ch. 7). That population is frozen under G-FREEZE in H3; **after the freeze no
-opponent is added, removed, retuned, or re-versioned**. Evaluation games use
-paired positions: both arms (and both colours) play the same pre-drawn
-openings.
+**Evaluation population:** frozen 2026-09-09 under G-FREEZE (D-017, user
+approval): **B-RND (seeded legal-random), B-HEU (documented heuristic,
+weights pinned by hash), B-MCTS (6400-sim no-network search)** — configs
+and hashes in `docs/baselines.md`; the gen-19 prior checkpoint is
+excluded (D-016). **No opponent is added, removed, retuned, or
+re-versioned after that freeze.** Evaluation games use paired positions:
+both arms (and both colours) play the same pre-drawn openings, under the
+pinned evaluation settings of D-019 (`configs/eval-settings.toml`).
 
 **Elo demotion:** if an Elo-style rating is computed, it is descriptive,
 relative to this population only, and never a headline number.
@@ -105,14 +108,15 @@ ch. 6):
    graph net that is better per example but slower per example can lose this
    reading, and both readings are reported side by side.
 
-**Simulation budgets:** from H2 profiling *(measured proposal, D-011;
-journal H2-2026-09-09-throughput-profile-01)*: **full/cheap = 128/32
-simulations per decision with playout-cap randomization**, conditional on
-the CoreML execution provider being restored in the Rust pipeline (measured
-2.62 ms/eval vs 23.5 ms CPU-only); fallback 64/16 if the pilot's wall-clock
-demands it. The plan's 64/128 were placeholders, superseded by this
-measured proposal; the G-FREEZE review confirms the final values after the
-pilot. Profile first, optimize only measured bottlenecks (plan ch. 4).
+**Simulation budgets:** **full/cheap = 128/32 simulations per decision
+with playout-cap randomization** *(measured D-011, pilot-confirmed with a
+study-scale 1.44M-param net: worst-case gen-0 generation ≈12 s/game wall
+at 4 threads, ≈3 s/game with a trained net; the CoreML condition of D-011
+is met — journals H4-2026-09-09-coreml-fix-01, H4-2026-09-10-pilot-01)*.
+Evaluation runs at the pinned 400 sims/decision, no noise (D-019,
+`configs/eval-settings.toml`). The plan's 64/128 were placeholders,
+superseded by these measured values. Profile first, optimize only
+measured bottlenecks (plan ch. 4).
 
 ## 6. Seeds, pairing, and uncertainty
 
@@ -178,9 +182,11 @@ in the report cite matrix rows only.
 
 ## 11. Freezes this protocol declares
 
-- **This document** — frozen at H1 task 9 (G-FREEZE), after §3/§5 values are
-  measured in H2.
-- **Opponent population** — frozen in H3 (G-FREEZE) before any comparison.
+- **This document** — frozen at H1 task 9 (G-FREEZE); presented v0.3 with
+  measured values per D-012.
+- **Opponent population** — DONE: frozen 2026-09-09 (D-017).
+- **Evaluation settings** — pinned by D-019; any change is a G-FREEZE
+  event.
 - **Evaluation/test positions** — frozen in H6 (G-FREEZE) before the
   controlled comparison.
 

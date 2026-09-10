@@ -22,7 +22,7 @@ echo "=== data/model battery (checks 1-3 + stamp) ==="
 (cd python && PYTHONPATH=. .venv/bin/python -m hivenet.checks "$SHARDS" --manifest "$MANIFEST")
 
 echo "=== check 5 (save/resume) ==="
-python3 scripts/check5_resume.py "$SHARDS"
+python/.venv/bin/python scripts/check5_resume.py "$SHARDS"
 
 if [ -n "$RUN_DIR" ]; then
   echo "=== check 7 (eval/training separation) ==="
