@@ -5,11 +5,13 @@
 //!   --mcts            PUCT MCTS with the handcrafted-eval evaluator
 //!   --mcts --net P    PUCT MCTS with the trained network (ONNX; CoreML EP,
 //!                     pass --cpu to force the CPU provider)
+//!   --mcts --graph-net P  PUCT MCTS with the GRAPH-arm network (ONNX,
+//!                     CPU provider - faster than CoreML for this net)
 //!   --random          uniform legal-random baseline
 //!   --seed N          RNG seed (random move choice / MCTS tie-breaking)
 //!   --sims N          MCTS sims per depth unit (`bestmove depth 1` = N sims)
 
-use hive_mcts::{EvalNet, Mcts, MctsParams, OrtEvaluator};
+use hive_mcts::{EvalNet, GraphOrtEvaluator, Mcts, MctsParams, OrtEvaluator};
 use hive_search::{AlphaBeta, SearchParams};
 use hive_uhp::server::{RandomSearcher, Searcher, run_server};
 use std::io::{BufReader, stdin, stdout};
@@ -39,9 +41,22 @@ fn main() -> std::io::Result<()> {
         }
         p
     };
+    let graph_net = args
+        .iter()
+        .position(|a| a == "--graph-net")
+        .and_then(|i| args.get(i + 1).cloned());
     let mut searcher: Box<dyn Searcher> = if args.iter().any(|a| a == "--random") {
         Box::new(RandomSearcher::new(seed.unwrap_or(0)))
     } else if args.iter().any(|a| a == "--mcts") {
+        if let Some(path) = graph_net {
+            let eval = GraphOrtEvaluator::new(&path)
+                .unwrap_or_else(|e| panic!("failed to load graph network: {e}"));
+            return run_server(
+                BufReader::new(stdin()),
+                stdout().lock(),
+                &mut Mcts::new(eval, mcts_params()),
+            );
+        }
         match net_path {
             Some(path) => {
                 let coreml = !args.iter().any(|a| a == "--cpu");

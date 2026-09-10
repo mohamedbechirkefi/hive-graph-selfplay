@@ -38,6 +38,8 @@
 //! then u32 total stored visits. Files of v2 records begin with the
 //! 16-byte magic header `HIVEREC2????????` (8 magic + 8 reserved).
 
+pub mod graph;
+
 use hive_core::bug::{Color, PIECES_PER_COLOR, PieceId};
 use hive_core::hex::{ALL_DIRS, Cell, neighbor, neighbors};
 use hive_core::onehive::articulation_cells;

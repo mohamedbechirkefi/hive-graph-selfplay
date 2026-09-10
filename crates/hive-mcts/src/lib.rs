@@ -15,6 +15,10 @@
 pub mod ort_eval;
 #[cfg(feature = "nn")]
 pub use ort_eval::OrtEvaluator;
+#[cfg(feature = "nn")]
+pub mod graph_eval;
+#[cfg(feature = "nn")]
+pub use graph_eval::GraphOrtEvaluator;
 
 use hive_core::game::Game;
 use hive_core::state::{GameResult, GameState, Move};

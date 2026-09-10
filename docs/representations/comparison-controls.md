@@ -54,9 +54,11 @@ budget: neither arm has had any tuning beyond capacity matching; any
 future search applies the same budget to both (plan ch. 6). Opponents
 and eval settings: frozen (D-017, D-019).
 
-## Known open items before H6
+## D-022c closure (2026-09-10)
 
-Rust-side graph builder + `dump_graph` golden crosscheck (D-022c) and
-graph-arm wiring into the Rust MCTS evaluator; graph-arm training-loop
-integration mirroring `train.py`. Until those land, the graph arm
-trains/checks in Python only and cannot be evaluated in the arena.
+All former open items are closed (journal H5-2026-09-10-graph-wiring-01):
+Rust graph builder golden-crosschecked against the Python builder
+(160/160 positions exact, nightly-wired), `GraphOrtEvaluator` runs the
+graph arm through the identical Rust MCTS (arena-validated), and
+`train_graph.py` mirrors the grid loop's conventions (truncation-excluded
+value loss, bitwise resume). Both arms are now end-to-end symmetric.

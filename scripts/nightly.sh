@@ -26,3 +26,7 @@ echo "nightly validation complete"
 echo "=== cross-language plane encoder golden test ==="
 ./target/release/dump_planes /tmp/hive_planes.bin
 python/.venv/bin/python scripts/crosscheck_planes.py /tmp/hive_planes.bin
+
+echo "=== cross-language graph encoder golden test (D-022c) ==="
+./target/release/dump_graph /tmp/hive_graph.bin
+python/.venv/bin/python scripts/crosscheck_graph.py /tmp/hive_graph.bin
