@@ -1,11 +1,12 @@
 # Protocol — Graph-Based Self-Play for Hive under Limited Compute
 
-**Status: DRAFT v0.3 — PRESENTED FOR G-FREEZE (D-012 trigger met).**
-2026-09-10. The H4 pilot has re-measured D-011's proposals with a
-study-scale net (journal H4-2026-09-10-pilot-01): every value below is
-now measured or pilot-confirmed, no placeholders remain (D-004). This
-document freezes only through G-FREEZE with explicit human approval
-(pipeline H1 task 9); until then it stays editable. Any number inherited from the research plan is labeled
+**Status: FROZEN — version 1.0, frozen 2026-09-10 (G-FREEZE, D-020).**
+Frozen by explicit user approval ("freeze it now", 2026-09-10) after the
+H4 pilot confirmed every measured value (journal H4-2026-09-10-pilot-01);
+no placeholders remain (D-004). **Any later change to this document
+constitutes a new study** (workspace G-FREEZE rule). The freeze record,
+with this file's hash and commit, is decision D-020 in
+`../../state/decisions.md`. Any number inherited from the research plan is labeled
 *(planning proposal)*. After the freeze, any change to this document
 constitutes a new study.
 
