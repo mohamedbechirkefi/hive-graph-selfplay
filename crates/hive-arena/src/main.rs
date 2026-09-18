@@ -359,22 +359,25 @@ fn main() {
         "\n=== A vs B: +{wins} ={draws} -{losses}  truncated {truncations}/{total} ({:.1}%)",
         truncations as f64 / total as f64 * 100.0
     );
+    // Records/PGN are written below even when every game truncated — an
+    // early return here once silently dropped the raw records (found by
+    // the H6 failure-position reproduction, 2026-09-18).
     if decided.is_empty() {
         println!("all games truncated — no primary score");
-        return;
+    } else {
+        let n = decided.len() as f64;
+        let p = decided.iter().sum::<f64>() / n;
+        // 95% CI on the score via normal approximation.
+        let var: f64 = decided.iter().map(|s| (s - p) * (s - p)).sum::<f64>() / n;
+        let se = (var / n).sqrt();
+        println!("score {:.1}% over {} non-truncated games", p * 100.0, decided.len());
+        println!(
+            "Elo diff (descriptive): {:+.0} [{:+.0}, {:+.0}] (95%)",
+            elo_diff(p),
+            elo_diff((p - 1.96 * se).max(0.001)),
+            elo_diff((p + 1.96 * se).min(0.999))
+        );
     }
-    let n = decided.len() as f64;
-    let p = decided.iter().sum::<f64>() / n;
-    // 95% CI on the score via normal approximation.
-    let var: f64 = decided.iter().map(|s| (s - p) * (s - p)).sum::<f64>() / n;
-    let se = (var / n).sqrt();
-    println!("score {:.1}% over {} non-truncated games", p * 100.0, decided.len());
-    println!(
-        "Elo diff (descriptive): {:+.0} [{:+.0}, {:+.0}] (95%)",
-        elo_diff(p),
-        elo_diff((p - 1.96 * se).max(0.001)),
-        elo_diff((p + 1.96 * se).min(0.999))
-    );
     let p_sens = results.iter().map(|(s, _, _, _, _, _)| s).sum::<f64>() / total as f64;
     println!(
         "sensitivity (truncations scored 0.5): {:.1}% over all {total} games",

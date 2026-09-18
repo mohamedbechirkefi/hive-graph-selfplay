@@ -1,0 +1,7 @@
+arm,seed,opponent,score,trunc_rate,score_sens_05,games
+grid,1,B-RND,0.9950,0.0000,0.9950,100
+grid,1,B-HEU,0.1500,0.0000,0.1500,100
+grid,1,B-MCTS,0.1250,0.0000,0.1250,100
+grid,2,B-RND,0.9747,0.0100,0.9700,100
+grid,2,B-HEU,0.0800,0.0000,0.0800,100
+grid,2,B-MCTS,0.1250,0.0000,0.1250,100
