@@ -47,6 +47,10 @@ def main() -> None:
     ap.add_argument("--init", default=None)
     ap.add_argument("--resume", default=None)
     ap.add_argument("--cpu", action="store_true")
+    ap.add_argument("--untyped-edges", action="store_true",
+                    help="H7 ablation b: one shared edge matrix (naive adjacency)")
+    ap.add_argument("--no-gpool", action="store_true",
+                    help="H7 ablation a-sub: remove global-pooling bias")
     args = ap.parse_args()
     # save_ckpt records channels/blocks; map hidden/layers onto them.
     args.channels, args.blocks = args.hidden, args.layers
@@ -62,7 +66,9 @@ def main() -> None:
     print(f"{len(train_ds)} train / {len(val_ds)} val records from {len(paths)} shards")
 
     dev = device(args.cpu)
-    net = HiveGraphNet(args.hidden, args.layers).to(dev)
+    net = HiveGraphNet(args.hidden, args.layers,
+                       untyped_edges=args.untyped_edges,
+                       no_gpool=args.no_gpool).to(dev)
     opt = torch.optim.SGD(net.parameters(), lr=args.lr, momentum=0.9, weight_decay=args.wd)
     steps_total = max(1, len(train_ds) // args.batch) * args.epochs
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(

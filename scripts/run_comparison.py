@@ -51,7 +51,8 @@ def free_gb() -> float:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--arm", choices=["grid", "graph"], required=True)
+    ap.add_argument("--arm", required=True,
+                    choices=["grid", "graph", "graph-untyped", "graph-nogpool"])
     ap.add_argument("--seed", type=int, required=True)
     ap.add_argument("--gens", type=int, default=10)
     ap.add_argument("--games", type=int, default=500)
@@ -70,23 +71,33 @@ def main():
     clock = json.loads(clock_path.read_text()) if clock_path.exists() else {}
 
     py = ".venv/bin/python"
+    is_graph = args.arm != "grid"
     train_mod = "hivenet.train" if args.arm == "grid" else "hivenet.train_graph"
     size_flags = (["--channels", "96", "--blocks", "8"] if args.arm == "grid"
                   else ["--hidden", "152", "--layers", "8"])
-    graph_flags = ["--graph"] if args.arm == "graph" else []
+    if args.arm == "graph-untyped":
+        size_flags += ["--untyped-edges"]
+    if args.arm == "graph-nogpool":
+        size_flags += ["--no-gpool"]
+    graph_flags = ["--graph"] if is_graph else []
     base_seed = 100_000 * args.seed  # disjoint seed spaces per run
 
     # Gen 0 net: seeded random init (per-arm export mode).
     models = run / "checkpoints"
     rand_kind = "random" if args.arm == "grid" else "random-graph"
+    variant_flags = ([f for f in ["--untyped-edges"] if args.arm == "graph-untyped"]
+                     + [f for f in ["--no-gpool"] if args.arm == "graph-nogpool"])
+    var = ("-untyped" if args.arm == "graph-untyped" else "") + \
+          ("-nogpool" if args.arm == "graph-nogpool" else "")
     if args.arm == "grid":
         net = models / f"hivenet-random-c96b8s{base_seed}-b1.onnx"
     else:
-        net = models / f"hivegraph-random-h152L8s{base_seed}-b1.onnx"
+        net = models / f"hivegraph-random{var}-h152L8s{base_seed}-b1.onnx"
     if not net.exists():
         sh([py, "-m", "hivenet.export_onnx", rand_kind, "--out", models,
             *(["--channels", "96", "--blocks", "8"] if args.arm == "grid"
               else ["--channels", "152", "--blocks", "8"]),
+            *variant_flags,
             "--seed", base_seed, "--batches", "1"],
            cwd=REPO / "python", env_extra={"PYTHONPATH": "."})
 

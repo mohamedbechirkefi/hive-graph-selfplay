@@ -18,12 +18,21 @@ from .graph_dataset import GLOBAL_F, MOVE_CAP, NODE_CAP, NODE_F, PASS_SLOT
 
 
 class RelLayer(nn.Module):
-    """h_i' = ReLU(W_self h_i + sum_d W_d h_{n_i(d)} + b), masked."""
+    """h_i' = ReLU(W_self h_i + sum_d W_d h_{n_i(d)} + b), masked.
 
-    def __init__(self, hidden: int, global_pool: bool = False):
+    H7 ablations (single-component switches; defaults = the H6 full
+    method): untyped_edges=True shares ONE weight matrix across all six
+    directions (naive adjacency — plan ch. 3/6, ablation b);
+    global_pool=False everywhere removes the pooling bias (ablation a
+    substitution, D-028)."""
+
+    def __init__(self, hidden: int, global_pool: bool = False,
+                 untyped_edges: bool = False):
         super().__init__()
         self.self_lin = nn.Linear(hidden, hidden)
-        self.dir_lin = nn.ModuleList(nn.Linear(hidden, hidden, bias=False) for _ in range(6))
+        n_rel = 1 if untyped_edges else 6
+        self.dir_lin = nn.ModuleList(
+            nn.Linear(hidden, hidden, bias=False) for _ in range(n_rel))
         self.gpool = nn.Linear(2 * hidden, hidden) if global_pool else None
 
     def forward(self, h, nbrs, nmask):
@@ -31,7 +40,7 @@ class RelLayer(nn.Module):
         y = self.self_lin(h[:, :-1])
         for d in range(6):
             nb = h.gather(1, nbrs[:, :, d : d + 1].expand(-1, -1, h.size(-1)))
-            y = y + self.dir_lin[d](nb)
+            y = y + self.dir_lin[d if len(self.dir_lin) == 6 else 0](nb)
         if self.gpool is not None:
             m = nmask.unsqueeze(-1)
             mean = (h[:, :-1] * m).sum(1) / m.sum(1).clamp_min(1.0)
@@ -42,12 +51,16 @@ class RelLayer(nn.Module):
 
 
 class HiveGraphNet(nn.Module):
-    def __init__(self, hidden: int = 152, layers: int = 8, slot_dim: int = 32):
+    def __init__(self, hidden: int = 152, layers: int = 8, slot_dim: int = 32,
+                 untyped_edges: bool = False, no_gpool: bool = False):
         super().__init__()
         self.hidden = hidden
         self.inp = nn.Linear(NODE_F + GLOBAL_F, hidden)
         self.layers = nn.ModuleList(
-            RelLayer(hidden, global_pool=(i % 3 == 2)) for i in range(layers)
+            RelLayer(hidden,
+                     global_pool=(False if no_gpool else i % 3 == 2),
+                     untyped_edges=untyped_edges)
+            for i in range(layers)
         )
         self.slot_emb = nn.Embedding(PASS_SLOT + 1, slot_dim)
         self.reserve_vec = nn.Parameter(torch.zeros(hidden))

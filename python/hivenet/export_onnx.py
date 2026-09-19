@@ -25,6 +25,8 @@ def main() -> None:
     ap.add_argument("--channels", type=int, default=96, help="for 'random' init")
     ap.add_argument("--blocks", type=int, default=8, help="for 'random' init")
     ap.add_argument("--seed", type=int, default=0, help="for 'random' init")
+    ap.add_argument("--untyped-edges", action="store_true", help="H7 ablation b variant")
+    ap.add_argument("--no-gpool", action="store_true", help="H7 ablation a-sub variant")
     args = ap.parse_args()
 
     graph_arm = False
@@ -32,8 +34,12 @@ def main() -> None:
         torch.manual_seed(args.seed)
         if args.checkpoint == "random-graph":
             graph_arm = True
-            net = HiveGraphNet(args.channels, args.blocks)
-            base = f"hivegraph-random-h{args.channels}L{args.blocks}s{args.seed}"
+            net = HiveGraphNet(args.channels, args.blocks,
+                               untyped_edges=args.untyped_edges,
+                               no_gpool=args.no_gpool)
+            var = ("-untyped" if args.untyped_edges else "") + \
+                  ("-nogpool" if args.no_gpool else "")
+            base = f"hivegraph-random{var}-h{args.channels}L{args.blocks}s{args.seed}"
         else:
             net = HiveNet(args.channels, args.blocks)
             base = f"hivenet-random-c{args.channels}b{args.blocks}s{args.seed}"
@@ -43,7 +49,10 @@ def main() -> None:
             args.checkpoint
         )
         if graph_arm:
-            net = HiveGraphNet(ckpt["channels"], ckpt["blocks"])
+            a = ckpt.get("args", {})
+            net = HiveGraphNet(ckpt["channels"], ckpt["blocks"],
+                               untyped_edges=a.get("untyped_edges", False),
+                               no_gpool=a.get("no_gpool", False))
         else:
             net = HiveNet(ckpt["channels"], ckpt["blocks"])
         net.load_state_dict(ckpt["model"])

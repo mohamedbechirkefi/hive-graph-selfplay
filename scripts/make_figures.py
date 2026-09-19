@@ -287,8 +287,52 @@ def fig4():
     print(f"fig4 written ({len(picks)} positions)")
 
 
+def fig2():
+    """Score/cost table (task 7) — regenerated from results CSVs +
+    wallclock logs + comparison-controls measurements."""
+    import csv as _csv
+    scores = {}
+    for reading in ["same-examples", "same-wallclock"]:
+        f = REPO / "results" / "comparison" / f"results-{reading}.csv"
+        per = {}
+        for row in _csv.DictReader(open(f)):
+            per.setdefault((row["arm"], row["opponent"]), []).append(
+                float(row["score"]))
+        for arm in ["grid", "graph"]:
+            vals = [sum(per[(arm, o)]) / len(per[(arm, o)]) for o in OPP]
+            scores[(arm, reading)] = sum(vals) / len(vals)
+    clock = {}
+    for arm in ["grid", "graph"]:
+        tots = []
+        for seed in [1, 2, 3]:
+            c = json.load(open(REPO / f"data/runs/cmp-{arm}-s{seed}/wallclock.json"))
+            tots.append(sum(c.values()) / 3600)
+        clock[arm] = sum(tots) / 3
+    lines = [
+        "# Score / cost table (H6 task 7; fig2)", "",
+        "| Metric | Grid arm | Graph arm |",
+        "| --- | --- | --- |",
+        "| Parameters | 1.44 M | 1.47 M (+2.1%) |",
+        "| Best-provider inference (b1) | 2.62 ms (CoreML) | 3.67 ms (CPU) |",
+        f"| Mean run wall-clock (10 gens × 500 games) | {clock['grid']:.1f} h | {clock['graph']:.1f} h ({clock['graph']/clock['grid']:.1f}×) |",
+        f"| Mean self-play cost | {clock['grid']*3600/5000:.1f} s/game | {clock['graph']*3600/5000:.1f} s/game |",
+        "| Training throughput (MPS) | ≈770 pos/s | ≈195 pos/s |",
+        f"| Population score, same-examples | {scores[('grid','same-examples')]:.3f} | {scores[('graph','same-examples')]:.3f} |",
+        f"| Population score, same-wall-clock (T*=18.77 h) | {scores[('grid','same-wallclock')]:.3f} | {scores[('graph','same-wallclock')]:.3f} |",
+        "",
+        "Population score = mean over the three frozen opponents of the "
+        "seed-mean score (truncations excluded, reported separately in the "
+        "results tables). Sources: results-*.csv, wallclock.json per run, "
+        "comparison-controls.md measurements; journal "
+        "H6-2026-09-19-comparison-01.",
+    ]
+    (FIG / "fig2-score-cost.md").write_text("\n".join(lines) + "\n")
+    print("fig2 written")
+
+
 if __name__ == "__main__":
     FIG.mkdir(parents=True, exist_ok=True)
     fig1()
+    fig2()
     fig3()
     fig4()
