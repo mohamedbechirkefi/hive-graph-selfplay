@@ -51,6 +51,9 @@ def main() -> None:
                     help="H7 ablation b: one shared edge matrix (naive adjacency)")
     ap.add_argument("--no-gpool", action="store_true",
                     help="H7 ablation a-sub: remove global-pooling bias")
+    ap.add_argument("--clip-norm", type=float, default=0.0,
+                    help="global grad-norm clip; 0 = off. A1\' ONLY: the\n"
+                         "explicitly-labeled second component (D-030)")
     args = ap.parse_args()
     # save_ckpt records channels/blocks; map hidden/layers onto them.
     args.channels, args.blocks = args.hidden, args.layers
@@ -125,6 +128,8 @@ def main() -> None:
                     f"(p={loss_p.item()}, v={loss_v.item()}) — divergence")
             opt.zero_grad(set_to_none=True)
             loss.backward()
+            if args.clip_norm > 0:
+                torch.nn.utils.clip_grad_norm_(net.parameters(), args.clip_norm)
             opt.step()
             sched.step()
             step += 1

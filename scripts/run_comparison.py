@@ -52,7 +52,8 @@ def free_gb() -> float:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--arm", required=True,
-                    choices=["grid", "graph", "graph-untyped", "graph-nogpool"])
+                    choices=["grid", "graph", "graph-untyped", "graph-nogpool",
+                             "graph-untyped-clip"])
     ap.add_argument("--seed", type=int, required=True)
     ap.add_argument("--gens", type=int, default=10)
     ap.add_argument("--games", type=int, default=500)
@@ -75,8 +76,10 @@ def main():
     train_mod = "hivenet.train" if args.arm == "grid" else "hivenet.train_graph"
     size_flags = (["--channels", "96", "--blocks", "8"] if args.arm == "grid"
                   else ["--hidden", "152", "--layers", "8"])
-    if args.arm == "graph-untyped":
+    if args.arm in ("graph-untyped", "graph-untyped-clip"):
         size_flags += ["--untyped-edges"]
+    if args.arm == "graph-untyped-clip":
+        size_flags += ["--clip-norm", "1.0"]
     if args.arm == "graph-nogpool":
         size_flags += ["--no-gpool"]
     graph_flags = ["--graph"] if is_graph else []
@@ -85,9 +88,10 @@ def main():
     # Gen 0 net: seeded random init (per-arm export mode).
     models = run / "checkpoints"
     rand_kind = "random" if args.arm == "grid" else "random-graph"
-    variant_flags = ([f for f in ["--untyped-edges"] if args.arm == "graph-untyped"]
+    variant_flags = ([f for f in ["--untyped-edges"]
+                      if args.arm in ("graph-untyped", "graph-untyped-clip")]
                      + [f for f in ["--no-gpool"] if args.arm == "graph-nogpool"])
-    var = ("-untyped" if args.arm == "graph-untyped" else "") + \
+    var = ("-untyped" if args.arm in ("graph-untyped", "graph-untyped-clip") else "") + \
           ("-nogpool" if args.arm == "graph-nogpool" else "")
     if args.arm == "grid":
         net = models / f"hivenet-random-c96b8s{base_seed}-b1.onnx"
