@@ -152,6 +152,13 @@ def main() -> None:
             loss_p = policy_loss(p_logits, target, mask, args.masked_policy)
             loss_v = value_loss(v_logits, wdl)
             loss = loss_p + args.value_weight * loss_v
+            # NaN guard (added 2026-09-23 after the A1 divergence
+            # trained silently for 10 generations): halt loudly, never
+            # train on a diverged net.
+            if not torch.isfinite(loss):
+                raise SystemExit(
+                    f"HALT: non-finite loss at epoch {epoch} step {step} "
+                    f"(p={loss_p.item()}, v={loss_v.item()}) — divergence")
             opt.zero_grad(set_to_none=True)
             loss.backward()
             opt.step()
