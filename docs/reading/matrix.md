@@ -17,6 +17,9 @@ the per-work notes). Date: 2026-09-09. 11 works.
 | Kampert et al. 2021, Mimicking Hive ([note](kampert-2021-mimicking-hive.md)) | Competitive Hive agent from search + human heuristics? | **Hive (base)** | Hand-crafted heuristic features (BeeKeeper engine) | Minimax (αβ+TT), MCTS variants | one DAS-5 node; 0.01–1 s/move | Win rate vs random; turns-to-win; Elo round-robin | partial | No neural nets; agents below human level |
 | Keller et al. 2023, GraphDQN/GraphAra ([note](keller-2023-graphdqn-hex.md)) | Direct CNN-vs-GNN comparison in Hex | Hex 8×8–25×25 (Shannon-game graph) | GNN (15×SAGEConv, ~487K params) vs Gao-ResNet & U-Net (~481K) | RainbowDQN for the comparison; AlphaZero-style (800 sims) for GNN only | ~110 A100-hours/model (comparison); 3×A100 ~6 days (GraphAra) | Long-range test suite; size transfer; supervised acc; vs MoHex | yes | Comparison is DQN, not self-play, and CNN arm never ran under MCTS; graph formulation Hex-specific; preprint |
 | Cazenave et al. 2020, Polygames ([note](cazenave-2020-polygames.md)) | Boardsize-invariant zero learning across games | Hex/Havannah/Othello/… (**not** Hive) | Fully-conv nets + global pooling (grid paradigm) | AlphaZero-style MCTS | not comparable per-run units | Competition results; beat strong humans 19×19 Hex | yes (archived) | Handles scaled grids, not boardless/dynamic topologies |
+| Rigaux & Kashima 2024, AlphaGateau ([note](rigaux-2024-chess-graph-rl.md)) | Does a graph representation help AlphaZero-style chess RL? | Chess | Edge-featured GAT (GATEAU), edge-based policy readout | AlphaZero-style MCTS | 8×A5000 ≈13.7 d (+fine-tune) | Jeffreys-prior Elo, delta-method CIs | yes | **Single run per model, no seeds**; loose capacity match (1.0M vs 2.2M); representation+decoder confounded |
+| Ben-Assayag & El-Yaniv 2021 ([note](benassayag-2021-scalable-alphazero.md)) | Train small, play large with GNN-AlphaZero | Othello/Gomoku/Go | 3-GIN lattice graph + global dummy node, node policy | AlphaZero-style MCTS | 1×TITAN X; deliberately asymmetric (3 d vs 30 d) | Win rate vs AZ baselines, 5 runs + SE | no (promised, absent) | Transfer claim, not equal-budget representation comparison |
+| Pfeifer 2018–2025, hiveGo ([note](pfeifer-2025-hivego.md)) | Hobby Hive AI (webographie) | **Hive** | Hand-crafted features → FNN; a "tiny GNN" | Alpha-beta; AlphaZero-style loop | not reported | Anecdotal only | yes (commit d6ff954) | No controlled comparison of any kind |
 
 ## Novelty positioning (protocol §10 cites this section)
 
@@ -44,8 +47,6 @@ patterns) plus Rigaux & Kashima's positive chess result make H1 plausible but
 genuinely open for Hive's locally-tactical play. No pivot to
 reproduce-then-extend is triggered (decision D-009).
 
-**Follow-ups before the report's related-work section is final:** obtain and
-read the AZ-Hive full text top-to-bottom (agent read the SPEC PDF; confirm no
-graph encoding in any appendix); write a dedicated note for Rigaux & Kashima
-2024 and a webographie note for hiveGo; Ben-Assayag & El-Yaniv 2021 (GNN
-AlphaZero on Othello, arXiv:2107.08387) is a candidate 12th note.
+**Follow-ups:** all closed 2026-09-26 (Rigaux & Kashima, hiveGo and
+Ben-Assayag notes added; AZ-Hive full text was read by the original agent
+from the SPEC PDF — no graph encoding present).
