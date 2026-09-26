@@ -2,7 +2,7 @@
 
 Generated from the reading notes in this directory (one row per
 `purpose: lit-review` note; full details, quotes and verified metadata live in
-the per-work notes). Date: 2026-09-09. 11 works.
+the per-work notes). Date: 2026-09-09; extended 2026-09-26. 14 works.
 
 | Work (note) | Question | Game/task | Representation | Search | Budget | Metrics | Code | Limits (for us) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -29,9 +29,9 @@ engines stayed below plain MCTS/minimax. (b) A parameter-matched CNN-vs-GNN
 comparison on a hex-grid game exists: Keller et al. 2023 on Hex — but under
 RainbowDQN (the CNN arm never trained under MCTS self-play), with a
 Hex-specific Shannon-game graph, and per-node actions. (c) A GNN-vs-CNN
-AlphaZero-style result exists for chess: Rigaux & Kashima 2024
-(arXiv:2410.23753, edge-featured GAT; noted in the Keller/AlphaZero notes,
-no dedicated note yet). (d) An unpublished hobby project trains a small GNN
+AlphaZero-style result exists for chess: Rigaux & Kashima 2024 —
+**NeurIPS 2024** (dedicated note; single training run per model, no
+seed replication — noted for the discussion). (d) An unpublished hobby project trains a small GNN
 on Hive with an AlphaZero loop (janpfeifer/hiveGo, GitHub; webographie item)
 — no CNN comparison, no controlled budget, no systematic evaluation.
 
