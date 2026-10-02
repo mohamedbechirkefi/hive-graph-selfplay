@@ -1,8 +1,6 @@
 # Chapter 7 — Discussion and threats to validity (booklet draft, 2026-09-26)
 
-*Four-way split per plan ch. 21. Grounded in the claims register; the
-ablation paragraphs cite H7 artifacts and will absorb A2's final numbers
-when its third seed lands.*
+*Four-way split per plan ch. 21. Grounded in the claims register.*
 
 ## 7.1 Reading the result
 
@@ -18,7 +16,11 @@ that fold caps into draws. Third, the ablations sharpen the reading:
 removing geometric edge typing does not merely weaken the graph arm — at
 parity settings it destroys trainability outright (NaN divergence,
 generation 0, 3/3 seeds), so the typed relations carry at minimum the
-optimization stability of the whole arm. This contrasts instructively
+optimization stability of the whole arm — while the second ablation
+found the global-pooling bias fully dispensable (score changes ≈0.00 ±
+0.17, −0.01 ± 0.04, −0.01 ± 0.03 against the three opponents; failure
+modes unchanged), localising the arm's distinctive machinery in the
+directional relations, not the pooling. This contrasts instructively
 with the positive chess result of Rigaux & Kashima (2024, NeurIPS) and
 Keller et al.'s (2023) Hex asymmetry: our result does not contradict
 them — it bounds where their optimism transfers, and the comparison of
