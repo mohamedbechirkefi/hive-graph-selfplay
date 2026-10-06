@@ -26,13 +26,23 @@ from analyze_comparison import load, summarize  # noqa: E402
 REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "results" / "comparison"
 OPPONENTS = ["B-RND", "B-HEU", "B-MCTS"]
-SEEDS = [1, 2, 3]
-TSTAR = {  # journal H6-2026-09-16-progress-01 (pre-registered rule)
-    ("grid", 1): ("gen009", "final"), ("grid", 2): ("gen009", "final"),
-    ("grid", 3): ("gen008", "tstar"),
-    ("graph", 1): ("gen003", "tstar"), ("graph", 2): ("gen004", "tstar"),
-    ("graph", 3): ("gen004", "tstar"),
-}
+SEEDS = [1, 2, 3, 4, 5]  # seeds 4-5 added per D-031 (all-seeds pre-commitment)
+TSTAR_H = 18.77  # FIXED 2026-09-16 by the pre-registered rule (D-031b)
+
+
+def tstar_checkpoint(arm, seed):
+    """Last checkpoint completed at <= T*, from the run's wall-clock log.
+    Returns (genNNN, kind) where kind 'final' means the gen009 final eval
+    doubles as the T* eval (same checkpoint/volume/openings)."""
+    import json
+    clock = json.load(open(REPO / "data" / "runs" / f"cmp-{arm}-s{seed}" / "wallclock.json"))
+    cum, last = 0.0, None
+    for gen in sorted(clock):
+        cum += clock[gen]
+        if cum / 3600 <= TSTAR_H:
+            last = gen
+    assert last is not None, f"no checkpoint within T* for {arm}-s{seed}"
+    return (last, "final" if last == "gen009" else "tstar")
 
 
 def cell(arm, seed, opp, reading):
@@ -40,7 +50,7 @@ def cell(arm, seed, opp, reading):
     if reading == "same-examples":
         f = run / f"gen009-vs-{opp}.csv"
     else:
-        gen, kind = TSTAR[(arm, seed)]
+        gen, kind = tstar_checkpoint(arm, seed)
         f = run / (f"gen009-vs-{opp}.csv" if kind == "final"
                    else f"tstar-{gen}-vs-{opp}.csv")
     if not f.exists():
@@ -120,7 +130,7 @@ def main():
             for opp in OPPONENTS:
                 g = per[("graph", opp)]
                 c = per[("grid", opp)]
-                d = sum(g) / 3 - sum(c) / 3
+                d = sum(g) / len(g) - sum(c) / len(c)
                 lo, hi = diff_ci(g, c)
                 lines.append(f"- vs {opp}: graph−grid = {d:+.3f} "
                              f"[{lo:+.3f}, {hi:+.3f}]")

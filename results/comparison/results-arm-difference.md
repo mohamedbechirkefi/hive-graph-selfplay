@@ -2,6 +2,6 @@
 
 Graph − grid difference of seed-level means; bootstrap 95% over seeds (3 per arm, independent).
 
-- vs B-RND: graph−grid = -0.175 [-0.268, -0.007]
-- vs B-HEU: graph−grid = -0.085 [-0.143, -0.025]
-- vs B-MCTS: graph−grid = +0.005 [-0.020, +0.035]
+- vs B-RND: graph−grid = -0.169 [-0.272, -0.062]
+- vs B-HEU: graph−grid = -0.064 [-0.111, -0.017]
+- vs B-MCTS: graph−grid = -0.009 [-0.055, +0.028]
