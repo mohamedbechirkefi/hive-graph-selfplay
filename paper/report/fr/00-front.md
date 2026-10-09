@@ -62,8 +62,10 @@ résultats bruts gelés du 9 octobre 2026.
 **Code et artefacts.** Le moteur, le pipeline d'entraînement, les deux
 encodeurs, les configurations gelées, les enregistrements bruts
 d'évaluation par partie et les scripts qui régénèrent chaque table et
-chaque figure de ce rapport forment un seul dépôt (étiquette de
-publication et accès à fixer au moment de la diffusion). Un scénario de
+chaque figure de ce rapport forment un seul dépôt public, publié à
+l'étiquette v2.0-report :
+https://github.com/mohamedbechirkefi/hive-graph-selfplay (l'archive des
+enregistrements est jointe à cette publication). Un scénario de
 reproduction en environnement vierge est décrit en
 `@sec:app-g`{=typst} ; la provenance de chaque résultat est tabulée en
 `@sec:app-e`{=typst}.

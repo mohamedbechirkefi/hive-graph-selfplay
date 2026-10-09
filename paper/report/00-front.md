@@ -62,8 +62,9 @@ is final and no number differs from the frozen raw results of 9 October
 **Code and artifacts.** The engine, the training pipeline, both
 encoders, the frozen configurations, the raw per-game evaluation records
 and the scripts that regenerate every table and figure of this report
-form one repository (release tag and access to be fixed at the time of
-diffusion). A fresh-environment reproduction scenario is described in
+form one public repository, released at tag v2.0-report:
+https://github.com/mohamedbechirkefi/hive-graph-selfplay (the records
+archive is attached to that release). A fresh-environment reproduction scenario is described in
 `@sec:app-g`{=typst}; the provenance of every result is tabulated in
 `@sec:app-e`{=typst}.
 
