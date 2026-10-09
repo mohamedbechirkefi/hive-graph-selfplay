@@ -32,6 +32,7 @@
 #set math.equation(numbering: "(1)")
 #show quote.where(block: true): it => block(inset: (left: 1.5em, right: 1.5em), text(style: "italic", it.body))
 #set footnote.entry(separator: line(length: 30%, stroke: 0.4pt))
+
 // ---------- title page ----------
 #page(numbering: none, header: none)[
   #v(4.5cm)
@@ -175,7 +176,7 @@ Les #strong[résultats] sont exprimés du point de vue du joueur au trait dans l
 
 #figure(
   align(center)[#table(
-    columns: (44.81%, 55.19%),
+    columns: (37.75%, 62.25%),
     align: (left,left,),
     table.header([Symbole], [Signification],),
     table.hline(),
@@ -388,7 +389,7 @@ La boucle est classée comme démonstration, non comme preuve, pour des raisons 
 <chronologie>
 #figure(
   align(center)[#table(
-    columns: (21.41%, 40.4%, 38.19%),
+    columns: (18.1%, 47.46%, 34.44%),
     align: (left,left,left,),
     table.header([Date], [Jalon], [Preuve produite],),
     table.hline(),
@@ -433,7 +434,7 @@ Le moteur est un espace de travail Rust composé de petits crates aux dépendanc
 
 #figure(
   align(center)[#table(
-    columns: (23.62%, 39.29%, 37.09%),
+    columns: (19.91%, 38.27%, 41.81%),
     align: (left,left,left,),
     table.header([Composant], [Rôle], [Propriétés sur lesquelles l'étude s'appuie],),
     table.hline(),
@@ -479,7 +480,7 @@ Le perft compte les chemins de coups légaux jusqu'à une profondeur donnée sou
 
 #figure(
   align(center)[#table(
-    columns: (49.89%, 50.11%),
+    columns: (45.37%, 54.63%),
     align: (left,right,),
     table.header([Profondeur], [Nœuds],),
     table.hline(),
@@ -496,7 +497,7 @@ Le perft compte les chemins de coups légaux jusqu'à une profondeur donnée sou
 
 #figure(
   align(center)[#table(
-    columns: (23.9%, 25%, 25%, 26.1%),
+    columns: (22.15%, 24.12%, 25.88%, 27.85%),
     align: (left,right,right,right,),
     table.header([Type de partie], [Profondeur 4], [Profondeur 5], [Profondeur 6],),
     table.hline(),
@@ -523,7 +524,7 @@ Trente positions critiques ont été annotées à la main à partir des règles 
 
 #figure(
   align(center)[#table(
-    columns: (65.12%, 34.88%),
+    columns: (69.54%, 30.46%),
     align: (left,left,),
     table.header([Domaine de règles], [Cas],),
     table.hline(),
@@ -552,7 +553,7 @@ Des parties aléatoires à graine fixée, sur l'ensemble des huit types de parti
 
 #figure(
   align(center)[#table(
-    columns: (19.65%, 17.9%, 15.94%, 20.09%, 16.38%, 10.04%),
+    columns: (20.13%, 17.51%, 16.19%, 19.04%, 16.19%, 10.94%),
     align: (left,left,right,right,right,right,),
     table.header([Exécution], [Parties], [Plis parcourus], [Coups générés appliqués et annulés], [Violations], [Durée],),
     table.hline(),
@@ -575,7 +576,7 @@ Avant que tout budget de simulations ou plafond de coups ne soit fixé, les coû
 
 #figure(
   align(center)[#table(
-    columns: (47.9%, 52.1%),
+    columns: (50.55%, 49.45%),
     align: (left,left,),
     table.header([Mesure], [Valeur],),
     table.hline(),
@@ -680,7 +681,7 @@ Le fournisseur d'exécution est le point où les deux bras diffèrent réellemen
 
 #figure(
   align(center)[#table(
-    columns: (46.59%, 27.47%, 25.93%),
+    columns: (43.64%, 28.51%, 27.85%),
     align: (left,right,right,),
     table.header([Chemin d'exécution], [Bras grille], [Bras graphe],),
     table.hline(),
@@ -709,7 +710,7 @@ Avant de faire confiance à toute sortie d'entraînement, sept propriétés du c
 
 #figure(
   align(center)[#table(
-    columns: (32.08%, 34.51%, 33.41%),
+    columns: (27.59%, 36.87%, 35.54%),
     align: (left,left,left,),
     table.header([Vérification], [Ce qu'elle affirme], [Comment elle est testée],),
     table.hline(),
@@ -741,7 +742,7 @@ La boucle a d'abord été exécutée de bout en bout à un budget délibérémen
 
 #figure(
   align(center)[#table(
-    columns: (44.08%, 17.11%, 16.67%, 22.15%),
+    columns: (39.39%, 19.69%, 18.38%, 22.54%),
     align: (left,right,right,right,),
     table.header([Adversaire], [V/N/D], [Score], [Tronquées],),
     table.hline(),
@@ -789,7 +790,7 @@ Une ruche de 28 pièces s'étend sur au plus 28 cellules par axe après dépliag
 <les-77-plans-de-caractéristiques>
 #figure(
   align(center)[#table(
-    columns: (17.7%, 82.3%),
+    columns: (17%, 83%),
     align: (left,left,),
     table.header([Plans], [Contenu],),
     table.hline(),
@@ -824,7 +825,7 @@ L'encodage graphe est sans coordonnées : aucune coordonnée absolue n'y appara�
 <caractéristiques-de-nœud-relations-typées-et-caractéristiques-globales>
 #figure(
   align(center)[#table(
-    columns: (32.23%, 67.77%),
+    columns: (28.7%, 71.3%),
     align: (left,left,),
     table.header([Caractéristiques], [Contenu],),
     table.hline(),
@@ -844,7 +845,7 @@ Les arêtes sont les adjacences dirigées entre cellules de l'ensemble candidat,
 
 #figure(
   align(center)[#table(
-    columns: (34.66%, 65.34%),
+    columns: (33.55%, 66.45%),
     align: (left,left,),
     table.header([Caractéristiques], [Contenu],),
     table.hline(),
@@ -869,7 +870,7 @@ Les tenseurs ont des formes fixes, 224 nœuds et 321 lignes de coups (320 coups 
 <couverture-de-létat-du-moteur-et-ce-qui-nest-pas-donné-au-réseau>
 #figure(
   align(center)[#table(
-    columns: (46.58%, 53.42%),
+    columns: (45.25%, 54.75%),
     align: (left,left,),
     table.header([Composant de l'état (influence la légalité ou l'issue)], [Élément du graphe],),
     table.hline(),
@@ -916,7 +917,7 @@ La capacité a été appariée en dimensionnant la largeur et la profondeur du r
 
 #figure(
   align(center)[#table(
-    columns: (39.12%, 26.15%, 34.73%),
+    columns: (40%, 27.03%, 32.97%),
     align: (left,right,right,),
     table.header([Chemin d'inférence], [Grille (HiveNet)], [Graphe (HiveGraphNet)],),
     table.hline(),
@@ -933,7 +934,7 @@ Le réseau convolutif s'exécute le plus vite sur l'accélérateur CoreML ; le r
 
 #figure(
   align(center)[#table(
-    columns: (41.23%, 25.22%, 33.55%),
+    columns: (42.86%, 25.27%, 31.87%),
     align: (left,right,right,),
     table.header([Chemin d'entraînement], [Grille (HiveNet)], [Graphe (HiveGraphNet)],),
     table.hline(),
@@ -958,7 +959,7 @@ Une validation du câblage (deux époques sur les données du pilote de la gén�
 <les-deux-variantes-dablation>
 #figure(
   align(center)[#table(
-    columns: (33.7%, 45.59%, 20.7%),
+    columns: (34.44%, 42.6%, 22.96%),
     align: (left,left,right,),
     table.header([Variante], [Composant unique modifié], [Paramètres],),
     table.hline(),
@@ -996,7 +997,7 @@ Les trois adversaires s'exécutent sur le moteur validé, le même noyau de règ
 
 #figure(
   align(center)[#table(
-    columns: (39.65%, 21.81%, 38.55%),
+    columns: (36.26%, 18.68%, 45.05%),
     align: (left,right,left,),
     table.header([Caractéristique], [Poids], [Justification],),
     table.hline(),
@@ -1025,7 +1026,7 @@ Les trois agents ont été opposés en tournoi toutes rondes le 9 septembre 2026
 
 #figure(
   align(center)[#table(
-    columns: (25.33%, 17.03%, 13.1%, 17.25%, 27.29%),
+    columns: (25.55%, 17.25%, 13.76%, 17.69%, 25.76%),
     align: (left,right,right,right,right,),
     table.header([Confrontation (A vs B)], [V/N/D pour A], [Score de A], [Tronquées], [Différence Elo (descriptive)],),
     table.hline(),
@@ -1140,7 +1141,7 @@ Toutes les exécutions ont tourné sur un seul Apple M1 Pro (10 cœurs, 16 Go, m
 
 #figure(
   align(center)[#table(
-    columns: (23.57%, 17.18%, 30.84%, 28.41%),
+    columns: (23.3%, 17.36%, 29.01%, 30.33%),
     align: (left,right,left,left,),
     table.header([Campagne], [Exécutions], [Dates (2026)], [Temps mural par exécution],),
     table.hline(),
@@ -1159,7 +1160,7 @@ Toutes les exécutions ont tourné sur un seul Apple M1 Pro (10 cœurs, 16 Go, m
 
 #figure(
   align(center)[#table(
-    columns: (29.8%, 12.8%, 28.04%, 29.36%),
+    columns: (28.98%, 13.5%, 27.88%, 29.65%),
     align: (left,left,left,left,),
     table.header([Élément], [Fixé le (2026)], [Moment], [Garde-fou],),
     table.hline(),
@@ -1182,7 +1183,7 @@ Toutes les exécutions ont tourné sur un seul Apple M1 Pro (10 cœurs, 16 Go, m
 <sec:protocol-matrix>
 #figure(
   align(center)[#table(
-    columns: (28.92%, 22.3%, 48.79%),
+    columns: (26.71%, 22.3%, 50.99%),
     align: (left,left,left,),
     table.header([Question], [Expérience], [Résultat et emplacement],),
     table.hline(),
@@ -1218,7 +1219,7 @@ La frontière est tracée mécaniquement plutôt que laissée au jugement. #stro
 
 #figure(
   align(center)[#table(
-    columns: (16.11%, 21.41%, 30.68%, 31.79%),
+    columns: (15.23%, 18.76%, 29.58%, 36.42%),
     align: (left,left,left,left,),
     table.header([Date], [Porte], [Décision], [Fondement et conditions consignés],),
     table.hline(),
@@ -1262,7 +1263,7 @@ Les règles de fonctionnement exigent un journal en ajout seul de chaque inciden
 
 #figure(
   align(center)[#table(
-    columns: (15.45%, 26.71%, 27.81%, 30.02%),
+    columns: (15.23%, 28.92%, 24.94%, 30.91%),
     align: (left,left,left,left,),
     table.header([Date], [Incident], [Comment il a été attrapé], [Conséquence],),
     table.hline(),
@@ -1312,7 +1313,7 @@ Dans la première lecture, les deux bras sont comparés à leurs points de contr
 
 #figure(
   align(center)[#table(
-    columns: (14.25%, 14.25%, 15.57%, 23.25%, 15.57%, 17.11%),
+    columns: (16.85%, 14.44%, 15.75%, 20.35%, 15.75%, 16.85%),
     align: (left,left,right,right,right,right,),
     table.header([Bras], [Graine], [Score B-RND], [Troncature B-RND], [Score B-HEU], [Score B-MCTS],),
     table.hline(),
@@ -1335,7 +1336,7 @@ Contre l'adversaire aléatoire légal, chaque graine grille obtient au moins 0.9
 
 #figure(
   align(center)[#table(
-    columns: (17.22%, 27.59%, 27.59%, 27.59%),
+    columns: (18.5%, 27.09%, 27.09%, 27.31%),
     align: (left,left,left,left,),
     table.header([Bras], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
     table.hline(),
@@ -1352,7 +1353,7 @@ Dans la seconde lecture, chaque exécution est prise au dernier point de contrô
 
 #figure(
   align(center)[#table(
-    columns: (14.25%, 14.25%, 15.57%, 23.25%, 15.57%, 17.11%),
+    columns: (16.85%, 14.44%, 15.75%, 20.35%, 15.75%, 16.85%),
     align: (left,left,right,right,right,right,),
     table.header([Bras], [Graine], [Score B-RND], [Troncature B-RND], [Score B-HEU], [Score B-MCTS],),
     table.hline(),
@@ -1373,7 +1374,7 @@ Dans la seconde lecture, chaque exécution est prise au dernier point de contrô
 
 #figure(
   align(center)[#table(
-    columns: (17.22%, 27.59%, 27.59%, 27.59%),
+    columns: (18.5%, 27.09%, 27.09%, 27.31%),
     align: (left,left,left,left,),
     table.header([Bras], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
     table.hline(),
@@ -1390,7 +1391,7 @@ Le tableau de la première lecture persiste à temps égal : les moyennes du bra
 <le-contraste-entre-bras>
 #figure(
   align(center)[#table(
-    columns: (38.24%, 30.33%, 31.43%),
+    columns: (35.6%, 32.09%, 32.31%),
     align: (left,right,right,),
     table.header([Adversaire], [Exemples égaux : graphe − grille], [Temps mural égal : graphe − grille],),
     table.hline(),
@@ -1439,7 +1440,7 @@ La deuxième question de recherche demande comment les deux représentations se 
 <ce-que-coûte-chaque-bras-sur-la-machine-détude>
 #figure(
   align(center)[#table(
-    columns: (48.46%, 31.94%, 19.6%),
+    columns: (49.34%, 28.19%, 22.47%),
     align: (left,right,right,),
     table.header([Métrique], [Bras grille], [Bras graphe],),
     table.hline(),
@@ -1487,7 +1488,7 @@ Ce chapitre répond à la troisième question de recherche : lequel des deux com
 <conception-des-trois-cellules>
 #figure(
   align(center)[#table(
-    columns: (19.56%, 25.49%, 16.26%, 12.53%, 26.15%),
+    columns: (20.22%, 26.15%, 16.92%, 12.75%, 23.96%),
     align: (left,left,right,right,left,),
     table.header([Cellule], [Ce qui change par rapport au bras graphe complet], [Paramètres], [Graines], [Statut],),
     table.hline(),
@@ -1514,7 +1515,7 @@ Aucun balayage du taux d'apprentissage n'a été exécuté, parce que changer le
 <a2-retirer-le-pooling-global-ne-change-rien-de-mesurable>
 #figure(
   align(center)[#table(
-    columns: (18.54%, 26.49%, 25.39%, 29.58%),
+    columns: (19.25%, 26.55%, 25.66%, 28.54%),
     align: (left,left,left,left,),
     table.header([Adversaire], [A2 (sans pooling), graines 1/2/3], [Bras graphe complet, graines 1/2/3], [Différence A2 − complet \[intervalle à 95%\]],),
     table.hline(),
@@ -1538,7 +1539,7 @@ La cellule compte trois graines ; la différence de 0.10 M paramètres est inhé
 <a1-la-variante-à-adjacence-naïve-stabilisée-supplément-à-deux-composants>
 #figure(
   align(center)[#table(
-    columns: (16.7%, 24.62%, 17.36%, 19.56%, 21.76%),
+    columns: (17.54%, 25.44%, 16.45%, 17.11%, 23.46%),
     align: (left,left,right,right,left,),
     table.header([Adversaire], [A1′ graines 1/2/3 (troncature)], [Moyenne A1′ (3 graines)], [Moyenne graphe complet (5 graines)], [Différence \[intervalle à 95%\]],),
     table.hline(),
@@ -1562,7 +1563,7 @@ Chaque nombre de cette cellule est confondu par l'écrêtage de gradient par con
 <table-de-synthèse-h-t3>
 #figure(
   align(center)[#table(
-    columns: (26.05%, 34.22%, 39.74%),
+    columns: (22.74%, 27.59%, 49.67%),
     align: (left,left,left,),
     table.header([Ablation], [Composant retiré], [Résultat],),
     table.hline(),
@@ -2033,7 +2034,7 @@ L'entrée est un tenseur de 77 plans × 32 × 32 à valeurs float32 dans \[0, 1\
 
 #figure(
   align(center)[#table(
-    columns: (18.72%, 35.9%, 13.88%, 31.5%),
+    columns: (19.87%, 35.1%, 16.11%, 28.92%),
     align: (left,left,left,left,),
     table.header([Étape], [Opération], [Largeur], [Notes],),
     table.hline(),
@@ -2063,7 +2064,7 @@ Le réseau du bras graphe consomme des tenseurs à formes fixes (@tbl:graph-tens
 
 #figure(
   align(center)[#table(
-    columns: (18.32%, 16.78%, 15.45%, 49.45%),
+    columns: (17.18%, 17.18%, 16.08%, 49.56%),
     align: (left,left,left,left,),
     table.header([Tenseur], [Forme], [Type], [Contenu],),
     table.hline(),
@@ -2082,7 +2083,7 @@ Le réseau du bras graphe consomme des tenseurs à formes fixes (@tbl:graph-tens
 
 #figure(
   align(center)[#table(
-    columns: (19.38%, 29.52%, 19.38%, 31.72%),
+    columns: (20.31%, 30.91%, 19.43%, 29.36%),
     align: (left,left,left,left,),
     table.header([Étape], [Opération], [Largeur], [Notes],),
     table.hline(),
@@ -2109,7 +2110,7 @@ Le réseau du bras graphe consomme des tenseurs à formes fixes (@tbl:graph-tens
 
 #figure(
   align(center)[#table(
-    columns: (36.34%, 44.27%, 19.38%),
+    columns: (29.58%, 50.11%, 20.31%),
     align: (left,left,right,),
     table.header([Variante], [Différence par rapport au bras graphe complet], [Paramètres],),
     table.hline(),
@@ -2128,7 +2129,7 @@ Le réseau du bras graphe consomme des tenseurs à formes fixes (@tbl:graph-tens
 
 #figure(
   align(center)[#table(
-    columns: (22.3%, 27.81%, 22.3%, 27.59%),
+    columns: (22.52%, 26.71%, 23.18%, 27.59%),
     align: (left,left,left,left,),
     table.header([Emplacement], [Pièce du joueur au trait], [Emplacement], [Pièce de l'adversaire],),
     table.hline(),
@@ -2157,7 +2158,7 @@ Les positions d'auto-jeu sont écrites comme des enregistrements de taille fixe,
 
 #figure(
   align(center)[#table(
-    columns: (15.89%, 38.19%, 45.92%),
+    columns: (16.78%, 37.75%, 45.47%),
     align: (left,left,left,),
     table.header([Octets], [Champ], [Encodage],),
     table.hline(),
@@ -2188,7 +2189,7 @@ Les deux bras lisent le même enregistrement. Le bras grille en décode les 77 p
 <réglages-de-recherche>
 #figure(
   align(center)[#table(
-    columns: (24.28%, 39.51%, 36.2%),
+    columns: (22.96%, 44.15%, 32.89%),
     align: (left,left,left,),
     table.header([Réglage], [Auto-jeu (données d'entraînement)], [Évaluation indépendante],),
     table.hline(),
@@ -2215,7 +2216,7 @@ Chaque valeur de cette annexe est celle que les campagnes ont réellement exécu
 <sec:app-c-constants>
 #figure(
   align(center)[#table(
-    columns: (22.35%, 27.43%, 27.21%, 23.01%),
+    columns: (22.08%, 33.33%, 24.94%, 19.65%),
     align: (left,left,left,left,),
     table.header([Constante], [Valeur], [Fixée le (2026)], [Approuvée par],),
     table.hline(),
@@ -2239,16 +2240,16 @@ Les artefacts gelés sont identifiés par hachage de contenu (@tbl:app-c-hashes)
 
 #figure(
   align(center)[#table(
-    columns: (20.31%, 79.69%),
+    columns: (32.89%, 67.11%),
     align: (left,left,),
     table.header([Artefact], [SHA-256],),
     table.hline(),
-    [Protocole, version 1.0], [f340a6b64db0f5f0bf126ffb251c3de339450bde192fd54b719036a8a3aefeb5],
-    [Ouvertures, contenu (250 lignes)], [63b318d071dfc3ecfae3585636c8e6f7327ddc08e7aed86a466f915f8005af7b],
-    [Poids de l'heuristique (B-HEU)], [d0602f1895fbed70b6f84ac2a3eb87bd68e811e53acf24d4d7814a1495b0b97a],
-    [Configuration B-RND], [f2fc4a06441d3c1a7922838a6693dbb48ec54543bc34fd814d41c9a742514cd7],
-    [Configuration B-HEU], [7210a0a349c5bad5dcd2df099cc6865ee3cb5d8a2c30e106ce58137804818999],
-    [Configuration B-MCTS], [3fc8f75cf2b4f21012dd61e9924408fbfc32c8ea561aa96eb44f1091ba07364e],
+    [Protocole, version 1.0], [f340a6b64db0f5f0bf126ffb​251c3de339450bde192fd54b​719036a8a3aefeb5],
+    [Ouvertures, contenu (250 lignes)], [63b318d071dfc3ecfae35856​36c8e6f7327ddc08e7aed86a​466f915f8005af7b],
+    [Poids de l'heuristique (B-HEU)], [d0602f1895fbed70b6f84ac2​a3eb87bd68e811e53acf24d4​d7814a1495b0b97a],
+    [Configuration B-RND], [f2fc4a06441d3c1a7922838a​6693dbb48ec54543bc34fd81​4d41c9a742514cd7],
+    [Configuration B-HEU], [7210a0a349c5bad5dcd2df09​9cc6865ee3cb5d8a2c30e106​ce58137804818999],
+    [Configuration B-MCTS], [3fc8f75cf2b4f21012dd61e9​924408fbfc32c8ea561aa96e​b44f1091ba07364e],
   )]
   , caption: [Hachages de contenu des artefacts gelés ; ce sont les identifiants scientifiques du protocole, des ouvertures et de la population d'adversaires. ]
   , kind: table
@@ -2260,7 +2261,7 @@ La boucle d'entraînement et chaque hyperparamètre sont identiques pour les deu
 
 #figure(
   align(center)[#table(
-    columns: (40.18%, 59.82%),
+    columns: (37.09%, 62.91%),
     align: (left,left,),
     table.header([Hyperparamètre], [Valeur (les deux bras)],),
     table.hline(),
@@ -2284,7 +2285,7 @@ Chaque choix aléatoire de l'étude descend d'une graine enregistrée, de sorte 
 
 #figure(
   align(center)[#table(
-    columns: (41.94%, 58.06%),
+    columns: (32.67%, 67.33%),
     align: (left,left,),
     table.header([Quantité], [Graine],),
     table.hline(),
@@ -2307,7 +2308,7 @@ Les cinq configurations partagent les constantes gelées de @tbl:app-c-frozen et
 
 #figure(
   align(center)[#table(
-    columns: (18.02%, 21.54%, 15.16%, 17.58%, 11.21%, 16.48%),
+    columns: (17.88%, 22.96%, 15.45%, 16.56%, 11.26%, 15.89%),
     align: (left,left,right,left,left,left,),
     table.header([Variante], [Corps], [Paramètres], [Différence par rapport au bras graphe complet], [Graines], [Fournisseur d'inférence],),
     table.hline(),
@@ -2327,7 +2328,7 @@ Tous les chiffres de temps mural de ce rapport ont été mesurés sur un seul Ap
 
 #figure(
   align(center)[#table(
-    columns: (49.34%, 27.53%, 23.13%),
+    columns: (47.03%, 27.91%, 25.05%),
     align: (left,right,right,),
     table.header([Chemin (lot 1, par évaluation de décision)], [Grille], [Graphe],),
     table.hline(),
@@ -2378,7 +2379,7 @@ La lecture à exemples égaux évalue le point de contrôle de chaque exécution
 
 #figure(
   align(center)[#table(
-    columns: (15.13%, 15.13%, 16.67%, 18.2%, 16.67%, 18.2%),
+    columns: (17.54%, 14.91%, 16.45%, 16.89%, 16.45%, 17.76%),
     align: (left,left,right,right,right,right,),
     table.header([Bras], [Graine], [Score B-RND], [Tronc. B-RND], [Score B-HEU], [Score B-MCTS],),
     table.hline(),
@@ -2403,7 +2404,7 @@ La lecture à temps mural égal évalue le dernier point de contrôle de chaque 
 
 #figure(
   align(center)[#table(
-    columns: (12.75%, 12.75%, 18.24%, 13.41%, 14.73%, 13.41%, 14.73%),
+    columns: (14.41%, 12.66%, 17.03%, 13.54%, 14.19%, 13.54%, 14.63%),
     align: (left,left,left,right,right,right,right,),
     table.header([Bras], [Graine], [Point de contrôle], [Score B-RND], [Tronc. B-RND], [Score B-HEU], [Score B-MCTS],),
     table.hline(),
@@ -2424,7 +2425,7 @@ La lecture à temps mural égal évalue le dernier point de contrôle de chaque 
 
 #figure(
   align(center)[#table(
-    columns: (16.96%, 16.96%, 33.48%, 32.6%),
+    columns: (24.4%, 19.56%, 29.01%, 27.03%),
     align: (left,left,right,right,),
     table.header([Bras], [Graine], [Exemples égaux : sens. B-RND], [Temps mural égal : sens. B-RND],),
     table.hline(),
@@ -2449,7 +2450,7 @@ Le @tbl:d-means donne la moyenne des cinq scores par graine pour chaque bras, ad
 
 #figure(
   align(center)[#table(
-    columns: (20.79%, 14.22%, 21.66%, 21.66%, 21.66%),
+    columns: (20.61%, 14.91%, 21.49%, 21.49%, 21.49%),
     align: (left,left,right,right,right,),
     table.header([Lecture], [Bras], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
     table.hline(),
@@ -2464,7 +2465,7 @@ Le @tbl:d-means donne la moyenne des cinq scores par graine pour chaque bras, ad
 
 #figure(
   align(center)[#table(
-    columns: (24.4%, 37.14%, 38.46%),
+    columns: (24.84%, 37.36%, 37.8%),
     align: (left,right,right,),
     table.header([Adversaire], [Exemples égaux : graphe − grille], [Temps mural égal : graphe − grille],),
     table.hline(),
@@ -2480,7 +2481,7 @@ Les graines ont été collectées en deux étapes : les graines 1--3 des deux br
 
 #figure(
   align(center)[#table(
-    columns: (18.2%, 18.64%, 21.05%, 21.05%, 21.05%),
+    columns: (18.64%, 18.86%, 20.83%, 20.83%, 20.83%),
     align: (left,left,right,right,right,),
     table.header([Quantité], [Lecture], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
     table.hline(),
@@ -2501,7 +2502,7 @@ Le seuil a été fixé par une règle énoncée avant la campagne : la médiane 
 
 #figure(
   align(center)[#table(
-    columns: (14.07%, 14.07%, 24.18%, 20%, 27.69%),
+    columns: (15.89%, 13.91%, 20.53%, 19.21%, 30.46%),
     align: (left,left,left,right,left,),
     table.header([Bras], [Graine], [Point de contrôle au seuil], [Temps mural cumulé], [Ensemble d'évaluation],),
     table.hline(),
@@ -2524,7 +2525,7 @@ La carte est le contenu mesuré de la seconde lecture : à temps mural égal, le
 
 #figure(
   align(center)[#table(
-    columns: (13.26%, 14.35%, 14.35%, 14.35%, 14.35%, 14.35%, 15%),
+    columns: (13.76%, 14.19%, 14.19%, 14.19%, 14.19%, 14.19%, 15.28%),
     align: (left,right,right,right,right,right,right,),
     table.header([Bras], [Graine 1], [Graine 2], [Graine 3], [Graine 4], [Graine 5], [Moyenne],),
     table.hline(),
@@ -2545,13 +2546,13 @@ Trois variantes du bras graphe ont été entraînées avec trois graines chacune
 
 #figure(
   align(center)[#table(
-    columns: (28.85%, 19.38%, 11.23%, 20.26%, 20.26%),
+    columns: (28.85%, 20.04%, 11.45%, 20.48%, 19.16%),
     align: (left,left,left,right,left,),
     table.header([Variante], [Composant modifié], [Graines], [Temps mural d'entraînement], [Issue],),
     table.hline(),
     [A1 (`graph-untyped`)], [les six matrices d'arêtes typées par direction remplacées par une seule matrice partagée], [1, 2, 3], [7.75 / 8.01 / 7.61 h], [entraînement divergé vers NaN à la génération 0, 3 graines sur 3],
     [A2 (`graph-nogpool`)], [biais de pooling global retiré de chaque couche (1.37M paramètres vs 1.47M)], [1, 2, 3], [39.90 / 47.44 / 32.05 h], [entraînée ; aucun effet mesurable],
-    [A1′ (`graph-untyped-clip`)], [arêtes non typées #emph[et] écrêtage de la norme du gradient à 1.0 (deux composants)], [1, 2, 3], [23.89 / 30.35 / 27.68 h], [entraînée ; dans la bande du bras complet],
+    [A1′ (`graph-`#sym.zws`untyped-`#sym.zws`clip`)], [arêtes non typées #emph[et] écrêtage de la norme du gradient à 1.0 (deux composants)], [1, 2, 3], [23.89 / 30.35 / 27.68 h], [entraînée ; dans la bande du bras complet],
   )]
   , caption: [Les trois variantes d'ablation du bras graphe, chacune entraînée avec trois graines indépendantes au budget complet de la comparaison principale (10 générations × 500 parties d'auto-jeu ; mêmes adversaires, ouvertures et réglages d'évaluation gelés). Temps mural d'entraînement en heures par graine, selon la même comptabilité que le @tbl:d-wallclock (secondes d'auto-jeu et d'entraînement par génération sommées, parties d'évaluation exclues) ; les exécutions graphe de référence des graines 1--3 ont pris 43.07, 32.71 et 31.28 h. Les exécutions courtes de A1 sont un symptôme de sa divergence (une politique NaN joue des parties dégénérées courtes) plutôt qu'une économie.]
   , kind: table
@@ -2561,7 +2562,7 @@ Aucune table de scores n'est donnée pour A1 parce qu'il n'en existe aucune qui 
 
 #figure(
   align(center)[#table(
-    columns: (16.81%, 12.88%, 12.88%, 12.88%, 14.85%, 14.85%, 14.85%),
+    columns: (16.34%, 13.29%, 13.29%, 13.29%, 14.6%, 14.6%, 14.6%),
     align: (left,right,right,right,right,right,right,),
     table.header([Adversaire], [A2 graine 1], [A2 graine 2], [A2 graine 3], [complet graine 1], [complet graine 2], [complet graine 3],),
     table.hline(),
@@ -2575,7 +2576,7 @@ Aucune table de scores n'est donnée pour A1 parce qu'il n'en existe aucune qui 
 
 #figure(
   align(center)[#table(
-    columns: (26.97%, 24.34%, 24.34%, 24.34%),
+    columns: (26.7%, 24.51%, 24.51%, 24.29%),
     align: (left,right,right,right,),
     table.header([Adversaire], [A1′ graine 1], [A1′ graine 2], [A1′ graine 3],),
     table.hline(),
@@ -2589,7 +2590,7 @@ Aucune table de scores n'est donnée pour A1 parce qu'il n'en existe aucune qui 
 
 #figure(
   align(center)[#table(
-    columns: (17.72%, 20.57%, 19.04%, 21.88%, 20.79%),
+    columns: (18.56%, 22.71%, 17.47%, 18.56%, 22.71%),
     align: (left,right,right,right,right,),
     table.header([Adversaire], [A2 − complet (3 vs 3 graines)], [Moyenne A1′ (3 graines)], [Moyenne graphe complet (5 graines)], [A1′ − complet (3 vs 5 graines)],),
     table.hline(),
@@ -2611,9 +2612,9 @@ Cette annexe est le seul endroit du rapport où les identifiants internes sont l
 
 == La chaîne de preuve
 <la-chaîne-de-preuve>
-Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #strong[enregistrements bruts par partie] sont écrits par l'arène d'évaluation sous la forme d'un CSV par appariement (point de contrôle, adversaire) dans le répertoire de l'exécution ; les lignes d'en-tête du fichier nomment verbatim les deux lignes de commande des moteurs (chemin du réseau, nombre de simulations, graines), et chaque partie porte son issue avec la troncature comme catégorie à part entière. Les #strong[tables générées] sont produites par `scripts/make_results.py`, qui lit ces CSV et les journaux de temps mural par exécution, agrège par (graine, adversaire), applique le bootstrap sur les graines (10 000 rééchantillonnages, la graine comme unité, aucune partie agrégée comme i.i.d.), et écrit `results/comparison/*.{md,csv}` ; il ne ressaisit jamais un nombre. Les #strong[figures] sont produites par `scripts/make_figures.py` à partir des mêmes CSV, journaux de temps mural et journaux de campagne. #strong[Le rapport] est assemblé à partir de ces fichiers ; un vérificateur de sources vérifie que chaque jeton numérique de chaque chapitre apparaît dans la base de preuves, et un second vérificateur vérifie l'identité numérique entre les versions anglaise et française. Le script de reproduction minimale reconstruit le moteur dans un clone frais, rejoue une partie enregistrée jusqu'à une correspondance exacte avec sa ligne livrée, et régénère les tables à l'identique à l'octet près (vérifié le 2026-10-09).
+Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #strong[enregistrements bruts par partie] sont écrits par l'arène d'évaluation sous la forme d'un CSV par appariement (point de contrôle, adversaire) dans le répertoire de l'exécution ; les lignes d'en-tête du fichier nomment verbatim les deux lignes de commande des moteurs (chemin du réseau, nombre de simulations, graines), et chaque partie porte son issue avec la troncature comme catégorie à part entière. Les #strong[tables générées] sont produites par `scripts/`#sym.zws`make_`#sym.zws`results.`#sym.zws`py`, qui lit ces CSV et les journaux de temps mural par exécution, agrège par (graine, adversaire), applique le bootstrap sur les graines (10 000 rééchantillonnages, la graine comme unité, aucune partie agrégée comme i.i.d.), et écrit `results/`#sym.zws`comparison/`#sym.zws`*.`#sym.zws`{md,`#sym.zws`csv}` ; il ne ressaisit jamais un nombre. Les #strong[figures] sont produites par `scripts/`#sym.zws`make_`#sym.zws`figures.`#sym.zws`py` à partir des mêmes CSV, journaux de temps mural et journaux de campagne. #strong[Le rapport] est assemblé à partir de ces fichiers ; un vérificateur de sources vérifie que chaque jeton numérique de chaque chapitre apparaît dans la base de preuves, et un second vérificateur vérifie l'identité numérique entre les versions anglaise et française. Le script de reproduction minimale reconstruit le moteur dans un clone frais, rejoue une partie enregistrée jusqu'à une correspondance exacte avec sa ligne livrée, et régénère les tables à l'identique à l'octet près (vérifié le 2026-10-09).
 
-#strong[Journaux.] Chaque expérience ou mesure a une entrée sous `journal/`, nommée `YYYY-MM-DD-<slug>.md` et portant un identifiant de la forme `<phase>-<date>-<slug>-<nn>` (par exemple `H6-2026-10-09-5seed-final-01`). L'en-tête fixe l'identifiant, la date, l'hypothèse, le commit git, la configuration, les graines, la version des données, le matériel, la durée et le coût ; le corps a des sections fixes : Méthodes, Résultats bruts et incertitude, Échecs, Limites et facteurs de confusion, Interprétation, Décision, Artefacts. Les résultats négatifs et les défauts d'outillage sont des entrées comme les autres. #strong[Journal des décisions.] Chaque décision non triviale est une entrée `D-nnn` dans le fichier d'espace de travail `state/decisions.md`, en ajout seul : une décision renversée n'est jamais modifiée, une nouvelle entrée la remplace et renvoie vers elle. Les franchissements de porte consignent l'approbation de l'auteur dans sa formulation originale. #strong[Journal de méthodologie.] `docs/methodology-log.md` (espace de travail) consigne, en ajout seul, chaque incident où la méthode a attrapé ou manqué quelque chose.
+#strong[Journaux.] Chaque expérience ou mesure a une entrée sous `journal/`, nommée `YYYY-`#sym.zws`MM-`#sym.zws`DD-`#sym.zws`<slug>.`#sym.zws`md` et portant un identifiant de la forme `<phase>-`#sym.zws`<date>-`#sym.zws`<slug>-`#sym.zws`<nn>` (par exemple `H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01`). L'en-tête fixe l'identifiant, la date, l'hypothèse, le commit git, la configuration, les graines, la version des données, le matériel, la durée et le coût ; le corps a des sections fixes : Méthodes, Résultats bruts et incertitude, Échecs, Limites et facteurs de confusion, Interprétation, Décision, Artefacts. Les résultats négatifs et les défauts d'outillage sont des entrées comme les autres. #strong[Journal des décisions.] Chaque décision non triviale est une entrée `D-nnn` dans le fichier d'espace de travail `state/`#sym.zws`decisions.`#sym.zws`md`, en ajout seul : une décision renversée n'est jamais modifiée, une nouvelle entrée la remplace et renvoie vers elle. Les franchissements de porte consignent l'approbation de l'auteur dans sa formulation originale. #strong[Journal de méthodologie.] `docs/`#sym.zws`methodology-`#sym.zws`log.`#sym.zws`md` (espace de travail) consigne, en ajout seul, chaque incident où la méthode a attrapé ou manqué quelque chose.
 
 == De chaque résultat à son artefact
 <de-chaque-résultat-à-son-artefact>
@@ -2621,46 +2622,46 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
 
 #figure(
   align(center)[#table(
-    columns: (9.71%, 30.68%, 38.41%, 21.19%),
+    columns: (18.54%, 38.85%, 26.05%, 16.56%),
     align: (left,left,left,left,),
     table.header([Résultat dans le rapport], [Artefact généré], [Entrée brute], [Entrée de journal],),
     table.hline(),
-    [Scores par graine et taux de troncature, lecture à exemples égaux (2 bras × 5 graines × 3 adversaires, 100 parties chacun)], [`results/comparison/results-same-examples.{md,csv}`], [`data/runs/cmp-{grid,graph}-s{1..5}/eval/gen009-vs-{B-RND,B-HEU,B-MCTS}.csv`], [`H6-2026-09-19-comparison-01` (3 graines) ; `H6-2026-10-09-5seed-final-01` (finale)],
-    [Scores par graine et taux de troncature, lecture à temps mural égal], [`results/comparison/results-same-wallclock.{md,csv}`], [`eval/tstar-gen00N-vs-*.csv` de chaque exécution (les fichiers du point de contrôle final lorsque le point de contrôle au seuil est le dernier) et `wallclock.json`], [les deux mêmes entrées],
-    [Contraste entre bras graphe − grille, les deux lectures, bootstrap sur les graines], [`results/comparison/results-arm-difference.md`], [les deux fichiers CSV ci-dessus], [les deux mêmes entrées],
-    [Seuil à temps mural égal T\* = 18.77 h et carte des points de contrôle à T\*], [nombres dans le journal ; carte re-dérivée par `make_results.py`], [`wallclock.json` des exécutions grille s1--s3 (médiane des trois totaux), puis de chaque exécution], [`H6-2026-09-16-progress-01` ; re-dérivation vérifiée dans `H6-2026-10-09-5seed-final-01`],
-    [Bornes de sensibilité au plafond (chaque troncature comptée comme une victoire pour le bras testé)], [nombres dans le journal], [enregistrements par partie des évaluations finales], [`H6-2026-09-19-comparison-01`],
-    [Table des coûts : paramètres, inférence au meilleur fournisseur, temps mural d'exécution (génération en auto-jeu + entraînement, évaluation exclue, moyenne sur les cinq graines), coût d'auto-jeu (ce temps mural / 5 000 parties), référence de débit d'entraînement (lot 128), scores contre la population], [`paper/figures/fig2-score-cost.md` (régénéré le 2026-10-09 après la découverte d'un défaut du générateur ; voir @sec:working-method)], [`wallclock.json` par exécution ; `results-*.csv` ; référence dans `docs/representations/comparison-controls.md`], [`H5-2026-09-10-encoders-01` ; `H6-2026-09-19-comparison-01`],
-    [Score en fonction du temps mural d'entraînement, toutes graines, les deux bras, T\* marqué], [`paper/figures/fig1-score-vs-time.png`], [`eval/*.csv` et `wallclock.json` par exécution], [`H6-2026-09-19-comparison-01` ; `H6-2026-10-09-5seed-final-01`],
-    [Plans de grille contre graphe de cellules pour une position], [`paper/figures/fig3-encodings.png`], [schéma : une position synthétique à cinq pièces dessinée dans le script ; aucune quantité mesurée], [`H5-2026-09-10-encoders-01` (définitions des encodages)],
-    [Trois positions d'échec F1--F3], [`paper/figures/fig4-failures.{md,png}`], [`eval/gen009-vs-*.csv` et `results/comparison/openings-v1.txt` ; chaque partie reproduite de façon déterministe et vérifiée contre sa ligne CSV], [`H6-2026-09-19-comparison-01`],
-    [Trajectoires de score par adversaire selon la génération, 5 graines], [`paper/figures/fig5-per-opponent.png`], [`eval/{gen004,gen007,gen009}-vs-*.csv` et `wallclock.json` par exécution], [`H8-2026-10-09-detailed-edition-01`],
-    [Argmax de politique (top-1) et exactitude de la valeur à l'époque 1 selon la génération, 10 exécutions], [`paper/figures/fig6-training-metrics.png`], [`data/runs/campaign.log`, `data/runs/extension.log` (journaux d'entraînement des 10 exécutions principales)], [`H8-2026-10-09-detailed-edition-01`],
-    [Taux de troncature à l'évaluation finale contre l'aléatoire légal par exécution], [`paper/figures/fig7-truncation.png`], [`eval/gen009-vs-B-RND.csv` par exécution], [`H8-2026-10-09-detailed-edition-01`],
-    [Table d'ablation : divergence A1, effet nul A2, supplément A1′], [`results/ablations/README.md`], [`data/runs/cmp-graph-{untyped,nogpool,untyped-clip}-s{1,2,3}/eval/` contre les finales du bras graphe complet], [`H7-2026-09-23-a1-divergence-01` ; `H7-2026-10-02-a2-nogpool-01` ; `H7-2026-10-09-a1prime-01`],
-    [Schémas du pipeline, des architectures et de la chronologie], [`paper/figures/fig8-pipeline.png`, `fig9-architectures.png`, `fig10-timeline.png` (`scripts/make_report_figures.py`)], [la documentation du système (`docs/inventory.md`), les en-têtes de journaux et le journal des décisions ; aucune quantité mesurée], [aucune],
+    [Scores par graine et taux de troncature, lecture à exemples égaux (2 bras × 5 graines × 3 adversaires, 100 parties chacun)], [`results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`{md,`#sym.zws`csv}`], [`data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`{grid,`#sym.zws`graph}-`#sym.zws`s{1.`#sym.zws`.`#sym.zws`5}/`#sym.zws`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`{B-`#sym.zws`RND,`#sym.zws`B-`#sym.zws`HEU,`#sym.zws`B-`#sym.zws`MCTS}.`#sym.zws`csv`], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01` (3 graines) ; `H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01` (finale)],
+    [Scores par graine et taux de troncature, lecture à temps mural égal], [`results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`{md,`#sym.zws`csv}`], [`eval/`#sym.zws`tstar-`#sym.zws`gen00N-`#sym.zws`vs-`#sym.zws`*.`#sym.zws`csv` de chaque exécution (les fichiers du point de contrôle final lorsque le point de contrôle au seuil est le dernier) et `wallclock.json`], [les deux mêmes entrées],
+    [Contraste entre bras graphe − grille, les deux lectures, bootstrap sur les graines], [`results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`], [les deux fichiers CSV ci-dessus], [les deux mêmes entrées],
+    [Seuil à temps mural égal T\* = 18.77 h et carte des points de contrôle à T\*], [nombres dans le journal ; carte re-dérivée par `make_results.py`], [`wallclock.json` des exécutions grille s1--s3 (médiane des trois totaux), puis de chaque exécution], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`16-`#sym.zws`progress-`#sym.zws`01` ; re-dérivation vérifiée dans `H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01`],
+    [Bornes de sensibilité au plafond (chaque troncature comptée comme une victoire pour le bras testé)], [nombres dans le journal], [enregistrements par partie des évaluations finales], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`],
+    [Table des coûts : paramètres, inférence au meilleur fournisseur, temps mural d'exécution (génération en auto-jeu + entraînement, évaluation exclue, moyenne sur les cinq graines), coût d'auto-jeu (ce temps mural / 5 000 parties), référence de débit d'entraînement (lot 128), scores contre la population], [`paper/`#sym.zws`figures/`#sym.zws`fig2-`#sym.zws`score-`#sym.zws`cost.`#sym.zws`md` (régénéré le 2026-10-09 après la découverte d'un défaut du générateur ; voir @sec:working-method)], [`wallclock.json` par exécution ; `results-*.csv` ; référence dans `docs/`#sym.zws`representations/`#sym.zws`comparison-`#sym.zws`controls.`#sym.zws`md`], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`encoders-`#sym.zws`01` ; `H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`],
+    [Score en fonction du temps mural d'entraînement, toutes graines, les deux bras, T\* marqué], [`paper/`#sym.zws`figures/`#sym.zws`fig1-`#sym.zws`score-`#sym.zws`vs-`#sym.zws`time.`#sym.zws`png`], [`eval/*.csv` et `wallclock.json` par exécution], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01` ; `H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01`],
+    [Plans de grille contre graphe de cellules pour une position], [`paper/`#sym.zws`figures/`#sym.zws`fig3-`#sym.zws`encodings.`#sym.zws`png`], [schéma : une position synthétique à cinq pièces dessinée dans le script ; aucune quantité mesurée], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`encoders-`#sym.zws`01` (définitions des encodages)],
+    [Trois positions d'échec F1--F3], [`paper/`#sym.zws`figures/`#sym.zws`fig4-`#sym.zws`failures.`#sym.zws`{md,`#sym.zws`png}`], [`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`*.`#sym.zws`csv` et `results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt` ; chaque partie reproduite de façon déterministe et vérifiée contre sa ligne CSV], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`],
+    [Trajectoires de score par adversaire selon la génération, 5 graines], [`paper/`#sym.zws`figures/`#sym.zws`fig5-`#sym.zws`per-`#sym.zws`opponent.`#sym.zws`png`], [`eval/`#sym.zws`{gen004,`#sym.zws`gen007,`#sym.zws`gen009}-`#sym.zws`vs-`#sym.zws`*.`#sym.zws`csv` et `wallclock.json` par exécution], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01`],
+    [Argmax de politique (top-1) et exactitude de la valeur à l'époque 1 selon la génération, 10 exécutions], [`paper/`#sym.zws`figures/`#sym.zws`fig6-`#sym.zws`training-`#sym.zws`metrics.`#sym.zws`png`], [`data/`#sym.zws`runs/`#sym.zws`campaign.`#sym.zws`log`, `data/`#sym.zws`runs/`#sym.zws`extension.`#sym.zws`log` (journaux d'entraînement des 10 exécutions principales)], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01`],
+    [Taux de troncature à l'évaluation finale contre l'aléatoire légal par exécution], [`paper/`#sym.zws`figures/`#sym.zws`fig7-`#sym.zws`truncation.`#sym.zws`png`], [`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`B-`#sym.zws`RND.`#sym.zws`csv` par exécution], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01`],
+    [Table d'ablation : divergence A1, effet nul A2, supplément A1′], [`results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [`data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`graph-`#sym.zws`{untyped,`#sym.zws`nogpool,`#sym.zws`untyped-`#sym.zws`clip}-`#sym.zws`s{1,`#sym.zws`2,`#sym.zws`3}/`#sym.zws`eval/` contre les finales du bras graphe complet], [`H7-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`23-`#sym.zws`a1-`#sym.zws`divergence-`#sym.zws`01` ; `H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`02-`#sym.zws`a2-`#sym.zws`nogpool-`#sym.zws`01` ; `H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`a1prime-`#sym.zws`01`],
+    [Schémas du pipeline, des architectures et de la chronologie], [`paper/`#sym.zws`figures/`#sym.zws`fig8-`#sym.zws`pipeline.`#sym.zws`png`, `fig9-`#sym.zws`architectures.`#sym.zws`png`, `fig10-`#sym.zws`timeline.`#sym.zws`png` (`scripts/`#sym.zws`make_`#sym.zws`report_`#sym.zws`figures.`#sym.zws`py`)], [la documentation du système (`docs/inventory.md`), les en-têtes de journaux et le journal des décisions ; aucune quantité mesurée], [aucune],
   )]
-  , caption: [Provenance de chaque table et figure générée : l'artefact dont elle est tirée, les enregistrements bruts à partir desquels cet artefact est calculé, et l'entrée de journal qui a consigné le résultat. Les répertoires d'exécution sont abrégés en `eval/…` pour `data/runs/cmp-<arm>-s<seed>/eval/…`. ]
+  , caption: [Provenance de chaque table et figure générée : l'artefact dont elle est tirée, les enregistrements bruts à partir desquels cet artefact est calculé, et l'entrée de journal qui a consigné le résultat. Les répertoires d'exécution sont abrégés en `eval/…` pour `data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`<arm>-`#sym.zws`s<seed>/`#sym.zws`eval/`#sym.zws`…`. ]
   , kind: table
   ) <tbl:prov-results>
 
 #figure(
   align(center)[#table(
-    columns: (15.45%, 51.43%, 33.11%),
+    columns: (41.94%, 32.67%, 25.39%),
     align: (left,left,left,),
     table.header([Preuve dans les chapitres de méthode], [Où elle réside], [Entrée de journal (date)],),
     table.hline(),
-    [Tables de perft (8 types de partie), conformité UHP 21/21, fuzzing différentiel contre deux moteurs de référence (27 829 positions à la graine 20260909), vérification croisée de l'encodeur de plans (240 positions)], [suites de tests sous `crates/`, `scripts/nightly.sh`, `scripts/crosscheck_planes.py`], [`H2-2026-09-09-suite-rerun-01` (2026-09-09)],
-    [30 positions critiques annotées à la main, 30/30 après une correction côté mise en place], [`tests/critical_positions/cases/*.toml` ; `scripts/run_critical_corpus.py`], [`H2-2026-09-09-corpus-run-01` (2026-09-09)],
-    [Zéro violation d'invariant sur 10.9M transitions appliquées], [`crates/hive-core/tests/random_invariants.rs`], [`H2-2026-09-09-random-invariants-01` (2026-09-09)],
-    [Profil de débit : aller-retour UHP de 21.7 µs ; 2.62 ms (CoreML) contre 23.5 ms (CPU) par évaluation ; distribution des longueurs de partie derrière le plafond de 300 plis], [commandes consignées en ligne dans l'entrée], [`H2-2026-09-09-throughput-profile-01` (2026-09-09)],
-    [Inférence CoreML restaurée dans le pipeline Rust (format MLProgram)], [`crates/hive-mcts/src/ort_eval.rs`], [`H4-2026-09-09-coreml-fix-01` (2026-09-09)],
-    [Définitions des lignes de base, round-robin de caractérisation, cinq cas tactiques, épinglage des poids], [`configs/baselines/*.toml`, `docs/baselines.md`, `tests/tactical_positions/`], [`H3-2026-09-09-baselines-01` (2026-09-09)],
-    [Pilote du pipeline et les sept vérifications automatisées pré-entraînement], [`scripts/run_pilot.py`, `scripts/run_h4_checks.sh`, `data/runs/pilot0/`], [`H4-2026-09-10-pilot-01` (2026-09-10)],
-    [Encodeurs grille et graphe, appariement de capacité (1.44M vs 1.47M), asymétries de coût, batterie de propriétés], [`docs/representations/{grid,graph,comparison-controls}.md`, `python/hivenet/{graph_dataset,graph_model}.py`], [`H5-2026-09-10-encoders-01` (2026-09-10)],
-    [Miroir Rust de l'encodeur graphe, vérification croisée dorée (160 positions), bras graphe de bout en bout à travers la même recherche], [`scripts/crosscheck_graph.py`, module graphe de `hive-nn`], [`H5-2026-09-10-graph-wiring-01` (2026-09-10)],
-    [Matrice de comparaison, génération des ouvertures, test du harnais à calendrier fixe, dimensionnement de la campagne], [`configs/comparison-matrix.yaml`, `results/comparison/openings-v1.txt`, `results/comparison/opponents-manifest.md`], [`H6-2026-09-10-matrix-01` (2026-09-10)],
-    [Vérifications d'assemblage du rapport et le défaut d'obsolescence trouvé par la passe de rendu], [`paper/final-control.md`], [`H8-2026-10-09-detailed-edition-01` (2026-10-09)],
+    [Tables de perft (8 types de partie), conformité UHP 21/21, fuzzing différentiel contre deux moteurs de référence (27 829 positions à la graine 20260909), vérification croisée de l'encodeur de plans (240 positions)], [suites de tests sous `crates/`, `scripts/`#sym.zws`nightly.`#sym.zws`sh`, `scripts/`#sym.zws`crosscheck_`#sym.zws`planes.`#sym.zws`py`], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`suite-`#sym.zws`rerun-`#sym.zws`01` (2026-09-09)],
+    [30 positions critiques annotées à la main, 30/30 après une correction côté mise en place], [`tests/`#sym.zws`critical_`#sym.zws`positions/`#sym.zws`cases/`#sym.zws`*.`#sym.zws`toml` ; `scripts/`#sym.zws`run_`#sym.zws`critical_`#sym.zws`corpus.`#sym.zws`py`], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`corpus-`#sym.zws`run-`#sym.zws`01` (2026-09-09)],
+    [Zéro violation d'invariant sur 10.9M transitions appliquées], [`crates/`#sym.zws`hive-`#sym.zws`core/`#sym.zws`tests/`#sym.zws`random_`#sym.zws`invariants.`#sym.zws`rs`], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`random-`#sym.zws`invariants-`#sym.zws`01` (2026-09-09)],
+    [Profil de débit : aller-retour UHP de 21.7 µs ; 2.62 ms (CoreML) contre 23.5 ms (CPU) par évaluation ; distribution des longueurs de partie derrière le plafond de 300 plis], [commandes consignées en ligne dans l'entrée], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`throughput-`#sym.zws`profile-`#sym.zws`01` (2026-09-09)],
+    [Inférence CoreML restaurée dans le pipeline Rust (format MLProgram)], [`crates/`#sym.zws`hive-`#sym.zws`mcts/`#sym.zws`src/`#sym.zws`ort_`#sym.zws`eval.`#sym.zws`rs`], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`coreml-`#sym.zws`fix-`#sym.zws`01` (2026-09-09)],
+    [Définitions des lignes de base, round-robin de caractérisation, cinq cas tactiques, épinglage des poids], [`configs/`#sym.zws`baselines/`#sym.zws`*.`#sym.zws`toml`, `docs/baselines.md`, `tests/`#sym.zws`tactical_`#sym.zws`positions/`], [`H3-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`baselines-`#sym.zws`01` (2026-09-09)],
+    [Pilote du pipeline et les sept vérifications automatisées pré-entraînement], [`scripts/`#sym.zws`run_`#sym.zws`pilot.`#sym.zws`py`, `scripts/`#sym.zws`run_`#sym.zws`h4_`#sym.zws`checks.`#sym.zws`sh`, `data/runs/pilot0/`], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`pilot-`#sym.zws`01` (2026-09-10)],
+    [Encodeurs grille et graphe, appariement de capacité (1.44M vs 1.47M), asymétries de coût, batterie de propriétés], [`docs/`#sym.zws`representations/`#sym.zws`{grid,`#sym.zws`graph,`#sym.zws`comparison-`#sym.zws`controls}.`#sym.zws`md`, `python/`#sym.zws`hivenet/`#sym.zws`{graph_`#sym.zws`dataset,`#sym.zws`graph_`#sym.zws`model}.`#sym.zws`py`], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`encoders-`#sym.zws`01` (2026-09-10)],
+    [Miroir Rust de l'encodeur graphe, vérification croisée dorée (160 positions), bras graphe de bout en bout à travers la même recherche], [`scripts/`#sym.zws`crosscheck_`#sym.zws`graph.`#sym.zws`py`, module graphe de `hive-nn`], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`graph-`#sym.zws`wiring-`#sym.zws`01` (2026-09-10)],
+    [Matrice de comparaison, génération des ouvertures, test du harnais à calendrier fixe, dimensionnement de la campagne], [`configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`, `results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`, `results/`#sym.zws`comparison/`#sym.zws`opponents-`#sym.zws`manifest.`#sym.zws`md`], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`matrix-`#sym.zws`01` (2026-09-10)],
+    [Vérifications d'assemblage du rapport et le défaut d'obsolescence trouvé par la passe de rendu], [`paper/`#sym.zws`final-`#sym.zws`control.`#sym.zws`md`], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01` (2026-10-09)],
   )]
   , caption: [Provenance des preuves des chapitres de méthode (validation du moteur, lignes de base, pipeline, encodeurs, conception de la campagne) : les artefacts et l'entrée de journal consignant chaque mesure. ]
   , kind: table
@@ -2672,7 +2673,7 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
 
 #figure(
   align(center)[#table(
-    columns: (15.27%, 21.68%, 63.05%),
+    columns: (14.13%, 20.31%, 65.56%),
     align: (left,left,left,),
     table.header([Entrée], [Date], [Décision],),
     table.hline(),
@@ -2716,37 +2717,37 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
 
 #figure(
   align(center)[#table(
-    columns: (22.79%, 45.35%, 31.86%),
+    columns: (30.97%, 28.76%, 40.27%),
     align: (left,left,left,),
     table.header([Affirmation], [Preuve], [Limite],),
     table.hline(),
-    [Le moteur de règles reproduit les tables de perft publiées de Mzinga pour les 8 types de partie jusqu'à la profondeur 6 (profondeur ≤5 dans la suite standard, profondeur 7 dans les exécutions nocturnes).], [`H2-2026-09-09-suite-rerun-01`], [égalité des comptes de nœuds bornée en profondeur ; la ré-exécution d7 n'a pas été répétée le 2026-09-09 (d≤6 confirmé)],
-    [Le moteur passe le harnais de conformité UHP de la référence nokamute (21/21).], [`H2-2026-09-09-suite-rerun-01`], [conformité = comportement du protocole, non preuve complète des règles],
-    [Les ensembles de coups légaux par pli sont identiques à ceux des deux moteurs de référence (MzingaEngine v0.16.0, nokamute 1.0.3) sur des parties aléatoires à graine fixée (27 829 positions à la graine 20260909 ; 200/100 parties/type en nocturne).], [`H2-2026-09-09-suite-rerun-01`], [accord avec les références, non directement avec la feuille de règles ; couverture par marche aléatoire],
-    [Le moteur concorde avec un corpus de 30 cas de positions critiques annotées à la main dont les attentes ont été validées (commit) avant toute exécution du moteur (30/30 après une correction côté mise en place).], [`H2-2026-09-09-corpus-run-01` ; `tests/critical_positions/`], [annotations du corpus non revues à l'externe (limite déclarée) ; 30 cas, dans le bas de la fourchette proposée de 30--50],
-    [Des sessions de parties aléatoires à graine fixée sur les 8 types de partie montrent zéro violation d'invariant sur 10.9M transitions appliquées.], [`H2-2026-09-09-random-invariants-01`], [largeur pseudo-aléatoire, non profondeur adversariale ; sérialisation via UHP GameString seulement],
-    [Les encodeurs de plans Rust et Python concordent exactement (240 positions, plans identiques à l'octet près).], [`H2-2026-09-09-suite-rerun-01`], [encodeur du bras grille seulement à cette date],
-    [Un aller-retour UHP par sous-processus coûte \~22 µs (négligeable face aux coûts par décision), de sorte que la liaison Python↔Rust utilise sous-processus/UHP (pas de PyO3).], [`H2-2026-09-09-throughput-profile-01` ; D-010], [une seule machine (M1 Pro) ; à revoir si Python entre un jour dans une boucle par coup],
-    [Aux coûts d'inférence mesurés (2.62 ms/eval CoreML, 23.5 ms CPU, réseau gen-19 comme charge de travail), 128/32 simulations avec randomisation du plafond de simulations et un plafond de 300 plis sont réalisables dans l'enveloppe de calcul de cette étude.], [`H2-2026-09-09-throughput-profile-01` ; D-011], [historique : propositions confirmées ensuite par le pilote et gelées (D-020) ; les coûts sont propres au réseau],
-    [Inférence CoreML restaurée dans le pipeline Rust (correctif MLProgram) : l'auto-jeu à 128/32 simulations coûte ≈12 thread-s/partie (≈3 s/partie en temps mural à 4 threads), contre ≈320 thread-s/partie sur le repli CPU à 600/150.], [`H4-2026-09-09-coreml-fix-01`], [réseau gen-19 comme charge de travail ; petits nombres de sondes ; re-mesuré au pilote],
-    [La ligne de base heuristique bat l'aléatoire légal 100--0 (100 parties appariées, 0 troncature) ; le MCTS sans réseau à 6400 simulations obtient 99.5% contre l'aléatoire et 37.5% contre l'heuristique (−89 Elo \[−150, −32\]) ; une sonde à budget 4× atteint 56.2%.], [`H3-2026-09-09-baselines-01`], [volume de pilote (100 parties/appariement) ; IC d'arène en approximation non appariée ; constat d'ordre diagnostiqué, non réajusté ; population gelée depuis (D-017)],
-    [La ligne de base MCTS résout les 5 cas tactiques annotés à la main à 400, 1600 et 6400 simulations, et les signes de la valeur sont épinglés sous alternance des joueurs.], [`H3-2026-09-09-baselines-01` ; `tests/tactical_positions/` ; tests de signe dans `crates/*/tests`], [5 cas, non revus à l'externe (limite déclarée)],
-    [Les sept vérifications pré-entraînement passent comme tests automatisés sur des shards réels d'auto-jeu : masse de politique illégale nulle, identité id↔coup, perspective d'issue correcte avec troncature distincte, sur-apprentissage d'un petit lot (KL 0.09, argmax 15/15, valeur 15/15), sauvegarde/reprise au bit près, bruit d'évaluation structurellement désactivé, séparation évaluation/entraînement par audit.], [`H4-2026-09-10-pilot-01` ; `scripts/run_h4_checks.sh`], [le critère de sur-apprentissage est la KL rapportée au plancher d'entropie des cibles douces, non perte→0],
-    [Une génération d'auto-jeu depuis une initialisation aléatoire (300 parties, 128/32 simulations, réseau grille de 1.44M paramètres) produit un réseau qui bat l'aléatoire légal 100--0 (28 victoires, 2 troncatures) tout en obtenant 3.3% contre l'heuristique et 3.3% contre le MCTS à 6400 simulations : apprentissage non dégénéré avec un diagnostic d'écart de données et d'itérations.], [`H4-2026-09-10-pilot-01` ; `data/runs/pilot0/eval/`], [une seule graine, 30 parties/adversaire, génération 0 seulement ; pas un résultat de l'étude],
-    [L'auto-jeu de la génération 0 tronque 56.7% des parties au plafond de 300 plis (170/300) ; le coût de génération est ≈12 s/partie en temps mural (4 threads) à la génération 0, retombant vers ≈3 s/partie avec un réseau entraîné au même budget.], [`H4-2026-09-10-pilot-01` ; `data/runs/pilot0/selfplay/gen000-manifest.json`], [une machine, une graine ; taux propres au jeu à initialisation aléatoire],
-    [Les deux bras sont à capacité appariée à +1.5% (grille 1.44M, graphe 1.47M paramètres) derrière le décodeur identique, et l'encodeur graphe ne perd aucune information d'état par rapport aux enregistrements générés par le moteur (batterie de propriétés P1--P5, 300 positions réelles, masse de politique illégale nulle de bout en bout).], [`H5-2026-09-10-encoders-01` ; `docs/representations/`], [historique : le miroir Rust et la vérification croisée dorée ont été livrés au vert le même jour (`H5-2026-09-10-graph-wiring-01`)],
-    [Les coûts d'inférence au meilleur fournisseur disponible diffèrent de ≈1.4× au détriment du bras graphe (grille 2.62 ms/eval CoreML contre graphe 3.67 ms ORT-CPU), tandis que le débit d'entraînement sur CPU favorise le bras graphe 3.5× et que MPS favorise le bras grille 2×.], [`H5-2026-09-10-encoders-01` ; table dans `comparison-controls.md`], [une seule machine ; rapporté, non égalisé ; alimente la lecture à temps mural égal],
-    [Les encodeurs graphe Rust et Python concordent exactement (160 positions sur les 8 types de partie, tenseurs identiques à l'octet près, épinglés chaque nuit), et le bras graphe s'exécute de bout en bout à travers le MCTS Rust identique.], [`H5-2026-09-10-graph-wiring-01` ; `scripts/crosscheck_graph.py`], [entraînement à l'échelle d'un test de fumée ; les résultats de force relèvent de la comparaison],
-    [#strong[H1 est rejetée sous la règle pré-enregistrée] : sous les deux lectures de budget, le bras graphe ne montre aucun avantage cohérent entre graines contre la population gelée, et chaque intervalle graphe−grille exclut un avantage graphe substantiel (plus grande borne supérieure +0.035).], [`H6-2026-09-19-comparison-01` ; `results/comparison/results-arm-difference.md`], [3 graines/bras ; une seule architecture graphe à une seule capacité et un seul budget ; auto-jeu en régime précoce (10 générations)],
-    [Contraste entre bras (moyenne par graine, bootstrap95 sur les graines) : vs B-RND −0.175 \[−0.268, −0.007\] (exemples égaux) et −0.158 \[−0.254, −0.050\] (temps mural égal) ; vs B-HEU −0.085 \[−0.143, −0.025\] et −0.072 \[−0.100, −0.028\] ; vs B-MCTS +0.005 \[−0.020, +0.035\] et −0.013 \[−0.040, +0.015\].], [`results/comparison/results-*.csv` ; `H6-2026-09-19-comparison-01`], [intervalles sur 3 graines indépendantes par bras],
-    [Le bras graphe tronque 20--57% de ses parties contre l'aléatoire légal au plafond de 300 plis (grille 0--1%) ; le rejet est robuste au plafond : compter toutes les troncatures comme des victoires du graphe laisse graphe−grille à −0.072/−0.058 contre B-RND.], [`H6-2026-09-19-comparison-01` (bornes de sensibilité au plafond) ; fig4-F1], [l'argument de borne se substitue à une ré-exécution à plafond plus grand (énoncé)],
-    [Coûts de campagne mesurés : les exécutions graphe ont pris en moyenne 2.0× le temps mural d'entraînement de la grille (36.7 vs 18.0 h par exécution de 10×500 parties, moyenne sur 5 graines, auto-jeu + entraînement, évaluation exclue ; les chiffres à 3 graines étaient 35.7 vs 18.2 h) ; à T\* = 18.77 h le bras graphe achève 3--6 des 10 générations (4--5 sur les trois graines originales).], [`data/runs/cmp-*/wallclock.json` ; `results/comparison/wallclock-per-run.md` ; fig2], [une seule machine ; meilleur fournisseur disponible par bras (rapporté) ; le défaut de diviseur du générateur de la table des coûts du 2026-10-09 n'a affecté que les moyennes précédemment imprimées (30.0/61.2 h), jamais ce rapport],
-    [Tous les artefacts de comparaison ont été gelés avant toute exécution de comparaison (population D-017, protocole D-020, ouvertures D-025), T\* a été calculé à partir des temps muraux de la grille avant l'existence de tout nombre inter-bras, et aucun artefact gelé n'a été touché.], [D-017/D-020/D-025/D-026 ; `H6-2026-09-16-progress-01`, `H6-2026-09-19-comparison-01`], [aucune],
-    [Ablation A1 (parité) : retirer le typage géométrique des arêtes détruit l'entraînabilité : divergence NaN à la génération 0 pour 3/3 graines ; les arêtes typées contribuent au minimum à la stabilité d'optimisation ; les tables d'évaluation de A1 sont des artefacts d'une politique NaN et sont exclues en tant que scores.], [`H7-2026-09-23-a1-divergence-01` ; `results/ablations/README.md`], [le mécanisme (échelle de gradient 6× sur la matrice partagée) est une hypothèse fondée, non une décomposition mesurée],
-    [Ablation A2 : retirer le biais de pooling global n'a aucun effet mesurable : nogpool−complet = −0.001 \[−0.170, +0.165\] (B-RND), −0.007 \[−0.043, +0.030\] (B-HEU), −0.013 \[−0.043, +0.013\] (B-MCTS) ; modes de défaillance inchangés.], [`H7-2026-10-02-a2-nogpool-01` ; `results/ablations/README.md`], [3 graines/cellule ; différence de 0.10M paramètres inhérente au composant (rapportée)],
-    [#strong[Analyse finale à 5 graines (pré-engagée, D-031) : H1 reste rejetée.] Contrastes graphe−grille : B-RND −0.169 \[−0.272, −0.062\] / −0.161 \[−0.278, −0.048\] ; B-HEU −0.064 \[−0.111, −0.017\] / −0.059 \[−0.087, −0.029\] ; B-MCTS −0.009 \[−0.055, +0.028\] / −0.018 \[−0.066, +0.025\] (exemples égaux / temps mural égal) ; plus grande borne supérieure +0.028. Remplace les tables à 3 graines comme nombres finaux de l'étude.], [`H6-2026-10-09-5seed-final-01` ; `results/comparison/`], [graines 4--5 collectées après l'analyse à 3 graines (divulgué) ; T\* fixé à la valeur pré-enregistrée],
-    [Supplément A1′ (à deux composants : arêtes non typées + écrêtage de gradient) : s'entraîne de façon finie et obtient des scores dans la bande du bras graphe complet (tous les IC de différence chevauchent 0) ; avec A1, la contribution mesurable des relations typées à cette échelle se concentre dans la stabilité d'optimisation ; elle n'est jamais attribuée au seul typage (facteur de confusion de l'écrêtage).], [`H7-2026-10-09-a1prime-01` ; `results/ablations/README.md`], [3 vs 5 graines ; intervalles larges ; confondu par construction],
-    [La méthodologie de travail (délégation à l'IA au niveau des objectifs sous six portes réservées à l'humain, état dans des fichiers, vérification mécanique) a attrapé au moins cinq défauts de harnais ou de processus avant qu'ils ne puissent contaminer les résultats (interblocage du pipeline, erreur de mise en place du corpus, défaut d'adversaire du harnais d'évaluation, chemin silencieux de perte d'enregistrements, divergence NaN silencieuse), chacun journalisé au moment de sa détection.], [`docs/methodology-log.md` (espace de travail) ; journaux cités par incident dans @sec:working-method], [observations de processus issues d'une seule étude ; aucun contrôle contrefactuel],
+    [Le moteur de règles reproduit les tables de perft publiées de Mzinga pour les 8 types de partie jusqu'à la profondeur 6 (profondeur ≤5 dans la suite standard, profondeur 7 dans les exécutions nocturnes).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`suite-`#sym.zws`rerun-`#sym.zws`01`], [égalité des comptes de nœuds bornée en profondeur ; la ré-exécution d7 n'a pas été répétée le 2026-09-09 (d≤6 confirmé)],
+    [Le moteur passe le harnais de conformité UHP de la référence nokamute (21/21).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`suite-`#sym.zws`rerun-`#sym.zws`01`], [conformité = comportement du protocole, non preuve complète des règles],
+    [Les ensembles de coups légaux par pli sont identiques à ceux des deux moteurs de référence (MzingaEngine v0.16.0, nokamute 1.0.3) sur des parties aléatoires à graine fixée (27 829 positions à la graine 20260909 ; 200/100 parties/type en nocturne).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`suite-`#sym.zws`rerun-`#sym.zws`01`], [accord avec les références, non directement avec la feuille de règles ; couverture par marche aléatoire],
+    [Le moteur concorde avec un corpus de 30 cas de positions critiques annotées à la main dont les attentes ont été validées (commit) avant toute exécution du moteur (30/30 après une correction côté mise en place).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`corpus-`#sym.zws`run-`#sym.zws`01` ; `tests/`#sym.zws`critical_`#sym.zws`positions/`], [annotations du corpus non revues à l'externe (limite déclarée) ; 30 cas, dans le bas de la fourchette proposée de 30--50],
+    [Des sessions de parties aléatoires à graine fixée sur les 8 types de partie montrent zéro violation d'invariant sur 10.9M transitions appliquées.], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`random-`#sym.zws`invariants-`#sym.zws`01`], [largeur pseudo-aléatoire, non profondeur adversariale ; sérialisation via UHP GameString seulement],
+    [Les encodeurs de plans Rust et Python concordent exactement (240 positions, plans identiques à l'octet près).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`suite-`#sym.zws`rerun-`#sym.zws`01`], [encodeur du bras grille seulement à cette date],
+    [Un aller-retour UHP par sous-processus coûte \~22 µs (négligeable face aux coûts par décision), de sorte que la liaison Python↔Rust utilise sous-processus/UHP (pas de PyO3).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`throughput-`#sym.zws`profile-`#sym.zws`01` ; D-010], [une seule machine (M1 Pro) ; à revoir si Python entre un jour dans une boucle par coup],
+    [Aux coûts d'inférence mesurés (2.62 ms/eval CoreML, 23.5 ms CPU, réseau gen-19 comme charge de travail), 128/32 simulations avec randomisation du plafond de simulations et un plafond de 300 plis sont réalisables dans l'enveloppe de calcul de cette étude.], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`throughput-`#sym.zws`profile-`#sym.zws`01` ; D-011], [historique : propositions confirmées ensuite par le pilote et gelées (D-020) ; les coûts sont propres au réseau],
+    [Inférence CoreML restaurée dans le pipeline Rust (correctif MLProgram) : l'auto-jeu à 128/32 simulations coûte ≈12 thread-s/partie (≈3 s/partie en temps mural à 4 threads), contre ≈320 thread-s/partie sur le repli CPU à 600/150.], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`coreml-`#sym.zws`fix-`#sym.zws`01`], [réseau gen-19 comme charge de travail ; petits nombres de sondes ; re-mesuré au pilote],
+    [La ligne de base heuristique bat l'aléatoire légal 100--0 (100 parties appariées, 0 troncature) ; le MCTS sans réseau à 6400 simulations obtient 99.5% contre l'aléatoire et 37.5% contre l'heuristique (−89 Elo \[−150, −32\]) ; une sonde à budget 4× atteint 56.2%.], [`H3-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`baselines-`#sym.zws`01`], [volume de pilote (100 parties/appariement) ; IC d'arène en approximation non appariée ; constat d'ordre diagnostiqué, non réajusté ; population gelée depuis (D-017)],
+    [La ligne de base MCTS résout les 5 cas tactiques annotés à la main à 400, 1600 et 6400 simulations, et les signes de la valeur sont épinglés sous alternance des joueurs.], [`H3-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`baselines-`#sym.zws`01` ; `tests/`#sym.zws`tactical_`#sym.zws`positions/` ; tests de signe dans `crates/*/tests`], [5 cas, non revus à l'externe (limite déclarée)],
+    [Les sept vérifications pré-entraînement passent comme tests automatisés sur des shards réels d'auto-jeu : masse de politique illégale nulle, identité id↔coup, perspective d'issue correcte avec troncature distincte, sur-apprentissage d'un petit lot (KL 0.09, argmax 15/15, valeur 15/15), sauvegarde/reprise au bit près, bruit d'évaluation structurellement désactivé, séparation évaluation/entraînement par audit.], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`pilot-`#sym.zws`01` ; `scripts/`#sym.zws`run_`#sym.zws`h4_`#sym.zws`checks.`#sym.zws`sh`], [le critère de sur-apprentissage est la KL rapportée au plancher d'entropie des cibles douces, non perte→0],
+    [Une génération d'auto-jeu depuis une initialisation aléatoire (300 parties, 128/32 simulations, réseau grille de 1.44M paramètres) produit un réseau qui bat l'aléatoire légal 100--0 (28 victoires, 2 troncatures) tout en obtenant 3.3% contre l'heuristique et 3.3% contre le MCTS à 6400 simulations : apprentissage non dégénéré avec un diagnostic d'écart de données et d'itérations.], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`pilot-`#sym.zws`01` ; `data/`#sym.zws`runs/`#sym.zws`pilot0/`#sym.zws`eval/`], [une seule graine, 30 parties/adversaire, génération 0 seulement ; pas un résultat de l'étude],
+    [L'auto-jeu de la génération 0 tronque 56.7% des parties au plafond de 300 plis (170/300) ; le coût de génération est ≈12 s/partie en temps mural (4 threads) à la génération 0, retombant vers ≈3 s/partie avec un réseau entraîné au même budget.], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`pilot-`#sym.zws`01` ; `data/`#sym.zws`runs/`#sym.zws`pilot0/`#sym.zws`selfplay/`#sym.zws`gen000-`#sym.zws`manifest.`#sym.zws`json`], [une machine, une graine ; taux propres au jeu à initialisation aléatoire],
+    [Les deux bras sont à capacité appariée à +1.5% (grille 1.44M, graphe 1.47M paramètres) derrière le décodeur identique, et l'encodeur graphe ne perd aucune information d'état par rapport aux enregistrements générés par le moteur (batterie de propriétés P1--P5, 300 positions réelles, masse de politique illégale nulle de bout en bout).], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`encoders-`#sym.zws`01` ; `docs/`#sym.zws`representations/`], [historique : le miroir Rust et la vérification croisée dorée ont été livrés au vert le même jour (`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`graph-`#sym.zws`wiring-`#sym.zws`01`)],
+    [Les coûts d'inférence au meilleur fournisseur disponible diffèrent de ≈1.4× au détriment du bras graphe (grille 2.62 ms/eval CoreML contre graphe 3.67 ms ORT-CPU), tandis que le débit d'entraînement sur CPU favorise le bras graphe 3.5× et que MPS favorise le bras grille 2×.], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`encoders-`#sym.zws`01` ; table dans `comparison-`#sym.zws`controls.`#sym.zws`md`], [une seule machine ; rapporté, non égalisé ; alimente la lecture à temps mural égal],
+    [Les encodeurs graphe Rust et Python concordent exactement (160 positions sur les 8 types de partie, tenseurs identiques à l'octet près, épinglés chaque nuit), et le bras graphe s'exécute de bout en bout à travers le MCTS Rust identique.], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`graph-`#sym.zws`wiring-`#sym.zws`01` ; `scripts/`#sym.zws`crosscheck_`#sym.zws`graph.`#sym.zws`py`], [entraînement à l'échelle d'un test de fumée ; les résultats de force relèvent de la comparaison],
+    [#strong[H1 est rejetée sous la règle pré-enregistrée] : sous les deux lectures de budget, le bras graphe ne montre aucun avantage cohérent entre graines contre la population gelée, et chaque intervalle graphe−grille exclut un avantage graphe substantiel (plus grande borne supérieure +0.035).], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01` ; `results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`], [3 graines/bras ; une seule architecture graphe à une seule capacité et un seul budget ; auto-jeu en régime précoce (10 générations)],
+    [Contraste entre bras (moyenne par graine, bootstrap95 sur les graines) : vs B-RND −0.175 \[−0.268, −0.007\] (exemples égaux) et −0.158 \[−0.254, −0.050\] (temps mural égal) ; vs B-HEU −0.085 \[−0.143, −0.025\] et −0.072 \[−0.100, −0.028\] ; vs B-MCTS +0.005 \[−0.020, +0.035\] et −0.013 \[−0.040, +0.015\].], [`results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`*.`#sym.zws`csv` ; `H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`], [intervalles sur 3 graines indépendantes par bras],
+    [Le bras graphe tronque 20--57% de ses parties contre l'aléatoire légal au plafond de 300 plis (grille 0--1%) ; le rejet est robuste au plafond : compter toutes les troncatures comme des victoires du graphe laisse graphe−grille à −0.072/−0.058 contre B-RND.], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01` (bornes de sensibilité au plafond) ; fig4-F1], [l'argument de borne se substitue à une ré-exécution à plafond plus grand (énoncé)],
+    [Coûts de campagne mesurés : les exécutions graphe ont pris en moyenne 2.0× le temps mural d'entraînement de la grille (36.7 vs 18.0 h par exécution de 10×500 parties, moyenne sur 5 graines, auto-jeu + entraînement, évaluation exclue ; les chiffres à 3 graines étaient 35.7 vs 18.2 h) ; à T\* = 18.77 h le bras graphe achève 3--6 des 10 générations (4--5 sur les trois graines originales).], [`data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`*/`#sym.zws`wallclock.`#sym.zws`json` ; `results/`#sym.zws`comparison/`#sym.zws`wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md` ; fig2], [une seule machine ; meilleur fournisseur disponible par bras (rapporté) ; le défaut de diviseur du générateur de la table des coûts du 2026-10-09 n'a affecté que les moyennes précédemment imprimées (30.0/61.2 h), jamais ce rapport],
+    [Tous les artefacts de comparaison ont été gelés avant toute exécution de comparaison (population D-017, protocole D-020, ouvertures D-025), T\* a été calculé à partir des temps muraux de la grille avant l'existence de tout nombre inter-bras, et aucun artefact gelé n'a été touché.], [D-017/D-020/D-025/D-026 ; `H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`16-`#sym.zws`progress-`#sym.zws`01`, `H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`], [aucune],
+    [Ablation A1 (parité) : retirer le typage géométrique des arêtes détruit l'entraînabilité : divergence NaN à la génération 0 pour 3/3 graines ; les arêtes typées contribuent au minimum à la stabilité d'optimisation ; les tables d'évaluation de A1 sont des artefacts d'une politique NaN et sont exclues en tant que scores.], [`H7-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`23-`#sym.zws`a1-`#sym.zws`divergence-`#sym.zws`01` ; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [le mécanisme (échelle de gradient 6× sur la matrice partagée) est une hypothèse fondée, non une décomposition mesurée],
+    [Ablation A2 : retirer le biais de pooling global n'a aucun effet mesurable : nogpool−complet = −0.001 \[−0.170, +0.165\] (B-RND), −0.007 \[−0.043, +0.030\] (B-HEU), −0.013 \[−0.043, +0.013\] (B-MCTS) ; modes de défaillance inchangés.], [`H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`02-`#sym.zws`a2-`#sym.zws`nogpool-`#sym.zws`01` ; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [3 graines/cellule ; différence de 0.10M paramètres inhérente au composant (rapportée)],
+    [#strong[Analyse finale à 5 graines (pré-engagée, D-031) : H1 reste rejetée.] Contrastes graphe−grille : B-RND −0.169 \[−0.272, −0.062\] / −0.161 \[−0.278, −0.048\] ; B-HEU −0.064 \[−0.111, −0.017\] / −0.059 \[−0.087, −0.029\] ; B-MCTS −0.009 \[−0.055, +0.028\] / −0.018 \[−0.066, +0.025\] (exemples égaux / temps mural égal) ; plus grande borne supérieure +0.028. Remplace les tables à 3 graines comme nombres finaux de l'étude.], [`H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01` ; `results/`#sym.zws`comparison/`], [graines 4--5 collectées après l'analyse à 3 graines (divulgué) ; T\* fixé à la valeur pré-enregistrée],
+    [Supplément A1′ (à deux composants : arêtes non typées + écrêtage de gradient) : s'entraîne de façon finie et obtient des scores dans la bande du bras graphe complet (tous les IC de différence chevauchent 0) ; avec A1, la contribution mesurable des relations typées à cette échelle se concentre dans la stabilité d'optimisation ; elle n'est jamais attribuée au seul typage (facteur de confusion de l'écrêtage).], [`H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`a1prime-`#sym.zws`01` ; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [3 vs 5 graines ; intervalles larges ; confondu par construction],
+    [La méthodologie de travail (délégation à l'IA au niveau des objectifs sous six portes réservées à l'humain, état dans des fichiers, vérification mécanique) a attrapé au moins cinq défauts de harnais ou de processus avant qu'ils ne puissent contaminer les résultats (interblocage du pipeline, erreur de mise en place du corpus, défaut d'adversaire du harnais d'évaluation, chemin silencieux de perte d'enregistrements, divergence NaN silencieuse), chacun journalisé au moment de sa détection.], [`docs/`#sym.zws`methodology-`#sym.zws`log.`#sym.zws`md` (espace de travail) ; journaux cités par incident dans @sec:working-method], [observations de processus issues d'une seule étude ; aucun contrôle contrefactuel],
   )]
   , caption: [Le registre des affirmations et des preuves de ce rapport, reproduit depuis le fichier du dépôt sans sa colonne de section. Chaque affirmation faite dans le corps correspond à une ligne ; la colonne des limites énonce ce qui empêche une lecture plus large. ]
   , kind: table
@@ -2754,7 +2755,7 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
 
 == Données brutes, identifiants et hachages gelés
 <données-brutes-identifiants-et-hachages-gelés>
-#strong[Emplacement et agencement.] Les enregistrements bruts résident sur disque sous `data/runs/` dans le dépôt de l'étude ; ils ne sont pas sous contrôle de version. Il y a un répertoire par exécution d'entraînement, `cmp-<arm>-s<seed>`, avec `<arm>` dans {`grid`, `graph`} pour la comparaison principale (graines 1--5) et dans {`graph-untyped`, `graph-nogpool`, `graph-untyped-clip`} pour les ablations A1, A2 et A1′ (graines 1--3), plus `pilot0/` pour le pilote du pipeline. Chaque répertoire d'exécution contient : `selfplay/gen00N-*.bin` (shards binaires d'enregistrements de la génération N, format v3, estampillés par le modèle) avec `gen00N-manifest.json` (réseau et son empreinte, génération du modèle, version des enregistrements, type de partie, graine, nombre de parties, nombres de simulations complètes et économiques, fraction de coups complets, plis en température, réglages d'abandon, nombres de parties abandonnées et tronquées, nombre de positions, liste des shards) ; `checkpoints/gen00N/` (`hivenet-e0.pt`, `hivenet-e1.pt`, `train-config.json`) et le `gen00N-b1.onnx` exporté utilisé pour le jeu ; `eval/<checkpoint>-vs-<opponent>.csv` avec son `.log` pour les évaluations intermédiaires (gen004, gen007) et finale (gen009), et `eval/tstar-gen00N-vs-<opponent>.{csv,log}` pour le point de contrôle au seuil à temps égal ; et `wallclock.json`, le temps mural par génération en secondes dont dérivent chaque chiffre de temps et le seuil. Les journaux au niveau de la campagne sont `data/runs/campaign.log` (exécutions principales, graines 1--3), `extension.log` (graines 4--5), `ablations.log` et `tstar-evals.log`. Dérivation des graines : graine de base = 100 000 × graine ; la génération g utilise graine de base + g ; graine du réseau d'évaluation 9000 + gen (finales) ou 9500 (ensembles au seuil), graines des adversaires 9101 (aléatoire légal) et 9201 (recherche).
+#strong[Emplacement et agencement.] Les enregistrements bruts résident sur disque sous `data/runs/` dans le dépôt de l'étude ; ils ne sont pas sous contrôle de version. Il y a un répertoire par exécution d'entraînement, `cmp-<arm>-s<seed>`, avec `<arm>` dans {`grid`, `graph`} pour la comparaison principale (graines 1--5) et dans {`graph-untyped`, `graph-nogpool`, `graph-`#sym.zws`untyped-`#sym.zws`clip`} pour les ablations A1, A2 et A1′ (graines 1--3), plus `pilot0/` pour le pilote du pipeline. Chaque répertoire d'exécution contient : `selfplay/`#sym.zws`gen00N-`#sym.zws`*.`#sym.zws`bin` (shards binaires d'enregistrements de la génération N, format v3, estampillés par le modèle) avec `gen00N-`#sym.zws`manifest.`#sym.zws`json` (réseau et son empreinte, génération du modèle, version des enregistrements, type de partie, graine, nombre de parties, nombres de simulations complètes et économiques, fraction de coups complets, plis en température, réglages d'abandon, nombres de parties abandonnées et tronquées, nombre de positions, liste des shards) ; `checkpoints/`#sym.zws`gen00N/` (`hivenet-e0.pt`, `hivenet-e1.pt`, `train-config.json`) et le `gen00N-b1.onnx` exporté utilisé pour le jeu ; `eval/`#sym.zws`<checkpoint>-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`csv` avec son `.log` pour les évaluations intermédiaires (gen004, gen007) et finale (gen009), et `eval/`#sym.zws`tstar-`#sym.zws`gen00N-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`{csv,`#sym.zws`log}` pour le point de contrôle au seuil à temps égal ; et `wallclock.json`, le temps mural par génération en secondes dont dérivent chaque chiffre de temps et le seuil. Les journaux au niveau de la campagne sont `data/`#sym.zws`runs/`#sym.zws`campaign.`#sym.zws`log` (exécutions principales, graines 1--3), `extension.log` (graines 4--5), `ablations.log` et `tstar-evals.log`. Dérivation des graines : graine de base = 100 000 × graine ; la génération g utilise graine de base + g ; graine du réseau d'évaluation 9000 + gen (finales) ou 9500 (ensembles au seuil), graines des adversaires 9101 (aléatoire légal) et 9201 (recherche).
 
 #strong[Volumes.] La campagne principale a compris 10 générations × 500 parties d'auto-jeu par exécution (30 000 parties d'auto-jeu par bras à trois graines au stade à 3 graines) et 100 parties appariées par évaluation (point de contrôle, adversaire) sur les ouvertures gelées ; la campagne s'est déroulée du 2026-09-10 12:42 au 2026-09-17 22:31 pour les graines 1--3 (≈163 h de temps machine, évaluations au seuil comprises), les graines 4--5 ayant été collectées du 2026-09-27 au 2026-10-02. L'empreinte disque n'est consignée dans la base de preuves que sous la forme des estimations au lancement (≈3--5 Go pour la campagne principale, ≈3--4 Go pour les ablations) contre 164 Go libres au lancement avec une garde de 20 Go ; les tailles exactes par exécution n'ont pas été journalisées. Depuis la suppression consignée dans D-024, le dépôt de l'étude est la seule copie du matériel antérieur à l'étude dont il a hérité (le point de contrôle de la boucle antérieure et ses données, 412 Mo et 75 Mo), ce qui explique que ces fichiers soient protégés par la porte des actions destructrices.
 
@@ -2762,20 +2763,20 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
 
 #figure(
   align(center)[#table(
-    columns: (29.8%, 7.95%, 43.27%, 18.98%),
+    columns: (44.37%, 11.92%, 28.04%, 15.67%),
     align: (left,left,left,left,),
     table.header([Artefact], [Gelé / épinglé le], [Identifiant], [Enregistrement],),
     table.hline(),
-    [Protocole v1.0 (`docs/protocol.md`)], [2026-09-10], [sha256 f340a6b6…aefeb5 au commit 44a74ff (complet : f340a6b64db0f5f0bf126ffb251c3de339450bde192fd54b719036a8a3aefeb5)], [D-020],
-    [Adversaire B-RND (`configs/baselines/random.toml`)], [2026-09-09], [sha256 f2fc4a06441d3c1a7922838a6693dbb48ec54543bc34fd814d41c9a742514cd7], [D-017],
-    [Adversaire B-HEU (`configs/baselines/heuristic.toml`)], [2026-09-09], [sha256 7210a0a349c5bad5dcd2df099cc6865ee3cb5d8a2c30e106ce58137804818999], [D-017],
-    [Adversaire B-MCTS (`configs/baselines/mcts-nonet.toml`)], [2026-09-09], [sha256 3fc8f75cf2b4f21012dd61e9924408fbfc32c8ea561aa96eb44f1091ba07364e], [D-017],
-    [Poids de l'heuristique (`configs/baselines/heuristic-weights.toml`)], [2026-09-09], [sha256 d0602f1895fbed70b6f84ac2a3eb87bd68e811e53acf24d4d7814a1495b0b97a ; épinglé par le test `weights_pinned_for_h3_baselines`], [D-014, D-017],
+    [Protocole v1.0 (`docs/protocol.md`)], [2026-09-10], [sha256 f340a6b6…aefeb5 au commit 44a74ff (complet : f340a6b64db0f5f0bf126ffb​251c3de339450bde192fd54b​719036a8a3aefeb5)], [D-020],
+    [Adversaire B-RND (`configs/`#sym.zws`baselines/`#sym.zws`random.`#sym.zws`toml`)], [2026-09-09], [sha256 f2fc4a06441d3c1a7922838a​6693dbb48ec54543bc34fd81​4d41c9a742514cd7], [D-017],
+    [Adversaire B-HEU (`configs/`#sym.zws`baselines/`#sym.zws`heuristic.`#sym.zws`toml`)], [2026-09-09], [sha256 7210a0a349c5bad5dcd2df09​9cc6865ee3cb5d8a2c30e106​ce58137804818999], [D-017],
+    [Adversaire B-MCTS (`configs/`#sym.zws`baselines/`#sym.zws`mcts-`#sym.zws`nonet.`#sym.zws`toml`)], [2026-09-09], [sha256 3fc8f75cf2b4f21012dd61e9​924408fbfc32c8ea561aa96e​b44f1091ba07364e], [D-017],
+    [Poids de l'heuristique (`configs/`#sym.zws`baselines/`#sym.zws`heuristic-`#sym.zws`weights.`#sym.zws`toml`)], [2026-09-09], [sha256 d0602f1895fbed70b6f84ac2​a3eb87bd68e811e53acf24d4​d7814a1495b0b97a ; épinglé par le test `weights_`#sym.zws`pinned_`#sym.zws`for_`#sym.zws`h3_`#sym.zws`baselines`], [D-014, D-017],
     [Code du moteur au gel de la population], [2026-09-09], [commit b94e7c1], [D-017],
-    [Ouvertures partagées (`results/comparison/openings-v1.txt`, 250 lignes)], [2026-09-10], [sha256 du contenu 63b318d071dfc3ecfae3585636c8e6f7327ddc08e7aed86a466f915f8005af7b ; sha256 du fichier gelé 538497390a3787299c67c3ca138b8feacb369d55dc562881d1aee45200cbccb2 ; graine du générateur 20260910 ; hachage du calendrier 8cd84b6564440666], [D-025],
-    [Réglages d'évaluation (`configs/eval-settings.toml`)], [2026-09-09], [400 simulations, aucun bruit d'exploration, argmax déterministe, plafond de 300 plis], [D-019],
-    [Matrice de comparaison (`configs/comparison-matrix.yaml`)], [2026-09-10], [tailles pré-enregistrées et règle du seuil], [D-026],
-    [Seuil à temps mural égal T\*], [2026-09-16], [18.77 h = médiane des totaux des trois exécutions grille originales (18.77, 16.73, 19.07 h)], [`H6-2026-09-16-progress-01` ; D-031],
+    [Ouvertures partagées (`results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`, 250 lignes)], [2026-09-10], [sha256 du contenu 63b318d071dfc3ecfae35856​36c8e6f7327ddc08e7aed86a​466f915f8005af7b ; sha256 du fichier gelé 538497390a3787299c67c3ca​138b8feacb369d55dc562881​d1aee45200cbccb2 ; graine du générateur 20260910 ; hachage du calendrier 8cd84b6564440666], [D-025],
+    [Réglages d'évaluation (`configs/`#sym.zws`eval-`#sym.zws`settings.`#sym.zws`toml`)], [2026-09-09], [400 simulations, aucun bruit d'exploration, argmax déterministe, plafond de 300 plis], [D-019],
+    [Matrice de comparaison (`configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`)], [2026-09-10], [tailles pré-enregistrées et règle du seuil], [D-026],
+    [Seuil à temps mural égal T\*], [2026-09-16], [18.77 h = médiane des totaux des trois exécutions grille originales (18.77, 16.73, 19.07 h)], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`16-`#sym.zws`progress-`#sym.zws`01` ; D-031],
     [Code de campagne et d'analyse], [2026-09-10 → 2026-10-09], [campagne ac58773 ; analyse 1c65269 (3 graines), 7db074d (5 graines) ; ablations 216fded → bffeea9 (garde contre les valeurs non finies) ; file d'attente A1′ 1fdd7ec], [journaux `H6-…`, `H7-…`],
   )]
   , caption: [Artefacts gelés et épinglés de l'étude avec les identifiants consignés lors de leur gel (hachages, commits, graines) et l'entrée du journal des décisions ou du journal qui les consigne. ]
@@ -2788,7 +2789,7 @@ Les tables ci-dessous fixent les termes français utilisés dans cette édition,
 
 #figure(
   align(center)[#table(
-    columns: (33.11%, 39.51%, 27.37%),
+    columns: (28.04%, 48.12%, 23.84%),
     align: (left,left,left,),
     table.header([Terme (français)], [Définition], [Équivalent anglais],),
     table.hline(),
@@ -2813,7 +2814,7 @@ Les tables ci-dessous fixent les termes français utilisés dans cette édition,
 
 #figure(
   align(center)[#table(
-    columns: (31.35%, 45.03%, 23.62%),
+    columns: (26.71%, 53.2%, 20.09%),
     align: (left,left,left,),
     table.header([Terme (français)], [Définition], [Équivalent anglais],),
     table.hline(),
@@ -2832,7 +2833,7 @@ Les tables ci-dessous fixent les termes français utilisés dans cette édition,
 
 #figure(
   align(center)[#table(
-    columns: (30.18%, 42.73%, 27.09%),
+    columns: (24.5%, 52.1%, 23.4%),
     align: (left,left,left,),
     table.header([Terme (français)], [Définition], [Équivalent anglais],),
     table.hline(),
@@ -2855,7 +2856,7 @@ Les tables ci-dessous fixent les termes français utilisés dans cette édition,
 
 #figure(
   align(center)[#table(
-    columns: (33.63%, 38.94%, 27.43%),
+    columns: (29.14%, 44.37%, 26.49%),
     align: (left,left,left,),
     table.header([Terme (français)], [Définition], [Équivalent anglais],),
     table.hline(),
@@ -2873,7 +2874,7 @@ Les tables ci-dessous fixent les termes français utilisés dans cette édition,
 
 #figure(
   align(center)[#table(
-    columns: (30.02%, 43.05%, 26.93%),
+    columns: (25.66%, 50.44%, 23.89%),
     align: (left,left,left,),
     table.header([Terme (français)], [Définition], [Équivalent anglais],),
     table.hline(),
@@ -2894,7 +2895,7 @@ Les tables ci-dessous fixent les termes français utilisés dans cette édition,
 
 #figure(
   align(center)[#table(
-    columns: (36.2%, 37.31%, 26.49%),
+    columns: (27.37%, 47.68%, 24.94%),
     align: (left,left,left,),
     table.header([Terme (français)], [Définition], [Équivalent anglais],),
     table.hline(),
@@ -2915,13 +2916,13 @@ C'est le seul endroit du rapport où commandes, noms de fichiers et identifiants
 
 == Ce qui est publié
 <ce-qui-est-publié>
-L'ensemble publié (release) est le dépôt `hive-graph-selfplay` et les enregistrements qu'il contient. Son accès et son étiquette de publication (release tag) sont fixés au moment de la diffusion ; au moment de la rédaction, rien n'a quitté la machine d'étude, et les licences des moteurs de référence tiers, utilisés uniquement pour la validation des règles, sont encore à l'examen.
+L'ensemble publié (release) est le dépôt `hive-`#sym.zws`graph-`#sym.zws`selfplay` et les enregistrements qu'il contient. Son accès et son étiquette de publication (release tag) sont fixés au moment de la diffusion ; au moment de la rédaction, rien n'a quitté la machine d'étude, et les licences des moteurs de référence tiers, utilisés uniquement pour la validation des règles, sont encore à l'examen.
 
 - #strong[Code.] Le moteur Rust (noyau de règles, serveur de protocole, recherche, arène, travailleurs d'auto-jeu), le code Python d'entraînement et d'export sous `python/hivenet/`, les scripts sous `scripts/`.
-- #strong[Configurations gelées.] `configs/comparison-matrix.yaml`, `configs/eval-settings.toml`, les configurations des adversaires et le fichier de poids de l'heuristique sous `configs/baselines/`, les spécifications d'ablation sous `configs/ablations/`.
-- #strong[Ouvertures gelées et manifeste de la population.] `results/comparison/openings-v1.txt` (250 lignes de quatre plis) et `opponents-manifest.md`, qui consigne les hachages du @tbl:g-identifiers.
-- #strong[Tables de résultats.] `results/comparison/results-same-examples.{md,csv}`, `results-same-wallclock.{md,csv}`, `results-arm-difference.md`, `wallclock-per-run.md` ; `results/ablations/README.md`.
-- #strong[Enregistrements par exécution];, sous `data/runs/cmp-<arm>-s<seed>/` : `eval/` (un fichier à valeurs séparées par des virgules par point de contrôle et par adversaire, une ligne par partie : `opening_id, a_is_white, score_a, truncated, plies, outcome`, métadonnées dans les lignes d'en-tête `#`) ; `wallclock.json` (secondes par génération) ; les manifestes `selfplay/` liant chaque shard à son réseau générateur, et les shards ; `checkpoints/gen000-b1.onnx` à `gen009-b1.onnx`. Les tables et les figures n'ont besoin que de `eval/` et de `wallclock.json` ; le rejeu n'a besoin que d'un point de contrôle.
+- #strong[Configurations gelées.] `configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`, `configs/`#sym.zws`eval-`#sym.zws`settings.`#sym.zws`toml`, les configurations des adversaires et le fichier de poids de l'heuristique sous `configs/`#sym.zws`baselines/`, les spécifications d'ablation sous `configs/`#sym.zws`ablations/`.
+- #strong[Ouvertures gelées et manifeste de la population.] `results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt` (250 lignes de quatre plis) et `opponents-`#sym.zws`manifest.`#sym.zws`md`, qui consigne les hachages du @tbl:g-identifiers.
+- #strong[Tables de résultats.] `results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`, `wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md` ; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`.
+- #strong[Enregistrements par exécution];, sous `data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`<arm>-`#sym.zws`s<seed>/` : `eval/` (un fichier à valeurs séparées par des virgules par point de contrôle et par adversaire, une ligne par partie : `opening_id, a_is_white, score_a, truncated, plies, outcome`, métadonnées dans les lignes d'en-tête `#`) ; `wallclock.json` (secondes par génération) ; les manifestes `selfplay/` liant chaque shard à son réseau générateur, et les shards ; `checkpoints/`#sym.zws`gen000-`#sym.zws`b1.`#sym.zws`onnx` à `gen009-b1.onnx`. Les tables et les figures n'ont besoin que de `eval/` et de `wallclock.json` ; le rejeu n'a besoin que d'un point de contrôle.
 
 Les moteurs tiers utilisés dans la validation des règles (Mzinga, nokamute) ne sont pas livrés et ne sont pas nécessaires : aucun nombre de l'étude n'en dérive.
 
@@ -2930,9 +2931,9 @@ Les moteurs tiers utilisés dans la validation des règles (Mzinga, nokamute) ne
 `scripts/reproduce_minimal.sh <workdir>` effectue, à partir d'un clone propre et des enregistrements livrés, la plus petite vérification de bout en bout qui touche chaque maillon de la chaîne : construire, jouer, enregistrer, agréger. Elle a réussi le 9 octobre 2026, puis de nouveau le même jour après une correction de prose du générateur de tables, avec une différence numérique vide. Ses quatre étapes :
 
 + #strong[Cloner et construire.] `git clone` dans `<workdir>/clone`, puis `cargo build --release -p hive-engine -p hive-arena` ; le binaire du moteur doit exister ensuite. Le crate d'inférence télécharge le binaire ONNX Runtime à la première construction, de sorte que la première construction nécessite un accès réseau.
-+ #strong[Livrer les enregistrements.] Copier `results/comparison/`, le `eval/` et le `wallclock.json` de chaque exécution, et l'unique point de contrôle `cmp-grid-s2/checkpoints/gen009-b1.onnx` dans le clone, comme le ferait l'agencement de publication.
-+ #strong[Rejouer une partie enregistrée de manière déterministe.] La partie est la position d'échec F2 des résultats qualitatifs : le point de contrôle final de la graine 2 du bras grille contre B-HEU sur la ligne d'ouverture 2, le bras jouant les Noirs, perdue en 19 plis. L'arène joue la paire de couleurs de cette ouverture (`--games 2 --depth 1 --seed 1 --threads 1`), le réseau à 400 simulations avec la graine 9009 (la règle de l'évaluation finale, 9000 + indice de génération), B-HEU à la profondeur 1 sur un seul thread ; le script vérifie que les champs `score_a`, `truncated` et `plies` de la ligne du côté noir sont égaux à ceux de la ligne livrée dans `cmp-grid-s2/eval/gen009-vs-B-HEU.csv` et imprime `replay matches shipped row: plies 19, score 0`.
-+ #strong[Régénérer et comparer.] `python3 scripts/make_results.py` (bibliothèque standard de Python uniquement) reconstruit les tables des deux lectures à partir des enregistrements livrés ; `cmp` contre les fichiers livrés `results-same-examples.md` et `results-same-wallclock.md` doit les déclarer identiques à l'octet près. Le script se termine par `MINIMAL REPRODUCTION: PASS`.
++ #strong[Livrer les enregistrements.] Copier `results/`#sym.zws`comparison/`, le `eval/` et le `wallclock.json` de chaque exécution, et l'unique point de contrôle `cmp-`#sym.zws`grid-`#sym.zws`s2/`#sym.zws`checkpoints/`#sym.zws`gen009-`#sym.zws`b1.`#sym.zws`onnx` dans le clone, comme le ferait l'agencement de publication.
++ #strong[Rejouer une partie enregistrée de manière déterministe.] La partie est la position d'échec F2 des résultats qualitatifs : le point de contrôle final de la graine 2 du bras grille contre B-HEU sur la ligne d'ouverture 2, le bras jouant les Noirs, perdue en 19 plis. L'arène joue la paire de couleurs de cette ouverture (`--games 2 --depth 1 --seed 1 --threads 1`), le réseau à 400 simulations avec la graine 9009 (la règle de l'évaluation finale, 9000 + indice de génération), B-HEU à la profondeur 1 sur un seul thread ; le script vérifie que les champs `score_a`, `truncated` et `plies` de la ligne du côté noir sont égaux à ceux de la ligne livrée dans `cmp-`#sym.zws`grid-`#sym.zws`s2/`#sym.zws`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`B-`#sym.zws`HEU.`#sym.zws`csv` et imprime `replay matches shipped row: plies 19, score 0`.
++ #strong[Régénérer et comparer.] `python3 scripts/make_results.py` (bibliothèque standard de Python uniquement) reconstruit les tables des deux lectures à partir des enregistrements livrés ; `cmp` contre les fichiers livrés `results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`md` et `results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`md` doit les déclarer identiques à l'octet près. Le script se termine par `MINIMAL REPRODUCTION: PASS`.
 
 Le scénario vérifie que le code publié se construit à partir d'une copie propre du dépôt, qu'une partie enregistrée est rejouée exactement par le point de contrôle publié contre l'adversaire publié sous les réglages épinglés, et que les tables publiées sont une fonction pure des enregistrements publiés. Il ne vérifie pas l'entraînement ; c'est l'objet de la reproduction complète ci-dessous.
 
@@ -2976,7 +2977,7 @@ Toutes les durées du @tbl:g-durations ont été mesurées sur la machine d'étu
 
 #figure(
   align(center)[#table(
-    columns: (52.1%, 47.9%),
+    columns: (65.64%, 34.36%),
     align: (left,right,),
     table.header([Étape], [Durée mesurée],),
     table.hline(),
@@ -3003,16 +3004,16 @@ Une reproduction est fidèle lorsqu'elle utilise les artefacts gelés identifié
 
 #figure(
   align(center)[#table(
-    columns: (41.06%, 58.94%),
+    columns: (58.72%, 41.28%),
     align: (left,left,),
     table.header([Artefact], [Identifiant],),
     table.hline(),
-    [Fichier de poids de l'heuristique (`configs/baselines/heuristic-weights.toml`), SHA-256], [`d0602f1895fbed70b6f84ac2a3eb87bd`#linebreak()`68e811e53acf24d4d7814a1495b0b97a`],
-    [Configuration de B-RND (`configs/baselines/random.toml`), SHA-256], [`f2fc4a06441d3c1a7922838a6693dbb4`#linebreak()`8ec54543bc34fd814d41c9a742514cd7`],
-    [Configuration de B-HEU (`configs/baselines/heuristic.toml`), SHA-256], [`7210a0a349c5bad5dcd2df099cc6865e`#linebreak()`e3cb5d8a2c30e106ce58137804818999`],
-    [Configuration de B-MCTS (`configs/baselines/mcts-nonet.toml`), SHA-256], [`3fc8f75cf2b4f21012dd61e9924408fb`#linebreak()`fc32c8ea561aa96eb44f1091ba07364e`],
-    [Ouvertures gelées, contenu des 250 lignes, SHA-256], [`63b318d071dfc3ecfae3585636c8e6f7`#linebreak()`327ddc08e7aed86a466f915f8005af7b`],
-    [Ouvertures gelées, fichier tel que gelé, SHA-256], [`538497390a3787299c67c3ca138b8fea`#linebreak()`cb369d55dc562881d1aee45200cbccb2`],
+    [Fichier de poids de l'heuristique (`configs/`#sym.zws`baselines/`#sym.zws`heuristic-`#sym.zws`weights.`#sym.zws`toml`), SHA-256], [`d0602f1895fbed70b6f84ac2a3eb87bd`#sym.zws`68e811e53acf24d4d7814a1495b0b97a`],
+    [Configuration de B-RND (`configs/`#sym.zws`baselines/`#sym.zws`random.`#sym.zws`toml`), SHA-256], [`f2fc4a06441d3c1a7922838a6693dbb4`#sym.zws`8ec54543bc34fd814d41c9a742514cd7`],
+    [Configuration de B-HEU (`configs/`#sym.zws`baselines/`#sym.zws`heuristic.`#sym.zws`toml`), SHA-256], [`7210a0a349c5bad5dcd2df099cc6865e`#sym.zws`e3cb5d8a2c30e106ce58137804818999`],
+    [Configuration de B-MCTS (`configs/`#sym.zws`baselines/`#sym.zws`mcts-`#sym.zws`nonet.`#sym.zws`toml`), SHA-256], [`3fc8f75cf2b4f21012dd61e9924408fb`#sym.zws`fc32c8ea561aa96eb44f1091ba07364e`],
+    [Ouvertures gelées, contenu des 250 lignes, SHA-256], [`63b318d071dfc3ecfae3585636c8e6f7`#sym.zws`327ddc08e7aed86a466f915f8005af7b`],
+    [Ouvertures gelées, fichier tel que gelé, SHA-256], [`538497390a3787299c67c3ca138b8fea`#sym.zws`cb369d55dc562881d1aee45200cbccb2`],
     [Calendrier d'ouvertures et de couleurs de chaque affrontement de 100 parties], [`8cd84b6564440666`],
     [Document de protocole gelé], [`f340a6b6…aefeb5` (consigné sous forme abrégée), commit `44a74ff`],
     [Code du moteur au gel de la population], [commit `b94e7c1`],

@@ -11,3 +11,4 @@ data_gauntlet*.txt
 logs/
 .tools/
 paper/build/report-*-work/
+release/

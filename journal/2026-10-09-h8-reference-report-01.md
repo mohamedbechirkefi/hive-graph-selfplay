@@ -47,7 +47,7 @@ corrected on substance (see Failures).
 | --- | --- |
 | Source files EN / FR | 25 / 25 |
 | Words (EN sources incl. tables, comments stripped) | ≈65,000 |
-| PDF pages EN / FR (A4, Typst, final build) | 157 / 172 |
+| PDF pages EN / FR (A4, Typst, final build) | 152 / 166 |
 | Em dashes in the 50 source files after the style pass | 2 per language (quoted frozen rule; one cited title) |
 | Figures / tables (EN) | 10 / ≈75 |
 | Traceability check | 1 token to review of ≈3,000 (a seed written `777_000` in code) |

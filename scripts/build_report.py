@@ -28,6 +28,8 @@ PANDOC = REPO / ".tools" / "pandoc"
 FONT_PATHS = ["/System/Library/Fonts", "/System/Library/Fonts/Supplemental",
               "/Library/Fonts"]
 VERSION = "v2.0-draft"
+NAME = "report"
+SHORT = False
 
 STR = {
     "en": dict(
@@ -78,7 +80,7 @@ def preamble(s):
 #set text(font: "New York", size: 11pt, lang: "{s['lang']}")
 #set par(justify: true, leading: 0.62em, spacing: 0.9em)
 #set heading(numbering: "1.1")
-#show heading.where(level: 1): it => {{ pagebreak(weak: true); v(1.6em); block[#text(size: 20pt, weight: "bold")[#if it.numbering != none [#counter(heading).display(it.numbering) #h(0.6em)] #it.body]]; v(1.0em) }}
+#show heading.where(level: 1): it => {{ {"" if SHORT else "pagebreak(weak: true);"} v(1.6em); block[#text(size: 20pt, weight: "bold")[#if it.numbering != none [#counter(heading).display(it.numbering) #h(0.6em)] #it.body]]; v(1.0em) }}
 #show heading.where(level: 2): it => {{ v(1.0em); block[#text(size: 14pt, weight: "bold")[#if it.numbering != none [#counter(heading).display(it.numbering) #h(0.5em)] #it.body]]; v(0.45em) }}
 #show heading.where(level: 3): it => {{ v(0.7em); block[#text(size: 11.5pt, weight: "bold", style: "italic")[#if it.numbering != none [#counter(heading).display(it.numbering) #h(0.4em)] #it.body]]; v(0.3em) }}
 #set table(inset: (x: 4.5pt, y: 3.5pt), stroke: (x, y) => if y == 0 {{ (bottom: 0.8pt, top: 0.8pt) }} else {{ (bottom: 0.3pt + luma(175)) }})
@@ -102,6 +104,20 @@ def preamble(s):
 #set math.equation(numbering: "(1)")
 #show quote.where(block: true): it => block(inset: (left: 1.5em, right: 1.5em), text(style: "italic", it.body))
 #set footnote.entry(separator: line(length: 30%, stroke: 0.4pt))
+''' + (rf'''
+// ---------- title block (article) ----------
+#align(center)[
+  #v(0.5cm)
+  #text(size: 19pt, weight: "bold")[{s['title']}]
+  #v(0.5em)
+  #text(size: 12.5pt)[{s['subtitle']}]
+  #v(1.0em)
+  #text(size: 12pt)[{s['author']}]
+  #v(0.3em)
+  #text(size: 9.5pt, fill: luma(80))[{s['status']}; {s['version']}, {s['date']}]
+  #v(1.0em)
+]
+''' if SHORT else rf'''
 // ---------- title page ----------
 #page(numbering: none, header: none)[
   #v(4.5cm)
@@ -118,10 +134,12 @@ def preamble(s):
   ]
 ]
 #counter(page).update(1)
-'''
+''')
 
 
 def outline(s):
+    if SHORT:
+        return ""
     return rf'''
 #pagebreak(weak: true)
 #outline(title: "{s['contents']}", depth: 2, indent: 1.3em)
@@ -171,10 +189,22 @@ def attach_labels(typ):
     typ = re.sub(r"#scale\(x: \d+%, y: \d+%\)\[\\\(\]", "(", typ)
     typ = re.sub(r"#scale\(x: \d+%, y: \d+%\)\[\\\)\]", ")", typ)
     typ = typ.replace("#h(-1em)", "")   # LaTeX \! negative thin space
-    # 64-character hashes cannot wrap inside table cells: show them on
-    # two lines of 32 characters.
-    typ = re.sub(r"`([0-9a-f]{32})([0-9a-f]{8,32})`",
-                 lambda m: "`" + m.group(1) + "`#linebreak()`" + m.group(2) + "`", typ)
+    # Long code tokens (paths, identifiers, hashes) cannot wrap: split
+    # them into raw segments joined by zero-width spaces so that Typst may
+    # break the line after a separator (or every 32 hex characters).
+    def breakable(m):
+        inner = m.group(1)
+        if " " in inner or len(inner) < 18:
+            return m.group(0)
+        if re.fullmatch(r"[0-9a-f]{40,}", inner):
+            segs = [inner[i:i + 32] for i in range(0, len(inner), 32)]
+        else:
+            segs = [x for x in re.split(r"(?<=[/\-_.,])", inner) if x]
+        return "#sym.zws".join("`" + x + "`" for x in segs)
+    typ = re.sub(r"(?<!`)`([^`\n]+)`(?!`)", breakable, typ)
+    # plain-text hashes (outside code spans): allow a break every 32 chars
+    typ = re.sub(r"(?<![0-9a-f`])([0-9a-f]{40,})(?![0-9a-f`])",
+                 lambda m: "\u200b".join(m.group(1)[i:i + 24] for i in range(0, len(m.group(1)), 24)), typ)
     return typ
 
 
@@ -200,19 +230,38 @@ def widen_tables(md):
             cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in rows]
             ncol = max(len(r) for r in cells)
             seps = [c.strip() for c in line.strip().strip("|").split("|")]
-            # Width model (points, 9 pt table font): every column must at
-            # least fit its longest unbreakable word; the remaining width is
-            # shared in proportion to the columns' content length.
+            # Width model (points, 9 pt table font). Every column must at
+            # least fit its longest unbreakable chunk: a plain word, or a
+            # segment of a code token (code tokens are made breakable at
+            # / - _ . , by the Typst post-processing; hashes at 32 chars).
+            # The remaining width is shared in proportion to the total
+            # amount of text in the column.
             TEXT_PT = 453.0
+            CODE_PT, TEXT_CH = 4.7, 5.0
+
+            def longest_chunk(cell):
+                best = 0.0
+                for tok in cell.split():
+                    if tok.startswith("`") or tok.endswith("`"):
+                        inner = tok.strip("`*")
+                        if re.fullmatch(r"[0-9a-f]{40,}", inner):
+                            best = max(best, 32 * CODE_PT)
+                        else:
+                            for seg in re.split(r"(?<=[/\-_.,])", inner):
+                                best = max(best, len(seg) * CODE_PT)
+                    elif re.search(r"[0-9a-f]{40,}", tok):
+                        best = max(best, 24 * 5.6)
+                    else:
+                        best = max(best, len(tok) * TEXT_CH)
+                return best
+
             mins, content = [], []
             for k in range(ncol):
                 col = [r[k] for r in cells if k < len(r)]
-                longest = max((len(c) for c in col), default=4)
-                word = max((max((len(w) for w in c.split()), default=0) for c in col), default=4)
-                mins.append(min(word * 5.0 + 12, 340.0))
-                content.append(6 + min(longest, 70))
+                mins.append(min(max((longest_chunk(c) for c in col), default=20.0) + 12, 300.0))
+                content.append(8 + sum(min(len(c), 300) for c in col) / max(1, len(col)))
             spare = TEXT_PT - sum(mins)
-            if spare < 0:            # too many long words: let hyphenation work
+            if spare < 0:            # too many long chunks: let hyphenation work
                 mins = [m * TEXT_PT / sum(mins) for m in mins]
                 spare = 0
             tot = float(sum(content))
@@ -236,7 +285,7 @@ URL = re.compile(r'(?<![\"\[(])(https?:(?:\\/\\/|//)[^\s\)\]>]+?)(?=[\s\)\]>]|[.
 
 
 def linkify(typ):
-    """Bare URLs (pandoc escapes `//` as `\/\/` in Typst text) become
+    r"""Bare URLs (pandoc escapes `//` as `\/\/` in Typst text) become
     clickable links that display themselves."""
     def repl(m):
         shown = m.group(1)
@@ -258,12 +307,12 @@ def assemble(lang):
     def md_of(f):
         return f.read_text().rstrip() + "\n"
 
-    work = BUILD / f"report-{lang}-work"
+    work = BUILD / f"{NAME}-{lang}-work"
     work.mkdir(parents=True, exist_ok=True)
     parts = []
     for f in body:
         key = f.name[:2]
-        if key in s["parts"]:
+        if key in s["parts"] and not SHORT:
             parts.append(f"```{{=typst}}\n#part[{s['parts'][key]}]\n```\n")
         if key == "17":
             # bibliography: hanging indent, unjustified, clickable URLs
@@ -273,7 +322,7 @@ def assemble(lang):
             continue
         parts.append(md_of(f))
     if apps:
-        parts.append(f"```{{=typst}}\n#part[{s['parts']['90']}]\n"
+        parts.append(("" if SHORT else f"```{{=typst}}\n#part[{s['parts']['90']}]\n```\n") + f"```{{=typst}}\n"
                      f"{appendix_switch(s)}\n```\n")
         for f in apps:
             parts.append(md_of(f))
@@ -296,7 +345,7 @@ def assemble(lang):
     (BUILD / "figures").mkdir(parents=True, exist_ok=True)
     for png in FIG.glob("*.png"):
         shutil.copy(png, BUILD / "figures" / png.name)
-    typ = BUILD / f"report-{lang}.typ"
+    typ = BUILD / f"{NAME}-{lang}.typ"
     typ.write_text(doc)
     return typ
 
@@ -316,6 +365,17 @@ def compile_pdf(typ):
 
 
 if __name__ == "__main__":
-    which = sys.argv[1] if len(sys.argv) > 1 else "all"
-    for lang in (["en", "fr"] if which == "all" else [which]):
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("which", nargs="?", default="all")
+    ap.add_argument("--src", default=None, help="source tree (default paper/report)")
+    ap.add_argument("--name", default="report", help="output basename")
+    ap.add_argument("--short", action="store_true",
+                    help="article layout: title block on page 1, no parts, no list of figures")
+    a = ap.parse_args()
+    if a.src:
+        SRC = Path(a.src).resolve()
+    NAME = a.name
+    SHORT = a.short
+    for lang in (["en", "fr"] if a.which == "all" else [a.which]):
         compile_pdf(assemble(lang))

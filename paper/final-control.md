@@ -49,7 +49,7 @@ the report; "author" items are the only open ones.
 | Code and report versions compatible | ✓ | report built from the committed repository state; commits listed in App. E and G |
 | Minimal reproduction runs in a fresh environment | ✓ | unchanged scenario (`reproduce_minimal.sh`, PASS 2026-10-09); documented in App. G |
 | Standalone readability (no .md references in the body) | ✓ | SPEC rule 1 enforced by scan; cross-references rendered as Section/Figure/Table/Appendix numbers; glossary with French equivalents (App. F) |
-| PDF visually checked, links work | **author** | `paper/build/report-en.pdf` **157 pp**, `report-fr.pdf` **172 pp**; A4, Typst: title page, contents, list of figures, numbered parts/chapters, running headers, page numbers, clickable outline and URLs; the author reviewed the first build and the flagged pages were re-rendered after the fixes; the author's full pass of the final build is the sign-off |
+| PDF visually checked, links work | **author** | `paper/build/report-en.pdf` **152 pp**, `report-fr.pdf` **166 pp**; A4, Typst: title page, contents, list of figures, numbered parts/chapters, running headers, page numbers, clickable outline and URLs; the author reviewed two builds (tables 2, 25, 26, 62, 65, 66, 74; section 4.4; equation 4; bibliography) and each flagged page was re-rendered after the fix (column widths now follow text volume with breakable code tokens and hashes); the author's full pass of the final build is the sign-off |
 | French copy: same numbers | ✓ | `check_fr_numbers.py --dir paper/report`: 25/25 files ALL CONSISTENT; FR build renders thousands separators as thin spaces (stated in its front matter) |
 | Diffusion gated | **author** | Nothing leaves the machine without G-PUBLIC |
 

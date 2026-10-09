@@ -32,6 +32,7 @@
 #set math.equation(numbering: "(1)")
 #show quote.where(block: true): it => block(inset: (left: 1.5em, right: 1.5em), text(style: "italic", it.body))
 #set footnote.entry(separator: line(length: 30%, stroke: 0.4pt))
+
 // ---------- title page ----------
 #page(numbering: none, header: none)[
   #v(4.5cm)
@@ -175,7 +176,7 @@ An #strong[action] is a pair $a = (p \, d)$ of a piece $p$ and a destination cel
 
 #figure(
   align(center)[#table(
-    columns: (44.37%, 55.63%),
+    columns: (39.29%, 60.71%),
     align: (left,left,),
     table.header([Symbol], [Meaning],),
     table.hline(),
@@ -388,7 +389,7 @@ The loop is classified as a demonstration, not evidence, for reasons fixed in wr
 <timeline>
 #figure(
   align(center)[#table(
-    columns: (21.63%, 39.74%, 38.63%),
+    columns: (19.21%, 46.8%, 34%),
     align: (left,left,left,),
     table.header([Date], [Milestone], [Evidence produced],),
     table.hline(),
@@ -433,7 +434,7 @@ The engine is a Rust workspace of small crates with one-way dependencies: the ru
 
 #figure(
   align(center)[#table(
-    columns: (24.72%, 39.29%, 35.98%),
+    columns: (22.74%, 37.97%, 39.29%),
     align: (left,left,left,),
     table.header([Component], [Role], [Properties the study relies on],),
     table.hline(),
@@ -479,7 +480,7 @@ Perft counts legal-move paths to a given depth under the reference engine's conv
 
 #figure(
   align(center)[#table(
-    columns: (39.87%, 60.13%),
+    columns: (40.97%, 59.03%),
     align: (left,right,),
     table.header([Depth], [Nodes],),
     table.hline(),
@@ -496,7 +497,7 @@ Perft counts legal-move paths to a given depth under the reference engine's conv
 
 #figure(
   align(center)[#table(
-    columns: (24.12%, 21.49%, 25.22%, 29.17%),
+    columns: (23.03%, 21.93%, 25.88%, 29.17%),
     align: (left,right,right,right,),
     table.header([Game type], [Depth 4], [Depth 5], [Depth 6],),
     table.hline(),
@@ -523,7 +524,7 @@ Thirty critical positions were annotated by hand from the publisher's rules: the
 
 #figure(
   align(center)[#table(
-    columns: (63.58%, 36.42%),
+    columns: (65.34%, 34.66%),
     align: (left,left,),
     table.header([Rule area], [Cases],),
     table.hline(),
@@ -552,7 +553,7 @@ Seeded random games across all eight game types check four invariants after ever
 
 #figure(
   align(center)[#table(
-    columns: (17.07%, 17.94%, 13.57%, 20.79%, 16.63%, 14%),
+    columns: (17.29%, 17.29%, 14.22%, 19.69%, 16.63%, 14.88%),
     align: (left,left,right,right,right,right,),
     table.header([Run], [Games], [Plies walked], [Generated moves applied and undone], [Violations], [Duration],),
     table.hline(),
@@ -575,7 +576,7 @@ Before any simulation budget or move cap was fixed, the engine's costs were meas
 
 #figure(
   align(center)[#table(
-    columns: (47.02%, 52.98%),
+    columns: (48.79%, 51.21%),
     align: (left,left,),
     table.header([Measurement], [Value],),
     table.hline(),
@@ -680,7 +681,7 @@ The execution provider is where the two arms genuinely differ in cost, and the d
 
 #figure(
   align(center)[#table(
-    columns: (43.08%, 29.89%, 27.03%),
+    columns: (41.85%, 29.3%, 28.85%),
     align: (left,right,right,),
     table.header([Execution path], [Grid arm], [Graph arm],),
     table.hline(),
@@ -709,7 +710,7 @@ Before any training output was trusted, seven properties of the data path and th
 
 #figure(
   align(center)[#table(
-    columns: (24.78%, 36.5%, 38.72%),
+    columns: (22.47%, 37.89%, 39.65%),
     align: (left,left,left,),
     table.header([Check], [What it asserts], [How it is tested],),
     table.hline(),
@@ -741,7 +742,7 @@ The loop was first run end to end at a deliberately small budget: one generation
 
 #figure(
   align(center)[#table(
-    columns: (43.86%, 17.11%, 16.67%, 22.37%),
+    columns: (39.04%, 19.74%, 18.42%, 22.81%),
     align: (left,right,right,right,),
     table.header([Opponent], [W/D/L], [Score], [Truncated],),
     table.hline(),
@@ -789,7 +790,7 @@ A 28-piece hive spans at most 28 cells per axis after unwrapping, so the occupie
 <the-77-feature-planes>
 #figure(
   align(center)[#table(
-    columns: (18.98%, 81.02%),
+    columns: (20.09%, 79.91%),
     align: (left,left,),
     table.header([Planes], [Content],),
     table.hline(),
@@ -824,7 +825,7 @@ The graph encoding is coordinate-free: no absolute coordinate appears in it. Its
 <node-features-typed-relations-and-global-features>
 #figure(
   align(center)[#table(
-    columns: (22.3%, 77.7%),
+    columns: (23.4%, 76.6%),
     align: (left,left,),
     table.header([Features], [Content],),
     table.hline(),
@@ -844,7 +845,7 @@ Edges are the directed adjacencies between candidate-set cells, typed by the six
 
 #figure(
   align(center)[#table(
-    columns: (23.84%, 76.16%),
+    columns: (28.7%, 71.3%),
     align: (left,left,),
     table.header([Features], [Content],),
     table.hline(),
@@ -869,7 +870,7 @@ The tensors have fixed shapes, 224 nodes and 321 move rows (320 legal moves, the
 <coverage-of-the-engines-state-and-what-the-network-is-not-given>
 #figure(
   align(center)[#table(
-    columns: (42.38%, 57.62%),
+    columns: (42.6%, 57.4%),
     align: (left,left,),
     table.header([State component (influences legality or outcome)], [Graph element],),
     table.hline(),
@@ -916,7 +917,7 @@ Capacity was matched by sizing the graph network's width and depth (152 channels
 
 #figure(
   align(center)[#table(
-    columns: (37.8%, 27.03%, 35.16%),
+    columns: (38.11%, 27.97%, 33.92%),
     align: (left,right,right,),
     table.header([Inference path], [Grid (HiveNet)], [Graph (HiveGraphNet)],),
     table.hline(),
@@ -933,7 +934,7 @@ The convolutional network runs fastest on the CoreML accelerator; the graph netw
 
 #figure(
   align(center)[#table(
-    columns: (37.58%, 26.37%, 36.04%),
+    columns: (37.14%, 27.91%, 34.95%),
     align: (left,right,right,),
     table.header([Training path], [Grid (HiveNet)], [Graph (HiveGraphNet)],),
     table.hline(),
@@ -958,7 +959,7 @@ A wiring validation (two epochs on the generation-0 pilot data, one seed) ran at
 <the-two-ablation-variants>
 #figure(
   align(center)[#table(
-    columns: (31.28%, 48.02%, 20.7%),
+    columns: (32.16%, 44.93%, 22.91%),
     align: (left,left,right,),
     table.header([Variant], [Single component changed], [Parameters],),
     table.hline(),
@@ -996,7 +997,7 @@ All three opponents run on the validated engine, the same rules kernel that gene
 
 #figure(
   align(center)[#table(
-    columns: (31.94%, 26.43%, 41.63%),
+    columns: (31.35%, 22.96%, 45.7%),
     align: (left,right,left,),
     table.header([Feature], [Weight(s)], [Rationale],),
     table.hline(),
@@ -1025,7 +1026,7 @@ The three agents were played round-robin on 9 September 2026: 100 paired, colour
 
 #figure(
   align(center)[#table(
-    columns: (18.82%, 18.16%, 14.44%, 18.38%, 30.2%),
+    columns: (20.13%, 18.38%, 14.88%, 18.82%, 27.79%),
     align: (left,right,right,right,right,),
     table.header([Pairing (A vs B)], [W/D/L for A], [Score of A], [Truncated], [Elo difference (descriptive)],),
     table.hline(),
@@ -1140,7 +1141,7 @@ All runs executed on one Apple M1 Pro (10 cores, 16 GB, macOS 15.3.1), sequentia
 
 #figure(
   align(center)[#table(
-    columns: (23.57%, 9.91%, 33.26%, 33.26%),
+    columns: (24.45%, 11.01%, 30.62%, 33.92%),
     align: (left,right,left,left,),
     table.header([Campaign], [Runs], [Dates (2026)], [Wall-clock per run],),
     table.hline(),
@@ -1159,7 +1160,7 @@ All runs executed on one Apple M1 Pro (10 cores, 16 GB, macOS 15.3.1), sequentia
 
 #figure(
   align(center)[#table(
-    columns: (29.74%, 13.88%, 27.97%, 28.41%),
+    columns: (29.58%, 13.91%, 27.15%, 29.36%),
     align: (left,left,left,left,),
     table.header([Element], [Fixed on (2026)], [Timing], [Safeguard],),
     table.hline(),
@@ -1182,7 +1183,7 @@ All runs executed on one Apple M1 Pro (10 cores, 16 GB, macOS 15.3.1), sequentia
 <sec:protocol-matrix>
 #figure(
   align(center)[#table(
-    columns: (28.54%, 24.12%, 47.35%),
+    columns: (26.87%, 24.23%, 48.9%),
     align: (left,left,left,),
     table.header([Question], [Experiment], [Result and where],),
     table.hline(),
@@ -1218,7 +1219,7 @@ The boundary is drawn mechanically rather than left to judgement. #strong[G-FREE
 
 #figure(
   align(center)[#table(
-    columns: (15.93%, 21.02%, 29.87%, 33.19%),
+    columns: (15.45%, 18.76%, 28.48%, 37.31%),
     align: (left,left,left,left,),
     table.header([Date], [Gate], [Decision], [Basis and conditions recorded],),
     table.hline(),
@@ -1262,7 +1263,7 @@ The operating rules require an append-only log of every incident in which the me
 
 #figure(
   align(center)[#table(
-    columns: (15.01%, 30.91%, 29.8%, 24.28%),
+    columns: (15.04%, 32.3%, 27.88%, 24.78%),
     align: (left,left,left,left,),
     table.header([Date], [Incident], [How it was caught], [Consequence],),
     table.hline(),
@@ -1312,7 +1313,7 @@ In the first reading both arms are compared at their generation-10 checkpoints: 
 
 #figure(
   align(center)[#table(
-    columns: (13.32%, 11.79%, 16.38%, 24.24%, 16.38%, 17.9%),
+    columns: (15.5%, 12.66%, 16.59%, 20.96%, 16.59%, 17.69%),
     align: (left,left,right,right,right,right,),
     table.header([Arm], [Seed], [B-RND score], [B-RND truncation], [B-HEU score], [B-MCTS score],),
     table.hline(),
@@ -1335,7 +1336,7 @@ Against the legal-random opponent every grid seed scores at least 0.949 while gr
 
 #figure(
   align(center)[#table(
-    columns: (15.71%, 28.1%, 28.1%, 28.1%),
+    columns: (16.81%, 27.65%, 27.65%, 27.88%),
     align: (left,left,left,left,),
     table.header([Arm], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
     table.hline(),
@@ -1352,7 +1353,7 @@ In the second reading each run is taken at the last checkpoint it had completed 
 
 #figure(
   align(center)[#table(
-    columns: (13.32%, 11.79%, 16.38%, 24.24%, 16.38%, 17.9%),
+    columns: (15.5%, 12.66%, 16.59%, 20.96%, 16.59%, 17.69%),
     align: (left,left,right,right,right,right,),
     table.header([Arm], [Seed], [B-RND score], [B-RND truncation], [B-HEU score], [B-MCTS score],),
     table.hline(),
@@ -1373,7 +1374,7 @@ In the second reading each run is taken at the last checkpoint it had completed 
 
 #figure(
   align(center)[#table(
-    columns: (15.71%, 28.1%, 28.1%, 28.1%),
+    columns: (16.81%, 27.65%, 27.65%, 27.88%),
     align: (left,left,left,left,),
     table.header([Arm], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
     table.hline(),
@@ -1390,7 +1391,7 @@ The picture of the first reading persists at equal time: the grid arm's means ar
 <the-arm-contrast>
 #figure(
   align(center)[#table(
-    columns: (34.07%, 31.43%, 34.51%),
+    columns: (31.06%, 33.26%, 35.68%),
     align: (left,right,right,),
     table.header([Opponent], [Same-examples: graph − grid], [Same-wall-clock: graph − grid],),
     table.hline(),
@@ -1439,7 +1440,7 @@ The second research question asks how the two representations compare when the b
 <what-each-arm-costs-on-the-study-machine>
 #figure(
   align(center)[#table(
-    columns: (50.77%, 30.33%, 18.9%),
+    columns: (49.67%, 27.91%, 22.42%),
     align: (left,right,right,),
     table.header([Metric], [Grid arm], [Graph arm],),
     table.hline(),
@@ -1487,7 +1488,7 @@ This chapter answers the third research question: which of the graph arm's two d
 <design-of-the-three-cells>
 #figure(
   align(center)[#table(
-    columns: (17.98%, 27.85%, 15.57%, 9.65%, 28.95%),
+    columns: (18.28%, 27.75%, 16.3%, 9.91%, 27.75%),
     align: (left,left,right,right,left,),
     table.header([Cell], [What changes relative to the full graph arm], [Parameters], [Seeds], [Status],),
     table.hline(),
@@ -1514,7 +1515,7 @@ No learning-rate sweep was run, because changing the learning rate would have ma
 <a2-removing-global-pooling-changes-nothing-measurable>
 #figure(
   align(center)[#table(
-    columns: (16.78%, 29.36%, 24.94%, 28.92%),
+    columns: (17.88%, 28.7%, 24.28%, 29.14%),
     align: (left,left,left,left,),
     table.header([Opponent], [A2 (no pooling), seeds 1/2/3], [Full graph arm, seeds 1/2/3], [Difference A2 − full \[95% interval\]],),
     table.hline(),
@@ -1538,7 +1539,7 @@ The cell has three seeds; the 0.10 M parameter difference is inherent to the rem
 <a1-the-stabilised-naive-adjacency-variant-two-component-supplement>
 #figure(
   align(center)[#table(
-    columns: (15.42%, 28.19%, 16.08%, 18.06%, 22.25%),
+    columns: (16.26%, 28.13%, 15.16%, 15.82%, 24.62%),
     align: (left,left,right,right,left,),
     table.header([Opponent], [A1′ seeds 1/2/3 (truncation)], [A1′ mean (3 seeds)], [Full graph mean (5 seeds)], [Difference \[95% interval\]],),
     table.hline(),
@@ -1562,7 +1563,7 @@ Every number in this cell is confounded by the gradient clip by construction and
 <summary-table-h-t3>
 #figure(
   align(center)[#table(
-    columns: (28.92%, 34.88%, 36.2%),
+    columns: (26.27%, 30.68%, 43.05%),
     align: (left,left,left,),
     table.header([Ablation], [Component removed], [Outcome],),
     table.hline(),
@@ -2033,7 +2034,7 @@ The input is a tensor of 77 planes × 32 × 32 with float32 values in \[0, 1\] (
 
 #figure(
   align(center)[#table(
-    columns: (15.45%, 36.2%, 12.14%, 36.2%),
+    columns: (17.92%, 34.07%, 15.27%, 32.74%),
     align: (left,left,left,left,),
     table.header([Stage], [Operation], [Width], [Notes],),
     table.hline(),
@@ -2063,7 +2064,7 @@ The graph arm's network consumes fixed-shape tensors (@tbl:graph-tensors) built 
 
 #figure(
   align(center)[#table(
-    columns: (20.53%, 15.23%, 15.89%, 48.34%),
+    columns: (21.9%, 16.15%, 17.48%, 44.47%),
     align: (left,left,left,left,),
     table.header([Tensor], [Shape], [Type], [Content],),
     table.hline(),
@@ -2082,7 +2083,7 @@ The graph arm's network consumes fixed-shape tensors (@tbl:graph-tensors) built 
 
 #figure(
   align(center)[#table(
-    columns: (15.49%, 34.73%, 12.83%, 36.95%),
+    columns: (17.7%, 34.73%, 14.16%, 33.41%),
     align: (left,left,left,left,),
     table.header([Stage], [Operation], [Width], [Notes],),
     table.hline(),
@@ -2109,7 +2110,7 @@ The graph arm's network consumes fixed-shape tensors (@tbl:graph-tensors) built 
 
 #figure(
   align(center)[#table(
-    columns: (35.02%, 45.15%, 19.82%),
+    columns: (30.4%, 47.8%, 21.81%),
     align: (left,left,right,),
     table.header([Variant], [Difference from the full graph arm], [Parameters],),
     table.hline(),
@@ -2128,7 +2129,7 @@ The graph arm's network consumes fixed-shape tensors (@tbl:graph-tensors) built 
 
 #figure(
   align(center)[#table(
-    columns: (15.64%, 32.16%, 17.62%, 34.58%),
+    columns: (17.48%, 31.42%, 19.47%, 31.64%),
     align: (left,left,left,left,),
     table.header([Slot], [Mover's piece], [Slot], [Opponent's piece],),
     table.hline(),
@@ -2157,7 +2158,7 @@ Self-play positions are written as fixed-size little-endian records in shards th
 
 #figure(
   align(center)[#table(
-    columns: (16.37%, 37.17%, 46.46%),
+    columns: (18.81%, 38.5%, 42.7%),
     align: (left,left,left,),
     table.header([Bytes], [Field], [Encoding],),
     table.hline(),
@@ -2188,7 +2189,7 @@ Both arms read the same record. The grid arm decodes the 77 planes from it; the 
 <search-settings>
 #figure(
   align(center)[#table(
-    columns: (22.91%, 37.44%, 39.65%),
+    columns: (23.18%, 41.28%, 35.54%),
     align: (left,left,left,),
     table.header([Setting], [Self-play (training data)], [Independent evaluation],),
     table.hline(),
@@ -2215,7 +2216,7 @@ Every value in this appendix is the one the campaigns actually ran; the configur
 <sec:app-c-constants>
 #figure(
   align(center)[#table(
-    columns: (18.98%, 30.02%, 27.59%, 23.4%),
+    columns: (19.43%, 35.76%, 24.94%, 19.87%),
     align: (left,left,left,left,),
     table.header([Constant], [Value], [Fixed on (2026)], [Approved by],),
     table.hline(),
@@ -2239,16 +2240,16 @@ Frozen artifacts are identified by content hash (@tbl:app-c-hashes). The protoco
 
 #figure(
   align(center)[#table(
-    columns: (20.31%, 79.69%),
+    columns: (32.45%, 67.55%),
     align: (left,left,),
     table.header([Artifact], [SHA-256],),
     table.hline(),
-    [Protocol, version 1.0], [f340a6b64db0f5f0bf126ffb251c3de339450bde192fd54b719036a8a3aefeb5],
-    [Openings, content (250 lines)], [63b318d071dfc3ecfae3585636c8e6f7327ddc08e7aed86a466f915f8005af7b],
-    [Heuristic weights (B-HEU)], [d0602f1895fbed70b6f84ac2a3eb87bd68e811e53acf24d4d7814a1495b0b97a],
-    [B-RND configuration], [f2fc4a06441d3c1a7922838a6693dbb48ec54543bc34fd814d41c9a742514cd7],
-    [B-HEU configuration], [7210a0a349c5bad5dcd2df099cc6865ee3cb5d8a2c30e106ce58137804818999],
-    [B-MCTS configuration], [3fc8f75cf2b4f21012dd61e9924408fbfc32c8ea561aa96eb44f1091ba07364e],
+    [Protocol, version 1.0], [f340a6b64db0f5f0bf126ffb​251c3de339450bde192fd54b​719036a8a3aefeb5],
+    [Openings, content (250 lines)], [63b318d071dfc3ecfae35856​36c8e6f7327ddc08e7aed86a​466f915f8005af7b],
+    [Heuristic weights (B-HEU)], [d0602f1895fbed70b6f84ac2​a3eb87bd68e811e53acf24d4​d7814a1495b0b97a],
+    [B-RND configuration], [f2fc4a06441d3c1a7922838a​6693dbb48ec54543bc34fd81​4d41c9a742514cd7],
+    [B-HEU configuration], [7210a0a349c5bad5dcd2df09​9cc6865ee3cb5d8a2c30e106​ce58137804818999],
+    [B-MCTS configuration], [3fc8f75cf2b4f21012dd61e9​924408fbfc32c8ea561aa96e​b44f1091ba07364e],
   )]
   , caption: [Content hashes of the frozen artifacts; these are the scientific identifiers of the protocol, the openings and the opponent population. ]
   , kind: table
@@ -2284,7 +2285,7 @@ Every random choice in the study descends from a recorded seed, so that a run, a
 
 #figure(
   align(center)[#table(
-    columns: (35.32%, 64.68%),
+    columns: (31.13%, 68.87%),
     align: (left,left,),
     table.header([Quantity], [Seed],),
     table.hline(),
@@ -2307,7 +2308,7 @@ All five configurations share the frozen constants of @tbl:app-c-frozen and the 
 
 #figure(
   align(center)[#table(
-    columns: (17.84%, 24.67%, 15.42%, 18.72%, 9.03%, 14.32%),
+    columns: (18.06%, 25.33%, 15.64%, 17.84%, 9.25%, 13.88%),
     align: (left,left,right,left,left,left,),
     table.header([Variant], [Body], [Parameters], [Difference from the full graph arm], [Seeds], [Inference provider],),
     table.hline(),
@@ -2327,7 +2328,7 @@ All wall-clock figures in this report were measured on one Apple M1 Pro (10 core
 
 #figure(
   align(center)[#table(
-    columns: (53.63%, 25.71%, 20.66%),
+    columns: (51.43%, 26.15%, 22.42%),
     align: (left,right,right,),
     table.header([Path (batch 1, per decision-evaluation)], [Grid], [Graph],),
     table.hline(),
@@ -2378,7 +2379,7 @@ The same-examples reading evaluates each run's checkpoint after the tenth and la
 
 #figure(
   align(center)[#table(
-    columns: (14%, 12.47%, 17.51%, 19.26%, 17.51%, 19.26%),
+    columns: (16.23%, 13.16%, 17.32%, 17.54%, 17.32%, 18.42%),
     align: (left,left,right,right,right,right,),
     table.header([Arm], [Seed], [B-RND score], [B-RND trunc.], [B-HEU score], [B-MCTS score],),
     table.hline(),
@@ -2403,7 +2404,7 @@ The same-wall-clock reading evaluates each run's last checkpoint completed withi
 
 #figure(
   align(center)[#table(
-    columns: (11.79%, 10.26%, 19%, 13.97%, 15.5%, 13.97%, 15.5%),
+    columns: (13.13%, 10.72%, 19.26%, 13.79%, 14.44%, 13.79%, 14.88%),
     align: (left,left,left,right,right,right,right,),
     table.header([Arm], [Seed], [Checkpoint], [B-RND score], [B-RND trunc.], [B-HEU score], [B-MCTS score],),
     table.hline(),
@@ -2424,7 +2425,7 @@ The same-wall-clock reading evaluates each run's last checkpoint completed withi
 
 #figure(
   align(center)[#table(
-    columns: (14.07%, 12.31%, 35.16%, 38.46%),
+    columns: (18.9%, 14.95%, 31.87%, 34.29%),
     align: (left,left,right,right,),
     table.header([Arm], [Seed], [Same-examples: B-RND sens.], [Same-wall-clock: B-RND sens.],),
     table.hline(),
@@ -2449,7 +2450,7 @@ The same-wall-clock reading evaluates each run's last checkpoint completed withi
 
 #figure(
   align(center)[#table(
-    columns: (27.03%, 12.31%, 20.22%, 20.22%, 20.22%),
+    columns: (26.75%, 12.72%, 20.18%, 20.18%, 20.18%),
     align: (left,left,right,right,right,),
     table.header([Reading], [Arm], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
     table.hline(),
@@ -2464,7 +2465,7 @@ The same-wall-clock reading evaluates each run's last checkpoint completed withi
 
 #figure(
   align(center)[#table(
-    columns: (20%, 38.24%, 41.76%),
+    columns: (20.22%, 38.68%, 41.1%),
     align: (left,right,right,),
     table.header([Opponent], [Same-examples: graph − grid], [Same-wall-clock: graph − grid],),
     table.hline(),
@@ -2480,7 +2481,7 @@ The seeds were collected in two stages: seeds 1--3 of both arms in the campaign 
 
 #figure(
   align(center)[#table(
-    columns: (16.48%, 24.84%, 19.56%, 19.56%, 19.56%),
+    columns: (16.59%, 25.11%, 19.43%, 19.43%, 19.43%),
     align: (left,left,right,right,right,),
     table.header([Quantity], [Reading], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
     table.hline(),
@@ -2501,7 +2502,7 @@ The cutoff was fixed by a rule stated before the campaign: the median of the ful
 
 #figure(
   align(center)[#table(
-    columns: (13%, 11.45%, 26.65%, 25.55%, 23.35%),
+    columns: (14.76%, 12.11%, 23.79%, 23.35%, 25.99%),
     align: (left,left,left,right,left,),
     table.header([Arm], [Seed], [Checkpoint at the cutoff], [Cumulative wall-clock], [Evaluation set],),
     table.hline(),
@@ -2524,7 +2525,7 @@ The map is the measured content of the second reading: at equal wall-clock the g
 
 #figure(
   align(center)[#table(
-    columns: (13.79%, 14.44%, 14.44%, 14.44%, 14.44%, 14.44%, 14%),
+    columns: (13.57%, 14.44%, 14.44%, 14.44%, 14.44%, 14.44%, 14.22%),
     align: (left,right,right,right,right,right,right,),
     table.header([Arm], [Seed 1], [Seed 2], [Seed 3], [Seed 4], [Seed 5], [Mean],),
     table.hline(),
@@ -2545,13 +2546,13 @@ Three variants of the graph arm were trained with three seeds each at the full b
 
 #figure(
   align(center)[#table(
-    columns: (29.74%, 25.77%, 9.25%, 16.3%, 18.94%),
+    columns: (29.74%, 25.77%, 9.69%, 16.96%, 17.84%),
     align: (left,left,left,right,left,),
     table.header([Variant], [Component changed], [Seeds], [Training wall-clock], [Outcome],),
     table.hline(),
     [A1 (`graph-untyped`)], [six direction-typed edge matrices replaced by one shared matrix], [1, 2, 3], [7.75 / 8.01 / 7.61 h], [training diverged to NaN in generation 0, 3 of 3 seeds],
     [A2 (`graph-nogpool`)], [global-pooling bias removed from every layer (1.37M parameters vs 1.47M)], [1, 2, 3], [39.90 / 47.44 / 32.05 h], [trained; no measurable effect],
-    [A1′ (`graph-untyped-clip`)], [untyped edges #emph[and] gradient-norm clipping at 1.0 (two components)], [1, 2, 3], [23.89 / 30.35 / 27.68 h], [trained; within the full arm's band],
+    [A1′ (`graph-`#sym.zws`untyped-`#sym.zws`clip`)], [untyped edges #emph[and] gradient-norm clipping at 1.0 (two components)], [1, 2, 3], [23.89 / 30.35 / 27.68 h], [trained; within the full arm's band],
   )]
   , caption: [The three ablation variants of the graph arm, each trained with three independent seeds at the full budget of the main comparison (10 generations × 500 self-play games; same frozen opponents, openings and evaluation settings). Training wall-clock in hours per seed under the same accounting as @tbl:d-wallclock (per-generation self-play and training seconds summed, evaluation games excluded); the reference graph runs of seeds 1--3 took 43.07, 32.71 and 31.28 h. A1's short runs are a symptom of its divergence (a NaN policy plays short degenerate games) rather than a saving.]
   , kind: table
@@ -2561,7 +2562,7 @@ No score table is given for A1 because none exists as a strength measurement: ev
 
 #figure(
   align(center)[#table(
-    columns: (15.97%, 14%, 14%, 14%, 14%, 14%, 14%),
+    columns: (15.69%, 13.94%, 13.94%, 13.94%, 14.16%, 14.16%, 14.16%),
     align: (left,right,right,right,right,right,right,),
     table.header([Opponent], [A2 seed 1], [A2 seed 2], [A2 seed 3], [full seed 1], [full seed 2], [full seed 3],),
     table.hline(),
@@ -2575,7 +2576,7 @@ No score table is given for A1 because none exists as a strength measurement: ev
 
 #figure(
   align(center)[#table(
-    columns: (24.73%, 25.38%, 25.38%, 24.51%),
+    columns: (25.88%, 24.78%, 24.78%, 24.56%),
     align: (left,right,right,right,),
     table.header([Opponent], [A1′ seed 1], [A1′ seed 2], [A1′ seed 3],),
     table.hline(),
@@ -2589,7 +2590,7 @@ No score table is given for A1 because none exists as a strength measurement: ev
 
 #figure(
   align(center)[#table(
-    columns: (16.41%, 22.32%, 17.94%, 20.57%, 22.76%),
+    columns: (17.29%, 24.73%, 16.19%, 17.07%, 24.73%),
     align: (left,right,right,right,right,),
     table.header([Opponent], [A2 − full (3 vs 3 seeds)], [A1′ mean (3 seeds)], [full graph mean (5 seeds)], [A1′ − full (3 vs 5 seeds)],),
     table.hline(),
@@ -2611,9 +2612,9 @@ This appendix is the one place in the report where internal identifiers are the 
 
 == The evidence chain
 <the-evidence-chain>
-Every number in this report is reachable along one chain. #strong[Raw per-game records] are written by the evaluation arena as one CSV per (checkpoint, opponent) pairing under the run directory; the file's header lines name both engine command lines verbatim (network path, simulation count, seeds), and every game carries its outcome with truncation as its own category. #strong[Generated tables] are produced by `scripts/make_results.py`, which reads those CSVs and the per-run wall-clock logs, aggregates per (seed, opponent), bootstraps over seeds (10,000 resamples, seed as the unit, no game pooled as i.i.d.), and writes `results/comparison/*.{md,csv}`; it never retypes a number. #strong[Figures] are produced by `scripts/make_figures.py` from the same CSVs, wall-clock logs and campaign logs. #strong[The report] is assembled from these files; a source checker verifies that every numeric token in every chapter occurs in the evidence base, and a second checker verifies numeric identity between the English and French versions. The minimal reproduction script rebuilds the engine in a fresh clone, replays a recorded game to an exact match of its shipped row, and regenerates the tables byte-identically (verified 2026-10-09).
+Every number in this report is reachable along one chain. #strong[Raw per-game records] are written by the evaluation arena as one CSV per (checkpoint, opponent) pairing under the run directory; the file's header lines name both engine command lines verbatim (network path, simulation count, seeds), and every game carries its outcome with truncation as its own category. #strong[Generated tables] are produced by `scripts/`#sym.zws`make_`#sym.zws`results.`#sym.zws`py`, which reads those CSVs and the per-run wall-clock logs, aggregates per (seed, opponent), bootstraps over seeds (10,000 resamples, seed as the unit, no game pooled as i.i.d.), and writes `results/`#sym.zws`comparison/`#sym.zws`*.`#sym.zws`{md,`#sym.zws`csv}`; it never retypes a number. #strong[Figures] are produced by `scripts/`#sym.zws`make_`#sym.zws`figures.`#sym.zws`py` from the same CSVs, wall-clock logs and campaign logs. #strong[The report] is assembled from these files; a source checker verifies that every numeric token in every chapter occurs in the evidence base, and a second checker verifies numeric identity between the English and French versions. The minimal reproduction script rebuilds the engine in a fresh clone, replays a recorded game to an exact match of its shipped row, and regenerates the tables byte-identically (verified 2026-10-09).
 
-#strong[Journals.] Every experiment or measurement has one entry under `journal/`, named `YYYY-MM-DD-<slug>.md` and carrying an identifier of the form `<phase>-<date>-<slug>-<nn>` (for example `H6-2026-10-09-5seed-final-01`). The header fixes id, date, hypothesis, git commit, configuration, seeds, data version, hardware, duration and cost; the body has fixed sections: Methods, Raw results and uncertainty, Failures, Limits and confounders, Interpretation, Decision, Artifacts. Negative results and tooling defects are entries like any other. #strong[Decision log.] Every non-trivial decision is an entry `D-nnn` in the workspace file `state/decisions.md`, append-only: a reversed decision is never edited, a new entry supersedes it and links back. Gate crossings record the author's approval in its original wording. #strong[Methodology log.] `docs/methodology-log.md` (workspace) records, append-only, every incident in which the method caught or missed something.
+#strong[Journals.] Every experiment or measurement has one entry under `journal/`, named `YYYY-`#sym.zws`MM-`#sym.zws`DD-`#sym.zws`<slug>.`#sym.zws`md` and carrying an identifier of the form `<phase>-`#sym.zws`<date>-`#sym.zws`<slug>-`#sym.zws`<nn>` (for example `H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01`). The header fixes id, date, hypothesis, git commit, configuration, seeds, data version, hardware, duration and cost; the body has fixed sections: Methods, Raw results and uncertainty, Failures, Limits and confounders, Interpretation, Decision, Artifacts. Negative results and tooling defects are entries like any other. #strong[Decision log.] Every non-trivial decision is an entry `D-nnn` in the workspace file `state/`#sym.zws`decisions.`#sym.zws`md`, append-only: a reversed decision is never edited, a new entry supersedes it and links back. Gate crossings record the author's approval in its original wording. #strong[Methodology log.] `docs/`#sym.zws`methodology-`#sym.zws`log.`#sym.zws`md` (workspace) records, append-only, every incident in which the method caught or missed something.
 
 == From each result to its artifact
 <from-each-result-to-its-artifact>
@@ -2621,46 +2622,46 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
 
 #figure(
   align(center)[#table(
-    columns: (11.89%, 29.96%, 37.44%, 20.7%),
+    columns: (21.9%, 37.39%, 25%, 15.71%),
     align: (left,left,left,left,),
     table.header([Result in the report], [Generated artifact], [Raw input], [Journal entry],),
     table.hline(),
-    [Per-seed scores and truncation rates, same-examples reading (2 arms × 5 seeds × 3 opponents, 100 games each)], [`results/comparison/results-same-examples.{md,csv}`], [`data/runs/cmp-{grid,graph}-s{1..5}/eval/gen009-vs-{B-RND,B-HEU,B-MCTS}.csv`], [`H6-2026-09-19-comparison-01` (3 seeds); `H6-2026-10-09-5seed-final-01` (final)],
-    [Per-seed scores and truncation rates, same-wall-clock reading], [`results/comparison/results-same-wallclock.{md,csv}`], [`eval/tstar-gen00N-vs-*.csv` of each run (the final checkpoint's files where the cutoff checkpoint is the last one) and `wallclock.json`], [same two entries],
-    [Arm contrast graph − grid, both readings, bootstrap over seeds], [`results/comparison/results-arm-difference.md`], [the two CSV files above], [same two entries],
-    [Equal-time cutoff T\* = 18.77 h and the checkpoint map at T\*], [numbers in the journal; map re-derived by `make_results.py`], [`wallclock.json` of grid s1--s3 (median of the three totals), then of every run], [`H6-2026-09-16-progress-01`; re-derivation checked in `H6-2026-10-09-5seed-final-01`],
-    [Cap sensitivity bounds (every truncation scored as a win for the arm under test)], [numbers in the journal], [per-game records of the final evaluations], [`H6-2026-09-19-comparison-01`],
-    [Cost table: parameters, best-provider inference, run wall-clock (self-play generation + training, evaluation excluded, mean over the five seeds), self-play cost (that wall-clock / 5,000 games), training-throughput benchmark (batch 128), population scores], [`paper/figures/fig2-score-cost.md` (regenerated 2026-10-09 after a generator defect was found; see @sec:working-method)], [`wallclock.json` per run; `results-*.csv`; benchmark in `docs/representations/comparison-controls.md`], [`H5-2026-09-10-encoders-01`; `H6-2026-09-19-comparison-01`],
-    [Score versus training wall-clock, all seeds, both arms, T\* marked], [`paper/figures/fig1-score-vs-time.png`], [`eval/*.csv` and `wallclock.json` per run], [`H6-2026-09-19-comparison-01`; `H6-2026-10-09-5seed-final-01`],
-    [Grid planes versus cell graph for one position], [`paper/figures/fig3-encodings.png`], [schematic: a synthetic five-piece position drawn in the script; no measured quantity], [`H5-2026-09-10-encoders-01` (encoding definitions)],
-    [Three failure positions F1--F3], [`paper/figures/fig4-failures.{md,png}`], [`eval/gen009-vs-*.csv` and `results/comparison/openings-v1.txt`; each game reproduced deterministically and verified against its CSV row], [`H6-2026-09-19-comparison-01`],
-    [Per-opponent score trajectories by generation, 5 seeds], [`paper/figures/fig5-per-opponent.png`], [`eval/{gen004,gen007,gen009}-vs-*.csv` and `wallclock.json` per run], [`H8-2026-10-09-detailed-edition-01`],
-    [Epoch-1 policy top-1 and value accuracy by generation, 10 runs], [`paper/figures/fig6-training-metrics.png`], [`data/runs/campaign.log`, `data/runs/extension.log` (training logs of the 10 main runs)], [`H8-2026-10-09-detailed-edition-01`],
-    [Final-evaluation truncation rate versus legal-random per run], [`paper/figures/fig7-truncation.png`], [`eval/gen009-vs-B-RND.csv` per run], [`H8-2026-10-09-detailed-edition-01`],
-    [Ablation table: A1 divergence, A2 null effect, A1′ supplement], [`results/ablations/README.md`], [`data/runs/cmp-graph-{untyped,nogpool,untyped-clip}-s{1,2,3}/eval/` against the full graph arm's finals], [`H7-2026-09-23-a1-divergence-01`; `H7-2026-10-02-a2-nogpool-01`; `H7-2026-10-09-a1prime-01`],
-    [Pipeline, architecture and chronology schematics], [`paper/figures/fig8-pipeline.png`, `fig9-architectures.png`, `fig10-timeline.png` (`scripts/make_report_figures.py`)], [the system documentation (`docs/inventory.md`), the journal headers and the decision log; no measured quantity], [none],
+    [Per-seed scores and truncation rates, same-examples reading (2 arms × 5 seeds × 3 opponents, 100 games each)], [`results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`{md,`#sym.zws`csv}`], [`data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`{grid,`#sym.zws`graph}-`#sym.zws`s{1.`#sym.zws`.`#sym.zws`5}/`#sym.zws`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`{B-`#sym.zws`RND,`#sym.zws`B-`#sym.zws`HEU,`#sym.zws`B-`#sym.zws`MCTS}.`#sym.zws`csv`], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01` (3 seeds); `H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01` (final)],
+    [Per-seed scores and truncation rates, same-wall-clock reading], [`results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`{md,`#sym.zws`csv}`], [`eval/`#sym.zws`tstar-`#sym.zws`gen00N-`#sym.zws`vs-`#sym.zws`*.`#sym.zws`csv` of each run (the final checkpoint's files where the cutoff checkpoint is the last one) and `wallclock.json`], [same two entries],
+    [Arm contrast graph − grid, both readings, bootstrap over seeds], [`results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`], [the two CSV files above], [same two entries],
+    [Equal-time cutoff T\* = 18.77 h and the checkpoint map at T\*], [numbers in the journal; map re-derived by `make_results.py`], [`wallclock.json` of grid s1--s3 (median of the three totals), then of every run], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`16-`#sym.zws`progress-`#sym.zws`01`; re-derivation checked in `H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01`],
+    [Cap sensitivity bounds (every truncation scored as a win for the arm under test)], [numbers in the journal], [per-game records of the final evaluations], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`],
+    [Cost table: parameters, best-provider inference, run wall-clock (self-play generation + training, evaluation excluded, mean over the five seeds), self-play cost (that wall-clock / 5,000 games), training-throughput benchmark (batch 128), population scores], [`paper/`#sym.zws`figures/`#sym.zws`fig2-`#sym.zws`score-`#sym.zws`cost.`#sym.zws`md` (regenerated 2026-10-09 after a generator defect was found; see @sec:working-method)], [`wallclock.json` per run; `results-*.csv`; benchmark in `docs/`#sym.zws`representations/`#sym.zws`comparison-`#sym.zws`controls.`#sym.zws`md`], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`encoders-`#sym.zws`01`; `H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`],
+    [Score versus training wall-clock, all seeds, both arms, T\* marked], [`paper/`#sym.zws`figures/`#sym.zws`fig1-`#sym.zws`score-`#sym.zws`vs-`#sym.zws`time.`#sym.zws`png`], [`eval/*.csv` and `wallclock.json` per run], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`; `H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01`],
+    [Grid planes versus cell graph for one position], [`paper/`#sym.zws`figures/`#sym.zws`fig3-`#sym.zws`encodings.`#sym.zws`png`], [schematic: a synthetic five-piece position drawn in the script; no measured quantity], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`encoders-`#sym.zws`01` (encoding definitions)],
+    [Three failure positions F1--F3], [`paper/`#sym.zws`figures/`#sym.zws`fig4-`#sym.zws`failures.`#sym.zws`{md,`#sym.zws`png}`], [`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`*.`#sym.zws`csv` and `results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`; each game reproduced deterministically and verified against its CSV row], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`],
+    [Per-opponent score trajectories by generation, 5 seeds], [`paper/`#sym.zws`figures/`#sym.zws`fig5-`#sym.zws`per-`#sym.zws`opponent.`#sym.zws`png`], [`eval/`#sym.zws`{gen004,`#sym.zws`gen007,`#sym.zws`gen009}-`#sym.zws`vs-`#sym.zws`*.`#sym.zws`csv` and `wallclock.json` per run], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01`],
+    [Epoch-1 policy top-1 and value accuracy by generation, 10 runs], [`paper/`#sym.zws`figures/`#sym.zws`fig6-`#sym.zws`training-`#sym.zws`metrics.`#sym.zws`png`], [`data/`#sym.zws`runs/`#sym.zws`campaign.`#sym.zws`log`, `data/`#sym.zws`runs/`#sym.zws`extension.`#sym.zws`log` (training logs of the 10 main runs)], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01`],
+    [Final-evaluation truncation rate versus legal-random per run], [`paper/`#sym.zws`figures/`#sym.zws`fig7-`#sym.zws`truncation.`#sym.zws`png`], [`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`B-`#sym.zws`RND.`#sym.zws`csv` per run], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01`],
+    [Ablation table: A1 divergence, A2 null effect, A1′ supplement], [`results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [`data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`graph-`#sym.zws`{untyped,`#sym.zws`nogpool,`#sym.zws`untyped-`#sym.zws`clip}-`#sym.zws`s{1,`#sym.zws`2,`#sym.zws`3}/`#sym.zws`eval/` against the full graph arm's finals], [`H7-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`23-`#sym.zws`a1-`#sym.zws`divergence-`#sym.zws`01`; `H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`02-`#sym.zws`a2-`#sym.zws`nogpool-`#sym.zws`01`; `H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`a1prime-`#sym.zws`01`],
+    [Pipeline, architecture and chronology schematics], [`paper/`#sym.zws`figures/`#sym.zws`fig8-`#sym.zws`pipeline.`#sym.zws`png`, `fig9-`#sym.zws`architectures.`#sym.zws`png`, `fig10-`#sym.zws`timeline.`#sym.zws`png` (`scripts/`#sym.zws`make_`#sym.zws`report_`#sym.zws`figures.`#sym.zws`py`)], [the system documentation (`docs/inventory.md`), the journal headers and the decision log; no measured quantity], [none],
   )]
-  , caption: [Provenance of every generated table and figure: the artifact it is taken from, the raw records that artifact is computed from, and the journal entry that recorded the result. Run directories are abbreviated as `eval/…` for `data/runs/cmp-<arm>-s<seed>/eval/…`. ]
+  , caption: [Provenance of every generated table and figure: the artifact it is taken from, the raw records that artifact is computed from, and the journal entry that recorded the result. Run directories are abbreviated as `eval/…` for `data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`<arm>-`#sym.zws`s<seed>/`#sym.zws`eval/`#sym.zws`…`. ]
   , kind: table
   ) <tbl:prov-results>
 
 #figure(
   align(center)[#table(
-    columns: (15.45%, 51.43%, 33.11%),
+    columns: (40.4%, 33.55%, 26.05%),
     align: (left,left,left,),
     table.header([Evidence in the method chapters], [Where it lives], [Journal entry (date)],),
     table.hline(),
-    [Perft tables (8 game types), UHP conformance 21/21, differential fuzzing against two reference engines (27,829 positions at seed 20260909), plane-encoder crosscheck (240 positions)], [test suites under `crates/`, `scripts/nightly.sh`, `scripts/crosscheck_planes.py`], [`H2-2026-09-09-suite-rerun-01` (2026-09-09)],
-    [30 hand-annotated critical positions, 30/30 after one setup-side correction], [`tests/critical_positions/cases/*.toml`; `scripts/run_critical_corpus.py`], [`H2-2026-09-09-corpus-run-01` (2026-09-09)],
-    [Zero invariant violations over 10.9M applied transitions], [`crates/hive-core/tests/random_invariants.rs`], [`H2-2026-09-09-random-invariants-01` (2026-09-09)],
-    [Throughput profile: 21.7 µs UHP round-trip; 2.62 ms (CoreML) versus 23.5 ms (CPU) per evaluation; game-length distribution behind the 300-ply cap], [commands recorded inline in the entry], [`H2-2026-09-09-throughput-profile-01` (2026-09-09)],
-    [CoreML inference restored in the Rust pipeline (MLProgram format)], [`crates/hive-mcts/src/ort_eval.rs`], [`H4-2026-09-09-coreml-fix-01` (2026-09-09)],
-    [Baseline definitions, characterisation round-robin, five tactical cases, weight pin], [`configs/baselines/*.toml`, `docs/baselines.md`, `tests/tactical_positions/`], [`H3-2026-09-09-baselines-01` (2026-09-09)],
-    [Pipeline pilot and the seven automated pre-training checks], [`scripts/run_pilot.py`, `scripts/run_h4_checks.sh`, `data/runs/pilot0/`], [`H4-2026-09-10-pilot-01` (2026-09-10)],
-    [Grid and graph encoders, capacity matching (1.44M vs 1.47M), cost asymmetries, property battery], [`docs/representations/{grid,graph,comparison-controls}.md`, `python/hivenet/{graph_dataset,graph_model}.py`], [`H5-2026-09-10-encoders-01` (2026-09-10)],
-    [Rust mirror of the graph encoder, golden crosscheck (160 positions), end-to-end graph arm through the same search], [`scripts/crosscheck_graph.py`, `hive-nn` graph module], [`H5-2026-09-10-graph-wiring-01` (2026-09-10)],
-    [Comparison matrix, opening generation, fixed-schedule harness test, campaign sizing], [`configs/comparison-matrix.yaml`, `results/comparison/openings-v1.txt`, `results/comparison/opponents-manifest.md`], [`H6-2026-09-10-matrix-01` (2026-09-10)],
-    [Report assembly checks and the staleness defect found by the render pass], [`paper/final-control.md`], [`H8-2026-10-09-detailed-edition-01` (2026-10-09)],
+    [Perft tables (8 game types), UHP conformance 21/21, differential fuzzing against two reference engines (27,829 positions at seed 20260909), plane-encoder crosscheck (240 positions)], [test suites under `crates/`, `scripts/`#sym.zws`nightly.`#sym.zws`sh`, `scripts/`#sym.zws`crosscheck_`#sym.zws`planes.`#sym.zws`py`], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`suite-`#sym.zws`rerun-`#sym.zws`01` (2026-09-09)],
+    [30 hand-annotated critical positions, 30/30 after one setup-side correction], [`tests/`#sym.zws`critical_`#sym.zws`positions/`#sym.zws`cases/`#sym.zws`*.`#sym.zws`toml`; `scripts/`#sym.zws`run_`#sym.zws`critical_`#sym.zws`corpus.`#sym.zws`py`], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`corpus-`#sym.zws`run-`#sym.zws`01` (2026-09-09)],
+    [Zero invariant violations over 10.9M applied transitions], [`crates/`#sym.zws`hive-`#sym.zws`core/`#sym.zws`tests/`#sym.zws`random_`#sym.zws`invariants.`#sym.zws`rs`], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`random-`#sym.zws`invariants-`#sym.zws`01` (2026-09-09)],
+    [Throughput profile: 21.7 µs UHP round-trip; 2.62 ms (CoreML) versus 23.5 ms (CPU) per evaluation; game-length distribution behind the 300-ply cap], [commands recorded inline in the entry], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`throughput-`#sym.zws`profile-`#sym.zws`01` (2026-09-09)],
+    [CoreML inference restored in the Rust pipeline (MLProgram format)], [`crates/`#sym.zws`hive-`#sym.zws`mcts/`#sym.zws`src/`#sym.zws`ort_`#sym.zws`eval.`#sym.zws`rs`], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`coreml-`#sym.zws`fix-`#sym.zws`01` (2026-09-09)],
+    [Baseline definitions, characterisation round-robin, five tactical cases, weight pin], [`configs/`#sym.zws`baselines/`#sym.zws`*.`#sym.zws`toml`, `docs/baselines.md`, `tests/`#sym.zws`tactical_`#sym.zws`positions/`], [`H3-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`baselines-`#sym.zws`01` (2026-09-09)],
+    [Pipeline pilot and the seven automated pre-training checks], [`scripts/`#sym.zws`run_`#sym.zws`pilot.`#sym.zws`py`, `scripts/`#sym.zws`run_`#sym.zws`h4_`#sym.zws`checks.`#sym.zws`sh`, `data/runs/pilot0/`], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`pilot-`#sym.zws`01` (2026-09-10)],
+    [Grid and graph encoders, capacity matching (1.44M vs 1.47M), cost asymmetries, property battery], [`docs/`#sym.zws`representations/`#sym.zws`{grid,`#sym.zws`graph,`#sym.zws`comparison-`#sym.zws`controls}.`#sym.zws`md`, `python/`#sym.zws`hivenet/`#sym.zws`{graph_`#sym.zws`dataset,`#sym.zws`graph_`#sym.zws`model}.`#sym.zws`py`], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`encoders-`#sym.zws`01` (2026-09-10)],
+    [Rust mirror of the graph encoder, golden crosscheck (160 positions), end-to-end graph arm through the same search], [`scripts/`#sym.zws`crosscheck_`#sym.zws`graph.`#sym.zws`py`, `hive-nn` graph module], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`graph-`#sym.zws`wiring-`#sym.zws`01` (2026-09-10)],
+    [Comparison matrix, opening generation, fixed-schedule harness test, campaign sizing], [`configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`, `results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`, `results/`#sym.zws`comparison/`#sym.zws`opponents-`#sym.zws`manifest.`#sym.zws`md`], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`matrix-`#sym.zws`01` (2026-09-10)],
+    [Report assembly checks and the staleness defect found by the render pass], [`paper/`#sym.zws`final-`#sym.zws`control.`#sym.zws`md`], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01` (2026-10-09)],
   )]
   , caption: [Provenance of the method-chapter evidence (engine validation, baselines, pipeline, encoders, campaign design): the artifacts and the journal entry recording each measurement. ]
   , kind: table
@@ -2672,7 +2673,7 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
 
 #figure(
   align(center)[#table(
-    columns: (13.94%, 22.12%, 63.94%),
+    columns: (13.91%, 21.63%, 64.46%),
     align: (left,left,left,),
     table.header([Entry], [Date], [Decision],),
     table.hline(),
@@ -2716,37 +2717,37 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
 
 #figure(
   align(center)[#table(
-    columns: (22.79%, 45.35%, 31.86%),
+    columns: (30.24%, 29.8%, 39.96%),
     align: (left,left,left,),
     table.header([Claim], [Evidence], [Limit],),
     table.hline(),
-    [The rules engine reproduces Mzinga's published perft tables for all 8 game types to depth 6 (depth ≤5 in the standard suite, depth 7 in nightly runs).], [`H2-2026-09-09-suite-rerun-01`], [depth-bounded node-count equality; d7 re-run not repeated on 2026-09-09 (d≤6 confirmed)],
-    [The engine passes the UHP conformance harness of the nokamute reference (21/21).], [`H2-2026-09-09-suite-rerun-01`], [conformance = protocol behaviour, not full rules proof],
-    [Per-ply legal-move sets are identical to both reference engines (MzingaEngine v0.16.0, nokamute 1.0.3) over seeded random games (27,829 positions at seed 20260909; 200/100 games/type in nightly).], [`H2-2026-09-09-suite-rerun-01`], [agreement with references, not with the rulesheet directly; random-walk coverage],
-    [The engine agrees with a 30-case corpus of hand-annotated critical positions whose expectations were committed before any engine run (30/30 after one setup-side correction).], [`H2-2026-09-09-corpus-run-01`; `tests/critical_positions/`], [corpus annotations not externally reviewed (declared limit); 30 cases at the low end of the 30--50 proposal],
-    [Seeded random-game sessions across all 8 game types show zero invariant violations over 10.9M applied transitions.], [`H2-2026-09-09-random-invariants-01`], [pseudo-random breadth, not adversarial depth; serialisation via UHP GameString only],
-    [The Rust and Python plane encoders agree exactly (240 positions, byte-identical planes).], [`H2-2026-09-09-suite-rerun-01`], [grid-arm encoder only at that date],
-    [A UHP subprocess round-trip costs \~22 µs (negligible against per-decision costs), so the Python↔Rust binding uses subprocess/UHP (no PyO3).], [`H2-2026-09-09-throughput-profile-01`; D-010], [one machine (M1 Pro); revisit if Python ever enters a per-move loop],
-    [At the measured inference costs (2.62 ms/eval CoreML, 23.5 ms CPU, gen-19 net as workload), 128/32 sims with playout-cap randomization and a 300-ply cap are feasible for this study's compute envelope.], [`H2-2026-09-09-throughput-profile-01`; D-011], [historical: proposals later pilot-confirmed and frozen (D-020); costs are net-specific],
-    [CoreML inference restored in the Rust pipeline (MLProgram fix): self-play at 128/32 sims costs ≈12 thread-s/game (≈3 s/game wall at 4 threads), vs ≈320 thread-s/game on the CPU fallback at 600/150.], [`H4-2026-09-09-coreml-fix-01`], [gen-19 net as workload; small probe counts; re-measured at the pilot],
-    [The heuristic baseline defeats legal-random 100--0 (100 paired games, 0 truncations); MCTS-without-network at 6400 sims scores 99.5% vs random and 37.5% vs the heuristic (−89 Elo \[−150, −32\]); a 4×-budget probe reaches 56.2%.], [`H3-2026-09-09-baselines-01`], [pilot volume (100 games/pairing); arena CI unpaired approximation; ordering finding diagnosed, not retuned; population since frozen (D-017)],
-    [The MCTS baseline solves all 5 hand-annotated tactical cases at 400, 1600 and 6400 sims, and value signs are pinned under player alternation.], [`H3-2026-09-09-baselines-01`; `tests/tactical_positions/`; sign tests in `crates/*/tests`], [5 cases, unreviewed externally (declared limit)],
-    [All seven pre-training checks pass as automated tests on real self-play shards: zero illegal policy mass, id↔move identity, correct outcome perspective with truncation distinct, tiny-batch overfit (KL 0.09, argmax 15/15, value 15/15), bitwise save/resume, structurally-off eval noise, eval/training separation by audit.], [`H4-2026-09-10-pilot-01`; `scripts/run_h4_checks.sh`], [overfit criterion is KL to the soft-target entropy floor, not loss→0],
-    [One generation of self-play from random init (300 games, 128/32 sims, 1.44M-param grid net) yields a net that beats legal-random 100--0 (28 wins, 2 truncations) while scoring 3.3% vs the heuristic and 3.3% vs 6400-sim MCTS: non-degenerate learning with a data/iteration-gap diagnosis.], [`H4-2026-09-10-pilot-01`; `data/runs/pilot0/eval/`], [single seed, 30 games/opponent, gen 0 only; not a study result],
-    [Gen-0 self-play truncates 56.7% of games at the 300-ply cap (170/300); generation cost ≈12 s/game wall (4 threads) at gen 0, falling toward ≈3 s/game with a trained net at the same budget.], [`H4-2026-09-10-pilot-01`; `data/runs/pilot0/selfplay/gen000-manifest.json`], [one machine, one seed; rates specific to random-init play],
-    [The two arms are capacity-matched to +1.5% (grid 1.44M, graph 1.47M params) behind the identical decoder, and the graph encoder loses no state information vs engine-generated records (property battery P1--P5, 300 real positions, zero illegal policy mass end-to-end).], [`H5-2026-09-10-encoders-01`; `docs/representations/`], [historical: Rust mirror + golden crosscheck landed green the same day (`H5-2026-09-10-graph-wiring-01`)],
-    [Best-available-provider inference costs differ ≈1.4× against the graph arm (grid 2.62 ms/eval CoreML vs graph 3.67 ms ORT-CPU), while CPU training throughput favours the graph arm 3.5× and MPS favours the grid arm 2×.], [`H5-2026-09-10-encoders-01`; table in `comparison-controls.md`], [one machine; reported, not equalised; feeds the same-wall-clock reading],
-    [The Rust and Python graph encoders agree exactly (160 positions across all 8 game types, byte-identical tensors, nightly-pinned), and the graph arm runs end-to-end through the identical Rust MCTS.], [`H5-2026-09-10-graph-wiring-01`; `scripts/crosscheck_graph.py`], [smoke-scale training; strength results belong to the comparison],
-    [#strong[H1 is rejected under the pre-registered rule];: under both budget readings the graph arm shows no seed-consistent advantage against the frozen population, and every graph−grid interval excludes a meaningful graph advantage (largest upper bound +0.035).], [`H6-2026-09-19-comparison-01`; `results/comparison/results-arm-difference.md`], [3 seeds/arm; one graph architecture at one capacity and budget; early-regime self-play (10 gens)],
-    [Arm contrast (seed-mean, bootstrap95 over seeds): vs B-RND −0.175 \[−0.268, −0.007\] (same-examples) and −0.158 \[−0.254, −0.050\] (same-wall-clock); vs B-HEU −0.085 \[−0.143, −0.025\] and −0.072 \[−0.100, −0.028\]; vs B-MCTS +0.005 \[−0.020, +0.035\] and −0.013 \[−0.040, +0.015\].], [`results/comparison/results-*.csv`; `H6-2026-09-19-comparison-01`], [intervals over 3 independent seeds per arm],
-    [The graph arm truncates 20--57% of its games vs legal-random at the 300-ply cap (grid 0--1%); the rejection is cap-robust: scoring all truncations as graph wins leaves graph−grid at −0.072/−0.058 vs B-RND.], [`H6-2026-09-19-comparison-01` (cap-sensitivity bounds); fig4-F1], [bound argument substitutes for a larger-cap re-run (stated)],
-    [Measured campaign costs: graph runs averaged 2.0× grid training wall-clock (36.7 vs 18.0 h per 10×500-game run, mean over 5 seeds, self-play + training, evaluation excluded; 3-seed figures were 35.7 vs 18.2 h); at T\* = 18.77 h the graph arm completes 3--6 of 10 generations (4--5 over the original three seeds).], [`data/runs/cmp-*/wallclock.json`; `results/comparison/wallclock-per-run.md`; fig2], [one machine; per-arm best available provider (reported); the cost-table generator's divisor defect of 2026-10-09 affected only the previously printed means (30.0/61.2 h), never this ratio],
-    [All comparison artifacts were frozen before any comparison run (population D-017, protocol D-020, openings D-025), T\* was computed from grid wall-clocks before any cross-arm number existed, and no frozen artifact was touched.], [D-017/D-020/D-025/D-026; `H6-2026-09-16-progress-01`, `H6-2026-09-19-comparison-01`], [none],
-    [Ablation A1 (parity): removing geometric edge typing destroys trainability: NaN divergence at generation 0 in 3/3 seeds; typed edges contribute at minimum optimization stability; A1 eval tables are artifacts of a NaN policy and excluded as scores.], [`H7-2026-09-23-a1-divergence-01`; `results/ablations/README.md`], [mechanism (6× gradient scale on the shared matrix) is a grounded hypothesis, not a measured decomposition],
-    [Ablation A2: removing the global-pooling bias has no measurable effect: nogpool−full = −0.001 \[−0.170, +0.165\] (B-RND), −0.007 \[−0.043, +0.030\] (B-HEU), −0.013 \[−0.043, +0.013\] (B-MCTS); failure modes unchanged.], [`H7-2026-10-02-a2-nogpool-01`; `results/ablations/README.md`], [3 seeds/cell; 0.10M param difference inherent to the component (reported)],
-    [#strong[Final 5-seed analysis (pre-committed, D-031): H1 remains rejected.] Graph−grid contrasts: B-RND −0.169 \[−0.272, −0.062\] / −0.161 \[−0.278, −0.048\]; B-HEU −0.064 \[−0.111, −0.017\] / −0.059 \[−0.087, −0.029\]; B-MCTS −0.009 \[−0.055, +0.028\] / −0.018 \[−0.066, +0.025\] (same-examples / same-wall-clock); largest upper bound +0.028. Supersedes the 3-seed tables as the study's final numbers.], [`H6-2026-10-09-5seed-final-01`; `results/comparison/`], [seeds 4--5 collected after the 3-seed analysis (disclosed); T\* fixed at the pre-registered value],
-    [A1′ supplement (two-component: untyped edges + grad-clip): trains finite and scores within the full graph arm's band (all diff CIs straddle 0); with A1, the typed relations' measurable contribution at this scale concentrates in optimization stability; it is never attributed to typing alone (clip confound).], [`H7-2026-10-09-a1prime-01`; `results/ablations/README.md`], [3 vs 5 seeds; wide intervals; confounded by construction],
-    [The working methodology (goal-level AI delegation under six human-only gates, file-based state, mechanical verification) caught at least five harness/process defects before they could contaminate results (pipeline deadlock, corpus setup error, eval-harness opponent defect, silent record-loss path, silent NaN divergence), each journaled at detection time.], [`docs/methodology-log.md` (workspace); journals cited per incident in @sec:working-method], [process observations from one study; no counterfactual control],
+    [The rules engine reproduces Mzinga's published perft tables for all 8 game types to depth 6 (depth ≤5 in the standard suite, depth 7 in nightly runs).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`suite-`#sym.zws`rerun-`#sym.zws`01`], [depth-bounded node-count equality; d7 re-run not repeated on 2026-09-09 (d≤6 confirmed)],
+    [The engine passes the UHP conformance harness of the nokamute reference (21/21).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`suite-`#sym.zws`rerun-`#sym.zws`01`], [conformance = protocol behaviour, not full rules proof],
+    [Per-ply legal-move sets are identical to both reference engines (MzingaEngine v0.16.0, nokamute 1.0.3) over seeded random games (27,829 positions at seed 20260909; 200/100 games/type in nightly).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`suite-`#sym.zws`rerun-`#sym.zws`01`], [agreement with references, not with the rulesheet directly; random-walk coverage],
+    [The engine agrees with a 30-case corpus of hand-annotated critical positions whose expectations were committed before any engine run (30/30 after one setup-side correction).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`corpus-`#sym.zws`run-`#sym.zws`01`; `tests/`#sym.zws`critical_`#sym.zws`positions/`], [corpus annotations not externally reviewed (declared limit); 30 cases at the low end of the 30--50 proposal],
+    [Seeded random-game sessions across all 8 game types show zero invariant violations over 10.9M applied transitions.], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`random-`#sym.zws`invariants-`#sym.zws`01`], [pseudo-random breadth, not adversarial depth; serialisation via UHP GameString only],
+    [The Rust and Python plane encoders agree exactly (240 positions, byte-identical planes).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`suite-`#sym.zws`rerun-`#sym.zws`01`], [grid-arm encoder only at that date],
+    [A UHP subprocess round-trip costs \~22 µs (negligible against per-decision costs), so the Python↔Rust binding uses subprocess/UHP (no PyO3).], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`throughput-`#sym.zws`profile-`#sym.zws`01`; D-010], [one machine (M1 Pro); revisit if Python ever enters a per-move loop],
+    [At the measured inference costs (2.62 ms/eval CoreML, 23.5 ms CPU, gen-19 net as workload), 128/32 sims with playout-cap randomization and a 300-ply cap are feasible for this study's compute envelope.], [`H2-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`throughput-`#sym.zws`profile-`#sym.zws`01`; D-011], [historical: proposals later pilot-confirmed and frozen (D-020); costs are net-specific],
+    [CoreML inference restored in the Rust pipeline (MLProgram fix): self-play at 128/32 sims costs ≈12 thread-s/game (≈3 s/game wall at 4 threads), vs ≈320 thread-s/game on the CPU fallback at 600/150.], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`coreml-`#sym.zws`fix-`#sym.zws`01`], [gen-19 net as workload; small probe counts; re-measured at the pilot],
+    [The heuristic baseline defeats legal-random 100--0 (100 paired games, 0 truncations); MCTS-without-network at 6400 sims scores 99.5% vs random and 37.5% vs the heuristic (−89 Elo \[−150, −32\]); a 4×-budget probe reaches 56.2%.], [`H3-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`baselines-`#sym.zws`01`], [pilot volume (100 games/pairing); arena CI unpaired approximation; ordering finding diagnosed, not retuned; population since frozen (D-017)],
+    [The MCTS baseline solves all 5 hand-annotated tactical cases at 400, 1600 and 6400 sims, and value signs are pinned under player alternation.], [`H3-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`09-`#sym.zws`baselines-`#sym.zws`01`; `tests/`#sym.zws`tactical_`#sym.zws`positions/`; sign tests in `crates/*/tests`], [5 cases, unreviewed externally (declared limit)],
+    [All seven pre-training checks pass as automated tests on real self-play shards: zero illegal policy mass, id↔move identity, correct outcome perspective with truncation distinct, tiny-batch overfit (KL 0.09, argmax 15/15, value 15/15), bitwise save/resume, structurally-off eval noise, eval/training separation by audit.], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`pilot-`#sym.zws`01`; `scripts/`#sym.zws`run_`#sym.zws`h4_`#sym.zws`checks.`#sym.zws`sh`], [overfit criterion is KL to the soft-target entropy floor, not loss→0],
+    [One generation of self-play from random init (300 games, 128/32 sims, 1.44M-param grid net) yields a net that beats legal-random 100--0 (28 wins, 2 truncations) while scoring 3.3% vs the heuristic and 3.3% vs 6400-sim MCTS: non-degenerate learning with a data/iteration-gap diagnosis.], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`pilot-`#sym.zws`01`; `data/`#sym.zws`runs/`#sym.zws`pilot0/`#sym.zws`eval/`], [single seed, 30 games/opponent, gen 0 only; not a study result],
+    [Gen-0 self-play truncates 56.7% of games at the 300-ply cap (170/300); generation cost ≈12 s/game wall (4 threads) at gen 0, falling toward ≈3 s/game with a trained net at the same budget.], [`H4-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`pilot-`#sym.zws`01`; `data/`#sym.zws`runs/`#sym.zws`pilot0/`#sym.zws`selfplay/`#sym.zws`gen000-`#sym.zws`manifest.`#sym.zws`json`], [one machine, one seed; rates specific to random-init play],
+    [The two arms are capacity-matched to +1.5% (grid 1.44M, graph 1.47M params) behind the identical decoder, and the graph encoder loses no state information vs engine-generated records (property battery P1--P5, 300 real positions, zero illegal policy mass end-to-end).], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`encoders-`#sym.zws`01`; `docs/`#sym.zws`representations/`], [historical: Rust mirror + golden crosscheck landed green the same day (`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`graph-`#sym.zws`wiring-`#sym.zws`01`)],
+    [Best-available-provider inference costs differ ≈1.4× against the graph arm (grid 2.62 ms/eval CoreML vs graph 3.67 ms ORT-CPU), while CPU training throughput favours the graph arm 3.5× and MPS favours the grid arm 2×.], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`encoders-`#sym.zws`01`; table in `comparison-`#sym.zws`controls.`#sym.zws`md`], [one machine; reported, not equalised; feeds the same-wall-clock reading],
+    [The Rust and Python graph encoders agree exactly (160 positions across all 8 game types, byte-identical tensors, nightly-pinned), and the graph arm runs end-to-end through the identical Rust MCTS.], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`graph-`#sym.zws`wiring-`#sym.zws`01`; `scripts/`#sym.zws`crosscheck_`#sym.zws`graph.`#sym.zws`py`], [smoke-scale training; strength results belong to the comparison],
+    [#strong[H1 is rejected under the pre-registered rule];: under both budget readings the graph arm shows no seed-consistent advantage against the frozen population, and every graph−grid interval excludes a meaningful graph advantage (largest upper bound +0.035).], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`; `results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`], [3 seeds/arm; one graph architecture at one capacity and budget; early-regime self-play (10 gens)],
+    [Arm contrast (seed-mean, bootstrap95 over seeds): vs B-RND −0.175 \[−0.268, −0.007\] (same-examples) and −0.158 \[−0.254, −0.050\] (same-wall-clock); vs B-HEU −0.085 \[−0.143, −0.025\] and −0.072 \[−0.100, −0.028\]; vs B-MCTS +0.005 \[−0.020, +0.035\] and −0.013 \[−0.040, +0.015\].], [`results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`*.`#sym.zws`csv`; `H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`], [intervals over 3 independent seeds per arm],
+    [The graph arm truncates 20--57% of its games vs legal-random at the 300-ply cap (grid 0--1%); the rejection is cap-robust: scoring all truncations as graph wins leaves graph−grid at −0.072/−0.058 vs B-RND.], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01` (cap-sensitivity bounds); fig4-F1], [bound argument substitutes for a larger-cap re-run (stated)],
+    [Measured campaign costs: graph runs averaged 2.0× grid training wall-clock (36.7 vs 18.0 h per 10×500-game run, mean over 5 seeds, self-play + training, evaluation excluded; 3-seed figures were 35.7 vs 18.2 h); at T\* = 18.77 h the graph arm completes 3--6 of 10 generations (4--5 over the original three seeds).], [`data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`*/`#sym.zws`wallclock.`#sym.zws`json`; `results/`#sym.zws`comparison/`#sym.zws`wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md`; fig2], [one machine; per-arm best available provider (reported); the cost-table generator's divisor defect of 2026-10-09 affected only the previously printed means (30.0/61.2 h), never this ratio],
+    [All comparison artifacts were frozen before any comparison run (population D-017, protocol D-020, openings D-025), T\* was computed from grid wall-clocks before any cross-arm number existed, and no frozen artifact was touched.], [D-017/D-020/D-025/D-026; `H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`16-`#sym.zws`progress-`#sym.zws`01`, `H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`19-`#sym.zws`comparison-`#sym.zws`01`], [none],
+    [Ablation A1 (parity): removing geometric edge typing destroys trainability: NaN divergence at generation 0 in 3/3 seeds; typed edges contribute at minimum optimization stability; A1 eval tables are artifacts of a NaN policy and excluded as scores.], [`H7-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`23-`#sym.zws`a1-`#sym.zws`divergence-`#sym.zws`01`; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [mechanism (6× gradient scale on the shared matrix) is a grounded hypothesis, not a measured decomposition],
+    [Ablation A2: removing the global-pooling bias has no measurable effect: nogpool−full = −0.001 \[−0.170, +0.165\] (B-RND), −0.007 \[−0.043, +0.030\] (B-HEU), −0.013 \[−0.043, +0.013\] (B-MCTS); failure modes unchanged.], [`H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`02-`#sym.zws`a2-`#sym.zws`nogpool-`#sym.zws`01`; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [3 seeds/cell; 0.10M param difference inherent to the component (reported)],
+    [#strong[Final 5-seed analysis (pre-committed, D-031): H1 remains rejected.] Graph−grid contrasts: B-RND −0.169 \[−0.272, −0.062\] / −0.161 \[−0.278, −0.048\]; B-HEU −0.064 \[−0.111, −0.017\] / −0.059 \[−0.087, −0.029\]; B-MCTS −0.009 \[−0.055, +0.028\] / −0.018 \[−0.066, +0.025\] (same-examples / same-wall-clock); largest upper bound +0.028. Supersedes the 3-seed tables as the study's final numbers.], [`H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01`; `results/`#sym.zws`comparison/`], [seeds 4--5 collected after the 3-seed analysis (disclosed); T\* fixed at the pre-registered value],
+    [A1′ supplement (two-component: untyped edges + grad-clip): trains finite and scores within the full graph arm's band (all diff CIs straddle 0); with A1, the typed relations' measurable contribution at this scale concentrates in optimization stability; it is never attributed to typing alone (clip confound).], [`H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`a1prime-`#sym.zws`01`; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [3 vs 5 seeds; wide intervals; confounded by construction],
+    [The working methodology (goal-level AI delegation under six human-only gates, file-based state, mechanical verification) caught at least five harness/process defects before they could contaminate results (pipeline deadlock, corpus setup error, eval-harness opponent defect, silent record-loss path, silent NaN divergence), each journaled at detection time.], [`docs/`#sym.zws`methodology-`#sym.zws`log.`#sym.zws`md` (workspace); journals cited per incident in @sec:working-method], [process observations from one study; no counterfactual control],
   )]
   , caption: [The claims--evidence register of this report, reproduced from the repository file with the section column removed. Every claim made in the body corresponds to one row; the limit column states what prevents a broader reading. ]
   , kind: table
@@ -2754,7 +2755,7 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
 
 == Raw data, identifiers and frozen hashes
 <raw-data-identifiers-and-frozen-hashes>
-#strong[Location and layout.] Raw records live on disk under `data/runs/` in the study repository; they are not under version control. There is one directory per training run, `cmp-<arm>-s<seed>`, with `<arm>` in {`grid`, `graph`} for the main comparison (seeds 1--5) and in {`graph-untyped`, `graph-nogpool`, `graph-untyped-clip`} for the ablations A1, A2 and A1′ (seeds 1--3), plus `pilot0/` for the pipeline pilot. Each run directory contains: `selfplay/gen00N-*.bin` (binary record shards of generation N, v3 format, model-stamped) with `gen00N-manifest.json` (network and its fingerprint, model generation, record version, game type, seed, game count, full and cheap simulation counts, full-move fraction, temperature plies, resignation settings, counts of resigned and truncated games, number of positions, shard list); `checkpoints/gen00N/` (`hivenet-e0.pt`, `hivenet-e1.pt`, `train-config.json`) and the exported `gen00N-b1.onnx` used for play; `eval/<checkpoint>-vs-<opponent>.csv` with its `.log` for the intermediate (gen004, gen007) and final (gen009) evaluations, and `eval/tstar-gen00N-vs-<opponent>.{csv,log}` for the equal-time cutoff checkpoint; and `wallclock.json`, the per-generation wall-clock in seconds from which every time figure and the cutoff are derived. Campaign-level logs are `data/runs/campaign.log` (main runs, seeds 1--3), `extension.log` (seeds 4--5), `ablations.log` and `tstar-evals.log`. Seed derivation: base seed = 100,000 × seed; generation g uses base seed + g; evaluation network seed 9000 + gen (finals) or 9500 (cutoff sets), opponent seeds 9101 (legal-random) and 9201 (search).
+#strong[Location and layout.] Raw records live on disk under `data/runs/` in the study repository; they are not under version control. There is one directory per training run, `cmp-<arm>-s<seed>`, with `<arm>` in {`grid`, `graph`} for the main comparison (seeds 1--5) and in {`graph-untyped`, `graph-nogpool`, `graph-`#sym.zws`untyped-`#sym.zws`clip`} for the ablations A1, A2 and A1′ (seeds 1--3), plus `pilot0/` for the pipeline pilot. Each run directory contains: `selfplay/`#sym.zws`gen00N-`#sym.zws`*.`#sym.zws`bin` (binary record shards of generation N, v3 format, model-stamped) with `gen00N-`#sym.zws`manifest.`#sym.zws`json` (network and its fingerprint, model generation, record version, game type, seed, game count, full and cheap simulation counts, full-move fraction, temperature plies, resignation settings, counts of resigned and truncated games, number of positions, shard list); `checkpoints/`#sym.zws`gen00N/` (`hivenet-e0.pt`, `hivenet-e1.pt`, `train-config.json`) and the exported `gen00N-b1.onnx` used for play; `eval/`#sym.zws`<checkpoint>-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`csv` with its `.log` for the intermediate (gen004, gen007) and final (gen009) evaluations, and `eval/`#sym.zws`tstar-`#sym.zws`gen00N-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`{csv,`#sym.zws`log}` for the equal-time cutoff checkpoint; and `wallclock.json`, the per-generation wall-clock in seconds from which every time figure and the cutoff are derived. Campaign-level logs are `data/`#sym.zws`runs/`#sym.zws`campaign.`#sym.zws`log` (main runs, seeds 1--3), `extension.log` (seeds 4--5), `ablations.log` and `tstar-evals.log`. Seed derivation: base seed = 100,000 × seed; generation g uses base seed + g; evaluation network seed 9000 + gen (finals) or 9500 (cutoff sets), opponent seeds 9101 (legal-random) and 9201 (search).
 
 #strong[Volumes.] The main campaign comprised 10 generations × 500 self-play games per run (30,000 self-play games per three-seed arm at the 3-seed stage) and 100 paired games per (checkpoint, opponent) evaluation on the frozen openings; the campaign ran from 2026-09-10 12:42 to 2026-09-17 22:31 for seeds 1--3 (≈163 h of machine time including the cutoff evaluations), with seeds 4--5 collected 2026-09-27 to 2026-10-02. Disk footprint is recorded in the evidence base only as the launch estimates (≈3--5 GB for the main campaign, ≈3--4 GB for the ablations) against 164 GB free at launch with a 20 GB guard; exact per-run sizes were not journaled. Since the deletion recorded in D-024, the study repository is the sole copy of the pre-study material it inherited (the prior-loop checkpoint and its data, 412 MB and 75 MB), which is why those files are protected by the destructive-action gate.
 
@@ -2762,20 +2763,20 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
 
 #figure(
   align(center)[#table(
-    columns: (29.58%, 7.95%, 43.05%, 19.43%),
+    columns: (46.8%, 12.58%, 29.58%, 11.04%),
     align: (left,left,left,left,),
     table.header([Artifact], [Frozen / pinned on], [Identifier], [Record],),
     table.hline(),
-    [Protocol v1.0 (`docs/protocol.md`)], [2026-09-10], [sha256 f340a6b6…aefeb5 at commit 44a74ff (full: f340a6b64db0f5f0bf126ffb251c3de339450bde192fd54b719036a8a3aefeb5)], [D-020],
-    [Opponent B-RND (`configs/baselines/random.toml`)], [2026-09-09], [sha256 f2fc4a06441d3c1a7922838a6693dbb48ec54543bc34fd814d41c9a742514cd7], [D-017],
-    [Opponent B-HEU (`configs/baselines/heuristic.toml`)], [2026-09-09], [sha256 7210a0a349c5bad5dcd2df099cc6865ee3cb5d8a2c30e106ce58137804818999], [D-017],
-    [Opponent B-MCTS (`configs/baselines/mcts-nonet.toml`)], [2026-09-09], [sha256 3fc8f75cf2b4f21012dd61e9924408fbfc32c8ea561aa96eb44f1091ba07364e], [D-017],
-    [Heuristic weights (`configs/baselines/heuristic-weights.toml`)], [2026-09-09], [sha256 d0602f1895fbed70b6f84ac2a3eb87bd68e811e53acf24d4d7814a1495b0b97a; pinned by test `weights_pinned_for_h3_baselines`], [D-014, D-017],
+    [Protocol v1.0 (`docs/protocol.md`)], [2026-09-10], [sha256 f340a6b6…aefeb5 at commit 44a74ff (full: f340a6b64db0f5f0bf126ffb​251c3de339450bde192fd54b​719036a8a3aefeb5)], [D-020],
+    [Opponent B-RND (`configs/`#sym.zws`baselines/`#sym.zws`random.`#sym.zws`toml`)], [2026-09-09], [sha256 f2fc4a06441d3c1a7922838a​6693dbb48ec54543bc34fd81​4d41c9a742514cd7], [D-017],
+    [Opponent B-HEU (`configs/`#sym.zws`baselines/`#sym.zws`heuristic.`#sym.zws`toml`)], [2026-09-09], [sha256 7210a0a349c5bad5dcd2df09​9cc6865ee3cb5d8a2c30e106​ce58137804818999], [D-017],
+    [Opponent B-MCTS (`configs/`#sym.zws`baselines/`#sym.zws`mcts-`#sym.zws`nonet.`#sym.zws`toml`)], [2026-09-09], [sha256 3fc8f75cf2b4f21012dd61e9​924408fbfc32c8ea561aa96e​b44f1091ba07364e], [D-017],
+    [Heuristic weights (`configs/`#sym.zws`baselines/`#sym.zws`heuristic-`#sym.zws`weights.`#sym.zws`toml`)], [2026-09-09], [sha256 d0602f1895fbed70b6f84ac2​a3eb87bd68e811e53acf24d4​d7814a1495b0b97a; pinned by test `weights_`#sym.zws`pinned_`#sym.zws`for_`#sym.zws`h3_`#sym.zws`baselines`], [D-014, D-017],
     [Engine code at the population freeze], [2026-09-09], [commit b94e7c1], [D-017],
-    [Shared openings (`results/comparison/openings-v1.txt`, 250 lines)], [2026-09-10], [content sha256 63b318d071dfc3ecfae3585636c8e6f7327ddc08e7aed86a466f915f8005af7b; frozen-file sha256 538497390a3787299c67c3ca138b8feacb369d55dc562881d1aee45200cbccb2; generator seed 20260910; schedule hash 8cd84b6564440666], [D-025],
-    [Evaluation settings (`configs/eval-settings.toml`)], [2026-09-09], [400 simulations, no exploration noise, deterministic argmax, 300-ply cap], [D-019],
-    [Comparison matrix (`configs/comparison-matrix.yaml`)], [2026-09-10], [pre-registered sizes and the cutoff rule], [D-026],
-    [Equal-time cutoff T\*], [2026-09-16], [18.77 h = median of the three original grid run totals (18.77, 16.73, 19.07 h)], [`H6-2026-09-16-progress-01`; D-031],
+    [Shared openings (`results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`, 250 lines)], [2026-09-10], [content sha256 63b318d071dfc3ecfae35856​36c8e6f7327ddc08e7aed86a​466f915f8005af7b; frozen-file sha256 538497390a3787299c67c3ca​138b8feacb369d55dc562881​d1aee45200cbccb2; generator seed 20260910; schedule hash 8cd84b6564440666], [D-025],
+    [Evaluation settings (`configs/`#sym.zws`eval-`#sym.zws`settings.`#sym.zws`toml`)], [2026-09-09], [400 simulations, no exploration noise, deterministic argmax, 300-ply cap], [D-019],
+    [Comparison matrix (`configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`)], [2026-09-10], [pre-registered sizes and the cutoff rule], [D-026],
+    [Equal-time cutoff T\*], [2026-09-16], [18.77 h = median of the three original grid run totals (18.77, 16.73, 19.07 h)], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`16-`#sym.zws`progress-`#sym.zws`01`; D-031],
     [Campaign and analysis code], [2026-09-10 → 2026-10-09], [campaign ac58773; analysis 1c65269 (3 seeds), 7db074d (5 seeds); ablations 216fded → bffeea9 (non-finite guard); A1′ queue 1fdd7ec], [journals `H6-…`, `H7-…`],
   )]
   , caption: [Frozen and pinned artifacts of the study with the identifiers recorded at their freeze (hashes, commits, seeds) and the decision-log or journal entry that records them. ]
@@ -2788,7 +2789,7 @@ The tables below fix the English terms used in this report, their meaning within
 
 #figure(
   align(center)[#table(
-    columns: (28.04%, 37.75%, 34.22%),
+    columns: (24.78%, 45.58%, 29.65%),
     align: (left,left,left,),
     table.header([Term], [Definition], [French equivalent],),
     table.hline(),
@@ -2813,7 +2814,7 @@ The tables below fix the English terms used in this report, their meaning within
 
 #figure(
   align(center)[#table(
-    columns: (22.3%, 46.58%, 31.13%),
+    columns: (18.98%, 52.32%, 28.7%),
     align: (left,left,left,),
     table.header([Term], [Definition], [French equivalent],),
     table.hline(),
@@ -2832,7 +2833,7 @@ The tables below fix the English terms used in this report, their meaning within
 
 #figure(
   align(center)[#table(
-    columns: (27.09%, 42.73%, 30.18%),
+    columns: (23.84%, 50.33%, 25.83%),
     align: (left,left,left,),
     table.header([Term], [Definition], [French equivalent],),
     table.hline(),
@@ -2855,7 +2856,7 @@ The tables below fix the English terms used in this report, their meaning within
 
 #figure(
   align(center)[#table(
-    columns: (28.32%, 36.5%, 35.18%),
+    columns: (27.59%, 41.28%, 31.13%),
     align: (left,left,left,),
     table.header([Term], [Definition], [French equivalent],),
     table.hline(),
@@ -2873,7 +2874,7 @@ The tables below fix the English terms used in this report, their meaning within
 
 #figure(
   align(center)[#table(
-    columns: (27.15%, 42.38%, 30.46%),
+    columns: (24.72%, 47.9%, 27.37%),
     align: (left,left,left,),
     table.header([Term], [Definition], [French equivalent],),
     table.hline(),
@@ -2894,7 +2895,7 @@ The tables below fix the English terms used in this report, their meaning within
 
 #figure(
   align(center)[#table(
-    columns: (26.27%, 37.97%, 35.76%),
+    columns: (25.17%, 46.58%, 28.26%),
     align: (left,left,left,),
     table.header([Term], [Definition], [French equivalent],),
     table.hline(),
@@ -2915,13 +2916,13 @@ This is the one place in the report where commands, file names and identifiers a
 
 == What is released
 <what-is-released>
-The release set is the repository `hive-graph-selfplay` and the records under it. Its access and release tag are fixed at diffusion time; at the time of writing nothing has left the study machine, and the licences of the third-party reference engines used only for rules validation are still under review.
+The release set is the repository `hive-`#sym.zws`graph-`#sym.zws`selfplay` and the records under it. Its access and release tag are fixed at diffusion time; at the time of writing nothing has left the study machine, and the licences of the third-party reference engines used only for rules validation are still under review.
 
 - #strong[Code.] The Rust engine (rules kernel, protocol server, search, arena, self-play workers), the Python training and export code under `python/hivenet/`, the scripts under `scripts/`.
-- #strong[Frozen configurations.] `configs/comparison-matrix.yaml`, `configs/eval-settings.toml`, the opponent configurations and heuristic weight file under `configs/baselines/`, the ablation specifications under `configs/ablations/`.
-- #strong[Frozen openings and population manifest.] `results/comparison/openings-v1.txt` (250 four-ply lines) and `opponents-manifest.md`, which records the hashes of @tbl:g-identifiers.
-- #strong[Result tables.] `results/comparison/results-same-examples.{md,csv}`, `results-same-wallclock.{md,csv}`, `results-arm-difference.md`, `wallclock-per-run.md`; `results/ablations/README.md`.
-- #strong[Per-run records];, under `data/runs/cmp-<arm>-s<seed>/`: `eval/` (one comma-separated file per checkpoint and opponent, one row per game: `opening_id, a_is_white, score_a, truncated, plies, outcome`, metadata in `#` header lines); `wallclock.json` (seconds per generation); `selfplay/` manifests tying each shard to its generating network, and the shards; `checkpoints/gen000-b1.onnx` to `gen009-b1.onnx`. Tables and figures need only `eval/` and `wallclock.json`; the replay needs one checkpoint.
+- #strong[Frozen configurations.] `configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`, `configs/`#sym.zws`eval-`#sym.zws`settings.`#sym.zws`toml`, the opponent configurations and heuristic weight file under `configs/`#sym.zws`baselines/`, the ablation specifications under `configs/`#sym.zws`ablations/`.
+- #strong[Frozen openings and population manifest.] `results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt` (250 four-ply lines) and `opponents-`#sym.zws`manifest.`#sym.zws`md`, which records the hashes of @tbl:g-identifiers.
+- #strong[Result tables.] `results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`, `wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md`; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`.
+- #strong[Per-run records];, under `data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`<arm>-`#sym.zws`s<seed>/`: `eval/` (one comma-separated file per checkpoint and opponent, one row per game: `opening_id, a_is_white, score_a, truncated, plies, outcome`, metadata in `#` header lines); `wallclock.json` (seconds per generation); `selfplay/` manifests tying each shard to its generating network, and the shards; `checkpoints/`#sym.zws`gen000-`#sym.zws`b1.`#sym.zws`onnx` to `gen009-b1.onnx`. Tables and figures need only `eval/` and `wallclock.json`; the replay needs one checkpoint.
 
 The third-party engines used in rules validation (Mzinga, nokamute) are not shipped and are not needed: no study number derives from them.
 
@@ -2930,9 +2931,9 @@ The third-party engines used in rules validation (Mzinga, nokamute) are not ship
 `scripts/reproduce_minimal.sh <workdir>` performs, from a clean clone plus the shipped records, the smallest end-to-end check that touches every link of the chain: build, play, record, aggregate. It passed on 9 October 2026 and again the same day after a prose fix to the table generator, with an empty numeric difference. Its four steps:
 
 + #strong[Clone and build.] `git clone` into `<workdir>/clone`, then `cargo build --release -p hive-engine -p hive-arena`; the engine binary must exist afterwards. The inference crate downloads the ONNX Runtime binary at first build, so the first build needs network access.
-+ #strong[Ship the records.] Copy `results/comparison/`, every run's `eval/` and `wallclock.json`, and the single checkpoint `cmp-grid-s2/checkpoints/gen009-b1.onnx` into the clone, as the release layout would.
-+ #strong[Replay one recorded game deterministically.] The game is failure position F2 of the qualitative results: the grid arm's seed-2 final checkpoint against B-HEU on opening line 2, the arm playing Black, lost in 19 plies. The arena plays that opening's colour pair (`--games 2 --depth 1 --seed 1 --threads 1`), the network at 400 simulations with seed 9009 (the final-evaluation rule, 9000 + generation index), B-HEU at depth 1 on one thread; the script asserts that the Black-side row's `score_a`, `truncated` and `plies` equal the shipped row in `cmp-grid-s2/eval/gen009-vs-B-HEU.csv` and prints `replay matches shipped row: plies 19, score 0`.
-+ #strong[Regenerate and compare.] `python3 scripts/make_results.py` (standard-library Python only) rebuilds both reading tables from the shipped records; `cmp` against the shipped `results-same-examples.md` and `results-same-wallclock.md` must report them byte-identical. The script ends with `MINIMAL REPRODUCTION: PASS`.
++ #strong[Ship the records.] Copy `results/`#sym.zws`comparison/`, every run's `eval/` and `wallclock.json`, and the single checkpoint `cmp-`#sym.zws`grid-`#sym.zws`s2/`#sym.zws`checkpoints/`#sym.zws`gen009-`#sym.zws`b1.`#sym.zws`onnx` into the clone, as the release layout would.
++ #strong[Replay one recorded game deterministically.] The game is failure position F2 of the qualitative results: the grid arm's seed-2 final checkpoint against B-HEU on opening line 2, the arm playing Black, lost in 19 plies. The arena plays that opening's colour pair (`--games 2 --depth 1 --seed 1 --threads 1`), the network at 400 simulations with seed 9009 (the final-evaluation rule, 9000 + generation index), B-HEU at depth 1 on one thread; the script asserts that the Black-side row's `score_a`, `truncated` and `plies` equal the shipped row in `cmp-`#sym.zws`grid-`#sym.zws`s2/`#sym.zws`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`B-`#sym.zws`HEU.`#sym.zws`csv` and prints `replay matches shipped row: plies 19, score 0`.
++ #strong[Regenerate and compare.] `python3 scripts/make_results.py` (standard-library Python only) rebuilds both reading tables from the shipped records; `cmp` against the shipped `results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`md` and `results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`md` must report them byte-identical. The script ends with `MINIMAL REPRODUCTION: PASS`.
 
 The scenario verifies that the released code builds from a clean checkout, that a recorded game is replayed exactly by the released checkpoint against the released opponent under the pinned settings, and that the published tables are a pure function of the released records. It does not verify training; that is the full reproduction below.
 
@@ -2976,7 +2977,7 @@ All durations in @tbl:g-durations were measured on the study machine (Apple M1 P
 
 #figure(
   align(center)[#table(
-    columns: (51.98%, 48.02%),
+    columns: (61.45%, 38.55%),
     align: (left,right,),
     table.header([Step], [Measured duration],),
     table.hline(),
@@ -3003,16 +3004,16 @@ A reproduction is faithful when it uses the frozen artifacts identified below an
 
 #figure(
   align(center)[#table(
-    columns: (41.06%, 58.94%),
+    columns: (58.28%, 41.72%),
     align: (left,left,),
     table.header([Artifact], [Identifier],),
     table.hline(),
-    [Heuristic weight file (`configs/baselines/heuristic-weights.toml`), SHA-256], [`d0602f1895fbed70b6f84ac2a3eb87bd`#linebreak()`68e811e53acf24d4d7814a1495b0b97a`],
-    [B-RND configuration (`configs/baselines/random.toml`), SHA-256], [`f2fc4a06441d3c1a7922838a6693dbb4`#linebreak()`8ec54543bc34fd814d41c9a742514cd7`],
-    [B-HEU configuration (`configs/baselines/heuristic.toml`), SHA-256], [`7210a0a349c5bad5dcd2df099cc6865e`#linebreak()`e3cb5d8a2c30e106ce58137804818999`],
-    [B-MCTS configuration (`configs/baselines/mcts-nonet.toml`), SHA-256], [`3fc8f75cf2b4f21012dd61e9924408fb`#linebreak()`fc32c8ea561aa96eb44f1091ba07364e`],
-    [Frozen openings, content of the 250 lines, SHA-256], [`63b318d071dfc3ecfae3585636c8e6f7`#linebreak()`327ddc08e7aed86a466f915f8005af7b`],
-    [Frozen openings, file as frozen, SHA-256], [`538497390a3787299c67c3ca138b8fea`#linebreak()`cb369d55dc562881d1aee45200cbccb2`],
+    [Heuristic weight file (`configs/`#sym.zws`baselines/`#sym.zws`heuristic-`#sym.zws`weights.`#sym.zws`toml`), SHA-256], [`d0602f1895fbed70b6f84ac2a3eb87bd`#sym.zws`68e811e53acf24d4d7814a1495b0b97a`],
+    [B-RND configuration (`configs/`#sym.zws`baselines/`#sym.zws`random.`#sym.zws`toml`), SHA-256], [`f2fc4a06441d3c1a7922838a6693dbb4`#sym.zws`8ec54543bc34fd814d41c9a742514cd7`],
+    [B-HEU configuration (`configs/`#sym.zws`baselines/`#sym.zws`heuristic.`#sym.zws`toml`), SHA-256], [`7210a0a349c5bad5dcd2df099cc6865e`#sym.zws`e3cb5d8a2c30e106ce58137804818999`],
+    [B-MCTS configuration (`configs/`#sym.zws`baselines/`#sym.zws`mcts-`#sym.zws`nonet.`#sym.zws`toml`), SHA-256], [`3fc8f75cf2b4f21012dd61e9924408fb`#sym.zws`fc32c8ea561aa96eb44f1091ba07364e`],
+    [Frozen openings, content of the 250 lines, SHA-256], [`63b318d071dfc3ecfae3585636c8e6f7`#sym.zws`327ddc08e7aed86a466f915f8005af7b`],
+    [Frozen openings, file as frozen, SHA-256], [`538497390a3787299c67c3ca138b8fea`#sym.zws`cb369d55dc562881d1aee45200cbccb2`],
     [Opening/colour schedule of every 100-game match], [`8cd84b6564440666`],
     [Frozen protocol document], [`f340a6b6…aefeb5` (recorded abbreviated), commit `44a74ff`],
     [Engine code at the population freeze], [commit `b94e7c1`],
