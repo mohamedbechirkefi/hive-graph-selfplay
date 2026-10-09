@@ -2,7 +2,8 @@
 
 *Drafted 2026-09-19 at the H6 close (invariant 14). English working
 master; French copy at the report milestone (D-006). Every number traces
-to journal `H6-2026-09-19-comparison-01` and regenerates from
+to journals `H6-2026-09-19-comparison-01` (3-seed analysis) and
+`H6-2026-10-09-5seed-final-01` (final 5-seed analysis) and regenerates from
 `scripts/make_results.py` / `make_figures.py` over the raw per-game
 records; claims registered in `claims.md`.*
 
@@ -67,8 +68,9 @@ self-play in a frameless, stacking game.
 It does not show: anything about graph representations at larger
 budgets, other graph architectures, or other games; nor that the arms
 would not reorder with more generations (10 is early-regime; all scores
-against the strong baselines remain low). Three seeds per arm bound the
-statistics; the rejection is seed-consistent but the intervals are wide.
+against the strong baselines remain low). Five seeds per arm bound the
+statistics; the rejection is seed-consistent, and the extension seeds
+(added under pre-commitment) tightened four of the six intervals.
 
 ## Costs (both denominations, per plan ch. 6)
 
