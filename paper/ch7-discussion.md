@@ -39,7 +39,7 @@ differential agreement with two reference engines, a rules-derived
 hand-annotated corpus, 10.9M-transition invariant sessions). Both
 encoders are pinned byte-exactly against cross-language goldens run
 nightly. Arms share the decoder, records, losses, budgets and search;
-capacity differs by +2.1% (reported). Residual risks: the graph
+capacity differs by +1.5% (reported). Residual risks: the graph
 architecture is ONE point in design space — a stronger GNN might behave
 differently (we claim nothing beyond this net); tooling defects found
 during the study (an arena record-loss path on all-truncated matches; a

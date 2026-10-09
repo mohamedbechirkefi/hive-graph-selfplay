@@ -29,7 +29,7 @@ cells — a natural candidate, in principle, for graph neural encodings
 over the convolutional grid encodings standard in AlphaZero-style
 systems. We test that intuition under a pre-registered protocol frozen
 before any comparison run: one grid CNN and one capacity-matched
-(+2.1%) relational message-passing network share a rules-validated
+(+1.5%) relational message-passing network share a rules-validated
 engine, one action decoder, identical training settings, a frozen
 three-opponent population and 250 frozen openings, evaluated under two
 budget readings (equal training examples; equal wall-clock at a

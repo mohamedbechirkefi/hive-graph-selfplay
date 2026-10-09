@@ -31,7 +31,7 @@ rejet elle-même.
 
 **Ce que nous avons fait.** Nous avons construit les deux encodages
 derrière un décodeur d'actions partagé unique, sur un moteur validé
-côté règles, apparié la capacité à +2.1%, et entraîné cinq graines
+côté règles, apparié la capacité à +1.5%, et entraîné cinq graines
 indépendantes par bras sous des réglages d'auto-jeu identiques, en
 lisant la comparaison de deux façons — à exemples d'entraînement égaux
 et à temps mural égal — contre une population gelée de trois

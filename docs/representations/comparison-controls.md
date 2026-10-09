@@ -14,7 +14,9 @@ for H6's two budget readings).
 | Arm | Architecture | Parameters |
 | --- | --- | --- |
 | Grid | HiveNet c96×b8 (ResNet, 28,673-way flat head) | 1.44 M |
-| Graph | HiveGraphNet h152×L8 (6-relation MP, per-candidate head) | 1.47 M (+2.1%) |
+| Graph | HiveGraphNet h152×L8 (6-relation MP, per-candidate head) | 1.47 M (+1.5%) |
+
+Exact counts (`scripts/count_params.py`, 2026-10-09): grid 1,443,168, graph 1,465,452 → +1.54%. (Documents before 2026-10-09 quoted +2.1%, the ratio of the rounded millions; corrected, see `results/comparison/parameter-counts.md`.)
 
 ## Inference (per decision-eval, batch 1)
 

@@ -23,7 +23,7 @@ opponents, openings, budgets, evaluation settings, and the rejection
 rule itself.
 
 **What we did.** We built both encodings behind one shared action
-decoder on one rules-validated engine, matched capacity to +2.1%, and
+decoder on one rules-validated engine, matched capacity to +1.5%, and
 trained five independent seeds per arm under identical self-play
 settings, reading the comparison two ways — equal training examples and
 equal wall-clock — against a frozen three-opponent population on 250

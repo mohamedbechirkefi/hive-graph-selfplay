@@ -44,7 +44,7 @@ destination cell), so piece identity enters the policy through a slot
 embedding and the piece's standing node — a documented design choice,
 not an accident. The network is a small relational message-passing net
 (direction-specific weights, global-pooling bias, masked pooling for the
-value head, per-candidate move scoring) at 1.47 M parameters — a +2.1%
+value head, per-candidate move scoring) at 1.47 M parameters — a +1.5%
 capacity difference, reported.
 
 **A graph network grants no invariance or rule equivalence for free.**

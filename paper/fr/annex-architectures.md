@@ -31,7 +31,7 @@ des caractéristiques agrégées (POLICY_SIZE = 28,673) ; valeur =
 caractéristiques agrégées → 64 → 3 (victoire/nulle/défaite du point de
 vue du camp au trait).
 
-## B.2 Bras graphe — HiveGraphNet (1.47 M paramètres, +2.1%)
+## B.2 Bras graphe — HiveGraphNet (1.47 M paramètres, +1.5%)
 
 Entrée par position : jusqu'à 224 nœuds (cellules occupées + chaque
 cellule vide adjacente à la ruche — exactement l'univers de

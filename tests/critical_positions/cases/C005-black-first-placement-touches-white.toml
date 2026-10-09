@@ -13,7 +13,7 @@ rule = "Playing the Game / Placing"
 source = "Gen42 Hive rulesheet pp. 2-3"
 justification = """'Play begins with one player placing a piece from their
 hand in the centre of the table and the next player joining one of their own
-pieces to it edge to edge.' (p. 2) — the first-piece exception to the
+pieces to it edge to edge.' (p. 2). This is the first-piece exception to the
 own-colour placing rule. Black's first piece must join wS1 edge to edge, so
 bG1 may be placed on any of the six cells adjacent to wS1, and nowhere
 else."""

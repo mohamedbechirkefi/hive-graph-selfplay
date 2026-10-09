@@ -25,7 +25,7 @@ Heads: policy = 1×1 convolution to 28 piece-slot planes, flattened to
 (POLICY_SIZE = 28,673); value = pooled features → 64 → 3 (win/draw/loss
 from the side to move).
 
-## B.2 Graph arm — HiveGraphNet (1.47 M parameters, +2.1%)
+## B.2 Graph arm — HiveGraphNet (1.47 M parameters, +1.5%)
 
 Input per position: up to 224 nodes (occupied cells + every empty cell
 adjacent to the hive — exactly the decoder's destination universe),

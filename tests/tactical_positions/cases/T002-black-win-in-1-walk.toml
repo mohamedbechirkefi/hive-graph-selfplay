@@ -18,7 +18,7 @@ target = "wQ\\"
 rule = "The End of the Game"
 source = "Gen42 Hive rulesheet pp. 1, 11"
 justification = """Mirror of T001 with the colours exchanged and black to
-move — this pair is the player-alternation check at the move level: the
+move. This pair is the player-alternation check at the move level: the
 winning pattern must be found from both sides. The white queen's only
 empty neighbour is the cell SE of wQ; a black ant reaches it along the
 south perimeter (route via SE of bS1's column: the step into the cell is

@@ -25,7 +25,7 @@ rule = "Grasshopper / The End of the Game"
 source = "Gen42 Hive rulesheet pp. 6, 11"
 justification = """Alternation mirror of T003 with black jumping. The white
 queen's neighbours: E wS1, NW wG1 (placed NW of wQ), NE wG2 (placed NW of
-wS1 = NE of wQ), SE wA1, SW wA2 — five occupied, only W of wQ empty. Due
+wS1 = NE of wQ), SE wA1, SW wA2. Five are occupied; only W of wQ is empty. Due
 east of that gap runs the unbroken row wQ, wS1, bS1, bQ with bG1 at the
 east cap (3,0): from bG1 the next unoccupied space westward along the row
 is exactly the gap, so the grasshopper jumps over four pieces and

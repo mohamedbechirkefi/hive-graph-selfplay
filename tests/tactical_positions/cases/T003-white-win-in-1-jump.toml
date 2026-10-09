@@ -23,5 +23,5 @@ wS1, bS1, bQ; the next unoccupied space along that row is exactly the
 winning cell, so the grasshopper jumps over four pieces and completes the
 surround (p. 6: 'over any number of pieces … to the next unoccupied space
 along a straight row of joined pieces'; p. 11: surround ends the game).
-White ants can also walk in around the perimeter — the expectation is the
+White ants can also walk in around the perimeter; the expectation is the
 destination cell, whichever piece the searcher sends."""

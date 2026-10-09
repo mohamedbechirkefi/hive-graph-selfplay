@@ -57,7 +57,7 @@ de conception documenté, pas un accident. Le réseau est un petit réseau
 relationnel à passage de messages (poids propres à chaque direction,
 biais d'agrégation globale, agrégation masquée pour la tête de valeur,
 notation des coups par candidat) de 1.47 M paramètres — une différence
-de capacité de +2.1%, rapportée.
+de capacité de +1.5%, rapportée.
 
 **Un réseau de graphe n'offre gratuitement ni invariance ni équivalence de règles.**
 L'encodage ne contient aucune coordonnée absolue, mais la

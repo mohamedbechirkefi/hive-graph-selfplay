@@ -29,12 +29,15 @@ def tokens(path):
 
 
 def main():
-    fr_dir = PAPER / "fr"
+    base = PAPER
+    if len(sys.argv) > 2 and sys.argv[1] == "--dir":
+        base = Path(sys.argv[2]).resolve()
+    fr_dir = base / "fr"
     if not fr_dir.is_dir():
-        sys.exit("no paper/fr/ directory")
+        sys.exit(f"no {fr_dir} directory")
     failures = 0
     for fr in sorted(fr_dir.glob("*.md")):
-        en = PAPER / fr.name
+        en = base / fr.name
         if not en.exists():
             print(f"  {fr.name}: no English master — SKIP")
             continue

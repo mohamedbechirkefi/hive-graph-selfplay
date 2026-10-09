@@ -43,8 +43,10 @@ de « meilleure graine » nulle part. La plus grande borne supérieure sur
 les six contrastes est +0.028.)
 
 La lecture à temps mural aggrave le résultat : le coût mesuré du bras
-graphe était de 2.0× par exécution (35.7 vs 18.2 h), de sorte qu'à
-heures égales il ne complète que 4–5 des 10 générations — un déficit
+graphe était de 2.0× par exécution (36.7 vs 18.0 h de temps mural
+d'entraînement, moyenne sur les cinq graines), de sorte qu'à
+heures égales il ne complète que 3–6 des 10 générations (4–5 sur les
+trois graines d'origine) — un déficit
 que la lecture par exemple montre déjà et que le temps égal ne fait
 qu'élargir.
 
@@ -73,7 +75,7 @@ les deux lectures (−0.072 / −0.058).
 ## Ce que cela montre et ne montre pas
 
 Cela montre : pour un réseau relationnel simple à passage de messages,
-à capacité appariée (+2.1%), partageant tous les autres composants avec
+à capacité appariée (+1.5%), partageant tous les autres composants avec
 le bras grille — règles, recherche, décodeur, enregistrements,
 conventions d'entraînement, adversaires gelés, ouvertures gelées,
 évaluation épinglée — l'encodage en plans de grille a appris davantage
@@ -95,9 +97,10 @@ des six intervalles.
 ## Coûts (dans les deux dénominations, selon plan ch. 6)
 
 Fig. 2 : paramètres 1.44M vs 1.47M ; inférence au meilleur fournisseur
-2.62 ms (CoreML) vs 3.67 ms (CPU) ; auto-jeu 13.1 vs 25.7 s/partie ;
-score contre la population 0.412 vs 0.327 (exemples égaux), 0.402 vs
-0.321 (temps mural égal).
+2.62 ms (CoreML) vs 3.67 ms (CPU) ; auto-jeu 13.0 vs 26.4 s/partie (temps mural
+d'entraînement / 5,000 parties) ; score contre la population 0.411 vs
+0.331 (exemples égaux), 0.405 vs 0.326 (temps mural égal) — moyennes sur
+cinq graines.
 
 ## Provenance
 

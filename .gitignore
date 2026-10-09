@@ -10,3 +10,4 @@ __pycache__/
 data_gauntlet*.txt
 logs/
 .tools/
+paper/build/report-*-work/

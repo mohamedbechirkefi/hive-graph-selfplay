@@ -70,9 +70,11 @@ python3 scripts/check_fr_numbers.py
 Apple M1 Pro (10 cores, 16 GB, macOS 15.3.1); 4 worker threads per run,
 runs sequential under `caffeinate`. Inference: grid CoreML 2.62
 ms/eval, graph CPU 3.67 ms/eval (CoreML slower for the gather-heavy
-graph net — measured, reported, charged). Training ≈770 (grid) / ≈195
-(graph) pos/s on MPS. Run totals: grid 16.7–19.8 h, graph 30.0–54.9 h
-per 10 × 500-game run; evaluation ≈23–32 s/game at 400 sims.
+graph net — measured, reported, charged). Training throughput
+benchmark on MPS (batch 128, forward+backward): 274 (grid) / 138
+(graph) pos/s. Training wall-clock per 10 × 500-game run (self-play
+generation + training, evaluation excluded): grid 16.7–19.1 h, graph
+26.6–49.9 h; evaluation ≈23–32 s/game at 400 sims.
 
 ## C.6 Journal and decision index for this study
 

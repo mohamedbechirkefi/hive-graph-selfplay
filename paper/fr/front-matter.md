@@ -38,7 +38,7 @@ neurones en graphe plutôt que pour les encodages convolutifs en grille
 standards des systèmes de type AlphaZero. Nous testons cette intuition
 sous un protocole pré-enregistré, gelé avant toute exécution
 comparative : un CNN en grille et un réseau relationnel à passage de
-messages de capacité appariée (+2.1%) partagent un moteur validé côté
+messages de capacité appariée (+1.5%) partagent un moteur validé côté
 règles, un décodeur d'actions unique, des réglages d'entraînement
 identiques, une population gelée de trois adversaires et 250 ouvertures
 gelées, évalués sous deux lectures budgétaires (à exemples

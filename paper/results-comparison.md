@@ -36,8 +36,10 @@ values in the results tables — no best-seed reporting anywhere. The
 largest upper bound across all six contrasts is +0.028.)
 
 The wall-clock reading compounds the result: the graph arm's measured
-cost was 2.0× per run (35.7 vs 18.2 h), so at equal hours it completes
-only 4–5 of 10 generations — a deficit the per-example reading already
+cost was 2.0× per run (36.7 vs 18.0 h of training wall-clock, mean
+over the five seeds), so at equal hours it completes
+only 3–6 of 10 generations (4–5 over the original three seeds) — a
+deficit the per-example reading already
 shows and equal time only widens.
 
 Fig. 5 decomposes the aggregate scores into per-opponent trajectories
@@ -61,7 +63,7 @@ both readings (−0.072 / −0.058).
 
 ## What this does and does not show
 
-It shows: for a capacity-matched (+2.1%), simple relational
+It shows: for a capacity-matched (+1.5%), simple relational
 message-passing network sharing every other component with the grid arm
 — rules, search, decoder, records, training conventions, frozen
 opponents, frozen openings, pinned evaluation — grid-plane encoding
@@ -81,8 +83,9 @@ statistics; the rejection is seed-consistent, and the extension seeds
 ## Costs (both denominations, per plan ch. 6)
 
 Fig. 2: parameters 1.44M vs 1.47M; best-provider inference 2.62 ms
-(CoreML) vs 3.67 ms (CPU); self-play 13.1 vs 25.7 s/game; population
-score 0.412 vs 0.327 (same-examples), 0.402 vs 0.321 (same-wall-clock).
+(CoreML) vs 3.67 ms (CPU); self-play 13.0 vs 26.4 s/game (training wall-clock / 5,000
+games); population score 0.411 vs 0.331 (same-examples), 0.405 vs 0.326
+(same-wall-clock) — five-seed means.
 
 ## Provenance
 

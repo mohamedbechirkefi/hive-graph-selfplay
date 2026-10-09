@@ -12,6 +12,6 @@ rule = "Tournament opening rule"
 source = "Tournament variant of the official rules (README source 4); Gen42 2010 rulesheet p. 3 alone would allow it"
 justification = """The 2010 base rulesheet says the Queen 'can be placed at
 any time from your first to your fourth turn' (p. 3), but the tournament
-variant — adopted by UHP and both reference engines, and the convention this
-study fixes — forbids placing the Queen Bee on either player's first turn.
+variant (adopted by UHP and both reference engines, and the convention this
+study fixes) forbids placing the Queen Bee on either player's first turn.
 White's first move 'wQ' must therefore be rejected."""

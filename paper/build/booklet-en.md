@@ -29,7 +29,7 @@ cells — a natural candidate, in principle, for graph neural encodings
 over the convolutional grid encodings standard in AlphaZero-style
 systems. We test that intuition under a pre-registered protocol frozen
 before any comparison run: one grid CNN and one capacity-matched
-(+2.1%) relational message-passing network share a rules-validated
+(+1.5%) relational message-passing network share a rules-validated
 engine, one action decoder, identical training settings, a frozen
 three-opponent population and 250 frozen openings, evaluated under two
 budget readings (equal training examples; equal wall-clock at a
@@ -81,7 +81,7 @@ opponents, openings, budgets, evaluation settings, and the rejection
 rule itself.
 
 **What we did.** We built both encodings behind one shared action
-decoder on one rules-validated engine, matched capacity to +2.1%, and
+decoder on one rules-validated engine, matched capacity to +1.5%, and
 trained five independent seeds per arm under identical self-play
 settings, reading the comparison two ways — equal training examples and
 equal wall-clock — against a frozen three-opponent population on 250
@@ -597,7 +597,7 @@ destination cell), so piece identity enters the policy through a slot
 embedding and the piece's standing node — a documented design choice,
 not an accident. The network is a small relational message-passing net
 (direction-specific weights, global-pooling bias, masked pooling for the
-value head, per-candidate move scoring) at 1.47 M parameters — a +2.1%
+value head, per-candidate move scoring) at 1.47 M parameters — a +1.5%
 capacity difference, reported.
 
 **A graph network grants no invariance or rule equivalence for free.**
@@ -750,8 +750,10 @@ values in the results tables — no best-seed reporting anywhere. The
 largest upper bound across all six contrasts is +0.028.)
 
 The wall-clock reading compounds the result: the graph arm's measured
-cost was 2.0× per run (35.7 vs 18.2 h), so at equal hours it completes
-only 4–5 of 10 generations — a deficit the per-example reading already
+cost was 2.0× per run (36.7 vs 18.0 h of training wall-clock, mean
+over the five seeds), so at equal hours it completes
+only 3–6 of 10 generations (4–5 over the original three seeds) — a
+deficit the per-example reading already
 shows and equal time only widens.
 
 Fig. 5 decomposes the aggregate scores into per-opponent trajectories
@@ -775,7 +777,7 @@ both readings (−0.072 / −0.058).
 
 ## What this does and does not show
 
-It shows: for a capacity-matched (+2.1%), simple relational
+It shows: for a capacity-matched (+1.5%), simple relational
 message-passing network sharing every other component with the grid arm
 — rules, search, decoder, records, training conventions, frozen
 opponents, frozen openings, pinned evaluation — grid-plane encoding
@@ -795,8 +797,9 @@ statistics; the rejection is seed-consistent, and the extension seeds
 ## Costs (both denominations, per plan ch. 6)
 
 Fig. 2: parameters 1.44M vs 1.47M; best-provider inference 2.62 ms
-(CoreML) vs 3.67 ms (CPU); self-play 13.1 vs 25.7 s/game; population
-score 0.412 vs 0.327 (same-examples), 0.402 vs 0.321 (same-wall-clock).
+(CoreML) vs 3.67 ms (CPU); self-play 13.0 vs 26.4 s/game (training wall-clock / 5,000
+games); population score 0.411 vs 0.331 (same-examples), 0.405 vs 0.326
+(same-wall-clock) — five-seed means.
 
 ## Provenance
 
@@ -869,7 +872,7 @@ differential agreement with two reference engines, a rules-derived
 hand-annotated corpus, 10.9M-transition invariant sessions). Both
 encoders are pinned byte-exactly against cross-language goldens run
 nightly. Arms share the decoder, records, losses, budgets and search;
-capacity differs by +2.1% (reported). Residual risks: the graph
+capacity differs by +1.5% (reported). Residual risks: the graph
 architecture is ONE point in design space — a stronger GNN might behave
 differently (we claim nothing beyond this net); tooling defects found
 during the study (an arena record-loss path on all-truncated matches; a
@@ -1337,7 +1340,7 @@ Heads: policy = 1×1 convolution to 28 piece-slot planes, flattened to
 (POLICY_SIZE = 28,673); value = pooled features → 64 → 3 (win/draw/loss
 from the side to move).
 
-## B.2 Graph arm — HiveGraphNet (1.47 M parameters, +2.1%)
+## B.2 Graph arm — HiveGraphNet (1.47 M parameters, +1.5%)
 
 Input per position: up to 224 nodes (occupied cells + every empty cell
 adjacent to the hive — exactly the decoder's destination universe),
@@ -1477,9 +1480,11 @@ python3 scripts/check_fr_numbers.py
 Apple M1 Pro (10 cores, 16 GB, macOS 15.3.1); 4 worker threads per run,
 runs sequential under `caffeinate`. Inference: grid CoreML 2.62
 ms/eval, graph CPU 3.67 ms/eval (CoreML slower for the gather-heavy
-graph net — measured, reported, charged). Training ≈770 (grid) / ≈195
-(graph) pos/s on MPS. Run totals: grid 16.7–19.8 h, graph 30.0–54.9 h
-per 10 × 500-game run; evaluation ≈23–32 s/game at 400 sims.
+graph net — measured, reported, charged). Training throughput
+benchmark on MPS (batch 128, forward+backward): 274 (grid) / 138
+(graph) pos/s. Training wall-clock per 10 × 500-game run (self-play
+generation + training, evaluation excluded): grid 16.7–19.1 h, graph
+26.6–49.9 h; evaluation ≈23–32 s/game at 400 sims.
 
 ## C.6 Journal and decision index for this study
 
@@ -1598,15 +1603,15 @@ Reference: H6 graph full method (journal H6-2026-09-19-comparison-01).
 
 | Metric | Grid arm | Graph arm |
 | --- | --- | --- |
-| Parameters | 1.44 M | 1.47 M (+2.1%) |
+| Parameters | 1.44 M | 1.47 M (+1.5%) |
 | Best-provider inference (b1) | 2.62 ms (CoreML) | 3.67 ms (CPU) |
-| Mean run wall-clock (10 gens × 500 games) | 30.0 h | 61.2 h (2.0×) |
-| Mean self-play cost | 21.6 s/game | 44.0 s/game |
-| Training throughput (MPS) | ≈770 pos/s | ≈195 pos/s |
+| Mean run wall-clock (10 gens × 500 games) | 18.0 h | 36.7 h (2.0×) |
+| Mean self-play cost | 13.0 s/game | 26.4 s/game |
+| Training throughput benchmark (MPS, batch 128, fwd+bwd) | 274 pos/s | 138 pos/s |
 | Population score, same-examples | 0.411 | 0.331 |
 | Population score, same-wall-clock (T*=18.77 h) | 0.405 | 0.326 |
 
-Population score = mean over the three frozen opponents of the seed-mean score (truncations excluded, reported separately in the results tables). Sources: results-*.csv, wallclock.json per run, comparison-controls.md measurements; journal H6-2026-09-19-comparison-01.
+Population score = mean over the three frozen opponents of the seed-mean score (truncations excluded, reported separately in the results tables). Wall-clock = self-play generation + training per run (evaluation games excluded), mean over the five seeds; self-play cost = that wall-clock / 5,000 games. Sources: results-*.csv, wallclock.json per run, comparison-controls.md measurements (journal H5-2026-09-10-encoders-01); journal H6-2026-09-19-comparison-01.
 
 ![Fig. 1 — Mean score against the frozen population vs training wall-clock, all seeds, both arms (evaluations at generations 5, 8, 10; dashed line = T*).](fig1-score-vs-time.png)
 

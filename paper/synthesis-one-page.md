@@ -7,7 +7,7 @@ standard grid/CNN encoding under AlphaZero-style self-play at a budget
 one machine can afford?
 
 **Design (all frozen before any comparison run).** One grid CNN (1.44M
-parameters) vs one relational message-passing GNN (1.47M, +2.1%,
+parameters) vs one relational message-passing GNN (1.47M, +1.5%,
 reported) sharing a rules-validated engine (perft vs published tables;
 21/21 UHP conformance; 27,829-position differential agreement with two
 reference engines; hand-annotated corpus committed before first run),

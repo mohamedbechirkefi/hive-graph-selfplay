@@ -102,7 +102,11 @@ convention as the grid arm); **policy**: per-candidate scoring through
 the shared decoder — for each legal (rel_piece slot, destination):
 MLP(dest-node embedding ⊕ source embedding ⊕ slot embedding), where
 source = the piece's current node embedding for movements and a learned
-reserve vector for placements; a pass logit from the pooled state.
+reserve vector for placements; the pass row is scored by the same MLP
+from (zero row ‖ reserve vector ‖ pass-slot embedding), i.e. a learned
+constant — immaterial since pass is legal only when it is the sole
+action. (Correction 2026-10-09: an earlier version of this sentence said
+"from the pooled state"; the code never did that.)
 Scores attach to (slot, destination) pairs; list order carries no
 meaning (D-015 §3). Capacity is sized to the grid arm's 1.44 M
 parameters or the difference is reported (`comparison-controls.md`).

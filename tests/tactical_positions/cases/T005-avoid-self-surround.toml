@@ -18,10 +18,10 @@ rule = "The End of the Game"
 source = "Gen42 Hive rulesheet p. 11"
 justification = """The cell SE of wQ is the white queen's last liberty.
 White placing or moving any piece there completes the surround of White's
-own queen — 'the person whose Queen Bee is surrounded loses the game'
+own queen: 'the person whose Queen Bee is surrounded loses the game'
 (p. 11) regardless of who supplied the sixth piece. The placement is
 perfectly legal (the cell touches only white pieces), so only search
 judgment prevents it. Any move except one landing on that cell passes;
 the searcher must not play into it. (This does not assert White survives
-long-term — black threatens the same cell — only that the immediate
-self-kill is avoided.)"""
+long-term, since black threatens the same cell; it asserts only that the
+immediate self-kill is avoided.)"""

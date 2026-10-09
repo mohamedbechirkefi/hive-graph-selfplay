@@ -38,7 +38,7 @@ neurones en graphe plutôt que pour les encodages convolutifs en grille
 standards des systèmes de type AlphaZero. Nous testons cette intuition
 sous un protocole pré-enregistré, gelé avant toute exécution
 comparative : un CNN en grille et un réseau relationnel à passage de
-messages de capacité appariée (+2.1%) partagent un moteur validé côté
+messages de capacité appariée (+1.5%) partagent un moteur validé côté
 règles, un décodeur d'actions unique, des réglages d'entraînement
 identiques, une population gelée de trois adversaires et 250 ouvertures
 gelées, évalués sous deux lectures budgétaires (à exemples
@@ -103,7 +103,7 @@ rejet elle-même.
 
 **Ce que nous avons fait.** Nous avons construit les deux encodages
 derrière un décodeur d'actions partagé unique, sur un moteur validé
-côté règles, apparié la capacité à +2.1%, et entraîné cinq graines
+côté règles, apparié la capacité à +1.5%, et entraîné cinq graines
 indépendantes par bras sous des réglages d'auto-jeu identiques, en
 lisant la comparaison de deux façons — à exemples d'entraînement égaux
 et à temps mural égal — contre une population gelée de trois
@@ -724,7 +724,7 @@ de conception documenté, pas un accident. Le réseau est un petit réseau
 relationnel à passage de messages (poids propres à chaque direction,
 biais d'agrégation globale, agrégation masquée pour la tête de valeur,
 notation des coups par candidat) de 1.47 M paramètres — une différence
-de capacité de +2.1%, rapportée.
+de capacité de +1.5%, rapportée.
 
 **Un réseau de graphe n'offre gratuitement ni invariance ni équivalence de règles.**
 L'encodage ne contient aucune coordonnée absolue, mais la
@@ -904,8 +904,10 @@ de « meilleure graine » nulle part. La plus grande borne supérieure sur
 les six contrastes est +0.028.)
 
 La lecture à temps mural aggrave le résultat : le coût mesuré du bras
-graphe était de 2.0× par exécution (35.7 vs 18.2 h), de sorte qu'à
-heures égales il ne complète que 4–5 des 10 générations — un déficit
+graphe était de 2.0× par exécution (36.7 vs 18.0 h de temps mural
+d'entraînement, moyenne sur les cinq graines), de sorte qu'à
+heures égales il ne complète que 3–6 des 10 générations (4–5 sur les
+trois graines d'origine) — un déficit
 que la lecture par exemple montre déjà et que le temps égal ne fait
 qu'élargir.
 
@@ -934,7 +936,7 @@ les deux lectures (−0.072 / −0.058).
 ## Ce que cela montre et ne montre pas
 
 Cela montre : pour un réseau relationnel simple à passage de messages,
-à capacité appariée (+2.1%), partageant tous les autres composants avec
+à capacité appariée (+1.5%), partageant tous les autres composants avec
 le bras grille — règles, recherche, décodeur, enregistrements,
 conventions d'entraînement, adversaires gelés, ouvertures gelées,
 évaluation épinglée — l'encodage en plans de grille a appris davantage
@@ -956,9 +958,10 @@ des six intervalles.
 ## Coûts (dans les deux dénominations, selon plan ch. 6)
 
 Fig. 2 : paramètres 1.44M vs 1.47M ; inférence au meilleur fournisseur
-2.62 ms (CoreML) vs 3.67 ms (CPU) ; auto-jeu 13.1 vs 25.7 s/partie ;
-score contre la population 0.412 vs 0.327 (exemples égaux), 0.402 vs
-0.321 (temps mural égal).
+2.62 ms (CoreML) vs 3.67 ms (CPU) ; auto-jeu 13.0 vs 26.4 s/partie (temps mural
+d'entraînement / 5,000 parties) ; score contre la population 0.411 vs
+0.331 (exemples égaux), 0.405 vs 0.326 (temps mural égal) — moyennes sur
+cinq graines.
 
 ## Provenance
 
@@ -1043,7 +1046,7 @@ référence, un corpus annoté à la main dérivé des règles, des sessions
 d'invariants à 10.9M transitions). Les deux encodeurs sont épinglés à
 l'octet près contre des goldens inter-langages exécutés chaque nuit.
 Les bras partagent le décodeur, les enregistrements, les fonctions de
-perte, les budgets et la recherche ; la capacité diffère de +2.1%
+perte, les budgets et la recherche ; la capacité diffère de +1.5%
 (rapporté). Risques résiduels : l'architecture graphe est UN point de
 l'espace de conception — un GNN plus fort pourrait se comporter
 différemment (nous n'affirmons rien au-delà de ce réseau) ; des défauts
@@ -1548,7 +1551,7 @@ des caractéristiques agrégées (POLICY_SIZE = 28,673) ; valeur =
 caractéristiques agrégées → 64 → 3 (victoire/nulle/défaite du point de
 vue du camp au trait).
 
-## B.2 Bras graphe — HiveGraphNet (1.47 M paramètres, +2.1%)
+## B.2 Bras graphe — HiveGraphNet (1.47 M paramètres, +1.5%)
 
 Entrée par position : jusqu'à 224 nœuds (cellules occupées + chaque
 cellule vide adjacente à la ruche — exactement l'univers de
@@ -1710,10 +1713,11 @@ Apple M1 Pro (10 cœurs, 16 Go, macOS 15.3.1) ; 4 threads de travail
 par exécution, exécutions séquentielles sous `caffeinate`. Inférence :
 grille CoreML 2.62 ms/eval, graphe CPU 3.67 ms/eval (CoreML plus lent
 pour le réseau graphe riche en opérations de collecte — mesuré,
-rapporté, imputé). Entraînement ≈770 (grille) / ≈195 (graphe) pos/s
-sur MPS. Totaux par exécution : grille 16.7–19.8 h, graphe
-30.0–54.9 h par exécution de 10 × 500 parties ; évaluation ≈23–32
-s/partie à 400 simulations.
+rapporté, imputé). Référence de débit d'entraînement sur MPS (lot 128,
+avant+arrière) : 274 (grille) / 138 (graphe) pos/s. Temps mural
+d'entraînement par exécution de 10 × 500 parties (génération en
+auto-jeu + entraînement, évaluation exclue) : grille 16.7–19.1 h,
+graphe 26.6–49.9 h ; évaluation ≈23–32 s/partie à 400 simulations.
 
 ## C.6 Index des journaux et des décisions de cette étude
 
@@ -1833,15 +1837,15 @@ Reference: H6 graph full method (journal H6-2026-09-19-comparison-01).
 
 | Metric | Grid arm | Graph arm |
 | --- | --- | --- |
-| Parameters | 1.44 M | 1.47 M (+2.1%) |
+| Parameters | 1.44 M | 1.47 M (+1.5%) |
 | Best-provider inference (b1) | 2.62 ms (CoreML) | 3.67 ms (CPU) |
-| Mean run wall-clock (10 gens × 500 games) | 30.0 h | 61.2 h (2.0×) |
-| Mean self-play cost | 21.6 s/game | 44.0 s/game |
-| Training throughput (MPS) | ≈770 pos/s | ≈195 pos/s |
+| Mean run wall-clock (10 gens × 500 games) | 18.0 h | 36.7 h (2.0×) |
+| Mean self-play cost | 13.0 s/game | 26.4 s/game |
+| Training throughput benchmark (MPS, batch 128, fwd+bwd) | 274 pos/s | 138 pos/s |
 | Population score, same-examples | 0.411 | 0.331 |
 | Population score, same-wall-clock (T*=18.77 h) | 0.405 | 0.326 |
 
-Population score = mean over the three frozen opponents of the seed-mean score (truncations excluded, reported separately in the results tables). Sources: results-*.csv, wallclock.json per run, comparison-controls.md measurements; journal H6-2026-09-19-comparison-01.
+Population score = mean over the three frozen opponents of the seed-mean score (truncations excluded, reported separately in the results tables). Wall-clock = self-play generation + training per run (evaluation games excluded), mean over the five seeds; self-play cost = that wall-clock / 5,000 games. Sources: results-*.csv, wallclock.json per run, comparison-controls.md measurements (journal H5-2026-09-10-encoders-01); journal H6-2026-09-19-comparison-01.
 
 ![Fig. 1 — Score moyen contre la population gelée vs temps mural d'entraînement, toutes graines, les deux bras (évaluations aux générations 5, 8, 10 ; pointillé = T*).](fig1-score-vs-time.png)
 

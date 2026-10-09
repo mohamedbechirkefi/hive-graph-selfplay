@@ -48,7 +48,7 @@ référence, un corpus annoté à la main dérivé des règles, des sessions
 d'invariants à 10.9M transitions). Les deux encodeurs sont épinglés à
 l'octet près contre des goldens inter-langages exécutés chaque nuit.
 Les bras partagent le décodeur, les enregistrements, les fonctions de
-perte, les budgets et la recherche ; la capacité diffère de +2.1%
+perte, les budgets et la recherche ; la capacité diffère de +1.5%
 (rapporté). Risques résiduels : l'architecture graphe est UN point de
 l'espace de conception — un GNN plus fort pourrait se comporter
 différemment (nous n'affirmons rien au-delà de ce réseau) ; des défauts

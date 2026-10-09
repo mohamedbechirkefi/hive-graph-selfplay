@@ -64,7 +64,7 @@ def fig1():
     plt.text(TSTAR_H + 0.2, 0.02, "T* = 18.77 h", fontsize=8, color="gray")
     plt.xlabel("training wall-clock (h)")
     plt.ylabel("mean score vs frozen population (excl. truncations)")
-    plt.title("Score vs training time — all seeds, both arms\n"
+    plt.title("Score vs training time, all seeds, both arms\n"
               "(evals at generations 5, 8, 10; 20/20/100 games per opponent)")
     plt.legend()
     plt.grid(alpha=0.25)
@@ -183,14 +183,14 @@ def fig4():
     grid_heu = sum((rows_of("grid", s, "B-HEU") for s in [1, 2, 3, 4, 5]), [])
     graph_mcts = sum((rows_of("graph", s, "B-MCTS") for s in [1, 2, 3, 4, 5]), [])
     sel = [
-        ("F1: graph vs B-RND — longest truncated game (a won position it "
+        ("F1: graph vs B-RND, longest truncated game (a won position it "
          "cannot close: wins material, then shuffles to the 300-ply cap)",
          select(graph_rnd, lambda r: r["truncated"], lambda r: r["plies"], True)),
-        ("F2: grid vs B-HEU — shortest decided loss (the heuristic's "
+        ("F2: grid vs B-HEU, shortest decided loss (the heuristic's "
          "queen-targeting tactics strike before the net consolidates)",
          select(grid_heu, lambda r: not r["truncated"] and r["score"] == 0.0,
                 lambda r: r["plies"], False)),
-        ("F3: graph vs B-MCTS — longest drawn game (avoids losing without "
+        ("F3: graph vs B-MCTS, longest drawn game (avoids losing without "
          "ever generating winning threats)",
          select(graph_mcts, lambda r: not r["truncated"] and r["score"] == 0.5,
                 lambda r: r["plies"], True)),
@@ -277,7 +277,7 @@ def fig4():
         ax.autoscale_view()
         lines += [f"## {title}", "", f"- game: {src}",
                   f"- reproduction verified against CSV row: "
-                  f"{'YES' if verified else 'NO — mismatch, do not use'}",
+                  f"{'YES' if verified else 'NO (mismatch, do not use)'}",
                   f"- GameString: `{(gs or 'REPRODUCTION FAILED')[:500]}"
                   f"{'…' if gs and len(gs) > 500 else ''}`", ""]
     plt.tight_layout()
@@ -301,29 +301,65 @@ def fig2():
         for arm in ["grid", "graph"]:
             vals = [sum(per[(arm, o)]) / len(per[(arm, o)]) for o in OPP]
             scores[(arm, reading)] = sum(vals) / len(vals)
-    clock = {}
+    clock, per_run = {}, {}
     for arm in ["grid", "graph"]:
         tots = []
         for seed in [1, 2, 3, 4, 5]:
             c = json.load(open(REPO / f"data/runs/cmp-{arm}-s{seed}/wallclock.json"))
             tots.append(sum(c.values()) / 3600)
-        clock[arm] = sum(tots) / 3
+        clock[arm] = sum(tots) / len(tots)
+        per_run[arm] = tots
+    # Per-run training wall-clock table (derived artifact for the report):
+    # sum of per-generation self-play + training seconds, evaluation excluded.
+    wl = ["# Training wall-clock per run (derived from wallclock.json)", "",
+          "Per-generation self-play generation + training seconds summed over "
+          "the 10 generations of each run; evaluation games excluded. Hours.", "",
+          "| Arm | s1 | s2 | s3 | s4 | s5 | mean | sum |",
+          "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
+    for arm in ["grid", "graph"]:
+        t = per_run[arm]
+        wl.append(f"| {arm} | " + " | ".join(f"{x:.2f}" for x in t)
+                  + f" | {sum(t)/len(t):.2f} | {sum(t):.1f} |")
+    wl += ["", f"Ratio of means graph/grid: {clock['graph']/clock['grid']:.2f}×; "
+           f"total over the ten runs: {sum(per_run['grid'])+sum(per_run['graph']):.1f} h.",
+           f"Population-score gap grid − graph: "
+           f"{scores[('grid','same-examples')]-scores[('graph','same-examples')]:.3f} "
+           f"(same-examples), "
+           f"{scores[('grid','same-wallclock')]-scores[('graph','same-wallclock')]:.3f} "
+           f"(same-wall-clock)."]
+    wl += ["", "## Ablation runs (same accounting)", "",
+           "| Variant | s1 | s2 | s3 | mean |",
+           "| --- | ---: | ---: | ---: | ---: |"]
+    for label, arm in [("A1 untyped", "graph-untyped"),
+                       ("A2 no-gpool", "graph-nogpool"),
+                       ("A1' untyped+clip", "graph-untyped-clip")]:
+        t = []
+        for seed in [1, 2, 3]:
+            c = json.load(open(REPO / f"data/runs/cmp-{arm}-s{seed}/wallclock.json"))
+            t.append(sum(c.values()) / 3600)
+        wl.append(f"| {label} | " + " | ".join(f"{x:.2f}" for x in t)
+                  + f" | {sum(t)/len(t):.2f} |")
+    (REPO / "results" / "comparison" / "wallclock-per-run.md").write_text(
+        "\n".join(wl) + "\n")
     lines = [
         "# Score / cost table (H6 task 7; fig2)", "",
         "| Metric | Grid arm | Graph arm |",
         "| --- | --- | --- |",
-        "| Parameters | 1.44 M | 1.47 M (+2.1%) |",
+        "| Parameters | 1.44 M | 1.47 M (+1.5%) |",
         "| Best-provider inference (b1) | 2.62 ms (CoreML) | 3.67 ms (CPU) |",
         f"| Mean run wall-clock (10 gens × 500 games) | {clock['grid']:.1f} h | {clock['graph']:.1f} h ({clock['graph']/clock['grid']:.1f}×) |",
         f"| Mean self-play cost | {clock['grid']*3600/5000:.1f} s/game | {clock['graph']*3600/5000:.1f} s/game |",
-        "| Training throughput (MPS) | ≈770 pos/s | ≈195 pos/s |",
+        "| Training throughput benchmark (MPS, batch 128, fwd+bwd) | 274 pos/s | 138 pos/s |",
         f"| Population score, same-examples | {scores[('grid','same-examples')]:.3f} | {scores[('graph','same-examples')]:.3f} |",
         f"| Population score, same-wall-clock (T*=18.77 h) | {scores[('grid','same-wallclock')]:.3f} | {scores[('graph','same-wallclock')]:.3f} |",
         "",
         "Population score = mean over the three frozen opponents of the "
         "seed-mean score (truncations excluded, reported separately in the "
-        "results tables). Sources: results-*.csv, wallclock.json per run, "
-        "comparison-controls.md measurements; journal "
+        "results tables). Wall-clock = self-play generation + training per "
+        "run (evaluation games excluded), mean over the five seeds; "
+        "self-play cost = that wall-clock / 5,000 games. Sources: "
+        "results-*.csv, wallclock.json per run, comparison-controls.md "
+        "measurements (journal H5-2026-09-10-encoders-01); journal "
         "H6-2026-09-19-comparison-01.",
     ]
     (FIG / "fig2-score-cost.md").write_text("\n".join(lines) + "\n")

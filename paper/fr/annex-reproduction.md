@@ -77,10 +77,11 @@ Apple M1 Pro (10 cœurs, 16 Go, macOS 15.3.1) ; 4 threads de travail
 par exécution, exécutions séquentielles sous `caffeinate`. Inférence :
 grille CoreML 2.62 ms/eval, graphe CPU 3.67 ms/eval (CoreML plus lent
 pour le réseau graphe riche en opérations de collecte — mesuré,
-rapporté, imputé). Entraînement ≈770 (grille) / ≈195 (graphe) pos/s
-sur MPS. Totaux par exécution : grille 16.7–19.8 h, graphe
-30.0–54.9 h par exécution de 10 × 500 parties ; évaluation ≈23–32
-s/partie à 400 simulations.
+rapporté, imputé). Référence de débit d'entraînement sur MPS (lot 128,
+avant+arrière) : 274 (grille) / 138 (graphe) pos/s. Temps mural
+d'entraînement par exécution de 10 × 500 parties (génération en
+auto-jeu + entraînement, évaluation exclue) : grille 16.7–19.1 h,
+graphe 26.6–49.9 h ; évaluation ≈23–32 s/partie à 400 simulations.
 
 ## C.6 Index des journaux et des décisions de cette étude
 
