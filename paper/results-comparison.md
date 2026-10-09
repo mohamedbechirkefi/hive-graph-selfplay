@@ -19,17 +19,20 @@ meaningful graph advantage.
 reading (both arms, 10 generations × 500 games) and the same-wall-clock
 reading (T\* = 18.77 h, computed by a pre-registered rule before any
 cross-arm number existed), the graph arm scored lower against two of the
-three frozen opponents and no better against the third, consistently
-across all three seeds per arm:
+three frozen opponents and no better against the third, across **five
+seeds per arm** (seeds 4–5 were added after the three-seed analysis,
+symmetrically and under a pre-commitment to use all seeds regardless of
+direction, D-031; the three-seed analysis reached the same verdict):
 
 | graph − grid | Same-examples | Same-wall-clock |
 | --- | --- | --- |
-| vs legal-random | −0.175 [−0.268, −0.007] | −0.158 [−0.254, −0.050] |
-| vs heuristic | −0.085 [−0.143, −0.025] | −0.072 [−0.100, −0.028] |
-| vs 6400-sim MCTS | +0.005 [−0.020, +0.035] | −0.013 [−0.040, +0.015] |
+| vs legal-random | −0.169 [−0.272, −0.062] | −0.161 [−0.278, −0.048] |
+| vs heuristic | −0.064 [−0.111, −0.017] | −0.059 [−0.087, −0.029] |
+| vs 6400-sim MCTS | −0.009 [−0.055, +0.028] | −0.018 [−0.066, +0.025] |
 
-(Seed-level means; bootstrap 95% over seeds; per-seed values in the
-results tables — no best-seed reporting anywhere.)
+(Seed-level means; bootstrap 95% over five seeds per arm; per-seed
+values in the results tables — no best-seed reporting anywhere. The
+largest upper bound across all six contrasts is +0.028.)
 
 The wall-clock reading compounds the result: the graph arm's measured
 cost was 2.0× per run (35.7 vs 18.2 h), so at equal hours it completes
@@ -39,8 +42,9 @@ shows and equal time only widens.
 ## Truncation, reported separately and stress-tested
 
 The clearest behavioural difference is not a score but an outcome
-category: against legal-random, the graph arm truncated 20–57% of its
-games at the 300-ply cap (grid: 0–1%) — winning material and then
+category: against legal-random, the graph arm truncated 20–57% of its games at
+the 300-ply cap across the original seeds and 23–44% in the extension
+seeds (grid: 0–1%, with one extension seed at 11%) — winning material and then
 failing to convert (fig. 4, F1). Because truncation was defined as its
 own outcome from the start, this pathology is visible rather than
 laundered into draws. The cap value cannot rescue the hypothesis: even
@@ -81,3 +85,22 @@ run. Campaign approved and launched 2026-09-10 (D-026); T\* computed
 touch occurred at any point. Negative result retained and reported per
 invariant 5 and protocol §1: the work does not need H1 confirmed to
 count.
+
+## The ablations (H-T3)
+
+Two single-component ablations against the graph full method, three
+seeds each at full budget parity, plus one labeled supplement. Removing
+the direction-typed edge relations (A1, naive adjacency) destroyed
+trainability outright — NaN divergence in generation 0 for every seed —
+so typed edges carry, at minimum, the arm's optimization stability.
+Removing the global-pooling bias (A2) produced a null: score changes of
+−0.001 [−0.170, +0.165], −0.007 [−0.043, +0.030] and −0.013 [−0.043,
++0.013] against the three opponents, with the failure modes unchanged.
+The supplementary A1′ (untyped edges plus gradient clipping — an
+explicitly two-component variant, never attributed to typing alone)
+trains stably and scores within the full arm's band against all three
+opponents, suggesting the typed relations' measurable contribution at
+this scale is concentrated in optimization stability rather than final
+strength — a statement that inherits the clip confound and is phrased
+accordingly wherever it appears.
+

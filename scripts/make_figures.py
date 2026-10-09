@@ -27,7 +27,7 @@ from run_critical_corpus import Board  # noqa: E402
 
 FIG = REPO / "paper" / "figures"
 OPP = ["B-RND", "B-HEU", "B-MCTS"]
-TSTAR_H = 18.77
+TSTAR_H = 18.77  # display value; exact median used in make_results
 COL = {"grid": "#1f77b4", "graph": "#d62728"}
 
 
@@ -45,7 +45,7 @@ def pop_score(run: Path, tag: str):
 def fig1():
     plt.figure(figsize=(8, 5))
     for arm in ["grid", "graph"]:
-        for seed in [1, 2, 3]:
+        for seed in [1, 2, 3, 4, 5]:
             run = REPO / "data" / "runs" / f"cmp-{arm}-s{seed}"
             clock = json.load(open(run / "wallclock.json"))
             cum, xs, ys = 0.0, [], []
@@ -179,9 +179,9 @@ def fig4():
             return None
         return (max if biggest else min)(cands, key=key)
 
-    graph_rnd = sum((rows_of("graph", s, "B-RND") for s in [1, 2, 3]), [])
-    grid_heu = sum((rows_of("grid", s, "B-HEU") for s in [1, 2, 3]), [])
-    graph_mcts = sum((rows_of("graph", s, "B-MCTS") for s in [1, 2, 3]), [])
+    graph_rnd = sum((rows_of("graph", s, "B-RND") for s in [1, 2, 3, 4, 5]), [])
+    grid_heu = sum((rows_of("grid", s, "B-HEU") for s in [1, 2, 3, 4, 5]), [])
+    graph_mcts = sum((rows_of("graph", s, "B-MCTS") for s in [1, 2, 3, 4, 5]), [])
     sel = [
         ("F1: graph vs B-RND — longest truncated game (a won position it "
          "cannot close: wins material, then shuffles to the 300-ply cap)",
@@ -304,7 +304,7 @@ def fig2():
     clock = {}
     for arm in ["grid", "graph"]:
         tots = []
-        for seed in [1, 2, 3]:
+        for seed in [1, 2, 3, 4, 5]:
             c = json.load(open(REPO / f"data/runs/cmp-{arm}-s{seed}/wallclock.json"))
             tots.append(sum(c.values()) / 3600)
         clock[arm] = sum(tots) / 3

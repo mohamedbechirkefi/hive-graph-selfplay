@@ -27,7 +27,21 @@ REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "results" / "comparison"
 OPPONENTS = ["B-RND", "B-HEU", "B-MCTS"]
 SEEDS = [1, 2, 3, 4, 5]  # seeds 4-5 added per D-031 (all-seeds pre-commitment)
-TSTAR_H = 18.77  # FIXED 2026-09-16 by the pre-registered rule (D-031b)
+def _tstar_hours():
+    """T* = median full-run wall-clock of the ORIGINAL three grid runs
+    (pre-registered rule, executed 2026-09-16; D-031b: seeds 4-5 never
+    enter the median). Computed exactly from the wall-clock files so the
+    defining run's own final checkpoint sits AT T* inclusively — the
+    rounded 18.77 h constant broke that boundary."""
+    import json, statistics
+    tots = []
+    for seed in [1, 2, 3]:
+        c = json.load(open(REPO / "data" / "runs" / f"cmp-grid-s{seed}" / "wallclock.json"))
+        tots.append(sum(c.values()) / 3600)
+    return statistics.median(tots)
+
+
+TSTAR_H = None  # set lazily (exact median; reported as 18.77 h)
 
 
 def tstar_checkpoint(arm, seed):
@@ -35,6 +49,9 @@ def tstar_checkpoint(arm, seed):
     Returns (genNNN, kind) where kind 'final' means the gen009 final eval
     doubles as the T* eval (same checkpoint/volume/openings)."""
     import json
+    global TSTAR_H
+    if TSTAR_H is None:
+        TSTAR_H = _tstar_hours()
     clock = json.load(open(REPO / "data" / "runs" / f"cmp-{arm}-s{seed}" / "wallclock.json"))
     cum, last = 0.0, None
     for gen in sorted(clock):
