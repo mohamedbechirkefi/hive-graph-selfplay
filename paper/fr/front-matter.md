@@ -27,8 +27,8 @@ dans laquelle un assistant de recherche IA (Claude, Anthropic) a
 implémenté le code, mené les campagnes et rédigé le texte sous un
 système de portes réservant toutes les décisions scientifiques — gels,
 budgets, dépenses, publication — à l'auteur humain, qui assume chaque
-affirmation. La division du travail complète est documentée dans le
-dépôt (`docs/methodology.md`) et résumée dans les annexes.
+affirmation. Le chapitre 8 documente cette méthodologie de travail en
+entier ; le document source vit dans le dépôt (`docs/methodology.md`).
 
 **Résumé (164 mots dans la version anglaise).** Hive est un jeu de
 stratégie hexagonal sans plateau dont les coups sont des paires (pièce,
@@ -61,6 +61,9 @@ négatif
 **Table des matières.** 1 Introduction · 2 Formalisation · 3 Travaux
 connexes · 4 Méthode (validation du moteur ; lignes de base ;
 pipeline ; représentations) · 5 Protocole · 6 Résultats (comparaison ;
-ablations) · 7 Discussion et menaces · 8 Conclusion · Bibliographie ·
-Webographie · Annexes (corpus, conventions, architectures, configs,
-graines, commandes de reproduction)
+ablations) · 7 Discussion et menaces · 8 Méthodologie de travail
+(humain–IA sous portes) · 9 Conclusion · Bibliographie · Webographie ·
+Annexe A Corpus de positions · Annexe B Architectures, décodeur,
+formats · Annexe C Hyperparamètres, graines, commandes · Annexe D
+Pointeurs vers le dépôt · Annexe E Tableaux de résultats et figures
+(générés)

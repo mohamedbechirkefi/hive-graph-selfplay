@@ -20,8 +20,8 @@ human-as-PI methodology in which an AI research assistant (Claude,
 Anthropic) implemented code, ran campaigns, and drafted text under a
 gate system reserving all scientific decisions — freezes, budgets,
 spending, publication — to the human author, who owns every claim.
-The full division of labour is documented in the repository
-(`docs/methodology.md`) and summarised in the annexes.
+Chapter 8 documents this working methodology in full; the source
+document lives in the repository (`docs/methodology.md`).
 
 **Abstract (164 words).** Hive is a boardless hexagonal strategy game
 whose moves are (piece, destination) pairs over an ever-changing set of
@@ -48,9 +48,11 @@ learning; pre-registration; negative result
 **Table of contents.** 1 Introduction · 2 Formalisation · 3 Related
 work · 4 Method (engine validation; baselines; pipeline;
 representations) · 5 Protocol · 6 Results (comparison; ablations) ·
-7 Discussion and threats · 8 Conclusion · Bibliography · Webographie ·
-Annexes (corpus, conventions, architectures, configs, seeds,
-reproduction commands)
+7 Discussion and threats · 8 Working methodology (gated human–AI) ·
+9 Conclusion · Bibliography · Webographie · Annex A Position corpora ·
+Annex B Architectures, decoder, formats · Annex C Hyperparameters,
+seeds, commands · Annex D Repository pointers · Annex E Result tables
+and figures (generated)
 
 \newpage
 
@@ -204,20 +206,33 @@ bibliography/webographie.*
 ## 3.1 Self-play reinforcement learning at scale — and small scale
 
 AlphaZero (Silver et al. 2017/2018) fixed the algorithmic template this
-study inherits: a policy-value network guiding PUCT-MCTS self-play. Its
-budget reporting, however, is hardware-denominated and single-run —
-precisely what a small-compute, multi-seed study must improve on. KataGo
-(Wu 2020) showed the pipeline's cost is highly compressible and set the
-budget-reporting standard (GPU-days, games, samples) our accounting
-follows; its representation-agnostic economies (playout-cap
-randomization) are applied identically to both arms here. Jones (2021)
-demonstrated that deliberately small AlphaZero-style experiments on Hex
-yield lawful, extrapolatable signal — the closest methodological
-licence for our setting — and supplied the compute-frontier reporting
-style, while never varying the representation. Agarwal et al. (2021)
-provide the statistical frame: few-run regimes demand seed-level
-resampling and interval reporting, which our protocol adopts with the
-seed as the unit.
+study inherits: a policy-value network guiding PUCT-MCTS self-play, with
+the state presented as stacked spatial planes (8×8×119 for chess) and
+the policy itself expressed spatially — the canonical grid
+parameterisation our grid arm descends from. Its evidence style,
+however, is what a small-compute study must *depart* from: a single
+training run per game, budgets denominated in hardware (5,000
+first-generation TPUs) rather than in comparable units, and evaluation
+against one reference engine. KataGo (Wu 2020) showed the pipeline's
+cost is compressible by roughly 50× at equal strength (under 30 V100s
+for 19 days versus ELF OpenGo's ≈74 GPU-years) and set the
+budget-reporting standard — GPU-days, games, samples, with per-technique
+ablations — that our accounting follows; of its economies we adopt
+exactly one, playout-cap randomization, because it is
+representation-agnostic and can be applied identically to both arms,
+and we deliberately skip the Go-specific input features and auxiliary
+targets that would smuggle domain knowledge into one encoding. Jones
+(2021) trained AlphaZero-style agents across Hex board sizes on ≈500
+GPU-hours total and found smooth compute-performance frontiers —
+the closest methodological licence for drawing conclusions at our
+scale — and contributed a warning we encode in the protocol: train-time
+and test-time compute trade off, so evaluation visit counts must be
+pinned, not floated. Agarwal et al. (2021) supply the statistical
+frame: in few-run regimes, point estimates over single runs frequently
+reverse under proper interval analysis; their prescriptions —
+aggregate per run first, resample the run, report intervals, never pool
+games as independent observations — are implemented here with the seed
+as the resampling unit throughout.
 
 ## 3.2 Graph representations and variable action spaces
 
@@ -234,22 +249,49 @@ GNN, and none was claimed.
 ## 3.3 Hive and grid-vs-graph comparisons
 
 Scholarly Hive AI is thin. Kampert et al. (2021) built heuristic
-minimax/MCTS agents (BeeKeeper) and documented Hive's ~60 branching
-factor and the weakness of naive evaluation signals. AZ-Hive (de Goede
-et al. 2022) is the closest prior work: AlphaZero on Hive across five
-board encodings — all dense grid/CNN, no graph arm — with engines that
-remained below plain search; its finding that encoding choice strongly
-affects learning is direct motivation for RQ-H1. Polygames (Cazenave et
-al. 2020) achieves boardsize invariance within the grid paradigm and
-does not support Hive. The direct grid-vs-graph precedents are Keller
-et al. (2023) — parameter-matched CNN-vs-GNN on Hex, but under
-RainbowDQN (the CNN arm never trained under MCTS self-play) and with a
-Hex-specific Shannon-game graph — and Rigaux & Kashima (2024, NeurIPS), an
-edge-featured GAT for chess reporting GNN gains in an AlphaZero-style
-loop — from a single training run per model, without seed replication. Ben-Assayag & El-Yaniv (2021) trained a GNN-AlphaZero on Othello
-for size scaling, not for a budget-matched representation comparison.
-An unpublished hobby project (hiveGo; webographie) trains a small GNN on
-Hive with an AlphaZero loop, with no controlled comparison.
+minimax/MCTS agents on the BeeKeeper engine, documented Hive's ≈60
+branching factor, and found that an intuitively central feature
+(tiles around the queen) carries surprisingly little evaluation signal
+once tuned — an early warning that Hive's value structure is not where
+intuition puts it; their agents, like every scholarly Hive agent before
+ours, remained below strong human play. AZ-Hive (de Goede et al. 2022)
+is the closest prior work and the study's direct motivation: AlphaZero
+on Hive across a 5 × 2 design space of board and action encodings —
+all dense hex-lattice arrays into a CNN, no graph option anywhere in
+the space (confirmed against the full text) — with the stark result
+that after 24 h of training their best engine still lost to plain MCTS
+and minimax (BayesElo 1063 vs 1181/1355), while encoding choice
+measurably changed early learning speed. That is precisely RQ-H1's
+premise: in Hive, the encoding is load-bearing. Polygames (Cazenave et
+al. 2020) achieves boardsize invariance — fully convolutional bodies
+with global pooling — but within the grid paradigm and without Hive
+support: it scales fixed-topology boards, which a boardless, stacking
+game does not offer. The direct grid-vs-graph precedents are two. Keller
+et al. (2023) ran a parameter-matched CNN-vs-GNN comparison on Hex
+(≈487K vs ≈481K parameters, ≈110 A100-hours per model) and found the
+asymmetry our result extends: the GNN dominated long-range-dependency
+tests and transferred across board sizes, while the CNN remained
+sharper at local patterns — but their controlled comparison ran under
+RainbowDQN, their CNN arm never trained under MCTS self-play, their
+graph is a Hex-specific Shannon-game reduction (played cells are
+contracted away; actions biject to nodes), and they state themselves
+that the construction does not generalise to other games. Rigaux &
+Kashima (2024, NeurIPS) report the opposite sign for chess: an
+edge-featured graph-attention network (GATEAU) with an edge-based
+policy readout out-learns CNN baselines in an AlphaZero-style loop and
+transfers across board sizes — but from a single training run per
+model (intervals cover Elo estimation only, not run variance), with
+loose capacity matching (1.0M vs 2.2M parameters) and a decoder that
+differs between arms, confounding representation with action
+parameterisation; our design removes exactly those three confounds.
+Ben-Assayag & El-Yaniv (2021) trained a GIN-based AlphaZero on Othello
+lattice graphs to scale small-board training to larger boards — a
+transfer claim under deliberately asymmetric budgets, not an
+equal-budget representation comparison, though notably with the best
+replication hygiene of the three (five runs with standard errors). An
+unpublished hobby project (hiveGo; webographie) trains a small GNN on
+Hive with an AlphaZero-style loop and reports only anecdotal
+evaluation — no controlled comparison of any kind.
 
 ## 3.4 Positioning
 
@@ -712,6 +754,11 @@ cost was 2.0× per run (35.7 vs 18.2 h), so at equal hours it completes
 only 4–5 of 10 generations — a deficit the per-example reading already
 shows and equal time only widens.
 
+Fig. 5 decomposes the aggregate scores into per-opponent trajectories
+for all 10 main-campaign runs; fig. 6 reports the training-fit metrics
+(policy and value) by generation — both arms fit their self-play data
+throughout, so the gap is not a bare optimization failure.
+
 ## Truncation, reported separately and stress-tested
 
 The clearest behavioural difference is not a score but an outcome
@@ -720,7 +767,8 @@ the 300-ply cap across the original seeds and 23–44% in the extension
 seeds (grid: 0–1%, with one extension seed at 11%) — winning material and then
 failing to convert (fig. 4, F1). Because truncation was defined as its
 own outcome from the start, this pathology is visible rather than
-laundered into draws. The cap value cannot rescue the hypothesis: even
+laundered into draws; fig. 7 charts the per-run rates against
+legal-random. The cap value cannot rescue the hypothesis: even
 scoring every truncated game as a graph win — an upper bound on any
 larger cap — leaves the graph arm behind on the random opponent under
 both readings (−0.072 / −0.058).
@@ -869,7 +917,75 @@ found), and for Hive at small budget it favours the grid.
 
 \newpage
 
-# Chapter 8 — Conclusion (booklet draft, 2026-10-09)
+# Chapter 8 — Working methodology: gated human–AI research (booklet, 2026-10-09)
+
+*Condensed from `docs/methodology.md` (workspace, v1.0) and the
+append-only methodology log; this chapter is also the report's AI-use
+declaration in expanded form.*
+
+## Division of labour
+
+This study was executed under **goal-level delegation with mechanical
+human authority**. The human author is the principal investigator: he
+owns the research questions, every scientific commitment, every
+expenditure, everything public, and the final word on every claim — a
+responsibility that is not delegable. The AI assistant (Claude,
+Anthropic — operating as Claude Code sessions) is the runtime: given
+the research plan, it routes itself, builds, measures, journals, and
+drafts toward the plan's end-state without per-task instruction.
+
+The boundary is enforced by six **gates** enumerating decisions only
+the human makes: freezing any protocol, split or test set (G-FREEZE);
+spending or long compute (G-SPEND); anything leaving the machine
+(G-PUBLIC); reuse of material with unsettled rights (G-RIGHTS);
+institutional contact (G-ADMIN); destruction of data or results
+(G-DESTRUCTIVE). Every gate crossing in this study is recorded in the
+decision log with the human's approval quoted verbatim — the protocol
+freeze, the opponent-population freeze with its budget sub-choice, the
+openings freeze, four compute approvals with explicit sizing, and the
+seed-extension pre-commitments.
+
+## Why the state lives in files
+
+Sessions are stateless by design: a session reads the routing file,
+executes the active phase's pipeline document (ordered tasks, each with
+an acceptance check, closed by exit criteria), journals everything
+measured, and updates the state files last. Research quality is thereby
+a property of **process artifacts** — journals, the decision log,
+frozen documents with hashes, the claims register — not of any
+session's memory or competence. Everything in this booklet traces to
+those artifacts.
+
+## What the discipline caught
+
+The methodology log records every incident where the discipline changed
+an outcome. During this study it caught, among others: a protocol-
+deadlock in the pipeline documents before any work ran; an engine-vs-
+corpus disagreement resolved *against* the hand-written corpus (the
+engine was right, and the record of being wrong was kept); an
+evaluation harness defect detected because three "different" opponents
+produced identical results; a silent record-loss path in the match
+runner found by the rule that every selected failure position must be
+*reproduced and verified* before publication; and an ablation that had
+silently diverged to NaN for ten generations, caught by the same
+identical-results alarm and converted into the study's clearest
+ablation finding. The pattern is the methodology's core claim: **at
+small scale, harness error is a larger threat than statistical noise,
+and only mechanical verification catches it.**
+
+## What the AI did not do
+
+The AI chose no hypothesis, froze nothing, spent nothing, published
+nothing, and decided no claim. Where its drafts contained errors, the
+process — translation passes, mechanical consistency checks,
+adversarial re-reads — surfaced several (stale seed counts, stale
+claim limits) before this version; the final-control record lists the
+checks. The human author has personally verified the conclusions he
+signs.
+
+\newpage
+
+# Chapter 9 — Conclusion (booklet draft, 2026-10-09)
 
 *No new results here, per the plan.*
 
@@ -935,11 +1051,471 @@ Generated by `scripts/make_bibliography.py` from the reading notes; every entry 
 
 \newpage
 
-# Result tables and figures (generated)
+# Annex A — Hand-annotated position corpora
+
+Every expectation below was written by hand from the publisher's rules BEFORE any engine run (oracle-before-output); the engine run that followed is journaled, and the single disagreement found was resolved against the corpus (a One-Hive transit error in a setup sequence), with the engine vindicated. These renderings are generated from the executable case files by `scripts/make_annex_corpus.py` — the tests and the annex cannot drift apart.
+
+## A.1 Critical rules corpus (30 cases, H2)
+
+Rules-correctness cases: placement, sliding/freedom to move, gates, stacking, One-Hive, terminal states, forced pass, and kernel-guard Pillbug stun cases.
+
+### C001 — Queen Bee may not be placed on the first turn (tournament rule)
+
+- **Rule:** Tournament opening rule (*Tournament variant of the official rules (README source 4); Gen42 2010 rulesheet p. 3 alone would allow it*)
+- **Setup:** ``
+- **Expectation:** move_illegal `{'move': 'wQ'}`
+- **Hand-written justification:** The 2010 base rulesheet says the Queen 'can be placed at any time from your first to your fourth turn' (p. 3), but the tournament variant — adopted by UHP and both reference engines, and the convention this study fixes — forbids placing the Queen Bee on either player's first turn. White's first move 'wQ' must therefore be rejected.
+
+### C002 — Queen must be placed on the fourth turn if not placed before
+
+- **Rule:** Placing your Queen Bee (*Gen42 Hive rulesheet p. 3*)
+- **Setup:** `wS1;bS1 wS1-;wG1 -wS1;bG1 bS1-;wA1 -wG1;bA1 bG1-`
+- **Expectation:** all_moves_place `{'piece': 'wQ'}`
+- **Hand-written justification:** 'You must place your Queen Bee on your fourth turn if you have not placed it before.' (p. 3). It is White's fourth turn and wQ is still in hand, so every legal move must be a placement of wQ. (Movement moves are additionally excluded by the Moving rule, p. 3: no moving before the queen is placed.) Setup legality: each white placement touches only white pieces, each black placement only black (Placing, p. 2).
+
+### C003 — No piece may move before that player's queen is placed
+
+- **Rule:** Moving (*Gen42 Hive rulesheet p. 3*)
+- **Setup:** `wS1;bS1 wS1-`
+- **Expectation:** all_moves_are_placements
+- **Hand-written justification:** 'Once your Queen Bee has been placed (but not before), you can decide whether to use each turn after that to place another tile or to move one of the pieces that have already been placed.' (p. 3). White's queen is unplaced on turn 2, so wS1 must have no movement moves — only placements are offered.
+
+### C004 — After the first pieces, placements may not touch the opponent's colour
+
+- **Rule:** Placing (*Gen42 Hive rulesheet p. 2*)
+- **Setup:** `wG1;bS1 wG1/`
+- **Expectation:** moves_for_piece `{'piece': 'wB1', 'moves': ['wB1 wG1\\', 'wB1 /wG1', 'wB1 -wG1']}`
+- **Hand-written justification:** '…with the exception of the first piece placed by each player, pieces may not be placed next to a piece of the opponent's colour.' (p. 2). wG1 sits at the origin with bS1 to its north-east. Of wG1's five empty neighbours (E, SE, SW, W, NW), the E and NW cells each also touch bS1 (they are the two cells adjacent to both wG1 and its NE neighbour), so a new white piece may go only SE, SW or W of wG1. Expected wB1 placements: exactly those three cells. Hand geometry: axial E=(1,0), NE=(1,-1); neighbours of NE-cell (1,-1) include (1,0)=E-of-origin and (0,-1)=NW-of-origin.
+
+### C005 — Second player's first piece joins the first piece (may touch enemy)
+
+- **Rule:** Playing the Game / Placing (*Gen42 Hive rulesheet pp. 2-3*)
+- **Setup:** `wS1`
+- **Expectation:** moves_for_piece `{'piece': 'bG1', 'moves': ['bG1 wS1-', 'bG1 wS1/', 'bG1 wS1\\', 'bG1 -wS1', 'bG1 /wS1', 'bG1 \\wS1']}`
+- **Hand-written justification:** 'Play begins with one player placing a piece from their hand in the centre of the table and the next player joining one of their own pieces to it edge to edge.' (p. 2) — the first-piece exception to the own-colour placing rule. Black's first piece must join wS1 edge to edge, so bG1 may be placed on any of the six cells adjacent to wS1, and nowhere else.
+
+### C006 — Queen at the hive tip: exactly the two slides that keep contact
+
+- **Rule:** Queen Bee / Freedom to Move / One Hive (contact) (*Gen42 Hive rulesheet pp. 4, 9, 10*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-`
+- **Expectation:** moves_for_piece `{'piece': 'wQ', 'moves': ['wQ \\wS1', 'wQ /wS1']}`
+- **Hand-written justification:** The Queen 'can move only one space per turn' (p. 4) in a sliding movement (p. 10), and 'all pieces must always touch at least one other piece' (p. 3 NB). wQ sits at the west tip of a straight line of four. Of its five empty neighbours, only the two cells that are also adjacent to its neighbour wS1 (the cells NW and SW of wS1) keep contact with the hive after the slide; the three cells further west touch nothing once the queen leaves. Neither destination is gated (each slide's two flanking cells are one occupied, one empty). Expected: exactly those two moves.
+
+### C007 — Ant enclosed in a pocket: only exit is a gate, so it cannot move
+
+- **Rule:** Freedom to Move (*Gen42 Hive rulesheet p. 10*)
+- **Setup:** `wA1;bS1 wA1-;wQ \wA1;bQ bS1-;wG1 -wA1;bB1 bQ/;wS1 /wA1;bB1 bS1/;wB1 \wQ;bB1 wA1/`
+- **Expectation:** moves_for_piece `{'piece': 'wA1', 'moves': []}`
+- **Hand-written justification:** 'If a piece is surrounded to the point that it can no longer physically slide out of its position, it may not be moved.' (p. 10). Five of the ant's six neighbours are occupied. The only empty neighbour (SE of the ant) is flanked by bS1 (E of the ant) and wS1 (SW of the ant) - the two cells adjacent to both the ant and that space - so the ant cannot physically slide into it. Removing the ant would NOT split the hive (the ring bB1-wQ-wG1-wS1 plus bS1 stays connected), so the block is purely freedom-to-move, not One Hive. The Ant, normally the most mobile piece, has zero legal moves.
+
+### C008 — Spider moves exactly three spaces along the hive edge - two destinations
+
+- **Rule:** Spider (*Gen42 Hive rulesheet p. 7*)
+- **Setup:** `wG1;bS1 wG1-;wQ -wG1;bQ bS1-;wS1 \wQ;bG1 bQ-`
+- **Expectation:** moves_for_piece `{'piece': 'wS1', 'moves': ['wS1 bS1/', 'wS1 wQ\\']}`
+- **Hand-written justification:** 'The Spider moves three spaces per turn - no more, no less. It must move in a direct path and cannot backtrack on itself. It may only move around pieces that it is in direct contact with on each step.' (p. 7). The hive minus the spider is a straight five-piece line whose boundary is a single 14-cell ring with no gates; each ring cell touches the line, and cells off the ring touch nothing (excluded by the contact requirement). From its ring position the spider therefore has exactly two three-step walks - three cells clockwise and three cells anticlockwise: the cell NE of bS1, and the cell SE of wQ. One- and two-step stops are excluded ('no less'), backtracking is excluded.
+
+### C009 — Grasshopper: jumps only along occupied rows, no one-space slides
+
+- **Rule:** Grasshopper (*Gen42 Hive rulesheet p. 6*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wG1 \wS1;bG1 bQ-`
+- **Expectation:** moves_for_piece `{'piece': 'wG1', 'moves': ['wG1 wS1\\', 'wG1 /wQ']}`
+- **Hand-written justification:** 'It jumps from its space over any number of pieces (but at least one) to the next unoccupied space along a straight row of joined pieces.' (p. 6). The grasshopper touches occupied cells in exactly two of its six directions: SE (over wS1, landing in the next space, SE of wS1) and SW (over wQ, landing SW of wQ). In the other four directions the adjacent cell is empty, and a jump 'over at least one' piece is impossible - in particular the four adjacent empty cells are NOT destinations: the grasshopper 'does not move around the outside of the Hive like the other creatures'. Expected: exactly the two landing cells.
+
+### C010 — Grasshopper jumps a full five-piece row to the first empty space
+
+- **Rule:** Grasshopper (*Gen42 Hive rulesheet p. 6*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wG1 -wQ;bG1 bQ-`
+- **Expectation:** moves_for_piece `{'piece': 'wG1', 'moves': ['wG1 bG1-']}`
+- **Hand-written justification:** '…over any number of pieces (but at least one) to the next unoccupied space along a straight row of joined pieces.' (p. 6). Due east the grasshopper faces the unbroken row wQ, wS1, bS1, bQ, bG1; the first unoccupied space beyond it is the cell E of bG1 - the single destination. It must land there, not earlier (every nearer cell in the row is occupied). In all five other directions the adjacent cell is empty, so no jump exists. The grasshopper is a leaf of the hive, so One Hive does not restrict it.
+
+### C011 — Queen's only open neighbour is behind a gate: zero moves
+
+- **Rule:** Freedom to Move (*Gen42 Hive rulesheet p. 10*)
+- **Setup:** `wS1;bS1 -wS1;wB1 wS1/;bQ -bS1;wQ wB1-;bG1 \bQ;wS2 wQ/;bA1 /bQ;wG1 -wS2;bS2 /bS1;wA1 wS2\;bB1 \bG1;wG2 wQ\;bG2 \bB1`
+- **Expectation:** moves_for_piece `{'piece': 'wQ', 'moves': []}`
+- **Hand-written justification:** 'Similarly, no piece may move into a space that it cannot physically slide into.' (p. 10). Five of the queen's six neighbours are white pieces; the sixth (the cell W of wG2, equally SE of wB1) is empty, but the two cells adjacent to both the queen and that space are wG2 and wB1 - both occupied - so the queen cannot physically slide in. Removing the queen leaves the white horseshoe wS1-wB1-wG1-wS2-wA1-wG2 connected (and the black chain hangs off wS1 via bS1), so One Hive would allow the move; the block is purely Freedom to Move. Expected: the queen has no legal move.
+
+### C012 — Ant reaches every cell of the hive perimeter (13 destinations)
+
+- **Rule:** Soldier Ant / Freedom to Move (*Gen42 Hive rulesheet pp. 8, 10*)
+- **Setup:** `wG1;bS1 wG1-;wQ -wG1;bQ bS1-;wA1 \wQ;bG1 bQ-`
+- **Expectation:** moves_for_piece `{'piece': 'wA1', 'moves': ['wA1 -wQ', 'wA1 \\wG1', 'wA1 \\bS1', 'wA1 \\bQ', 'wA1 \\bG1', 'wA1 bG1/', 'wA1 bG1-', 'wA1 bG1\\', 'wA1 bQ\\', 'wA1 bS1\\', 'wA1 wG1\\', 'wA1 wQ\\', 'wA1 /wQ']}`
+- **Hand-written justification:** 'The Soldier Ant can move from its position to any other position around the Hive provided the restrictions are adhered to.' (p. 8). The hive minus the ant is a straight five-piece line; its boundary is a single 14-cell ring with no gates (every slide step is flanked by one line cell and one empty cell), and every ring cell touches the line. The ant starts on the ring at the cell NW of wQ, so it can stop on any of the other 13 ring cells: the west cap (W of wQ), the five north-shoulder cells (NW of each line piece plus NE of bG1), the east cap (E of bG1), and the six south-shoulder cells (SE of each line piece plus SW of wQ). Cells off the ring touch no piece and are excluded (p. 3 NB: pieces must always touch at least one other piece).
+
+### C013 — Beetle on the ground: two slides and two climbs
+
+- **Rule:** Beetle (*Gen42 Hive rulesheet pp. 4-5, 10*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wB1 \wS1;bG1 bQ-`
+- **Expectation:** moves_for_piece `{'piece': 'wB1', 'moves': ['wB1 wS1', 'wB1 wQ', 'wB1 \\bS1', 'wB1 \\wQ']}`
+- **Hand-written justification:** 'The Beetle, like the Queen Bee, moves only one space per turn. Unlike any other creature though, it can also move on top of the Hive.' (p. 4). From (NW of wS1) the beetle may climb onto either adjacent piece - wS1 or wQ - or slide along the ground to the two empty cells that keep contact with the hive: NW of bS1 (touching wS1 and bS1) and NW of wQ (touching wQ). The two remaining empty neighbours touch no piece after the beetle lifts, so they are excluded (p. 3 NB). No gate blocks any of the four moves (each is flanked by at most one occupied cell, and for the climbs the flanking stacks are not taller than the destination). Exactly four moves - matching the rulesheet's own beetle example count.
+
+### C014 — Beetle on top of the hive: all six neighbouring cells
+
+- **Rule:** Beetle (*Gen42 Hive rulesheet p. 5; beetle-gate ruling, World Hive Tournaments Rules FAQ*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wB1 \wS1;bG1 bQ-;wB1 wS1;bA1 bG1-`
+- **Expectation:** moves_for_piece `{'piece': 'wB1', 'moves': ['wB1 bS1', 'wB1 wQ', 'wB1 \\wS1', 'wB1 \\bS1', 'wB1 wS1\\', 'wB1 wQ\\']}`
+- **Hand-written justification:** 'From its position on top of the Hive, the Beetle can move from tile to tile across the top of the Hive. It can also drop into spaces that are surrounded and therefore not accessible to most other creatures.' (p. 5). Sitting on wS1, the beetle may move to every one of the six neighbouring cells: across onto bS1 or wQ (both height-1 stacks), or drop to any of the four empty cells around wS1 - each of which still touches wS1 itself, so contact holds. No pair of flanking stacks is taller than both origin (height 1 under the beetle) and destination, so no beetle gate applies (FAQ). One Hive cannot be violated: wS1 stays where it is. Exactly six destinations.
+
+### C015 — Beetle gate: drop between two height-2 stacks is blocked
+
+- **Rule:** Freedom to Move above ground level (beetle gate) (*World Hive Tournaments Rules FAQ; Gen42 Hive rulesheet p. 10*)
+- **Setup:** `wS1;bG1 wS1/;wQ /wS1;bQ bG1/;wG1 wS1\;bB1 bQ/;wB1 -wS1;bB1 bQ;wB2 /wQ;bB1 bG1;wB1 wS1;bQ bB1-;wB2 wQ;bQ bB1/;wB2 wG1;bA1 bQ/`
+- **Expectation:** move_illegal `{'move': 'wB1 bB1\\'}`
+- **Hand-written justification:** 'When a piece climbs up or down the hive, or moves staying on top of the hive, it must be able to slide according to the freedom to move rule which applies to higher levels than the ground. If two stacks form a gate above the ground level (we call it beetle gate), pieces won't be able to slide through.' (WHT Rules FAQ). wB1 sits on wS1 (its own level: on top of a height-1 piece); the target cell SE of the bB1 stack is empty (height 0). The two cells adjacent to both origin and target carry the stacks bG1+bB1 and wG1+wB2, both height 2 - strictly taller than both the origin without the beetle (1) and the destination (0) - so the beetle cannot slide down between them. The drop must be rejected. (One Hive would allow it: wS1 stays in place; contact holds via the flanking stacks.)
+
+### C016 — A piece with a beetle on top of it cannot move
+
+- **Rule:** Beetle (stack immobility) (*Gen42 Hive rulesheet p. 5*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wB1 \wS1;bG1 bQ-;wB1 wS1;bA1 bG1-`
+- **Expectation:** move_illegal `{'move': 'wS1 bS1\\'}`
+- **Hand-written justification:** 'A piece with a beetle on top of it is unable to move' (p. 5). wS1 lies under wB1, so any attempt to move wS1 - here a spider move towards the cell SE of bS1 - must be rejected, regardless of whether the path would otherwise be legal for a spider.
+
+### C017 — Stack takes the beetle's colour: white may place beside a covered black queen
+
+- **Rule:** Beetle (stack colour) / Placing (*Gen42 Hive rulesheet pp. 2, 5*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wB1 \wS1;bA1 bS1\;wB1 \bS1;bG1 bA1\;wB1 \bQ;bG2 bG1\;wB1 bQ;bB1 bG2\`
+- **Expectation:** move_legal `{'move': 'wG1 wB1-'}`
+- **Hand-written justification:** '…for the purposes of the placing rules on p. 2, the stack takes on the colour of the Beetle.' (p. 5). White's beetle sits on the black queen at the east end of the hive. The cell E of that stack touches no other piece, so a white placement there is adjacent only to a stack whose colour is - by the rule - white. Placing wG1 there must be accepted. (Without the stack-colour rule the cell would be adjacent to a black piece and the placement would be illegal, p. 2.)
+
+### C018 — Stack takes the beetle's colour: black may NOT place beside its own covered queen
+
+- **Rule:** Beetle (stack colour) / Placing (*Gen42 Hive rulesheet pp. 2, 5*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wB1 \wS1;bA1 bS1\;wB1 \bS1;bG1 bA1\;wB1 \bQ;bG2 bG1\;wB1 bQ;bB1 bG2\;wG1 -wQ`
+- **Expectation:** move_illegal `{'move': 'bB2 wB1-'}`
+- **Hand-written justification:** Mirror of C017: the stack bQ+wB1 counts as WHITE ('the stack takes on the colour of the Beetle', p. 5). The cell E of the stack touches only that stack, so for black it is adjacent to a white piece and 'pieces may not be placed next to a piece of the opponent's colour' (p. 2). Black's attempt to place bB2 there must be rejected - even though the buried piece is black's own queen.
+
+### C019 — One Hive: the only connection between two parts may not move
+
+- **Rule:** One Hive rule (*Gen42 Hive rulesheet pp. 3, 9*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-`
+- **Expectation:** moves_for_piece `{'piece': 'wS1', 'moves': []}`
+- **Hand-written justification:** 'All pieces must always touch at least one other piece. If a piece is the only connection between two parts of the Hive, it may not be moved.' (p. 3 NB); 'The pieces in play must be linked at all times. At no time can you leave a piece stranded (not joined to the Hive) or separate the Hive in two.' (p. 9). wS1 is the interior link between wQ on one side and bS1-bQ on the other: lifting it splits the hive, so the spider has no legal move at all - every destination, however valid as spider movement, is excluded by One Hive.
+
+### C020 — Ring: a piece on a closed loop may move (not a cut point); the ring's eye is gated
+
+- **Rule:** One Hive rule / Freedom to Move (*Gen42 Hive rulesheet pp. 9, 10*)
+- **Setup:** `wS1;bS1 -wS1;wG1 wS1/;bQ -bS1;wQ wS1\;bG1 -bQ;wG2 wG1-;bG2 -bG1;wA1 wQ-;bA1 -bG2;wS2 wG2\;bB1 -bA1`
+- **Expectation:** moves_for_piece `{'piece': 'wQ', 'moves': ['wQ /wS1', 'wQ /wA1']}`
+- **Hand-written justification:** The six white pieces form a closed ring, so removing wQ leaves the other five connected around the loop (and the black tail hangs off wS1): One Hive permits the queen to move. Sliding one space (p. 4), the queen has three empty neighbours: the ring's eye and two outside cells. The eye is flanked by wS1 and wA1 - both occupied - so the queen 'may not move into a space that it cannot physically slide into' (p. 10). The two outside cells (SW of wS1, which touches wS1 and bS1; and SW of wA1, which touches wA1) are unobstructed slides keeping contact. Expected: exactly those two destinations.
+
+### C021 — Game ends when a queen is fully surrounded - even by its own colour
+
+- **Rule:** The Object of Hive / The End of the Game (*Gen42 Hive rulesheet pp. 1, 11*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wG1 -wQ;bG1 bQ-;wA1 -wG1;bG2 bQ/;wA2 -wA1;bB1 \bQ;wA3 -wA2;bA1 bS1\;wS2 -wA3;bA2 bQ\`
+- **Expectation:** game_over `{'state': 'WhiteWins'}`
+- **Hand-written justification:** 'The pieces surrounding the Queen Bee can be made up of a mixture of both your pieces and your opponent's.' (p. 1). 'The game ends as soon as one Queen Bee is completely surrounded by pieces of any colour. The person whose Queen Bee is surrounded loses the game.' (p. 11). Black's final placement (bA2, SE of its own queen) fills the sixth and last cell around bQ. The surrounding pieces are all black - irrelevant per p. 1 - and it is Black's own move that completes the surround: Black loses, the GameString state must read WhiteWins immediately after that move.
+
+### C022 — One move surrounds both queens simultaneously: draw
+
+- **Rule:** The End of the Game (*Gen42 Hive rulesheet p. 11*)
+- **Setup:** `wS1;bS1 wS1/;wQ wS1\;bB1 bS1-;wA1 -wQ;bQ bB1\;wS2 /wQ;bQ /bB1;wG1 -wS2;bQ wQ-;wB1 -wA1;bA1 bQ\;wG1 wS2-;bG1 \bS1;wB1 \wA1;bA2 bQ-;wB1 \wS1;bA3 bB1\;wG2 -wB1;bG1 bS1\`
+- **Expectation:** game_over `{'state': 'Draw'}`
+- **Hand-written justification:** 'The person whose Queen Bee is surrounded loses the game, unless the last piece to surround their Queen Bee also completes the surrounding of the other Queen Bee. In that case the game is drawn.' (p. 11). Before Black's last move, each queen has exactly one empty neighbour - the same cell (1,0), adjacent to both queens (the queens sit side by side, wQ NE-shoulder wS1, bQ beside it). Black's grasshopper at (1,-2) jumps SE over bS1 into that cell, filling the sixth neighbour of both queens with a single piece: the game must end as a Draw, not a win for either side.
+
+### C023 — A player who can neither place nor move must pass
+
+- **Rule:** Unable to move or place (*Gen42 Hive rulesheet pp. 2, 5, 10, 11*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wB1 \wS1;bQ bS1/;wA1 /wQ;bQ bS1-;wB1 \bS1;bQ bS1/;wB1 bS1;bQ wB1-;wA1 /bQ;bQ wB1/;wA2 /wQ;bQ wB1-;wA2 bQ\;bQ wB1/;wA3 /wQ;bQ wB1-;wA3 bQ-;bQ wB1/;wG1 /wB1;bQ wB1-;wG1 wB1/`
+- **Expectation:** must_pass
+- **Hand-written justification:** 'If a player can neither place a new piece or move an existing piece, the turn passes to their opponent who then takes their turn again.' (p. 11). After White's final move Black has: bS1 under wB1 - 'a piece with a beetle on top of it is unable to move' (p. 5), and the stack counts as white for placing (p. 5); and bQ, whose five neighbours are the stack, wG1, wA1, wA2 and wA3, with its single empty neighbour reachable only between wG1 and wA3 - a gate the queen 'cannot physically slide into' (p. 10). No placement is possible either: the only cell adjacent to a black-topped piece is that same gated cell, which also touches white pieces (p. 2). Black is not lost - bQ has an empty neighbour, so it is not surrounded - but must pass.
+
+### C024 — Pillbug special ability: moving an adjacent friendly piece (kernel guard)
+
+- **Rule:** Pillbug special ability (*Gen42 Pillbug rulesheet (English section)*)
+- **Setup:** `wP;bS1 wP-;wQ -wP;bQ bS1-`
+- **Expectation:** move_legal `{'move': 'wQ wP\\'}`
+- **Hand-written justification:** 'The special ability allows the Pillbug to move an adjacent piece (friend or enemy) two spaces; up onto itself and then down into another empty space adjacent to itself.' (Pillbug rulesheet). wQ is adjacent to wP; the target cell SE of wP is empty and adjacent to wP. None of the four exceptions applies: wQ was not just moved by the other player (Black's last move was placing bQ), wQ is not in a stack, removing wQ does not split the hive (it is a leaf), and no stacked pieces form a gap on the up-and-over path. NOTE: this is a variant-tagged kernel-guard case (protocol §2) - the study variant is base game; Pillbug cases only protect the shared rules kernel.
+
+### C025 — A piece just moved by the enemy pillbug is stunned for one turn (kernel guard)
+
+- **Rule:** Pillbug special ability (immobility of the moved piece) (*Gen42 Pillbug rulesheet (English section); World Hive Tournaments Rules FAQ*)
+- **Setup:** `wS1;bP wS1-;wQ -wS1;bQ bP-;wA1 \wQ;bG1 bQ-;wA1 \bP;bG1 -wQ;wG1 -wA1;wA1 bP\`
+- **Expectation:** move_illegal `{'move': 'wA1 bP/'}`
+- **Hand-written justification:** 'Furthermore, any piece moved by the Pillbug may not be moved at all (directly or via Pillbug action) on the next player's turn.' (Pillbug rulesheet); FAQ: 'any piece that just moved, in the turn of the other player immediately after is unable to: move, be moved or use the pillbug's ability.' Black's pillbug just threw wA1 up over itself and down to the cell SE of bP (a legal use: wA1 last moved two plies earlier, so the just-moved exception did not block the throw; removing it kept the hive whole since wG1 also touches wS1 and wQ). On White's very next turn the thrown ant is stunned: the attempted ant move to NE of bP must be rejected. Variant-tagged kernel-guard case (protocol §2).
+
+### C026 — Pillbug may not move the piece the opponent just moved (kernel guard)
+
+- **Rule:** Pillbug special ability (exceptions) (*Gen42 Pillbug rulesheet (English section)*)
+- **Setup:** `wS1;bP wS1-;wQ -wS1;bQ bP-;wA1 \wQ;bG1 bQ-;wA1 \bP`
+- **Expectation:** move_illegal `{'move': 'wA1 bP\\'}`
+- **Hand-written justification:** 'The Pillbug may not move the piece which was just moved by the other player.' (Pillbug rulesheet, first exception). White's ant moved to the cell NW of bP on the immediately preceding ply; Black's attempt to use the pillbug's ability on that same ant - throwing it to SE of bP - must be rejected. (The identical throw becomes legal two plies later, which is case C025's setup.) Variant-tagged kernel-guard case (protocol §2).
+
+### C027 — One Hive binds even the grasshopper: a cut-point cannot jump
+
+- **Rule:** One Hive rule / Grasshopper (*Gen42 Hive rulesheet pp. 3, 6, 9*)
+- **Setup:** `wG1;bS1 wG1-;wQ -wG1;bQ bS1-`
+- **Expectation:** moves_for_piece `{'piece': 'wG1', 'moves': []}`
+- **Hand-written justification:** The grasshopper is exempt from the sliding restriction (p. 10: it 'can jump into or out of a space'), but not from One Hive: 'If a piece is the only connection between two parts of the Hive, it may not be moved.' (p. 3 NB). wG1 sits between wQ and the black pair; lifting it for any jump splits the hive in two, so despite having jump lines in both E and W directions the grasshopper has no legal move.
+
+### C028 — A beetle cannot be PLACED directly on top of the hive
+
+- **Rule:** Beetle (placement NB) (*Gen42 Hive rulesheet p. 5*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-`
+- **Expectation:** move_illegal `{'move': 'wB1 wS1'}`
+- **Hand-written justification:** 'When it is first placed, the Beetle is placed in the same way as all the other pieces. It cannot be placed directly on top of the Hive, even though it can be moved there later.' (p. 5 NB). wB1 is still in hand; the attempt to introduce it on top of wS1 must be rejected. (C013/C014 verify that the same beetle may climb there by a move once placed.)
+
+### C029 — Spider may not stop after one step ('no more, no less')
+
+- **Rule:** Spider (*Gen42 Hive rulesheet p. 7*)
+- **Setup:** `wG1;bS1 wG1-;wQ -wG1;bQ bS1-;wS1 \wQ;bG1 bQ-`
+- **Expectation:** move_illegal `{'move': 'wS1 \\wG1'}`
+- **Hand-written justification:** 'The Spider moves three spaces per turn - no more, no less.' (p. 7). The cell NW of wG1 is exactly one sliding step from the spider's position, and no legal three-step non-backtracking path ends there (the two three-step walks end NE of bS1 and SE of wQ - case C008); a path through that cell passes it at step one and may not stop. The one-step move must be rejected.
+
+### C030 — Queen between two pieces: two slides along the shoulder
+
+- **Rule:** Queen Bee / One Hive / Freedom to Move (*Gen42 Hive rulesheet pp. 4, 9, 10*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wB1 \wS1;bG1 bQ-`
+- **Expectation:** moves_for_piece `{'piece': 'wQ', 'moves': ['wQ -wB1', 'wQ /wS1']}`
+- **Hand-written justification:** The queen touches wS1 (E) and wB1 (NE). Removing her keeps the hive whole (wB1 still touches wS1), so One Hive allows a move. One-space slides (p. 4): of her four empty neighbours, only the cell W of wB1 (keeping contact with wB1) and the cell SW of wS1 (keeping contact with wS1) still touch the hive after she lifts; the two far-western cells touch nothing and are excluded (p. 3 NB). Neither slide is gated (each flanked by exactly one occupied cell). Expected: exactly those two destinations.
+
+## A.2 Tactical verification set (5 cases, H3)
+
+Search-correctness cases: mate-in-1 by walk and by jump from both colours, and self-surround avoidance; solved 5/5 by the MCTS baseline at 400, 1600 and 6400 simulations.
+
+### T001 — White mates in 1: occupy the black queen's last liberty (SE of bQ)
+
+- **Rule:** The End of the Game (*Gen42 Hive rulesheet pp. 1, 11*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wG1 -wQ;bG1 bQ-;wA1 -wG1;bG2 bQ/;wA2 -wA1;bB1 \bQ;wA3 -wA2;bA1 bS1\`
+- **Expectation:** bestmove_to_cell `{'target': 'bQ\\'}`
+- **Hand-written justification:** The black queen has exactly one empty neighbour, the cell SE of bQ. Any white piece landing there completes the surround and wins immediately ('the game ends as soon as one Queen Bee is completely surrounded by pieces of any colour', p. 11; mixture of colours allowed, p. 1). The cell is reachable: a white ant can walk the south perimeter in one move (entry past bA1 is not gated), so a winning move exists. No other single move ends the game. The searcher must play onto that cell.
+
+### T002 — Black mates in 1: occupy the white queen's last liberty (SE of wQ)
+
+- **Rule:** The End of the Game (*Gen42 Hive rulesheet pp. 1, 11*)
+- **Setup:** `wS1;bS1 -wS1;wQ wS1-;bQ -bS1;wG1 wQ-;bG1 -bQ;wG2 wQ/;bG2 -bG1;wB1 \wQ;bA1 -bG2;wA1 wS1\;bA2 -bA1;wA2 wG1-`
+- **Expectation:** bestmove_to_cell `{'target': 'wQ\\'}`
+- **Hand-written justification:** Mirror of T001 with the colours exchanged and black to move — this pair is the player-alternation check at the move level: the winning pattern must be found from both sides. The white queen's only empty neighbour is the cell SE of wQ; a black ant reaches it along the south perimeter (route via SE of bS1's column: the step into the cell is flanked by the occupied wA1 cell, so contact holds and no gate blocks). Landing there completes the surround: Black wins (p. 11).
+
+### T003 — White mates in 1 by grasshopper jump over four pieces (E of bQ)
+
+- **Rule:** Grasshopper / The End of the Game (*Gen42 Hive rulesheet pp. 6, 11*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wG1 -wQ;bG1 bQ/;wA1 \wQ;bB1 \bQ;wA2 \wA1;bA1 bS1\;wA3 \wA2;bA2 bQ\`
+- **Expectation:** bestmove_to_cell `{'target': 'bQ-'}`
+- **Hand-written justification:** The black queen's only empty neighbour is the cell E of bQ. Due east from wG1 at the west cap runs the unbroken occupied row wQ, wS1, bS1, bQ; the next unoccupied space along that row is exactly the winning cell, so the grasshopper jumps over four pieces and completes the surround (p. 6: 'over any number of pieces … to the next unoccupied space along a straight row of joined pieces'; p. 11: surround ends the game). White ants can also walk in around the perimeter — the expectation is the destination cell, whichever piece the searcher sends.
+
+### T004 — Black mates in 1 by grasshopper jump over four pieces (W of wQ)
+
+- **Rule:** Grasshopper / The End of the Game (*Gen42 Hive rulesheet pp. 6, 11*)
+- **Setup:** `wS1;bS1 wS1-;wQ -wS1;bQ bS1-;wG1 \wQ;bG1 bQ-;wG2 \wS1;bA1 bQ\;wA1 wQ\;bA2 bA1\;wA2 /wQ;bA3 bA2\;wB1 \wG1`
+- **Expectation:** bestmove_to_cell `{'target': '-wQ'}`
+- **Hand-written justification:** Alternation mirror of T003 with black jumping. The white queen's neighbours: E wS1, NW wG1 (placed NW of wQ), NE wG2 (placed NW of wS1 = NE of wQ), SE wA1, SW wA2 — five occupied, only W of wQ empty. Due east of that gap runs the unbroken row wQ, wS1, bS1, bQ with bG1 at the east cap (3,0): from bG1 the next unoccupied space westward along the row is exactly the gap, so the grasshopper jumps over four pieces and completes the surround (pp. 6, 11). Black's southern tail (bA1..bA3 SE of bG1) keeps black's earlier placements legal and away from white.
+
+### T005 — Do not fill your own queen's last liberty
+
+- **Rule:** The End of the Game (*Gen42 Hive rulesheet p. 11*)
+- **Setup:** `wS1;bS1 -wS1;wQ wS1-;bQ -bS1;wG1 wQ-;bG1 -bQ;wG2 wQ/;bG2 -bG1;wB1 \wQ;bA1 -bG2;wA1 wS1\;bA2 -bA1`
+- **Expectation:** bestmove_avoid_cell `{'target': 'wQ\\'}`
+- **Hand-written justification:** The cell SE of wQ is the white queen's last liberty. White placing or moving any piece there completes the surround of White's own queen — 'the person whose Queen Bee is surrounded loses the game' (p. 11) regardless of who supplied the sixth piece. The placement is perfectly legal (the cell touches only white pieces), so only search judgment prevents it. Any move except one landing on that cell passes; the searcher must not play into it. (This does not assert White survives long-term — black threatens the same cell — only that the immediate self-kill is avoided.)
+
+\newpage
+
+# Annex B — Architectures, decoder and data formats in detail
+
+*Sources: `python/hivenet/model.py`, `python/hivenet/graph_model.py`,
+`crates/hive-nn/` (authoritative); docs/representations/;
+docs/action-decoder.md. Parameter counts are measured
+(`count_params`), not estimated.*
+
+## B.1 Grid arm — HiveNet (1.44 M parameters)
+
+Input: 77 planes × 32 × 32 (float32 in [0,1]). Plane groups: 64 piece
+planes (own/opponent × 8 bug types × stack level 0–3+), one-hive-pinned
+tops, last-moved (stun) cell, legal placement regions for both sides,
+side-to-move constant, queen-liberty scalars (both queens, /6), ply/100,
+game-type bits, reserve counts (/14).
+
+Body: 3×3 convolutional stem → 8 residual blocks of 96 channels (two
+3×3 conv + BatchNorm each); blocks 2 and 5 carry a KataGo-style
+global-pooling bias (mean‖max pooled channels → linear → per-channel
+bias). Hex adjacency on axial coordinates is a 7-cell subset of the 3×3
+neighbourhood, so plain 3×3 convolutions cover it; the two non-neighbour
+corners become learnable dead weights.
+
+Heads: policy = 1×1 convolution to 28 piece-slot planes, flattened to
+28,672 spatial logits, plus a pass logit from pooled features
+(POLICY_SIZE = 28,673); value = pooled features → 64 → 3 (win/draw/loss
+from the side to move).
+
+## B.2 Graph arm — HiveGraphNet (1.47 M parameters, +2.1%)
+
+Input per position: up to 224 nodes (occupied cells + every empty cell
+adjacent to the hive — exactly the decoder's destination universe),
+each with 56 features: per stack level 0–4 a (present, owner-is-mover,
+bug one-hot[8]) block; stack height/5; empty-candidate, one-hive-pinned,
+last-moved, and both placement-region bits. A 23-value global vector
+(side, ply/100, queen liberties/6, per-bug-type reserves/3 for both
+sides, game-type bits) is concatenated to every node's input.
+
+Body: input linear to 152 channels → 8 relational message-passing
+layers: h′ᵢ = ReLU(W_self hᵢ + Σ_d W_d h_{n_i(d)} + b) with six
+direction-typed weight matrices (the six hex directions as edge types),
+residual, masked; every third layer adds a masked global-pooling bias
+(mean‖max → linear). Neighbour structure is a (224 × 6) index tensor
+with a zero pad row — all shapes static, so the ONNX export is
+fixed-shape and runs under the same Rust inference path as the grid arm.
+
+Heads: value = masked mean‖max pooling ‖ globals → 64 → 3 (same
+convention). Policy = per-candidate scoring through the shared decoder:
+for each legal (slot, destination) the logit is
+MLP(dest-node embedding ‖ source embedding ‖ slot embedding[32]), where
+the source embedding is the piece's standing node for movements and a
+learned reserve vector for placements; one learned pass logit. Logits
+attach to moves, never to list positions.
+
+**Ablation variants** (H-T3): `untyped_edges` shares ONE matrix across
+the six directions (0.54 M — the typed matrices are the ablated
+component); `no_gpool` removes every pooling bias (1.37 M).
+
+## B.3 The shared action decoder
+
+A move is (side-relative piece slot 0–27, destination cell) plus pass;
+slots 14–27 address opponent pieces (pillbug throws; inert in base
+game). The grid arm materialises the space as the flat 28,673-way
+tensor (slot × frame cell); the graph arm scores the identical pairs
+per candidate. Both arms: identical legal-set masking, softmax over
+exactly the legal set, identical MCTS visit-distribution targets,
+deterministic tiebreak toward the lowest flat index. Check 1 of the
+pre-training battery asserts zero probability mass outside the legal
+set through a real forward pass for whichever arm is under test.
+
+## B.4 Record format v3 (818 bytes)
+
+Bytes 0–83: 28 × (x, y, level) in frame coordinates, 255 = in hand;
+84 side to move; 85 last-moved id (stun state); 86 ply; 87 game-type
+bits; 88–91 queen liberties and reserves (mover/opponent); 92–95
+one-hive-pinned bitmask; 96–97 played-move policy index; 98 outcome
+from the mover's perspective — 0 loss / 1 draw / 2 win / **3
+truncated** (never a draw); 99 version; 100–107 generating-model stamp
+(generation, net hash); 112–175 top-15 MCTS visit distribution +
+total; 176–177 legal-move count; 178–817 the legal policy-index list
+(cap 320; measured max branching 213) that enables legal-masked
+training in both arms. Rust and Python builders for both the plane and
+graph encodings are pinned byte-identical by nightly cross-language
+golden tests (240 and 160 positions respectively).
+
+## B.5 Search (shared)
+
+PUCT MCTS, c = 1.4, batched leaf evaluation, terminal values backed up
+exactly; self-play adds Dirichlet root noise (ε 0.25), temperature
+sampling for 12 plies, playout-cap randomization (25% of decisions at
+128 simulations — recorded; 75% at 32 — unrecorded), resignation at
+−0.92 with a 10% no-resign audit; evaluation runs 400 simulations,
+no noise, deterministic argmax (enforced by test, pinned by config).
+
+\newpage
+
+# Annex C — Hyperparameters, seeds, commands: full reproduction sheet
+
+*Every value below is the one the campaigns actually ran (per-run
+`train-config.json` and `*-manifest.json` files are authoritative);
+nothing here is a recommendation.*
+
+## C.1 Frozen experimental constants
+
+| Constant | Value | Frozen by |
+| --- | --- | --- |
+| Variant | base game, tournament opening rule | D-007 / protocol v1.0 |
+| Move cap | 300 plies; truncation = own outcome | D-008/D-011 / protocol §3 |
+| Self-play sims (full/cheap) | 128 / 32, full-frac 0.25 | protocol §5 |
+| Temperature plies / resign / audit | 12 / −0.92 / 10% | matrix (pre-registered) |
+| Eval sims / noise / volume | 400 / none / 100 games/opponent | D-019, D-027 |
+| Opponent population | B-RND, B-HEU (weights sha256 d0602f18…0b97a), B-MCTS@6400 | D-017 |
+| Openings | 250 × 4-ply, content sha256 63b318d0…5af7b | D-025 |
+| T\* (same-wall-clock cutoff) | 18.77 h (median of grid s1–s3 totals) | pre-registered rule, computed 2026-09-16 |
+| Seeds | 1–5 per arm (4–5 added under pre-commitment) | D-026 / D-031 |
+
+## C.2 Training hyperparameters (identical both arms)
+
+SGD, lr 0.02 cosine-annealed to lr/100 over the run, momentum 0.9,
+weight decay 1e-4, batch 256, 2 epochs per generation, value-loss
+weight 0.6, legal-masked policy cross-entropy against MCTS visit
+distributions, truncated records excluded from the value loss.
+Grid: channels 96 × blocks 8. Graph: hidden 152 × layers 8, slot
+embedding 32. No hyperparameter search was performed for either arm
+(same zero tuning budget, plan ch. 6); the only post-hoc optimizer
+change in the whole study is the gradient clip of the explicitly
+two-component A1′ supplement.
+
+## C.3 Seed derivation
+
+Training run (arm, seed): base_seed = 100,000 × seed; generation g uses
+base_seed + g for self-play and training; the gen-0 network is a
+seeded random initialisation exported to ONNX (torch.manual_seed =
+base_seed). Evaluation: network seed 9000+gen (finals) / 9500 (T\*
+sets), opponent seeds 9101 (B-RND) and 9201 (B-MCTS), arena seeds as
+logged; with fixed openings the schedule is seed-independent (proven by
+schedule-hash test).
+
+## C.4 Commands
+
+```sh
+# one training run of the matrix (resumable per generation)
+python3 scripts/run_comparison.py --arm grid  --seed 1 --gens 10 --games 500
+python3 scripts/run_comparison.py --arm graph --seed 1 --gens 10 --games 500
+# ablations: --arm graph-untyped | graph-nogpool | graph-untyped-clip
+
+# regenerate every table and figure from raw per-game records
+python3 scripts/make_results.py
+python/.venv/bin/python scripts/make_figures.py
+
+# pre-training check battery on any shard set
+bash scripts/run_h4_checks.sh '<abs>/gen000-*.bin' '<abs>/gen000-manifest.json'
+
+# fresh-environment minimal reproduction (clone, build, replay, compare)
+bash scripts/reproduce_minimal.sh /tmp/repro
+
+# booklet (assembly -> HTML -> PDF)
+python3 scripts/assemble_booklet.py && bash scripts/make_booklet_pdf.sh
+
+# French/English numeric-identity check
+python3 scripts/check_fr_numbers.py
+```
+
+## C.5 Measured machine profile (all wall-clock figures)
+
+Apple M1 Pro (10 cores, 16 GB, macOS 15.3.1); 4 worker threads per run,
+runs sequential under `caffeinate`. Inference: grid CoreML 2.62
+ms/eval, graph CPU 3.67 ms/eval (CoreML slower for the gather-heavy
+graph net — measured, reported, charged). Training ≈770 (grid) / ≈195
+(graph) pos/s on MPS. Run totals: grid 16.7–19.8 h, graph 30.0–54.9 h
+per 10 × 500-game run; evaluation ≈23–32 s/game at 400 sims.
+
+## C.6 Journal and decision index for this study
+
+Protocol and freezes: D-007/008/011/012/017/019/020/025. Campaigns:
+D-026 (main), D-029 (ablations), D-030 (A1′), D-031 (5-seed extension
+with pre-commitments). Analysis journals: H6-2026-09-19-comparison-01
+(3-seed), H6-2026-10-09-5seed-final-01 (final), H7-2026-09-23 /
+10-02 / 10-09 (A1, A2, A1′). Engine validation: H2-2026-09-09 set.
+Every table cell in this booklet is reachable from one of these.
+
+\newpage
+
+# Annex D — Repository pointers
+
+Everything not materialised in annexes A–C lives in the repository;
+each pointer names its identifiers and how to read them (plan ch. 23).
+
+- **D.1 Configs, seeds, manifests.** `configs/` (matrix, baselines with
+  sha256-pinned weights, pinned eval settings, ablation diffs); per-run
+  `*-manifest.json` and `wallclock.json` under `data/runs/`.
+- **D.2 Encoding conventions in full.** `docs/representations/{grid,graph,
+  comparison-controls}.md`; `docs/action-decoder.md` — the normative
+  prose behind annex B.
+- **D.3 Claims register.** `paper/claims.md` — one row per claim:
+  claim, evidence, section, limit. No row, no claim.
+- **D.4 Experiment journal.** `journal/` — every run and measurement,
+  negative results included; decision log in `state/decisions.md`
+  (workspace repository).
+
+\newpage
+
+# Annex E — Result tables and figures (generated)
 
 *Pulled verbatim at assembly time from `results/` and `paper/figures/` — regenerate via `scripts/make_results.py` and `scripts/make_figures.py`.*
 
-# H6 results — same-examples reading
+## H6 results — same-examples reading
 
 Score = mean over non-truncated games (win 1 / draw 0.5 / loss 0); trunc = truncation rate; sens = truncations scored 0.5.
 
@@ -956,7 +1532,7 @@ Score = mean over non-truncated games (win 1 / draw 0.5 / loss 0); trunc = trunc
 | graph | s4 | 0.688 / 44% | 0.125 / 0% | 0.120 / 0% |
 | graph | s5 | 0.935 / 23% | 0.035 / 0% | 0.115 / 0% |
 
-## Seed-level means (bootstrap 95%, unit = seed)
+### Seed-level means (bootstrap 95%, unit = seed)
 
 - grid vs B-RND: mean 0.981 [0.964, 0.994] (seeds: 0.995, 0.975, 0.990, 0.949, 0.995)
 - grid vs B-HEU: mean 0.129 [0.098, 0.165] (seeds: 0.150, 0.080, 0.190, 0.105, 0.120)
@@ -965,7 +1541,7 @@ Score = mean over non-truncated games (win 1 / draw 0.5 / loss 0); trunc = trunc
 - graph vs B-HEU: mean 0.065 [0.034, 0.100] (seeds: 0.025, 0.050, 0.090, 0.125, 0.035)
 - graph vs B-MCTS: mean 0.115 [0.107, 0.121] (seeds: 0.115, 0.125, 0.100, 0.120, 0.115)
 
-# H6 results — same-wallclock reading
+## H6 results — same-wallclock reading
 
 Score = mean over non-truncated games (win 1 / draw 0.5 / loss 0); trunc = truncation rate; sens = truncations scored 0.5.
 
@@ -982,7 +1558,7 @@ Score = mean over non-truncated games (win 1 / draw 0.5 / loss 0); trunc = trunc
 | graph | s4 | 0.631 / 39% | 0.100 / 0% | 0.150 / 0% |
 | graph | s5 | 0.980 / 24% | 0.045 / 0% | 0.095 / 0% |
 
-## Seed-level means (bootstrap 95%, unit = seed)
+### Seed-level means (bootstrap 95%, unit = seed)
 
 - grid vs B-RND: mean 0.971 [0.950, 0.991] (seeds: 0.995, 0.975, 0.939, 0.949, 0.995)
 - grid vs B-HEU: mean 0.120 [0.098, 0.142] (seeds: 0.150, 0.080, 0.145, 0.105, 0.120)
@@ -991,23 +1567,23 @@ Score = mean over non-truncated games (win 1 / draw 0.5 / loss 0); trunc = trunc
 - graph vs B-HEU: mean 0.061 [0.047, 0.081] (seeds: 0.045, 0.055, 0.060, 0.100, 0.045)
 - graph vs B-MCTS: mean 0.107 [0.087, 0.130] (seeds: 0.075, 0.110, 0.105, 0.150, 0.095)
 
-# Arm contrast — same-examples
+## Arm contrast — same-examples
 
-Graph − grid difference of seed-level means; bootstrap 95% over seeds (3 per arm, independent).
+Graph − grid difference of seed-level means; bootstrap 95% over seeds (5 per arm, independent).
 
 - vs B-RND: graph−grid = -0.169 [-0.272, -0.062]
 - vs B-HEU: graph−grid = -0.064 [-0.111, -0.017]
 - vs B-MCTS: graph−grid = -0.009 [-0.055, +0.028]
 
-# Arm contrast — same-wallclock
+## Arm contrast — same-wallclock
 
-Graph − grid difference of seed-level means; bootstrap 95% over seeds (3 per arm, independent).
+Graph − grid difference of seed-level means; bootstrap 95% over seeds (5 per arm, independent).
 
 - vs B-RND: graph−grid = -0.161 [-0.278, -0.048]
 - vs B-HEU: graph−grid = -0.059 [-0.087, -0.029]
 - vs B-MCTS: graph−grid = -0.018 [-0.066, +0.025]
 
-# H7 ablation results (feeds booklet table H-T3)
+## H7 ablation results (feeds booklet table H-T3)
 
 Reference: H6 graph full method (journal H6-2026-09-19-comparison-01).
 
@@ -1018,7 +1594,7 @@ Reference: H6 graph full method (journal H6-2026-09-19-comparison-01).
 
 | A1' supplement (`graph-untyped-clip`, two-component, D-030) | untyped edges + grad-clip 1.0 | **Trains finite; scores within the full arm's band** — diffs vs full graph: B-RND −0.066 [−0.254, +0.130], B-HEU +0.032 [−0.011, +0.078], B-MCTS +0.008 [−0.040, +0.063]. NEVER attributed to typing alone (clip confound). With A1: typed edges' measurable contribution at this scale is concentrated in optimization stability (journal H7-2026-10-09-a1prime-01). |
 
-# Score / cost table (H6 task 7; fig2)
+## Score / cost table (H6 task 7; fig2)
 
 | Metric | Grid arm | Graph arm |
 | --- | --- | --- |
@@ -1032,60 +1608,39 @@ Reference: H6 graph full method (journal H6-2026-09-19-comparison-01).
 
 Population score = mean over the three frozen opponents of the seed-mean score (truncations excluded, reported separately in the results tables). Sources: results-*.csv, wallclock.json per run, comparison-controls.md measurements; journal H6-2026-09-19-comparison-01.
 
-![fig1-score-vs-time.png](fig1-score-vs-time.png)
+![Fig. 1 — Mean score against the frozen population vs training wall-clock, all seeds, both arms (evaluations at generations 5, 8, 10; dashed line = T*).](fig1-score-vs-time.png)
 
-![fig3-encodings.png](fig3-encodings.png)
+![Fig. 3 — The two encodings of one position: grid planes in the 32×32 frame (left) and the cell graph with its six direction-typed relations (right).](fig3-encodings.png)
 
-![fig4-failures.png](fig4-failures.png)
+![Fig. 4 — Three commented failure positions F1–F3 (details and reproduction status below).](fig4-failures.png)
 
-# Three commented failure positions (H6 task 7)
+## Three commented failure positions (H6 task 7)
 
 Selection criteria are mechanical, stated in `scripts/make_figures.py::fig4`, and applied over the raw per-game CSV records; each selected game is reproduced deterministically (fresh per-game engine seeds) and verified against its CSV row.
 
-## F1: graph vs B-RND — longest truncated game (a won position it cannot close: wins material, then shuffles to the 300-ply cap)
+### F1: graph vs B-RND — longest truncated game (a won position it cannot close: wins material, then shuffles to the 300-ply cap)
 
 - game: graph-s1 vs B-RND, opening 2, A white, 300 plies
 - reproduction verified against CSV row: YES
 - GameString: `Base;InProgress;White[151];wG1;bS1 \wG1;wQ /wG1;bQ -bS1;wS1 wG1-;bG1 -bQ;wG2 wS1-;bB1 bQ/;wS2 wG2-;bA1 -bG1;wG3 wS2-;bS2 \bA1;wA1 wG3\;bA2 bB1-;wB1 wA1\;bB1 bS1;wB2 wB1-;bB1 wG1;wA2 wB2\;bA2 bS2-;wA3 wB2/;bG2 \bS2;wA2 wA3/;bB2 bG2/;wA2 -bG2;bA1 /bQ;wA3 -wA2;bG3 bS1/;wA3 wB2\;bA3 \bG3;wA3 wB2/;bA1 /wS1;wA3 \bA3;bA1 wA3-;wB2 wA1-;bA1 wS2/;wB1 /wA1;bA1 bB2-;wA2 wA3/;bA1 \bB2;wA2 -bA1;bB1 bS1;wA2 wG3/;bA1 bB2\;wB1 wA1;bA1 /bG1;wB2 wB1;bA1 wG2/;wB2 wB1\;bA1 bG3-;wB2 /wB1;bA1 bG3\;wB2 -wB1;bB2 \bG2;wB…`
 
-## F2: grid vs B-HEU — shortest decided loss (the heuristic's queen-targeting tactics strike before the net consolidates)
+### F2: grid vs B-HEU — shortest decided loss (the heuristic's queen-targeting tactics strike before the net consolidates)
 
 - game: grid-s2 vs B-HEU, opening 2, A black, 19 plies
 - reproduction verified against CSV row: YES
 - GameString: `Base;WhiteWins;Black[10];wG1;bS1 \wG1;wQ /wG1;bQ -bS1;wA1 wG1-;bA1 bS1/;wA1 \bA1;bQ -wG1;wQ /bQ;bS2 -bS1;wA2 \wA1;bS2 /wQ;wA2 -bS1;bS2 wG1\;wA1 -bS2;bA1 /wA1;wA3 \wA2;bA1 /wQ;wA3 -bQ`
 
-## F3: graph vs B-MCTS — longest drawn game (avoids losing without ever generating winning threats)
+### F3: graph vs B-MCTS — longest drawn game (avoids losing without ever generating winning threats)
 
 - game: graph-s3 vs B-MCTS, opening 19, A white, 79 plies
 - reproduction verified against CSV row: YES
 - GameString: `Base;Draw;Black[40];wS1;bA1 wS1-;wA1 \wS1;bB1 bA1-;wA2 -wA1;bA2 /bB1;wQ \wA2;bQ bB1-;wQ wA2/;bA2 /wA2;wQ \wA2;bA2 -wQ;wB1 -wS1;bA3 bA1/;wA1 bQ-;bA3 bA2/;wA1 /bA1;bG1 bA1/;wA1 bQ-;bG2 -bA3;wA1 -bG2;bG3 /bB1;wA1 /bQ;bB1 wA1;wB2 /wS1;bG2 bA3-;wB2 wS1;bB2 -bQ;wB2 /wS1;bA3 bG2\;wB2 -bG3;bQ bB1-;wB2 /bG3;bS1 bG2-;wB2 /bB1;bS1 -bG2;wB2 /bQ;bQ bB2-;wB2 /bB1;bS2 bG2-;wB2 bB1\;bB1 wB2;wG1 /wS1;bQ bG1-;wG1 \bS1;bS2 wG1/;wA3 -wG1;bS2 -wA3;wG2 /wS1;bG2 -wA2;wG2 -bG1;bG2 bS1-;wG2 bQ-;bG1 wG2-;wG3 /wS1;bG3 wS1…`
 
-\newpage
+![Fig. 5 — Per-opponent score trajectories (mean over 5 seeds, min–max band; final checkpoints per generation; 100 games/opponent at 400 simulations).](fig5-per-opponent.png)
 
-# Annexes (pointers)
+![Fig. 6 — Training metrics by generation (epoch-1 policy top-1 and value accuracy, 10 main-campaign runs; ablation runs excluded).](fig6-training-metrics.png)
 
-Bulky artifacts live in the repository; each annex names its identifiers
-and how to read them (plan ch. 23).
-
-- **A. Position corpora.** `tests/critical_positions/` (30 rules-derived
-  cases + README with sources and review status);
-  `tests/tactical_positions/` (5 cases + runner).
-- **B. Rule and encoding conventions.** `docs/representations/{grid,graph,
-  comparison-controls}.md`; `docs/action-decoder.md`.
-- **C. Architectures and hyperparameters.** `python/hivenet/model.py`,
-  `python/hivenet/graph_model.py`; training flags in each run's
-  `train-config.json`.
-- **D. Configs, seeds, manifests.** `configs/` (matrix, baselines with
-  sha256-pinned weights, pinned eval settings, ablation diffs); per-run
-  `*-manifest.json` and `wallclock.json` under `data/runs/`.
-- **E. Reproduction.** `scripts/reproduce_minimal.sh` (fresh-environment
-  minimal scenario); `scripts/make_results.py` and `make_figures.py`
-  regenerate every table and figure from raw per-game records.
-- **F. Claims register.** `paper/claims.md` — one row per claim:
-  claim, evidence, section, limit. No row, no claim.
-- **G. Experiment journal.** `journal/` — every run and measurement,
-  negative results included; decision log in `state/decisions.md`
-  (workspace repository).
+![Fig. 7 — Final-evaluation truncation rate against legal-random, per run (final checkpoints, 5 seeds per arm; truncation reported separately from draws per invariant 7).](fig7-truncation.png)
 
 
 ---

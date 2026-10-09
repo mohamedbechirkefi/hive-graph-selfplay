@@ -40,6 +40,11 @@ cost was 2.0× per run (35.7 vs 18.2 h), so at equal hours it completes
 only 4–5 of 10 generations — a deficit the per-example reading already
 shows and equal time only widens.
 
+Fig. 5 decomposes the aggregate scores into per-opponent trajectories
+for all 10 main-campaign runs; fig. 6 reports the training-fit metrics
+(policy and value) by generation — both arms fit their self-play data
+throughout, so the gap is not a bare optimization failure.
+
 ## Truncation, reported separately and stress-tested
 
 The clearest behavioural difference is not a score but an outcome
@@ -48,7 +53,8 @@ the 300-ply cap across the original seeds and 23–44% in the extension
 seeds (grid: 0–1%, with one extension seed at 11%) — winning material and then
 failing to convert (fig. 4, F1). Because truncation was defined as its
 own outcome from the start, this pathology is visible rather than
-laundered into draws. The cap value cannot rescue the hypothesis: even
+laundered into draws; fig. 7 charts the per-run rates against
+legal-random. The cap value cannot rescue the hypothesis: even
 scoring every truncated game as a graph win — an upper bound on any
 larger cap — leaves the graph arm behind on the random opponent under
 both readings (−0.072 / −0.058).

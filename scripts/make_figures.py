@@ -330,9 +330,120 @@ def fig2():
     print("fig2 written")
 
 
+def fig5():
+    """Per-opponent score curves: one panel per frozen opponent, every
+    run's trajectory over generations (evals at gens 5/8/10)."""
+    fig, axes = plt.subplots(1, 3, figsize=(13, 4.2), sharey=False)
+    for ax, opp in zip(axes, OPP):
+        for arm in ["grid", "graph"]:
+            for seed in [1, 2, 3, 4, 5]:
+                run = REPO / "data" / "runs" / f"cmp-{arm}-s{seed}"
+                clock = json.load(open(run / "wallclock.json"))
+                xs, ys = [], []
+                for i, gen in enumerate(sorted(clock)):
+                    f = run / "eval" / f"{gen}-vs-{opp}.csv"
+                    if f.exists():
+                        xs.append(i + 1)
+                        ys.append(summarize(load(f)[1])["score"])
+                ax.plot(xs, ys, marker="o", markersize=3, linewidth=1.1,
+                        color=COL[arm], alpha=0.7,
+                        label=arm if (seed == 1 and opp == OPP[0]) else None)
+        ax.set_title(f"vs {opp}", fontsize=10)
+        ax.set_xlabel("generation")
+        ax.grid(alpha=0.25)
+    axes[0].set_ylabel("score (excl. truncations)")
+    fig.legend(loc="upper center", ncol=2, frameon=False)
+    plt.tight_layout(rect=(0, 0, 1, 0.93))
+    plt.savefig(FIG / "fig5-per-opponent.png", dpi=150)
+    plt.close()
+    print("fig5 written")
+
+
+def fig6():
+    """Training metrics per generation, parsed from the campaign logs:
+    self-play validation policy top-1 and value accuracy (epoch-1 line of
+    each generation, per run)."""
+    import re as _re
+    logs = [REPO / "data" / "runs" / "campaign.log",
+            REPO / "data" / "runs" / "extension.log"]
+    runs = {}
+    current = None
+    pat_run = _re.compile(r"=== run (cmp-(grid|graph)-s\d) start")
+    pat_ep = _re.compile(
+        r"=== epoch 1: policy top-1 ([\d.]+)%, value acc ([\d.]+)%")
+    for lg in logs:
+        for line in open(lg):
+            m = pat_run.search(line)
+            if m:
+                current = m.group(1)
+                runs.setdefault(current, [])
+                continue
+            if "=== run" in line and ("untyped" in line or "nogpool" in line):
+                current = None
+                continue
+            m = pat_ep.search(line)
+            if m and current:
+                runs[current].append((float(m.group(1)), float(m.group(2))))
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
+    for name, pts in runs.items():
+        arm = "grid" if "grid" in name else "graph"
+        gens = range(1, len(pts) + 1)
+        axes[0].plot(gens, [p[0] for p in pts], color=COL[arm], alpha=0.65,
+                     linewidth=1.1)
+        axes[1].plot(gens, [p[1] for p in pts], color=COL[arm], alpha=0.65,
+                     linewidth=1.1)
+    axes[0].set_title("self-play val policy top-1 (%)", fontsize=10)
+    axes[1].set_title("self-play val value accuracy (%)\n(non-truncated "
+                      "samples only)", fontsize=10)
+    for ax in axes:
+        ax.set_xlabel("generation")
+        ax.grid(alpha=0.25)
+    import matplotlib.lines as mlines
+    fig.legend(handles=[mlines.Line2D([], [], color=COL[a], label=a)
+                        for a in COL], loc="upper center", ncol=2,
+               frameon=False)
+    plt.tight_layout(rect=(0, 0, 1, 0.92))
+    plt.savefig(FIG / "fig6-training-metrics.png", dpi=150)
+    plt.close()
+    print(f"fig6 written ({len(runs)} runs parsed)")
+
+
+def fig7():
+    """Truncation decomposition vs B-RND: per (arm, seed) truncation rate
+    at the final evaluation — the conversion-failure signature."""
+    plt.figure(figsize=(7.5, 4))
+    xs, heights, colors, labels = [], [], [], []
+    x = 0
+    for arm in ["grid", "graph"]:
+        for seed in [1, 2, 3, 4, 5]:
+            f = (REPO / "data" / "runs" / f"cmp-{arm}-s{seed}" / "eval"
+                 / "gen009-vs-B-RND.csv")
+            tr = summarize(load(f)[1])["trunc_rate"]
+            xs.append(x)
+            heights.append(tr * 100)
+            colors.append(COL[arm])
+            labels.append(f"{arm[0]}{seed}")
+            x += 1
+        x += 1
+    plt.bar(xs, heights, color=colors, alpha=0.8)
+    plt.xticks(xs, labels, fontsize=8)
+    plt.ylabel("truncated games vs B-RND (%)")
+    plt.title("Final-evaluation truncation rate vs legal-random, per run\n"
+              "(300-ply cap; the graph arm wins material but fails to close)",
+              fontsize=10)
+    plt.grid(axis="y", alpha=0.25)
+    plt.tight_layout()
+    plt.savefig(FIG / "fig7-truncation.png", dpi=150)
+    plt.close()
+    print("fig7 written")
+
+
 if __name__ == "__main__":
     FIG.mkdir(parents=True, exist_ok=True)
     fig1()
     fig2()
     fig3()
+    fig5()
+    fig6()
+    fig7()
     fig4()

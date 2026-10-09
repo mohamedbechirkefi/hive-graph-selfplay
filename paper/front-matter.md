@@ -20,8 +20,8 @@ human-as-PI methodology in which an AI research assistant (Claude,
 Anthropic) implemented code, ran campaigns, and drafted text under a
 gate system reserving all scientific decisions — freezes, budgets,
 spending, publication — to the human author, who owns every claim.
-The full division of labour is documented in the repository
-(`docs/methodology.md`) and summarised in the annexes.
+Chapter 8 documents this working methodology in full; the source
+document lives in the repository (`docs/methodology.md`).
 
 **Abstract (164 words).** Hive is a boardless hexagonal strategy game
 whose moves are (piece, destination) pairs over an ever-changing set of
@@ -48,6 +48,8 @@ learning; pre-registration; negative result
 **Table of contents.** 1 Introduction · 2 Formalisation · 3 Related
 work · 4 Method (engine validation; baselines; pipeline;
 representations) · 5 Protocol · 6 Results (comparison; ablations) ·
-7 Discussion and threats · 8 Conclusion · Bibliography · Webographie ·
-Annexes (corpus, conventions, architectures, configs, seeds,
-reproduction commands)
+7 Discussion and threats · 8 Working methodology (gated human–AI) ·
+9 Conclusion · Bibliography · Webographie · Annex A Position corpora ·
+Annex B Architectures, decoder, formats · Annex C Hyperparameters,
+seeds, commands · Annex D Repository pointers · Annex E Result tables
+and figures (generated)

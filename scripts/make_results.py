@@ -134,6 +134,7 @@ def table(reading):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    contrast_blocks = []
     for reading in ["same-examples", "same-wallclock"]:
         md, csv, per, complete = table(reading)
         (OUT / f"results-{reading}.md").write_text("\n".join(md) + "\n")
@@ -143,7 +144,8 @@ def main():
         if complete:
             lines = [f"# Arm contrast — {reading}", "",
                      "Graph − grid difference of seed-level means; bootstrap "
-                     "95% over seeds (3 per arm, independent).", ""]
+                     f"95% over seeds ({len(SEEDS)} per arm, independent).",
+                     ""]
             for opp in OPPONENTS:
                 g = per[("graph", opp)]
                 c = per[("grid", opp)]
@@ -151,12 +153,13 @@ def main():
                 lo, hi = diff_ci(g, c)
                 lines.append(f"- vs {opp}: graph−grid = {d:+.3f} "
                              f"[{lo:+.3f}, {hi:+.3f}]")
-            existing = OUT / "results-arm-difference.md"
-            prev = existing.read_text() if existing.exists() else ""
-            block = "\n".join(lines) + "\n"
-            if f"# Arm contrast — {reading}" not in prev:
-                existing.write_text(prev + ("\n" if prev else "") + block)
-            print(f"  arm contrast ({reading}) appended")
+            contrast_blocks.append("\n".join(lines) + "\n")
+            print(f"  arm contrast ({reading}) computed")
+    # Rewritten whole each run (an earlier append-only version kept a
+    # stale seed count in the prose after the 5-seed extension).
+    if contrast_blocks:
+        (OUT / "results-arm-difference.md").write_text(
+            "\n".join(contrast_blocks))
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-# Chapter 8 — Conclusion (booklet draft, 2026-10-09)
+# Chapter 9 — Conclusion (booklet draft, 2026-10-09)
 
 *No new results here, per the plan.*
 

@@ -7,13 +7,16 @@ PANDOC="$REPO/.tools/pandoc"
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 cd "$REPO/paper/build"
 CSS='body{font-family:Georgia,serif;font-size:11pt;line-height:1.45;max-width:46em;margin:auto;color:#111}
-h1{font-size:1.6em;border-bottom:1px solid #999;padding-top:1em}
+h1{font-size:1.6em;border-bottom:1px solid #999;padding-top:1em;page-break-before:always}
+h1:first-of-type{page-break-before:avoid}
 h2{font-size:1.25em}table{border-collapse:collapse;font-size:.92em;margin:1em 0}
 td,th{border:1px solid #bbb;padding:3px 8px}code{font-size:.9em;background:#f4f4f4;padding:0 2px}
-img{max-width:100%}blockquote{color:#444}@page{size:A4;margin:2.2cm}'
+img{max-width:100%;page-break-inside:avoid}blockquote{color:#444}@page{size:A4;margin:2.2cm}'
 echo "$CSS" > booklet.css
 for lang in en fr; do
-  "$PANDOC" "booklet-${lang}.md" -s --css booklet.css --metadata title="booklet-${lang}" \
+  # pagetitle sets <title> only; a "title" metadata would render a
+  # spurious title block above the front matter.
+  "$PANDOC" "booklet-${lang}.md" -s --css booklet.css --metadata pagetitle="booklet-${lang}" \
     -o "booklet-${lang}.html" --embed-resources
   "$CHROME" --headless --disable-gpu --no-pdf-header-footer \
     --print-to-pdf="booklet-${lang}.pdf" "booklet-${lang}.html" 2>/dev/null

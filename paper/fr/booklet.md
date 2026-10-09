@@ -16,15 +16,20 @@ partie est un brouillon daté ; le registre des affirmations
 | 5 Protocole | `ch5-protocol.md` |
 | 6 Résultats | `results-comparison.md` (incl. H-T3) |
 | 7 Discussion et menaces | `ch7-discussion.md` |
-| 8 Conclusion | `ch8-conclusion.md` |
+| 8 Méthodologie de travail (humain–IA sous portes) | `ch-methodology.md` |
+| 9 Conclusion | `ch8-conclusion.md` |
 | Bibliographie + Webographie | `../bibliography.md` (générée ; bibliographie partagée, les références ne sont pas traduites) |
-| Figures | `../figures/fig1–fig4` (toutes se régénèrent à partir des scripts) |
-| Annexes (à assembler à la mise en page) | corpus : `tests/critical_positions/`, `tests/tactical_positions/` ; conventions : `docs/representations/`, `docs/action-decoder.md` ; configs/graines : `configs/`, manifestes par exécution ; reproduction : scripts + commandes du journal |
+| Annexe A — Corpus de positions (matérialisée) | `annex-corpus.md` (générée par `scripts/make_annex_corpus.py` depuis les cas TOML exécutables) |
+| Annexe B — Architectures, décodeur, formats | `annex-architectures.md` |
+| Annexe C — Hyperparamètres, graines, commandes | `annex-reproduction.md` |
+| Annexe D — Pointeurs vers le dépôt | injectée par `scripts/assemble_booklet.py` (configs/manifestes, conventions complètes, registre des affirmations, journal) |
+| Annexe E — Tableaux de résultats et figures (générés) | injectée par `scripts/assemble_booklet.py` tels quels depuis `results/` et `figures/` |
+| Figures | `../figures/fig1–fig7` (toutes se régénèrent via `scripts/make_figures.py`) |
 
 Les fichiers de chapitre ci-dessus désignent les copies françaises de
 ce répertoire (`fr/`).
 
-**Version :** v1.0-draft (2026-10-09). Master anglais. La copie
-française (`fr/`, D-006) est produite à partir de cet assemblage au
-même tag. **Toute diffusion, sous quelque forme que ce soit, requiert
-G-PUBLIC.**
+**Version :** v1.0-draft (2026-10-09, édition détaillée). Master
+anglais. La copie française (`fr/`, D-006) est produite à partir de
+cet assemblage au même tag. **Toute diffusion, sous quelque forme que
+ce soit, requiert G-PUBLIC.**

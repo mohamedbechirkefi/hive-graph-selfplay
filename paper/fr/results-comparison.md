@@ -48,6 +48,12 @@ heures égales il ne complète que 4–5 des 10 générations — un déficit
 que la lecture par exemple montre déjà et que le temps égal ne fait
 qu'élargir.
 
+La fig. 5 décompose les scores agrégés en trajectoires par adversaire
+pour les 10 exécutions de la campagne principale ; la fig. 6 rapporte
+les métriques d'ajustement d'entraînement (politique et valeur) par
+génération — les deux bras ajustent leurs données d'auto-jeu tout du
+long, de sorte que l'écart n'est pas un simple échec d'optimisation.
+
 ## La troncature, rapportée séparément et mise à l'épreuve
 
 La différence comportementale la plus nette n'est pas un score mais une
@@ -57,7 +63,8 @@ originales et 23–44% sur les graines d'extension (grille : 0–1%, avec
 une graine d'extension à 11%) — gagnant du matériel puis échouant à
 convertir (fig. 4, F1). Parce que la troncature a été définie dès le
 départ comme une issue à part entière, cette pathologie est visible au
-lieu d'être blanchie en nulles. La valeur du plafond ne peut pas sauver
+lieu d'être blanchie en nulles ; la fig. 7 trace les taux par
+exécution contre l'aléatoire légal. La valeur du plafond ne peut pas sauver
 l'hypothèse : même en comptant chaque partie tronquée comme une
 victoire du graphe — une borne supérieure pour tout plafond plus
 grand — le bras graphe reste derrière sur l'adversaire aléatoire sous

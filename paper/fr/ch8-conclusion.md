@@ -1,6 +1,6 @@
 *Copie française (D-006) — version 1.0-draft 2026-10-09; les nombres et affirmations sont identiques au master anglais.*
 
-# Chapitre 8 — Conclusion (brouillon du livret, 2026-10-09)
+# Chapitre 9 — Conclusion (brouillon du livret, 2026-10-09)
 
 *Aucun résultat nouveau ici, conformément au plan.*
 
