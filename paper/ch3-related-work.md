@@ -64,7 +64,7 @@ grid-vs-graph comparison in a board game", which Keller et al. and
 Rigaux & Kashima preclude. The scope closes as follows: one variant
 (base Hive), one grid net and one simple relational GNN at matched
 capacity, one machine, frozen opponents/openings/protocol, two budget
-readings, three seeds per arm. Within that perimeter the comparison is
+readings, five seeds per arm. Within that perimeter the comparison is
 answered (Chapter 6); outside it, nothing is claimed. The contrast with
 Rigaux & Kashima's positive chess result and Keller et al.'s
 long-range-vs-local asymmetry is taken up in the discussion.

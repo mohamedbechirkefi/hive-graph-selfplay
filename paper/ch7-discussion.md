@@ -26,7 +26,7 @@ Keller et al.'s (2023) Hex asymmetry: our result does not contradict
 them — it bounds where their optimism transfers, and the comparison of
 evidence standards matters: the chess result rests on a single training
 run per model with intervals covering Elo estimation only, whereas the
-present rejection is seed-consistent across three runs per arm under
+present rejection is seed-consistent across five runs per arm under
 two pre-registered budget readings. Hive's tactics are dominated by
 short-range surround geometry, the regime Keller et al. found CNNs
 stronger in; at small budgets that regime decides games.
@@ -62,16 +62,15 @@ fewer decided games (43–80 per seed).
 
 ## 7.4 Statistical validity (seeds, dependencies)
 
-Three seeds per arm is the floor of honest multi-seed work; intervals
-are correspondingly wide, and the B-MCTS contrast is indistinguishable
-from zero. The rejection does not rest on a single interval: it rests
-on seed-consistency across two opponents and two readings
+Five seeds per arm bound the statistics — the pre-committed extension
+from three to five (D-031) tightened four of the six intervals and
+absorbed the most graph-favourable seeds observed without changing the
+verdict; the B-MCTS contrast remains indistinguishable from zero under
+both readings. The rejection does not rest on a single interval: it
+rests on seed-consistency across two opponents and two readings
 simultaneously, plus bounds analysis. Openings are shared across arms
 (pairing respected in the design); the arm contrast bootstraps seeds,
-not games; no game-level pseudo-replication enters any interval. A
-5-seed extension (matrix option) would narrow intervals and remains
-open; it could not overturn seed-consistent deficits of this size in
-the other direction without extraordinary draws.
+not games; no game-level pseudo-replication enters any interval.
 
 ## 7.5 External validity (variant, hardware, budget)
 
