@@ -5,29 +5,29 @@ This chapter describes how the study was conducted, as a collaboration between o
 ## Why a gated method
 
 The study was carried out by a single researcher with limited time and a single laptop (Apple M1 Pro, 10 cores, 16 GB) as its only compute. An AI coding assistant multiplies throughput under those constraints but introduces a specific hazard: generated text and code fail *plausibly*, in that they look right at exactly the places nobody checks, and an assistant has no persistent memory worth trusting between working sessions. A study produced this way can accumulate fluent but untraceable claims. The response was to make research quality a property of **process artifacts** rather than of memory or trust: a journal entry for every measurement, frozen documents identified by cryptographic hash, a register pairing every claim with its evidence and its limit, and an append-only decision log in which a reversed decision is never edited but superseded by an entry that links back. Working sessions are stateless; each rebuilds its understanding from these files, so a crashed session loses nothing.
-<!-- src: /Users/bechir/research/docs/methodology.md:45-61,120-128 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/annex-reproduction.md:70 -->
+<!-- src: ../docs/methodology.md:45-61,120-128 -->
+<!-- src: paper/annex-reproduction.md:70 -->
 
 Three further choices follow. The assistant is routed by *goals*: the plan defines end states, each phase is an executable document with ordered tasks, acceptance checks and exit criteria, and the assistant optimises for "the phase's evidence exists" rather than "the requested edit was made". The irreversible categories of action are enumerated as **gates** and reserved for the human, keeping the assistant's autonomy where mistakes are cheap and reversible. And commitments precede the observations that could bias them (annotations before engine output, behavioural pins before code changes, measurements before budgets), while the assistant's substantial outputs, the operating documents included, pass through verification passes prompted to *refute* them. Report sections are written while the work happens, because a report assembled afterwards turns memory into narrative.
-<!-- src: /Users/bechir/research/docs/methodology.md:102-132 -->
+<!-- src: ../docs/methodology.md:102-132 -->
 
 ## Division of labour
 
 **The human is the principal investigator.** He owns the research questions, every scientific commitment (protocol, population and opening freezes), every expenditure of compute, everything that leaves the machine, and the final word on every claim. The scientific responsibility for this report is his alone and cannot be delegated.
-<!-- src: /Users/bechir/research/docs/methodology.md:27-31 -->
+<!-- src: ../docs/methodology.md:27-31 -->
 
 **The AI assistant executes the plan.** The assistant is Claude (Anthropic), operating as Claude Code sessions. Given the plan and the state files, it plans, implements, tests, measures, journals and drafts toward the plan's end state; sessions start from an intent ("continue", or a phase name) rather than from a task list. It implemented the encoders, the graph network, the training pipeline, the baselines and the evaluation harness inside the perimeter each phase document fixes; pinned existing behaviour before changing it; profiled before proposing budgets and piloted before campaigns; journaled every experiment with hypothesis, commit, configuration, seeds, data version, hardware, duration, cost, metrics, failures and interpretation; and drafted the report as it went. Its own decisions are logged with the same discipline, and several are explicit *proposals* that became binding only through the author's approval at a gate; the proposal to exclude the prior demonstration checkpoint from the opponent population is one example.
-<!-- src: /Users/bechir/research/docs/methodology.md:33-37,63-83 -->
-<!-- src: /Users/bechir/research/state/decisions.md:459-490 -->
+<!-- src: ../docs/methodology.md:33-37,63-83 -->
+<!-- src: ../state/decisions.md:459-490 -->
 
 What the assistant never decides is listed in the operating rules: it never crosses a gate (no freezing, spending, publishing, contacting or destroying without a recorded human decision); never writes an oracle after seeing model output, because that contamination is irreversible; never produces an untraceable number; never touches a frozen artifact, since any post-freeze change is by definition a new study; and never makes a claim without a row in the claims register.
-<!-- src: /Users/bechir/research/docs/methodology.md:85-100 -->
+<!-- src: ../docs/methodology.md:85-100 -->
 
 ## The six gates
 
 The boundary is drawn mechanically rather than left to judgement. **G-FREEZE**: freezing a protocol, split or test set, and any later touch of a frozen artifact. **G-SPEND**: paid calls, purchases, budget caps, starting or restarting long compute jobs. **G-PUBLIC**: anything leaving the machine (pushes, licence choices, publication). **G-RIGHTS**: reuse of material whose ownership is not established. **G-ADMIN**: institutional contact. **G-DESTRUCTIVE**: deleting data, models or results, overwriting raw results, killing running jobs. At a gate the assistant records the pending request, parks that phase and routes to other work; a phase document saying "do X" is never authorisation to cross. `@tbl:gates`{=typst} lists every gate decision the author took and summarises the basis of each; the decision log holds the author's approvals in their original wording.
-<!-- src: /Users/bechir/research/CLAUDE.md (operating rules, Gates) -->
-<!-- src: /Users/bechir/research/docs/methodology.md:39-43 -->
+<!-- src: ../CLAUDE.md (operating rules, Gates) -->
+<!-- src: ../docs/methodology.md:39-43 -->
 
 | Date | Gate | Decision | Basis and conditions recorded |
 | --- | --- | --- | --- |
@@ -44,10 +44,10 @@ The boundary is drawn mechanically rather than left to judgement. **G-FREEZE**: 
 | 2026-09-26 | G-SPEND | Main comparison extended to 5 seeds per arm, ≈4.8 days, under three pre-commitments stated before any new run | Approved with three written pre-commitments (all-seeds analysis, cutoff unchanged, two-stage collection disclosed); seeds added symmetrically to both arms under identical settings |
 
 Table: Gate decisions taken by the author during the study, in the order recorded in the decision log. G-RIGHTS and G-ADMIN were not crossed; nothing has left the machine, so G-PUBLIC remains open for diffusion. {#tbl:gates}
-<!-- src: /Users/bechir/research/state/decisions.md:95-156,316-343,492-527,598-633,729-753,755-785,787-820,888-915,917-935,938-959 -->
+<!-- src: ../state/decisions.md:95-156,316-343,492-527,598-633,729-753,755-785,787-820,888-915,917-935,938-959 -->
 
 Two entries deserve more comment than the table gives. The deferral of 9 September shows a gate working against haste: offered a protocol with measured values, the author waited for pilot confirmation so that the freeze would consume confirmed numbers rather than proposals. The 5-seed extension shows a post-hoc power decision kept from becoming a tuning channel: before any new run it was recorded that (a) the final analysis would use all five seeds per arm regardless of the new seeds' direction, (b) the equal-time cutoff would stay at the value computed on 16 September, never recomputed after seeing results, and (c) the report would disclose that seeds 4–5 were collected after the 3-seed analysis. The results chapters honour all three. The scope of this report was itself an authorial decision, recorded on 9 October 2026 with the constraint that no frozen artifact, number or claim could change.
-<!-- src: /Users/bechir/research/state/decisions.md:316-343,938-959,961-983 -->
+<!-- src: ../state/decisions.md:316-343,938-959,961-983 -->
 
 ## Scientific principles enforced in every phase
 
@@ -65,7 +65,7 @@ Beyond the gates, the operating rules bind every phase regardless of who execute
 10. **A claims register.** Every claim has a row (claim, evidence, section, limit) or it does not appear.
 11. **Write as you go.** A phase is not closed until its report section exists: protocol before experiments, method during implementation, results only from frozen raw tables.
 
-<!-- src: /Users/bechir/research/CLAUDE.md (operating rules, Scientific invariants) -->
+<!-- src: ../CLAUDE.md (operating rules, Scientific invariants) -->
 
 ## What the discipline caught
 
@@ -91,24 +91,24 @@ The operating rules require an append-only log of every incident in which the me
 | 2026-10-09 | The capacity difference "+2.1%" quoted in every document was the ratio of the rounded parameter counts (1.47/1.44 M); the exact counts give +1.5% | layer-by-layer tabulation of the architectures recounted the parameters from the code | corrected everywhere except the append-only journals; exact counts now a generated results artifact; no verdict depends on it |
 
 Table: Incidents recorded by the methodology log and the experiment journals during the study: what happened, which rule or check caught it, and what followed. {#tbl:incidents}
-<!-- src: /Users/bechir/research/docs/methodology-log.md:13-111 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-10-h4-pilot.md:70-81 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h6-5seed-final-01.md:22-29,48-52 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/ch-methodology.md:57-65 -->
+<!-- src: ../docs/methodology-log.md:13-111 -->
+<!-- src: journal/2026-09-10-h4-pilot.md:70-81 -->
+<!-- src: journal/2026-10-09-h6-5seed-final-01.md:22-29,48-52 -->
+<!-- src: paper/ch-methodology.md:57-65 -->
 
 None of these catches required insight; each came from a mechanical check. One alarm (independent conditions cannot agree to the game count) found a harness defect in the pilot and a silent numerical divergence in an ablation; one rule (commit the expectation, then run) found an annotation error and a setup error on the same day; the reproduce-and-verify step behind a figure found a record-loss path before the equal-time evaluations (where early graph checkpoints genuinely can truncate every game) would have tripped it. Two entries are *gate effects*: the population freeze visibly prevented a results-flattering retuning of the search opponent, and measure-before-commit dissolved an architecture argument with one number. At this scale, harness error was a larger threat than statistical noise, and only mechanical verification found it; the claims register carries this as a process observation from one study, whose stated limit is that no counterfactual exists for what an ungated workflow would have caught.
-<!-- src: /Users/bechir/research/docs/methodology-log.md:31-46,60-79 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/claims.md:36 -->
+<!-- src: ../docs/methodology-log.md:31-46,60-79 -->
+<!-- src: paper/claims.md:36 -->
 
 The cost side is recorded with the same honesty: the method's fixed cost was front-loaded, and the "missed" entry shows the first failure mode of multi-session operation: shared state files need write discipline as well as read discipline. The method did not prevent errors in drafts; it surfaced them before this version through translation passes, numeric identity checks between the two language versions, page renders and adversarial re-reads. A check comparing two languages cannot, however, see a staleness shared by both. The last incident sharpened the standard: a number present in a file is not thereby provenanced; the file must itself derive it from raw data under a stated definition, which is why every paragraph of this report carries a source citation that is checked mechanically.
-<!-- src: /Users/bechir/research/docs/methodology-log.md:47-58,81-111 -->
+<!-- src: ../docs/methodology-log.md:47-58,81-111 -->
 
 ## What the assistant did not do, and the author's responsibility
 
 The assistant chose no hypothesis, froze nothing, spent nothing, published nothing, deleted nothing, and decided no claim; it wrote no test expectation after seeing engine output and did not recompute the equal-time cutoff after results were known. The limits of the arrangement are recorded too: the assistant can misread the plan, and the phase documents are its interpretation (the decision log records where reality corrected them); adversarial self-verification remains self-verification at the level of the programme, so the external human review of a subset of annotations and of the report, foreseen in the plan, is not replaced by it; and the assistant's training data may overlap the public Hive literature, so no claim of the form "unseen by the model" is made anywhere in this report.
-<!-- src: /Users/bechir/research/docs/methodology.md:144-157 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/ch-methodology.md:57-65 -->
+<!-- src: ../docs/methodology.md:144-157 -->
+<!-- src: paper/ch-methodology.md:57-65 -->
 
 **AI-assistance declaration.** Implementation, experiment execution, journaling and drafting for this study were carried out with substantial assistance from an AI coding agent (Claude Code, Anthropic), operating under the gated methodology described in this chapter. Every scientific decision, every frozen commitment and every expenditure was made by the author at a gate, as recorded in `@tbl:gates`{=typst}; every claim was made or verified by the author, who has personally checked the conclusions he signs and takes full responsibility for the results. The exact wording of this declaration will follow the rules of any venue at diffusion time.
-<!-- src: /Users/bechir/research/docs/methodology.md:134-142 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/front-matter.md:18-24 -->
+<!-- src: ../docs/methodology.md:134-142 -->
+<!-- src: paper/front-matter.md:18-24 -->

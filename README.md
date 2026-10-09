@@ -1,4 +1,32 @@
-# HiveMind — an ultra-strong AI for the board game Hive
+# HiveMind: a Hive engine and the study "Grid vs. Graph Representations for Self-Play Learning in Hive"
+
+## Research report (October 2026)
+
+This repository holds the engine, the self-play pipeline, both state
+encoders and every artifact of a pre-registered comparison of grid and
+graph representations for AlphaZero-style self-play in base-game Hive.
+The hypothesis (graph learns better at equal budget) was rejected under
+the frozen rule: five seeds per arm, two budget readings, truncation as a
+separate outcome, byte-identical fresh-environment reproduction.
+
+- Full report (English, 152 pp): `paper/build/report-en.pdf`
+- Rapport complet (français, 166 pp) : `paper/build/report-fr.pdf`
+- Short article (17 pp): `paper/build/article-en.pdf`
+- Sources of the report: `paper/report/` (EN) and `paper/report/fr/` (FR);
+  build with `python/.venv/bin/python scripts/build_report.py all`
+- Raw evaluation records, clock files, manifests and checkpoints: the
+  records archive attached to release `v2.0-report`; place its `data/runs/`
+  at the repository root and run `python3 scripts/make_results.py` to
+  regenerate every table; `scripts/reproduce_minimal.sh` runs the minimal
+  fresh-environment scenario.
+- Frozen protocol: `docs/protocol.md` (v1.0, 2026-09-10); frozen opponents
+  and openings: `docs/baselines.md`, `results/comparison/`.
+
+The study was carried out by the author with an AI research assistant
+under a gated methodology that reserved every scientific decision to the
+author; the report's chapter 10 documents it. Licence: MIT.
+
+## The engine
 
 A UHP-compatible engine for [Hive](https://en.wikipedia.org/wiki/Hive_(game))
 (base game + Mosquito/Ladybug/Pillbug expansions, all 8 UHP game types),

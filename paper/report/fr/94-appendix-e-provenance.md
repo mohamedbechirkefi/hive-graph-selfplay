@@ -5,13 +5,13 @@ Cette annexe est le seul endroit du rapport où les identifiants internes sont l
 ## La chaîne de preuve
 
 Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les **enregistrements bruts par partie** sont écrits par l'arène d'évaluation sous la forme d'un CSV par appariement (point de contrôle, adversaire) dans le répertoire de l'exécution ; les lignes d'en-tête du fichier nomment verbatim les deux lignes de commande des moteurs (chemin du réseau, nombre de simulations, graines), et chaque partie porte son issue avec la troncature comme catégorie à part entière. Les **tables générées** sont produites par `scripts/make_results.py`, qui lit ces CSV et les journaux de temps mural par exécution, agrège par (graine, adversaire), applique le bootstrap sur les graines (10,000 rééchantillonnages, la graine comme unité, aucune partie agrégée comme i.i.d.), et écrit `results/comparison/*.{md,csv}` ; il ne ressaisit jamais un nombre. Les **figures** sont produites par `scripts/make_figures.py` à partir des mêmes CSV, journaux de temps mural et journaux de campagne. **Le rapport** est assemblé à partir de ces fichiers ; un vérificateur de sources vérifie que chaque jeton numérique de chaque chapitre apparaît dans la base de preuves, et un second vérificateur vérifie l'identité numérique entre les versions anglaise et française. Le script de reproduction minimale reconstruit le moteur dans un clone frais, rejoue une partie enregistrée jusqu'à une correspondance exacte avec sa ligne livrée, et régénère les tables à l'identique à l'octet près (vérifié le 2026-10-09).
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-19-h6-comparison-01.md:38-41 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/make_results.py:4-7,79-87 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/final-control.md:13,20 -->
+<!-- src: journal/2026-09-19-h6-comparison-01.md:38-41 -->
+<!-- src: scripts/make_results.py:4-7,79-87 -->
+<!-- src: paper/final-control.md:13,20 -->
 
 **Journaux.** Chaque expérience ou mesure a une entrée sous `journal/`, nommée `YYYY-MM-DD-<slug>.md` et portant un identifiant de la forme `<phase>-<date>-<slug>-<nn>` (par exemple `H6-2026-10-09-5seed-final-01`). L'en-tête fixe l'identifiant, la date, l'hypothèse, le commit git, la configuration, les graines, la version des données, le matériel, la durée et le coût ; le corps a des sections fixes : Méthodes, Résultats bruts et incertitude, Échecs, Limites et facteurs de confusion, Interprétation, Décision, Artefacts. Les résultats négatifs et les défauts d'outillage sont des entrées comme les autres. **Journal des décisions.** Chaque décision non triviale est une entrée `D-nnn` dans le fichier d'espace de travail `state/decisions.md`, en ajout seul : une décision renversée n'est jamais modifiée, une nouvelle entrée la remplace et renvoie vers elle. Les franchissements de porte consignent l'approbation de l'auteur dans sa formulation originale. **Journal de méthodologie.** `docs/methodology-log.md` (espace de travail) consigne, en ajout seul, chaque incident où la méthode a attrapé ou manqué quelque chose.
-<!-- src: /Users/bechir/research/state/decisions.md:1-5 -->
-<!-- src: /Users/bechir/research/docs/methodology-log.md:1-10 -->
+<!-- src: ../state/decisions.md:1-5 -->
+<!-- src: ../docs/methodology-log.md:1-10 -->
 
 ## De chaque résultat à son artefact
 
@@ -35,12 +35,12 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les **e
 | Schémas du pipeline, des architectures et de la chronologie | `paper/figures/fig8-pipeline.png`, `fig9-architectures.png`, `fig10-timeline.png` (`scripts/make_report_figures.py`) | la documentation du système (`docs/inventory.md`), les en-têtes de journaux et le journal des décisions ; aucune quantité mesurée | aucune |
 
 Table: Provenance de chaque table et figure générée : l'artefact dont elle est tirée, les enregistrements bruts à partir desquels cet artefact est calculé, et l'entrée de journal qui a consigné le résultat. Les répertoires d'exécution sont abrégés en `eval/…` pour `data/runs/cmp-<arm>-s<seed>/eval/…`. {#tbl:prov-results}
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/make_figures.py:34-74,152-170,290-330,333-438 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/make_report_figures.py:1-10 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/figures/fig2-score-cost.md:1-13 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/make_results.py:4-7,29-72 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h6-5seed-final-01.md:22-29 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h8-detailed-edition-01.md:31-34 -->
+<!-- src: scripts/make_figures.py:34-74,152-170,290-330,333-438 -->
+<!-- src: scripts/make_report_figures.py:1-10 -->
+<!-- src: paper/figures/fig2-score-cost.md:1-13 -->
+<!-- src: scripts/make_results.py:4-7,29-72 -->
+<!-- src: journal/2026-10-09-h6-5seed-final-01.md:22-29 -->
+<!-- src: journal/2026-10-09-h8-detailed-edition-01.md:31-34 -->
 
 | Preuve dans les chapitres de méthode | Où elle réside | Entrée de journal (date) |
 | --- | --- | --- |
@@ -57,14 +57,14 @@ Table: Provenance de chaque table et figure générée : l'artefact dont elle es
 | Vérifications d'assemblage du rapport et le défaut d'obsolescence trouvé par la passe de rendu | `paper/final-control.md` | `H8-2026-10-09-detailed-edition-01` (2026-10-09) |
 
 Table: Provenance des preuves des chapitres de méthode (validation du moteur, lignes de base, pipeline, encodeurs, conception de la campagne) : les artefacts et l'entrée de journal consignant chaque mesure. {#tbl:prov-method}
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/claims.md:9-25 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-09-suite-rerun-01.md:1-12 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-10-h6-matrix-01.md:1-12 -->
+<!-- src: paper/claims.md:9-25 -->
+<!-- src: journal/2026-09-09-suite-rerun-01.md:1-12 -->
+<!-- src: journal/2026-09-10-h6-matrix-01.md:1-12 -->
 
 ## Index des décisions
 
 `@tbl:prov-decisions`{=typst} liste les entrées du journal des décisions pertinentes pour cette étude avec leurs dates ; les entrées D-002, D-013 et D-018 concernent les autres projets du programme de recherche et sont omises. Les franchissements de porte sont marqués de leur porte.
-<!-- src: /Users/bechir/research/state/decisions.md:27-43,345-382,530-561 -->
+<!-- src: ../state/decisions.md:27-43,345-382,530-561 -->
 
 | Entrée | Date | Décision |
 | --- | --- | --- |
@@ -99,7 +99,7 @@ Table: Provenance des preuves des chapitres de méthode (validation du moteur, l
 | D-032 | 2026-10-09 | Portée du rapport : édition détaillée, aucun artefact gelé, nombre ou affirmation modifié |
 
 Table: Index des entrées du journal des décisions pertinentes pour cette étude, dans l'ordre de leur consignation. {#tbl:prov-decisions}
-<!-- src: /Users/bechir/research/state/decisions.md:8-983 -->
+<!-- src: ../state/decisions.md:8-983 -->
 
 ## Registre des affirmations et des preuves
 
@@ -136,25 +136,25 @@ Table: Index des entrées du journal des décisions pertinentes pour cette étud
 | La méthodologie de travail (délégation à l'IA au niveau des objectifs sous six portes réservées à l'humain, état dans des fichiers, vérification mécanique) a attrapé au moins cinq défauts de harnais ou de processus avant qu'ils ne puissent contaminer les résultats (interblocage du pipeline, erreur de mise en place du corpus, défaut d'adversaire du harnais d'évaluation, chemin silencieux de perte d'enregistrements, divergence NaN silencieuse), chacun journalisé au moment de sa détection. | `docs/methodology-log.md` (espace de travail) ; journaux cités par incident dans `@sec:working-method`{=typst} | observations de processus issues d'une seule étude ; aucun contrôle contrefactuel |
 
 Table: Le registre des affirmations et des preuves de ce rapport, reproduit depuis le fichier du dépôt sans sa colonne de section. Chaque affirmation faite dans le corps correspond à une ligne ; la colonne des limites énonce ce qui empêche une lecture plus large. {#tbl:prov-claims}
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/claims.md:7-36 -->
+<!-- src: paper/claims.md:7-36 -->
 
 ## Données brutes, identifiants et hachages gelés
 
 **Emplacement et agencement.** Les enregistrements bruts résident sur disque sous `data/runs/` dans le dépôt de l'étude ; ils ne sont pas sous contrôle de version. Il y a un répertoire par exécution d'entraînement, `cmp-<arm>-s<seed>`, avec `<arm>` dans {`grid`, `graph`} pour la comparaison principale (graines 1–5) et dans {`graph-untyped`, `graph-nogpool`, `graph-untyped-clip`} pour les ablations A1, A2 et A1′ (graines 1–3), plus `pilot0/` pour le pilote du pipeline. Chaque répertoire d'exécution contient : `selfplay/gen00N-*.bin` (shards binaires d'enregistrements de la génération N, format v3, estampillés par le modèle) avec `gen00N-manifest.json` (réseau et son empreinte, génération du modèle, version des enregistrements, type de partie, graine, nombre de parties, nombres de simulations complètes et économiques, fraction de coups complets, plis en température, réglages d'abandon, nombres de parties abandonnées et tronquées, nombre de positions, liste des shards) ; `checkpoints/gen00N/` (`hivenet-e0.pt`, `hivenet-e1.pt`, `train-config.json`) et le `gen00N-b1.onnx` exporté utilisé pour le jeu ; `eval/<checkpoint>-vs-<opponent>.csv` avec son `.log` pour les évaluations intermédiaires (gen004, gen007) et finale (gen009), et `eval/tstar-gen00N-vs-<opponent>.{csv,log}` pour le point de contrôle au seuil à temps égal ; et `wallclock.json`, le temps mural par génération en secondes dont dérivent chaque chiffre de temps et le seuil. Les journaux au niveau de la campagne sont `data/runs/campaign.log` (exécutions principales, graines 1–3), `extension.log` (graines 4–5), `ablations.log` et `tstar-evals.log`. Dérivation des graines : graine de base = 100,000 × graine ; la génération g utilise graine de base + g ; graine du réseau d'évaluation 9000 + gen (finales) ou 9500 (ensembles au seuil), graines des adversaires 9101 (aléatoire légal) et 9201 (recherche).
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/run_comparison.py:1-35 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/make_results.py:4-7,29-72 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/annex-reproduction.md:33-41 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-10-h4-pilot.md:18-19,117-120 -->
+<!-- src: scripts/run_comparison.py:1-35 -->
+<!-- src: scripts/make_results.py:4-7,29-72 -->
+<!-- src: paper/annex-reproduction.md:33-41 -->
+<!-- src: journal/2026-09-10-h4-pilot.md:18-19,117-120 -->
 
 **Volumes.** La campagne principale a compris 10 générations × 500 parties d'auto-jeu par exécution (30,000 parties d'auto-jeu par bras à trois graines au stade à 3 graines) et 100 parties appariées par évaluation (point de contrôle, adversaire) sur les ouvertures gelées ; la campagne s'est déroulée du 2026-09-10 12:42 au 2026-09-17 22:31 pour les graines 1–3 (≈163 h de temps machine, évaluations au seuil comprises), les graines 4–5 ayant été collectées du 2026-09-27 au 2026-10-02. L'empreinte disque n'est consignée dans la base de preuves que sous la forme des estimations au lancement (≈3–5 Go pour la campagne principale, ≈3–4 Go pour les ablations) contre 164 Go libres au lancement avec une garde de 20 Go ; les tailles exactes par exécution n'ont pas été journalisées. Depuis la suppression consignée dans D-024, le dépôt de l'étude est la seule copie du matériel antérieur à l'étude dont il a hérité (le point de contrôle de la boucle antérieure et ses données, 412 Mo et 75 Mo), ce qui explique que ces fichiers soient protégés par la porte des actions destructrices.
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-19-h6-comparison-01.md:18-26 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h6-5seed-final-01.md:12-13 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-10-h6-matrix-01.md:54-55 -->
-<!-- src: /Users/bechir/research/state/decisions.md:729-753,888-915 -->
+<!-- src: journal/2026-09-19-h6-comparison-01.md:18-26 -->
+<!-- src: journal/2026-10-09-h6-5seed-final-01.md:12-13 -->
+<!-- src: journal/2026-09-10-h6-matrix-01.md:54-55 -->
+<!-- src: ../state/decisions.md:729-753,888-915 -->
 
 **Artefacts gelés et leurs hachages.** `@tbl:prov-hashes`{=typst} liste chaque artefact gelé ou épinglé avec l'identifiant consigné lors de son gel. Le hachage du protocole est consigné dans le journal des décisions sous forme abrégée ; la valeur complète a été recalculée à partir du commit gelé lors de la préparation de cette annexe et est identique au hachage du fichier actuel, ce qui confirme que le protocole n'a pas changé depuis son gel.
-<!-- src: /Users/bechir/research/state/decisions.md:492-527,598-633,755-785 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/results/comparison/opponents-manifest.md:10-44 -->
+<!-- src: ../state/decisions.md:492-527,598-633,755-785 -->
+<!-- src: results/comparison/opponents-manifest.md:10-44 -->
 
 | Artefact | Gelé / épinglé le | Identifiant | Enregistrement |
 | --- | --- | --- | --- |
@@ -171,10 +171,10 @@ Table: Le registre des affirmations et des preuves de ce rapport, reproduit depu
 | Code de campagne et d'analyse | 2026-09-10 → 2026-10-09 | campagne ac58773 ; analyse 1c65269 (3 graines), 7db074d (5 graines) ; ablations 216fded → bffeea9 (garde contre les valeurs non finies) ; file d'attente A1′ 1fdd7ec | journaux `H6-…`, `H7-…` |
 
 Table: Artefacts gelés et épinglés de l'étude avec les identifiants consignés lors de leur gel (hachages, commits, graines) et l'entrée du journal des décisions ou du journal qui les consigne. {#tbl:prov-hashes}
-<!-- src: /Users/bechir/research/hive-graph-selfplay/results/comparison/opponents-manifest.md:10-44 -->
-<!-- src: /Users/bechir/research/state/decisions.md:492-527,565-595,598-633,755-785,787-820,938-959 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-16-h6-progress-01.md:36-42 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-19-h6-comparison-01.md:10-11 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h6-5seed-final-01.md:9-10 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-02-h7-a2-nogpool-01.md:9-10 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h7-a1prime-01.md:7 -->
+<!-- src: results/comparison/opponents-manifest.md:10-44 -->
+<!-- src: ../state/decisions.md:492-527,565-595,598-633,755-785,787-820,938-959 -->
+<!-- src: journal/2026-09-16-h6-progress-01.md:36-42 -->
+<!-- src: journal/2026-09-19-h6-comparison-01.md:10-11 -->
+<!-- src: journal/2026-10-09-h6-5seed-final-01.md:9-10 -->
+<!-- src: journal/2026-10-02-h7-a2-nogpool-01.md:9-10 -->
+<!-- src: journal/2026-10-09-h7-a1prime-01.md:7 -->

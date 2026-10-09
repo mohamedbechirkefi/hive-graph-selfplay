@@ -5,29 +5,29 @@ Ce chapitre décrit comment l'étude a été menée, comme une collaboration ent
 ## Pourquoi une méthode à portes
 
 L'étude a été réalisée par un chercheur unique disposant d'un temps limité et d'un seul ordinateur portable (Apple M1 Pro, 10 cœurs, 16 Go) comme unique ressource de calcul. Un assistant de programmation par IA multiplie le débit sous de telles contraintes, mais introduit un risque spécifique : le texte et le code générés échouent de manière *plausible*, en ce qu'ils paraissent corrects exactement aux endroits que personne ne vérifie, et un assistant n'a aucune mémoire persistante digne de confiance entre les sessions de travail. Une étude produite ainsi peut accumuler des affirmations fluides mais intraçables. La réponse a été de faire de la qualité de la recherche une propriété d'**artefacts de processus** plutôt que de la mémoire ou de la confiance : une entrée de journal pour chaque mesure, des documents gelés identifiés par hachage cryptographique, un registre appariant chaque affirmation à sa preuve et à sa limite, et un journal des décisions en ajout seul dans lequel une décision annulée n'est jamais modifiée mais remplacée par une entrée qui renvoie à elle. Les sessions de travail sont sans état ; chacune reconstruit sa compréhension à partir de ces fichiers, de sorte qu'une session interrompue ne perd rien.
-<!-- src: /Users/bechir/research/docs/methodology.md:45-61,120-128 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/annex-reproduction.md:70 -->
+<!-- src: ../docs/methodology.md:45-61,120-128 -->
+<!-- src: paper/annex-reproduction.md:70 -->
 
 Trois autres choix en découlent. L'assistant est routé par *objectifs* : le plan définit des états finaux, chaque phase est un document exécutable avec des tâches ordonnées, des vérifications d'acceptation et des critères de sortie, et l'assistant optimise pour « la preuve de la phase existe » plutôt que pour « la modification demandée a été faite ». Les catégories d'actions irréversibles sont énumérées comme **portes** et réservées à l'humain, ce qui maintient l'autonomie de l'assistant là où les erreurs sont peu coûteuses et réversibles. Et les engagements précèdent les observations qui pourraient les biaiser (annotations avant la sortie du moteur, épinglage des comportements avant les changements de code, mesures avant les budgets), tandis que les productions substantielles de l'assistant, documents de fonctionnement compris, passent par des passes de vérification dont la consigne est de les *réfuter*. Les sections du rapport sont écrites pendant que le travail se fait, parce qu'un rapport assemblé après coup transforme la mémoire en récit.
-<!-- src: /Users/bechir/research/docs/methodology.md:102-132 -->
+<!-- src: ../docs/methodology.md:102-132 -->
 
 ## Division du travail
 
 **L'humain est le chercheur principal.** Il détient les questions de recherche, chaque engagement scientifique (gels du protocole, de la population et des ouvertures), chaque dépense de calcul, tout ce qui quitte la machine, et le dernier mot sur chaque affirmation. La responsabilité scientifique de ce rapport est la sienne seule et ne peut pas être déléguée.
-<!-- src: /Users/bechir/research/docs/methodology.md:27-31 -->
+<!-- src: ../docs/methodology.md:27-31 -->
 
 **L'assistant IA exécute le plan.** L'assistant est Claude (Anthropic), opérant en sessions Claude Code. À partir du plan et des fichiers d'état, il planifie, implémente, teste, mesure, journalise et rédige vers l'état final du plan ; les sessions partent d'une intention (« continue », ou un nom de phase) plutôt que d'une liste de tâches. Il a implémenté les encodeurs, le réseau graphe, le pipeline d'entraînement, les lignes de base et le harnais d'évaluation à l'intérieur du périmètre que fixe chaque document de phase ; épinglé le comportement existant avant de le modifier ; profilé avant de proposer des budgets et piloté avant les campagnes ; journalisé chaque expérience avec hypothèse, commit, configuration, graines, version des données, matériel, durée, coût, métriques, défaillances et interprétation ; et rédigé le rapport au fil du travail. Ses propres décisions sont consignées avec la même discipline, et plusieurs sont des *propositions* explicites qui ne sont devenues contraignantes que par l'approbation de l'auteur à une porte ; la proposition d'exclure le point de contrôle de démonstration antérieur de la population d'adversaires en est un exemple.
-<!-- src: /Users/bechir/research/docs/methodology.md:33-37,63-83 -->
-<!-- src: /Users/bechir/research/state/decisions.md:459-490 -->
+<!-- src: ../docs/methodology.md:33-37,63-83 -->
+<!-- src: ../state/decisions.md:459-490 -->
 
 Ce que l'assistant ne décide jamais est listé dans les règles de fonctionnement : il ne franchit jamais une porte (aucun gel, aucune dépense, aucune publication, aucun contact ni aucune destruction sans décision humaine consignée) ; il n'écrit jamais un oracle après avoir vu la sortie d'un modèle, parce que cette contamination est irréversible ; il ne produit jamais un nombre intraçable ; il ne touche jamais un artefact gelé, puisque tout changement après gel est par définition une nouvelle étude ; et il ne formule jamais une affirmation sans une ligne dans le registre des affirmations.
-<!-- src: /Users/bechir/research/docs/methodology.md:85-100 -->
+<!-- src: ../docs/methodology.md:85-100 -->
 
 ## Les six portes
 
 La frontière est tracée mécaniquement plutôt que laissée au jugement. **G-FREEZE** : geler un protocole, une partition ou un ensemble de test, et toute retouche ultérieure d'un artefact gelé. **G-SPEND** : appels payants, achats, plafonds budgétaires, lancement ou relance de calculs longs. **G-PUBLIC** : tout ce qui quitte la machine (envois vers les dépôts distants, choix de licence, publication). **G-RIGHTS** : réutilisation de matériel dont la propriété n'est pas établie. **G-ADMIN** : contact institutionnel. **G-DESTRUCTIVE** : suppression de données, de modèles ou de résultats, écrasement de résultats bruts, arrêt de tâches en cours. À une porte, l'assistant consigne la demande en attente, met cette phase en attente et se route vers un autre travail ; un document de phase disant « faire X » n'est jamais une autorisation de franchir. `@tbl:gates`{=typst} liste chaque décision de porte prise par l'auteur et résume le fondement de chacune ; le journal des décisions conserve les approbations de l'auteur dans leur formulation originale.
-<!-- src: /Users/bechir/research/CLAUDE.md (operating rules, Gates) -->
-<!-- src: /Users/bechir/research/docs/methodology.md:39-43 -->
+<!-- src: ../CLAUDE.md (operating rules, Gates) -->
+<!-- src: ../docs/methodology.md:39-43 -->
 
 | Date | Porte | Décision | Fondement et conditions consignés |
 | --- | --- | --- | --- |
@@ -44,10 +44,10 @@ La frontière est tracée mécaniquement plutôt que laissée au jugement. **G-F
 | 2026-09-26 | G-SPEND | Comparaison principale étendue à 5 graines par bras, ≈4.8 jours, sous trois pré-engagements énoncés avant toute nouvelle exécution | Approuvée avec trois pré-engagements écrits (analyse sur toutes les graines, seuil inchangé, collecte en deux temps divulguée) ; graines ajoutées symétriquement aux deux bras sous des réglages identiques |
 
 Table: Décisions de porte prises par l'auteur pendant l'étude, dans l'ordre consigné dans le journal des décisions. G-RIGHTS et G-ADMIN n'ont pas été franchies ; rien n'a quitté la machine, de sorte que G-PUBLIC reste ouverte pour la diffusion. {#tbl:gates}
-<!-- src: /Users/bechir/research/state/decisions.md:95-156,316-343,492-527,598-633,729-753,755-785,787-820,888-915,917-935,938-959 -->
+<!-- src: ../state/decisions.md:95-156,316-343,492-527,598-633,729-753,755-785,787-820,888-915,917-935,938-959 -->
 
 Deux entrées méritent un commentaire plus long que celui de la table. Le report du 9 septembre montre une porte agissant contre la hâte : devant un protocole aux valeurs mesurées, l'auteur a attendu la confirmation des pilotes afin que le gel consomme des nombres confirmés plutôt que des propositions. L'extension à 5 graines montre une décision de puissance a posteriori empêchée de devenir un canal de réglage : avant toute nouvelle exécution, il a été consigné que (a) l'analyse finale utiliserait les cinq graines par bras quelle que soit la direction des nouvelles graines, (b) le seuil à temps mural égal resterait à la valeur calculée le 16 septembre, jamais recalculée après l'observation des résultats, et (c) le rapport divulguerait que les graines 4–5 ont été collectées après l'analyse à 3 graines. Les chapitres de résultats honorent ces trois engagements. Le périmètre de ce rapport a lui-même été une décision de l'auteur, consignée le 9 octobre 2026 avec la contrainte qu'aucun artefact gelé, aucun nombre ni aucune affirmation ne pouvait changer.
-<!-- src: /Users/bechir/research/state/decisions.md:316-343,938-959,961-983 -->
+<!-- src: ../state/decisions.md:316-343,938-959,961-983 -->
 
 ## Principes scientifiques appliqués à chaque phase
 
@@ -65,7 +65,7 @@ Au-delà des portes, les règles de fonctionnement lient chaque phase, quel que 
 10. **Un registre des affirmations.** Chaque affirmation a une ligne (affirmation, preuve, section, limite) ou n'apparaît pas.
 11. **Écrire au fil du travail.** Une phase n'est pas close tant que sa section de rapport n'existe pas : le protocole avant les expériences, la méthode pendant l'implémentation, les résultats uniquement à partir de tables brutes gelées.
 
-<!-- src: /Users/bechir/research/CLAUDE.md (operating rules, Scientific invariants) -->
+<!-- src: ../CLAUDE.md (operating rules, Scientific invariants) -->
 
 ## Ce que la discipline a attrapé
 
@@ -91,24 +91,24 @@ Les règles de fonctionnement exigent un journal en ajout seul de chaque inciden
 | 2026-10-09 | La différence de capacité « +2.1% » citée dans chaque document était le rapport des comptes de paramètres arrondis (1.47/1.44 M) ; les comptes exacts donnent +1.5% | la tabulation couche par couche des architectures a recompté les paramètres à partir du code | corrigé partout sauf dans les journaux en ajout seul ; les comptes exacts sont désormais un artefact de résultats généré ; aucun verdict n'en dépend |
 
 Table: Incidents consignés par le journal méthodologique et les journaux d'expériences pendant l'étude : ce qui s'est passé, quelle règle ou vérification l'a attrapé, et ce qui a suivi. {#tbl:incidents}
-<!-- src: /Users/bechir/research/docs/methodology-log.md:13-111 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-10-h4-pilot.md:70-81 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h6-5seed-final-01.md:22-29,48-52 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/ch-methodology.md:57-65 -->
+<!-- src: ../docs/methodology-log.md:13-111 -->
+<!-- src: journal/2026-09-10-h4-pilot.md:70-81 -->
+<!-- src: journal/2026-10-09-h6-5seed-final-01.md:22-29,48-52 -->
+<!-- src: paper/ch-methodology.md:57-65 -->
 
 Aucune de ces prises n'a demandé d'intuition ; chacune est venue d'une vérification mécanique. Une alarme (des conditions indépendantes ne peuvent pas s'accorder au nombre de parties près) a trouvé un défaut de harnais dans le pilote et une divergence numérique silencieuse dans une ablation ; une règle (consigner l'attente, puis exécuter) a trouvé une erreur d'annotation et une erreur de mise en place le même jour ; l'étape de reproduction-et-vérification derrière une figure a trouvé un chemin de perte d'enregistrements avant que les évaluations à temps égal (où les premiers points de contrôle du graphe peuvent réellement tronquer chaque partie) ne l'aient déclenché. Deux entrées sont des *effets de porte* : le gel de la population a visiblement empêché un réajustement de l'adversaire de recherche qui aurait flatté les résultats, et la règle mesurer-avant-de-s'engager a dissous un débat d'architecture avec un seul nombre. À cette échelle, l'erreur de harnais a été une menace plus grande que le bruit statistique, et seule la vérification mécanique l'a trouvée ; le registre des affirmations porte ceci comme une observation de processus issue d'une seule étude, dont la limite énoncée est qu'il n'existe aucun contrefactuel de ce qu'un flux de travail sans portes aurait attrapé.
-<!-- src: /Users/bechir/research/docs/methodology-log.md:31-46,60-79 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/claims.md:36 -->
+<!-- src: ../docs/methodology-log.md:31-46,60-79 -->
+<!-- src: paper/claims.md:36 -->
 
 Le volet coût est consigné avec la même honnêteté : le coût fixe de la méthode a été concentré en amont, et l'entrée « manqué » montre le premier mode de défaillance du fonctionnement multi-sessions : les fichiers d'état partagés exigent une discipline d'écriture autant qu'une discipline de lecture. La méthode n'a pas empêché les erreurs dans les brouillons ; elle les a fait remonter avant cette version par des passes de traduction, des vérifications d'identité numérique entre les deux versions linguistiques, des rendus de pages et des relectures adversariales. Une vérification comparant deux langues ne peut toutefois pas voir une obsolescence partagée par les deux. Le dernier incident a durci le standard : un nombre présent dans un fichier n'est pas pour autant pourvu de provenance ; le fichier doit lui-même le dériver des données brutes selon une définition énoncée, et c'est pourquoi chaque paragraphe de ce rapport porte une citation de source vérifiée mécaniquement.
-<!-- src: /Users/bechir/research/docs/methodology-log.md:47-58,81-111 -->
+<!-- src: ../docs/methodology-log.md:47-58,81-111 -->
 
 ## Ce que l'assistant n'a pas fait, et la responsabilité de l'auteur
 
 L'assistant n'a choisi aucune hypothèse, n'a rien gelé, n'a rien dépensé, n'a rien publié, n'a rien supprimé et n'a décidé d'aucune affirmation ; il n'a écrit aucune attente de test après avoir vu la sortie du moteur et n'a pas recalculé le seuil à temps mural égal après que les résultats ont été connus. Les limites de l'arrangement sont consignées elles aussi : l'assistant peut mal lire le plan, et les documents de phase sont son interprétation (le journal des décisions consigne les endroits où la réalité les a corrigés) ; l'auto-vérification adversariale reste une auto-vérification au niveau du programme, de sorte que la relecture humaine externe d'un sous-ensemble d'annotations et du rapport, prévue dans le plan, n'est pas remplacée par elle ; et les données d'entraînement de l'assistant peuvent recouper la littérature publique sur Hive, de sorte qu'aucune affirmation de la forme « non vu par le modèle » n'est faite nulle part dans ce rapport.
-<!-- src: /Users/bechir/research/docs/methodology.md:144-157 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/ch-methodology.md:57-65 -->
+<!-- src: ../docs/methodology.md:144-157 -->
+<!-- src: paper/ch-methodology.md:57-65 -->
 
 **Déclaration d'assistance par IA.** L'implémentation, l'exécution des expériences, la journalisation et la rédaction de cette étude ont été réalisées avec l'assistance substantielle d'un agent de programmation par IA (Claude Code, Anthropic), opérant sous la méthodologie à portes décrite dans ce chapitre. Chaque décision scientifique, chaque engagement gelé et chaque dépense ont été pris par l'auteur à une porte, comme consigné dans `@tbl:gates`{=typst} ; chaque affirmation a été formulée ou vérifiée par l'auteur, qui a personnellement vérifié les conclusions qu'il signe et assume l'entière responsabilité des résultats. La formulation exacte de cette déclaration suivra les règles du lieu de diffusion au moment de la diffusion.
-<!-- src: /Users/bechir/research/docs/methodology.md:134-142 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/front-matter.md:18-24 -->
+<!-- src: ../docs/methodology.md:134-142 -->
+<!-- src: paper/front-matter.md:18-24 -->

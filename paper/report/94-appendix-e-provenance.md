@@ -5,13 +5,13 @@ This appendix is the one place in the report where internal identifiers are the 
 ## The evidence chain
 
 Every number in this report is reachable along one chain. **Raw per-game records** are written by the evaluation arena as one CSV per (checkpoint, opponent) pairing under the run directory; the file's header lines name both engine command lines verbatim (network path, simulation count, seeds), and every game carries its outcome with truncation as its own category. **Generated tables** are produced by `scripts/make_results.py`, which reads those CSVs and the per-run wall-clock logs, aggregates per (seed, opponent), bootstraps over seeds (10,000 resamples, seed as the unit, no game pooled as i.i.d.), and writes `results/comparison/*.{md,csv}`; it never retypes a number. **Figures** are produced by `scripts/make_figures.py` from the same CSVs, wall-clock logs and campaign logs. **The report** is assembled from these files; a source checker verifies that every numeric token in every chapter occurs in the evidence base, and a second checker verifies numeric identity between the English and French versions. The minimal reproduction script rebuilds the engine in a fresh clone, replays a recorded game to an exact match of its shipped row, and regenerates the tables byte-identically (verified 2026-10-09).
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-19-h6-comparison-01.md:38-41 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/make_results.py:4-7,79-87 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/final-control.md:13,20 -->
+<!-- src: journal/2026-09-19-h6-comparison-01.md:38-41 -->
+<!-- src: scripts/make_results.py:4-7,79-87 -->
+<!-- src: paper/final-control.md:13,20 -->
 
 **Journals.** Every experiment or measurement has one entry under `journal/`, named `YYYY-MM-DD-<slug>.md` and carrying an identifier of the form `<phase>-<date>-<slug>-<nn>` (for example `H6-2026-10-09-5seed-final-01`). The header fixes id, date, hypothesis, git commit, configuration, seeds, data version, hardware, duration and cost; the body has fixed sections: Methods, Raw results and uncertainty, Failures, Limits and confounders, Interpretation, Decision, Artifacts. Negative results and tooling defects are entries like any other. **Decision log.** Every non-trivial decision is an entry `D-nnn` in the workspace file `state/decisions.md`, append-only: a reversed decision is never edited, a new entry supersedes it and links back. Gate crossings record the author's approval in its original wording. **Methodology log.** `docs/methodology-log.md` (workspace) records, append-only, every incident in which the method caught or missed something.
-<!-- src: /Users/bechir/research/state/decisions.md:1-5 -->
-<!-- src: /Users/bechir/research/docs/methodology-log.md:1-10 -->
+<!-- src: ../state/decisions.md:1-5 -->
+<!-- src: ../docs/methodology-log.md:1-10 -->
 
 ## From each result to its artifact
 
@@ -35,12 +35,12 @@ Every number in this report is reachable along one chain. **Raw per-game records
 | Pipeline, architecture and chronology schematics | `paper/figures/fig8-pipeline.png`, `fig9-architectures.png`, `fig10-timeline.png` (`scripts/make_report_figures.py`) | the system documentation (`docs/inventory.md`), the journal headers and the decision log; no measured quantity | none |
 
 Table: Provenance of every generated table and figure: the artifact it is taken from, the raw records that artifact is computed from, and the journal entry that recorded the result. Run directories are abbreviated as `eval/…` for `data/runs/cmp-<arm>-s<seed>/eval/…`. {#tbl:prov-results}
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/make_figures.py:34-74,152-170,290-330,333-438 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/make_report_figures.py:1-10 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/figures/fig2-score-cost.md:1-13 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/make_results.py:4-7,29-72 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h6-5seed-final-01.md:22-29 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h8-detailed-edition-01.md:31-34 -->
+<!-- src: scripts/make_figures.py:34-74,152-170,290-330,333-438 -->
+<!-- src: scripts/make_report_figures.py:1-10 -->
+<!-- src: paper/figures/fig2-score-cost.md:1-13 -->
+<!-- src: scripts/make_results.py:4-7,29-72 -->
+<!-- src: journal/2026-10-09-h6-5seed-final-01.md:22-29 -->
+<!-- src: journal/2026-10-09-h8-detailed-edition-01.md:31-34 -->
 
 | Evidence in the method chapters | Where it lives | Journal entry (date) |
 | --- | --- | --- |
@@ -57,14 +57,14 @@ Table: Provenance of every generated table and figure: the artifact it is taken 
 | Report assembly checks and the staleness defect found by the render pass | `paper/final-control.md` | `H8-2026-10-09-detailed-edition-01` (2026-10-09) |
 
 Table: Provenance of the method-chapter evidence (engine validation, baselines, pipeline, encoders, campaign design): the artifacts and the journal entry recording each measurement. {#tbl:prov-method}
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/claims.md:9-25 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-09-suite-rerun-01.md:1-12 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-10-h6-matrix-01.md:1-12 -->
+<!-- src: paper/claims.md:9-25 -->
+<!-- src: journal/2026-09-09-suite-rerun-01.md:1-12 -->
+<!-- src: journal/2026-09-10-h6-matrix-01.md:1-12 -->
 
 ## Decision index
 
 `@tbl:prov-decisions`{=typst} lists the decision-log entries relevant to this study with their dates; entries D-002, D-013 and D-018 concern the other projects of the research programme and are omitted. Gate crossings are marked with their gate.
-<!-- src: /Users/bechir/research/state/decisions.md:27-43,345-382,530-561 -->
+<!-- src: ../state/decisions.md:27-43,345-382,530-561 -->
 
 | Entry | Date | Decision |
 | --- | --- | --- |
@@ -99,7 +99,7 @@ Table: Provenance of the method-chapter evidence (engine validation, baselines, 
 | D-032 | 2026-10-09 | Report scope: detailed edition, no frozen artifact, number or claim changed |
 
 Table: Index of the decision-log entries relevant to this study, in order of recording. {#tbl:prov-decisions}
-<!-- src: /Users/bechir/research/state/decisions.md:8-983 -->
+<!-- src: ../state/decisions.md:8-983 -->
 
 ## Claims–evidence register
 
@@ -136,25 +136,25 @@ Table: Index of the decision-log entries relevant to this study, in order of rec
 | The working methodology (goal-level AI delegation under six human-only gates, file-based state, mechanical verification) caught at least five harness/process defects before they could contaminate results (pipeline deadlock, corpus setup error, eval-harness opponent defect, silent record-loss path, silent NaN divergence), each journaled at detection time. | `docs/methodology-log.md` (workspace); journals cited per incident in `@sec:working-method`{=typst} | process observations from one study; no counterfactual control |
 
 Table: The claims–evidence register of this report, reproduced from the repository file with the section column removed. Every claim made in the body corresponds to one row; the limit column states what prevents a broader reading. {#tbl:prov-claims}
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/claims.md:7-36 -->
+<!-- src: paper/claims.md:7-36 -->
 
 ## Raw data, identifiers and frozen hashes
 
 **Location and layout.** Raw records live on disk under `data/runs/` in the study repository; they are not under version control. There is one directory per training run, `cmp-<arm>-s<seed>`, with `<arm>` in {`grid`, `graph`} for the main comparison (seeds 1–5) and in {`graph-untyped`, `graph-nogpool`, `graph-untyped-clip`} for the ablations A1, A2 and A1′ (seeds 1–3), plus `pilot0/` for the pipeline pilot. Each run directory contains: `selfplay/gen00N-*.bin` (binary record shards of generation N, v3 format, model-stamped) with `gen00N-manifest.json` (network and its fingerprint, model generation, record version, game type, seed, game count, full and cheap simulation counts, full-move fraction, temperature plies, resignation settings, counts of resigned and truncated games, number of positions, shard list); `checkpoints/gen00N/` (`hivenet-e0.pt`, `hivenet-e1.pt`, `train-config.json`) and the exported `gen00N-b1.onnx` used for play; `eval/<checkpoint>-vs-<opponent>.csv` with its `.log` for the intermediate (gen004, gen007) and final (gen009) evaluations, and `eval/tstar-gen00N-vs-<opponent>.{csv,log}` for the equal-time cutoff checkpoint; and `wallclock.json`, the per-generation wall-clock in seconds from which every time figure and the cutoff are derived. Campaign-level logs are `data/runs/campaign.log` (main runs, seeds 1–3), `extension.log` (seeds 4–5), `ablations.log` and `tstar-evals.log`. Seed derivation: base seed = 100,000 × seed; generation g uses base seed + g; evaluation network seed 9000 + gen (finals) or 9500 (cutoff sets), opponent seeds 9101 (legal-random) and 9201 (search).
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/run_comparison.py:1-35 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/scripts/make_results.py:4-7,29-72 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/paper/annex-reproduction.md:33-41 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-10-h4-pilot.md:18-19,117-120 -->
+<!-- src: scripts/run_comparison.py:1-35 -->
+<!-- src: scripts/make_results.py:4-7,29-72 -->
+<!-- src: paper/annex-reproduction.md:33-41 -->
+<!-- src: journal/2026-09-10-h4-pilot.md:18-19,117-120 -->
 
 **Volumes.** The main campaign comprised 10 generations × 500 self-play games per run (30,000 self-play games per three-seed arm at the 3-seed stage) and 100 paired games per (checkpoint, opponent) evaluation on the frozen openings; the campaign ran from 2026-09-10 12:42 to 2026-09-17 22:31 for seeds 1–3 (≈163 h of machine time including the cutoff evaluations), with seeds 4–5 collected 2026-09-27 to 2026-10-02. Disk footprint is recorded in the evidence base only as the launch estimates (≈3–5 GB for the main campaign, ≈3–4 GB for the ablations) against 164 GB free at launch with a 20 GB guard; exact per-run sizes were not journaled. Since the deletion recorded in D-024, the study repository is the sole copy of the pre-study material it inherited (the prior-loop checkpoint and its data, 412 MB and 75 MB), which is why those files are protected by the destructive-action gate.
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-19-h6-comparison-01.md:18-26 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h6-5seed-final-01.md:12-13 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-10-h6-matrix-01.md:54-55 -->
-<!-- src: /Users/bechir/research/state/decisions.md:729-753,888-915 -->
+<!-- src: journal/2026-09-19-h6-comparison-01.md:18-26 -->
+<!-- src: journal/2026-10-09-h6-5seed-final-01.md:12-13 -->
+<!-- src: journal/2026-09-10-h6-matrix-01.md:54-55 -->
+<!-- src: ../state/decisions.md:729-753,888-915 -->
 
 **Frozen artifacts and their hashes.** `@tbl:prov-hashes`{=typst} lists every frozen or pinned artifact with the identifier recorded at its freeze. The protocol hash is recorded in the decision log in abbreviated form; the full value was recomputed from the frozen commit while preparing this appendix and is identical to the hash of the current file, confirming that the protocol has not changed since its freeze.
-<!-- src: /Users/bechir/research/state/decisions.md:492-527,598-633,755-785 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/results/comparison/opponents-manifest.md:10-44 -->
+<!-- src: ../state/decisions.md:492-527,598-633,755-785 -->
+<!-- src: results/comparison/opponents-manifest.md:10-44 -->
 
 | Artifact | Frozen / pinned on | Identifier | Record |
 | --- | --- | --- | --- |
@@ -171,10 +171,10 @@ Table: The claims–evidence register of this report, reproduced from the reposi
 | Campaign and analysis code | 2026-09-10 → 2026-10-09 | campaign ac58773; analysis 1c65269 (3 seeds), 7db074d (5 seeds); ablations 216fded → bffeea9 (non-finite guard); A1′ queue 1fdd7ec | journals `H6-…`, `H7-…` |
 
 Table: Frozen and pinned artifacts of the study with the identifiers recorded at their freeze (hashes, commits, seeds) and the decision-log or journal entry that records them. {#tbl:prov-hashes}
-<!-- src: /Users/bechir/research/hive-graph-selfplay/results/comparison/opponents-manifest.md:10-44 -->
-<!-- src: /Users/bechir/research/state/decisions.md:492-527,565-595,598-633,755-785,787-820,938-959 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-16-h6-progress-01.md:36-42 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-09-19-h6-comparison-01.md:10-11 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h6-5seed-final-01.md:9-10 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-02-h7-a2-nogpool-01.md:9-10 -->
-<!-- src: /Users/bechir/research/hive-graph-selfplay/journal/2026-10-09-h7-a1prime-01.md:7 -->
+<!-- src: results/comparison/opponents-manifest.md:10-44 -->
+<!-- src: ../state/decisions.md:492-527,565-595,598-633,755-785,787-820,938-959 -->
+<!-- src: journal/2026-09-16-h6-progress-01.md:36-42 -->
+<!-- src: journal/2026-09-19-h6-comparison-01.md:10-11 -->
+<!-- src: journal/2026-10-09-h6-5seed-final-01.md:9-10 -->
+<!-- src: journal/2026-10-02-h7-a2-nogpool-01.md:9-10 -->
+<!-- src: journal/2026-10-09-h7-a1prime-01.md:7 -->

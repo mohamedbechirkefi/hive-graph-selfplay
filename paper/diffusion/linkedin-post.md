@@ -42,7 +42,7 @@ architecture de graphe, un petit budget sur un seul ordinateur
 portable, dix générations en régime précoce. Une étude complémentaire
 avec démarrage à chaud et fenêtre de rejeu est la suite logique.
 
-Rapport et code : <link>
+Rapport et code : https://github.com/mohamedbechirkefi/hive-graph-selfplay/releases/tag/v2.0-report (prépublication arXiv à suivre)
 
 ## English version
 
@@ -80,4 +80,4 @@ architecture, a small budget on a single laptop, ten generations in an
 early regime. A follow-up study with warm starts and a replay window is
 the natural next step.
 
-Report and code: <link>
+Report and code: https://github.com/mohamedbechirkefi/hive-graph-selfplay/releases/tag/v2.0-report (arXiv preprint to follow)
