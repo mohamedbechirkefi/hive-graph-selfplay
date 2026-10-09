@@ -55,6 +55,15 @@ reported so that any threshold can be applied by the reader.
    training pass; 2 epochs per generation as before, so the number of
    gradient steps grows with the window.
 
+**Implementation (done 2026-10-09, journal H9-2026-10-09-driver-01).**
+The two changes are the driver options `--warm-start` and `--window W`
+of `scripts/run_comparison.py`, identical for both arms and off by
+default; `scripts/test_driver_equivalence.py` shows that the default
+command lines reproduce Study 1's recorded configs and manifests. Study
+2 runs are written under `data/runs/cmp2-<arm>-s<seed>` (option
+`--run-prefix cmp2`), each with a `driver-config.json` recording the
+regime, so Study 1's directories are never touched.
+
 Everything else is Study 1's: engine, search (128/32 simulations,
 playout-cap randomization, noise, temperature, resignation, 300-ply
 truncation), record format, loss and masking, both encoders and

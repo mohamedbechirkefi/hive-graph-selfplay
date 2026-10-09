@@ -13,6 +13,15 @@ cleanly before StorageFull. Re-running skips completed generations.
 Usage:
   python3 scripts/run_comparison.py --arm grid  --seed 1 [--gens 10] [--games 500]
   python3 scripts/run_comparison.py --arm graph --seed 1 ...
+
+Study 2 (H9, protocol v2 DRAFT) adds two options, identical for both arms
+and OFF by default so that the Study 1 command lines are reproduced
+exactly (scripts/test_driver_equivalence.py proves it):
+  --warm-start      train generation g from generation g-1's checkpoint
+                    (model weights only; optimizer and schedule restart)
+  --window W        train on the shards of generations max(0,g-W+1)..g
+  --run-prefix P    run directory data/runs/P-<arm>-s<seed> (default cmp)
+  --dry-run         print every command without executing anything
 """
 
 import argparse
@@ -32,10 +41,13 @@ OPPONENTS = {
     "B-MCTS": ["./target/release/hive-engine", "--mcts", "--sims", "6400", "--seed", "9201"],
 }
 MIN_FREE_GB = 20
+DRY = False
 
 
 def sh(cmd, cwd=REPO, env_extra=None, log=None):
     print(f"+ {' '.join(map(str, cmd))}", flush=True)
+    if DRY:
+        return
     env = {**os.environ, **(env_extra or {})}
     if log:
         with open(log, "w") as f:
@@ -62,12 +74,30 @@ def main():
     ap.add_argument("--eval-at", type=int, nargs="*", default=[4, 7])
     ap.add_argument("--eval-games", type=int, default=60)  # 20/opponent
     ap.add_argument("--final-per-opp", type=int, default=100)  # task-4 pilot volume
+    ap.add_argument("--warm-start", action="store_true",
+                    help="Study 2: init generation g from generation g-1's checkpoint")
+    ap.add_argument("--window", type=int, default=1,
+                    help="Study 2: train on the last W generations' shards (1 = Study 1)")
+    ap.add_argument("--run-prefix", default="cmp",
+                    help="run directory prefix under data/runs/ (Study 2 uses cmp2)")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="print the command lines without running anything")
     args = ap.parse_args()
+    global DRY
+    DRY = args.dry_run
+    assert args.window >= 1, "--window must be >= 1"
 
     assert OPENINGS.exists(), "frozen openings file missing"
-    run = REPO / "data" / "runs" / f"cmp-{args.arm}-s{args.seed}"
-    for d in ("selfplay", "checkpoints", "eval"):
-        (run / d).mkdir(parents=True, exist_ok=True)
+    run = REPO / "data" / "runs" / f"{args.run_prefix}-{args.arm}-s{args.seed}"
+    if not DRY:
+        for d in ("selfplay", "checkpoints", "eval"):
+            (run / d).mkdir(parents=True, exist_ok=True)
+        # Study-2 options are recorded with the run so a manifest reader
+        # can tell the regimes apart without parsing logs.
+        (run / "driver-config.json").write_text(json.dumps(
+            {"arm": args.arm, "seed": args.seed, "gens": args.gens, "games": args.games,
+             "epochs": args.epochs, "warm_start": args.warm_start, "window": args.window,
+             "run_prefix": args.run_prefix}, indent=2))
     clock_path = run / "wallclock.json"
     clock = json.loads(clock_path.read_text()) if clock_path.exists() else {}
 
@@ -97,7 +127,7 @@ def main():
         net = models / f"hivenet-random-c96b8s{base_seed}-b1.onnx"
     else:
         net = models / f"hivegraph-random{var}-h152L8s{base_seed}-b1.onnx"
-    if not net.exists():
+    if DRY or not net.exists():
         sh([py, "-m", "hivenet.export_onnx", rand_kind, "--out", models,
             *(["--channels", "96", "--blocks", "8"] if args.arm == "grid"
               else ["--channels", "152", "--blocks", "8"]),
@@ -105,27 +135,37 @@ def main():
             "--seed", base_seed, "--batches", "1"],
            cwd=REPO / "python", env_extra={"PYTHONPATH": "."})
 
+    def ckpt_of(g):
+        t = f"gen{g:03d}"
+        return (run / "checkpoints" / t / f"hivenet-e{args.epochs-1}.pt" if args.arm == "grid"
+                else run / "checkpoints" / t / f"hivegraph-e{args.epochs-1}.pt")
+
     for gen in range(args.gens):
         tag = f"gen{gen:03d}"
         done_marker = run / "selfplay" / f"{tag}-manifest.json"
-        ckpt = run / "checkpoints" / tag / f"hivenet-e{args.epochs-1}.pt" \
-            if args.arm == "grid" else \
-            run / "checkpoints" / tag / f"hivegraph-e{args.epochs-1}.pt"
+        ckpt = ckpt_of(gen)
 
-        if free_gb() < MIN_FREE_GB:
+        if not DRY and free_gb() < MIN_FREE_GB:
             raise SystemExit(f"HALT: free disk {free_gb():.1f} GB < {MIN_FREE_GB} GB guard")
 
         t0 = time.time()
-        if not done_marker.exists():
+        if DRY or not done_marker.exists():
             sh(["./target/release/selfplay-mcts", *graph_flags,
                 "--net", net, "--games", args.games, "--threads", args.threads,
                 "--sims-full", 128, "--sims-cheap", 32,
                 "--seed", base_seed + gen, "--model-gen", gen,
                 "--out", run / "selfplay" / tag])
-        if not ckpt.exists():
-            sh([py, "-m", train_mod, "--data", f"{run}/selfplay/{tag}-*.bin",
+        if DRY or not ckpt.exists():
+            # Study 1: this generation's shards only, fresh initialisation.
+            # Study 2: a window of W generations and/or a warm start from
+            # the previous generation's checkpoint (weights only).
+            first = max(0, gen - args.window + 1)
+            data_globs = [f"{run}/selfplay/gen{g:03d}-*.bin" for g in range(first, gen + 1)]
+            init_flags = (["--init", ckpt_of(gen - 1)]
+                          if args.warm_start and gen > 0 else [])
+            sh([py, "-m", train_mod, "--data", *data_globs,
                 "--out", run / "checkpoints" / tag, "--epochs", args.epochs,
-                *size_flags, "--seed", base_seed + gen, "--workers", 0],
+                *size_flags, "--seed", base_seed + gen, "--workers", 0, *init_flags],
                cwd=REPO / "python", env_extra={"PYTHONPATH": "."})
             sh([py, "-m", "hivenet.export_onnx", ckpt, "--out", models,
                 "--batches", "1"], cwd=REPO / "python", env_extra={"PYTHONPATH": "."})
@@ -133,12 +173,13 @@ def main():
         # export writes <stem>-b1.onnx into models/; rename per generation.
         gen_net = models / f"{tag}-b1.onnx"
         exported = models / f"{stem}-b1.onnx"
-        if exported.exists():
-            exported.replace(gen_net)
-        assert gen_net.exists(), f"missing export {gen_net}"
+        if not DRY:
+            if exported.exists():
+                exported.replace(gen_net)
+            assert gen_net.exists(), f"missing export {gen_net}"
         net = gen_net
 
-        if tag not in clock:
+        if not DRY and tag not in clock:
             clock[tag] = round(time.time() - t0, 1)
             clock_path.write_text(json.dumps(clock, indent=2))
 
@@ -149,7 +190,7 @@ def main():
             for name, opp in OPPONENTS.items():
                 per_opp = args.final_per_opp if gen == args.gens - 1 else args.eval_games // 3
                 rec = run / "eval" / f"{tag}-vs-{name}.csv"
-                if rec.exists():
+                if rec.exists() and not DRY:
                     continue
                 sh(["./target/release/hive-arena", "--games", per_opp,
                     "--depth", "1", "--seed", 777_000 + gen,
