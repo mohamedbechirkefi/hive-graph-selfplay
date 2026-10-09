@@ -25,7 +25,7 @@ the specific step. Order follows D-035.
 
 ## 1. Repository release (`hive-graph-selfplay`)
 
-- [ ] Decide visibility: public at tag `v2.0-report` (remote already
+- [x] Decide visibility: public at tag `v2.0-report` (done 2026-10-09, D-036) (remote already
       exists, private: `mohamedbechirkefi/hive-graph-selfplay`).
 - [ ] Records archive: `bash scripts/make_release_archive.sh` produces
       `release/hive-graph-selfplay-records-v2.0.tar.gz` (evaluation
@@ -37,7 +37,7 @@ the specific step. Order follows D-035.
 - [ ] `scripts/reproduce_minimal.sh` must pass against the released
       archive layout (it currently copies from `data/runs/`): adapt the
       script to accept the archive directory, re-run, record in a journal.
-- [ ] Tag and push only after approval: `git tag v2.0-report && git push
+- [x] Tag and push only after approval (done 2026-10-09; release with 5 assets): `git tag v2.0-report && git push
       origin main --tags`, then set visibility and upload the archive.
 
 ## 2. arXiv preprint
