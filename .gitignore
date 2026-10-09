@@ -12,3 +12,4 @@ logs/
 .tools/
 paper/build/report-*-work/
 release/
+paper/diffusion/
