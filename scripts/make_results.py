@@ -14,8 +14,16 @@ Conventions (protocol v1.0 §4/§6; invariants 7, 8): score excludes
 truncations (rate reported separately; 0.5-sensitivity column);
 aggregation per (seed, opponent) first; intervals bootstrap over seeds;
 no game pooled as i.i.d.
+
+Study 2 (H9, protocol v2): `--study 2` reads data/runs/cmp2-{arm}-s{seed}
+for seeds 11-15, computes T*' as the median full-run wall-clock of the
+five Study-2 grid runs (protocol v2 draft §4; rule fixed at the freeze),
+writes under results/study2/ and adds a descriptive Study 1 vs Study 2
+table (no pooling). The default (`--study 1`) is unchanged and its
+outputs stay byte-identical.
 """
 
+import argparse
 import random
 import sys
 from pathlib import Path
@@ -27,16 +35,41 @@ REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "results" / "comparison"
 OPPONENTS = ["B-RND", "B-HEU", "B-MCTS"]
 SEEDS = [1, 2, 3, 4, 5]  # seeds 4-5 added per D-031 (all-seeds pre-commitment)
+STUDY = 1
+PREFIX = "cmp"          # run directory prefix: cmp (Study 1) / cmp2 (Study 2)
+TSTAR_SEEDS = [1, 2, 3]  # grid runs whose clocks define the cutoff
+TITLE = "H6 results"
+
+
+def configure(study, out=None):
+    """Select the study. Study 1 keeps every constant above."""
+    global STUDY, PREFIX, SEEDS, TSTAR_SEEDS, OUT, TITLE, TSTAR_H
+    STUDY = study
+    if study == 2:
+        PREFIX = "cmp2"
+        SEEDS = [11, 12, 13, 14, 15]
+        TSTAR_SEEDS = list(SEEDS)   # T*' = median of all five grid runs (v2 §4)
+        OUT = REPO / "results" / "study2"
+        TITLE = "Study 2 (H9) results"
+    if out is not None:
+        OUT = Path(out)
+    TSTAR_H = None
+
+
 def _tstar_hours():
     """T* = median full-run wall-clock of the ORIGINAL three grid runs
     (pre-registered rule, executed 2026-09-16; D-031b: seeds 4-5 never
     enter the median). Computed exactly from the wall-clock files so the
     defining run's own final checkpoint sits AT T* inclusively — the
-    rounded 18.77 h constant broke that boundary."""
+    rounded 18.77 h constant broke that boundary.
+    Study 2: median over its five grid runs (TSTAR_SEEDS)."""
     import json, statistics
     tots = []
-    for seed in [1, 2, 3]:
-        c = json.load(open(REPO / "data" / "runs" / f"cmp-grid-s{seed}" / "wallclock.json"))
+    for seed in TSTAR_SEEDS:
+        f = REPO / "data" / "runs" / f"{PREFIX}-grid-s{seed}" / "wallclock.json"
+        if not f.exists():
+            return None  # cutoff undefined until every defining run has finished
+        c = json.load(open(f))
         tots.append(sum(c.values()) / 3600)
     return statistics.median(tots)
 
@@ -52,7 +85,10 @@ def tstar_checkpoint(arm, seed):
     global TSTAR_H
     if TSTAR_H is None:
         TSTAR_H = _tstar_hours()
-    clock = json.load(open(REPO / "data" / "runs" / f"cmp-{arm}-s{seed}" / "wallclock.json"))
+    f = REPO / "data" / "runs" / f"{PREFIX}-{arm}-s{seed}" / "wallclock.json"
+    if TSTAR_H is None or not f.exists():
+        return None
+    clock = json.load(open(f))
     cum, last = 0.0, None
     for gen in sorted(clock):
         cum += clock[gen]
@@ -63,11 +99,14 @@ def tstar_checkpoint(arm, seed):
 
 
 def cell(arm, seed, opp, reading):
-    run = REPO / "data" / "runs" / f"cmp-{arm}-s{seed}" / "eval"
+    run = REPO / "data" / "runs" / f"{PREFIX}-{arm}-s{seed}" / "eval"
     if reading == "same-examples":
         f = run / f"gen009-vs-{opp}.csv"
     else:
-        gen, kind = tstar_checkpoint(arm, seed)
+        ck = tstar_checkpoint(arm, seed)
+        if ck is None:
+            return None  # PENDING: cutoff or this run's clock not available
+        gen, kind = ck
         f = run / (f"gen009-vs-{opp}.csv" if kind == "final"
                    else f"tstar-{gen}-vs-{opp}.csv")
     if not f.exists():
@@ -95,7 +134,7 @@ def diff_ci(a, b, iters=10000, seed=0):
 
 
 def table(reading):
-    md = [f"# H6 results — {reading} reading",
+    md = [f"# {TITLE} — {reading} reading",
           "", "Score = mean over non-truncated games (win 1 / draw 0.5 / "
           "loss 0); trunc = truncation rate; sens = truncations scored 0.5.",
           ""]
@@ -132,7 +171,47 @@ def table(reading):
     return md, csv, per, complete
 
 
+def study_comparison_table():
+    """Descriptive Study 1 vs Study 2 table from the two studies' CSV
+    outputs (seed-level means and graph-grid contrasts per reading and
+    opponent). The studies are never pooled (protocol v2 §5)."""
+    import csv as _csv
+    s1 = REPO / "results" / "comparison"
+    lines = ["# Study 1 vs Study 2 (descriptive, no pooling)", "",
+             "Seed-level mean score per arm and graph-grid contrast with "
+             "bootstrap 95% over seeds, per reading and opponent. Study 1: "
+             "seeds 1-5, fresh initialisation per generation (protocol "
+             "v1.0). Study 2: seeds 11-15, warm start + replay window "
+             "(protocol v2).", ""]
+    for reading in ["same-examples", "same-wallclock"]:
+        lines += [f"## {reading}", "",
+                  "| Opponent | Study | grid mean | graph mean | graph-grid [95% CI] |",
+                  "| --- | --- | --- | --- | --- |"]
+        for label, base in (("1", s1), ("2", OUT)):
+            f = base / f"results-{reading}.csv"
+            if not f.exists():
+                continue
+            per = {}
+            for r in _csv.DictReader(open(f)):
+                per.setdefault((r["arm"], r["opponent"]), []).append(float(r["score"]))
+            for opp in OPPONENTS:
+                g, c = per.get(("graph", opp)), per.get(("grid", opp))
+                if not g or not c:
+                    continue
+                lo, hi = diff_ci(g, c)
+                lines.append(f"| {opp} | {label} | {sum(c)/len(c):.3f} | "
+                             f"{sum(g)/len(g):.3f} | {sum(g)/len(g)-sum(c)/len(c):+.3f} "
+                             f"[{lo:+.3f}, {hi:+.3f}] |")
+        lines.append("")
+    return "\n".join(lines)
+
+
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--study", type=int, choices=[1, 2], default=1)
+    ap.add_argument("--out", default=None, help="override the output directory")
+    args = ap.parse_args()
+    configure(args.study, args.out)
     OUT.mkdir(parents=True, exist_ok=True)
     contrast_blocks = []
     for reading in ["same-examples", "same-wallclock"]:
@@ -160,6 +239,9 @@ def main():
     if contrast_blocks:
         (OUT / "results-arm-difference.md").write_text(
             "\n".join(contrast_blocks))
+    if STUDY == 2 and len(contrast_blocks) == 2:
+        (OUT / "study1-vs-study2.md").write_text(study_comparison_table())
+        print("  study1-vs-study2.md written")
 
 
 if __name__ == "__main__":
