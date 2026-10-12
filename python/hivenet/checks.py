@@ -101,13 +101,20 @@ def main() -> int:
     assert torch.isfinite(lp), "masked policy loss not finite"
     print(f"masked policy loss finite: {lp.item():.3f}")
 
-    # --- stamp: dataset <-> model association.
+    # --- stamp: dataset <-> model association. One manifest for a
+    # single-generation shard set (Study 1); several, comma-separated, for
+    # a replay window (Study 2, H9): the set of record stamps must equal
+    # the set of (model_gen, net hash) pairs of the listed manifests, so
+    # every record comes from a listed generation and every listed
+    # generation is present.
     if args.manifest:
-        man = json.load(open(args.manifest))
-        want = (int(man["model_gen"]), int(man["net_fnv1a32"]))
+        want = set()
+        for mpath in args.manifest.split(","):
+            man = json.load(open(mpath))
+            want.add((int(man["model_gen"]), int(man["net_fnv1a32"])))
         stamps = {model_stamp(ds.records[i]) for i in range(len(ds))}
-        assert stamps == {want}, f"stamp FAIL: records {stamps} != manifest {want}"
-        print(f"stamp OK: all {len(ds)} records stamped {want} per manifest")
+        assert stamps == want, f"stamp FAIL: records {stamps} != manifest(s) {want}"
+        print(f"stamp OK: all {len(ds)} records stamped {sorted(want)} per manifest(s)")
 
     print("ALL CHECKS OK")
     return 0

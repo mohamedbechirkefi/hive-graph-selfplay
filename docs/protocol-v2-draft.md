@@ -62,7 +62,10 @@ default; `scripts/test_driver_equivalence.py` shows that the default
 command lines reproduce Study 1's recorded configs and manifests. Study
 2 runs are written under `data/runs/cmp2-<arm>-s<seed>` (option
 `--run-prefix cmp2`), each with a `driver-config.json` recording the
-regime, so Study 1's directories are never touched.
+regime, so Study 1's directories are never touched. The pilot
+(H9-2026-10-12-pilot-01, D-037) ran the full path on both arms and the
+H4 check battery passes on the windowed shard sets (the stamp check
+now takes the manifests of every generation in the window).
 
 Everything else is Study 1's: engine, search (128/32 simulations,
 playout-cap randomization, noise, temperature, resignation, 300-ply
@@ -93,10 +96,15 @@ wants the tuning objection closed as well.
   cutoff T*′ = median total training wall-clock of the five grid runs
   of Study 2, computed before any cross-arm comparison (rule stated
   here; value measured during the campaign).
-- Expected cost (from Study 1's clocks plus training growth): grid
-  ≈ 18–21 h per run, graph ≈ 27–52 h per run; ≈ 12–14 days of sequential
-  laptop time for the ten runs, plus ≈ 1 day of evaluations; disk
-  ≈ 2 GB. No paid resources.
+- Expected cost, measured (pilot H9-2026-10-12-pilot-01, D-037: one
+  seed, two generations × 200 games per arm, warm start + W = 3): the
+  window doubles training time when the second generation enters
+  (grid 78 → 168 s, graph 303 → 613 s at 200 games); training is 3%
+  (grid) and 5% (graph) of a Study 1 run, so W = 3 adds about 1.0 h per
+  grid run and 3.0 h per graph run. Projection: grid ≈ 18–20 h per run,
+  graph ≈ 30–53 h per run; ≈ 295 h, 12–13 days of sequential laptop
+  time for the ten runs, plus ≈ 1 day of evaluations; disk ≈ 2 GB
+  (pilot: 22 MB of shards per 400 games). No paid resources.
 - Evaluations: generations 5, 8 and 10 as in Study 1 (20/20/100 games
   per opponent), cutoff checkpoints at 100 games.
 
