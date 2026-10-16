@@ -54,8 +54,8 @@ Le protocole a été gelé le 13 octobre 2026 sous son empreinte de contenu, ave
 | Run | Début | Fin | Horloge d'entraînement (h) |
 | --- | --- | --- | ---: |
 | grille, graine 11 | 13 oct. 2026 15:02 | 14 oct. 2026 09:33 | 17.46 |
-| graphe, graine 11 | 14 oct. 2026 09:33 | | |
-| grille, graine 12 | | | |
+| graphe, graine 11 | 14 oct. 2026 09:33 | 16 oct. 2026 02:39 | 39.28 |
+| grille, graine 12 | 16 oct. 2026 02:39 | | |
 | graphe, graine 12 | | | |
 | grille, graine 13 | | | |
 | graphe, graine 13 | | | |
