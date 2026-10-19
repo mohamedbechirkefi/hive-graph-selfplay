@@ -57,8 +57,8 @@ The protocol was frozen on 13 October 2026 under its content hash, with the hype
 | graph, seed 11 | 14 Oct 2026 09:33 | 16 Oct 2026 02:39 | 39.28 |
 | grid, seed 12 | 16 Oct 2026 02:39 | 16 Oct 2026 21:46 | 17.95 |
 | graph, seed 12 | 16 Oct 2026 21:46 | 18 Oct 2026 13:40 | 37.33 |
-| grid, seed 13 | 18 Oct 2026 13:40 | | |
-| graph, seed 13 | | | |
+| grid, seed 13 | 18 Oct 2026 13:40 | 19 Oct 2026 08:19 | 17.63 |
+| graph, seed 13 | 19 Oct 2026 08:19 | | |
 | grid, seed 14 | | | |
 | graph, seed 14 | | | |
 | grid, seed 15 | | | |
