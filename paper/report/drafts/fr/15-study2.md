@@ -58,8 +58,8 @@ Le protocole a été gelé le 13 octobre 2026 sous son empreinte de contenu, ave
 | grille, graine 12 | 16 oct. 2026 02:39 | 16 oct. 2026 21:46 | 17.95 |
 | graphe, graine 12 | 16 oct. 2026 21:46 | 18 oct. 2026 13:40 | 37.33 |
 | grille, graine 13 | 18 oct. 2026 13:40 | 19 oct. 2026 08:19 | 17.63 |
-| graphe, graine 13 | 19 oct. 2026 08:19 | | |
-| grille, graine 14 | | | |
+| graphe, graine 13 | 19 oct. 2026 08:19 | 21 oct. 2026 17:55 | 52.85 |
+| grille, graine 14 | 21 oct. 2026 17:55 | | |
 | graphe, graine 14 | | | |
 | grille, graine 15 | | | |
 | graphe, graine 15 | | | |
