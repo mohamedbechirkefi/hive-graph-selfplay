@@ -60,8 +60,8 @@ The protocol was frozen on 13 October 2026 under its content hash, with the hype
 | grid, seed 13 | 18 Oct 2026 13:40 | 19 Oct 2026 08:19 | 17.63 |
 | graph, seed 13 | 19 Oct 2026 08:19 | 21 Oct 2026 17:55 | 52.85 |
 | grid, seed 14 | 21 Oct 2026 17:55 | 22 Oct 2026 12:18 | 17.46 |
-| graph, seed 14 | 22 Oct 2026 12:18 | | |
-| grid, seed 15 | | | |
+| graph, seed 14 | 22 Oct 2026 12:18 | 24 Oct 2026 10:44 | 42.20 |
+| grid, seed 15 | 24 Oct 2026 10:44 | | |
 | graph, seed 15 | | | |
 
 Table: Execution record of the second study's campaign: start and end of each run (CET) and its total training wall-clock, the sum of the ten per-generation clocks (self-play, training and export; evaluation time excluded). Ten generations of 500 games per run, warm start and three-generation replay window, sequential on one laptop. {#tbl:study2-runs}
