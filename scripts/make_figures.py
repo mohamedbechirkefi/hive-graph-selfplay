@@ -9,7 +9,15 @@ records; no figure shows only the best seed.
   fig4-failures.md/.png     three commented failure positions, selection
                             criteria stated BEFORE inspection (in code)
 
-Run: python/.venv/bin/python scripts/make_figures.py
+Run: python/.venv/bin/python scripts/make_figures.py [--study 1|2] [--only fig1 ...]
+
+Study 2 (H9, protocol v2): `--study 2` reads data/runs/cmp2-{arm}-s{seed}
+for seeds 11-15, takes the equal-time cutoff T*' from make_results
+(exact median of the five Study 2 grid clocks), reads the Study 2 result
+CSVs under results/study2/ and writes every figure with the suffix
+"-study2" so that no Study 1 figure is overwritten. fig3 (encodings) and
+fig4 (failure positions, Study 1 records) are not regenerated for
+Study 2. The default (`--study 1`) is unchanged.
 """
 
 import json
@@ -28,7 +36,31 @@ from run_critical_corpus import Board  # noqa: E402
 FIG = REPO / "paper" / "figures"
 OPP = ["B-RND", "B-HEU", "B-MCTS"]
 TSTAR_H = 18.77  # display value; exact median used in make_results
+TSTAR_LABEL = "T* = 18.77 h"
 COL = {"grid": "#1f77b4", "graph": "#d62728"}
+STUDY = 1
+PREFIX = "cmp"                 # run directory prefix (cmp2 for Study 2)
+SEEDS = [1, 2, 3, 4, 5]
+SUFFIX = ""                    # figure file suffix ("-study2" for Study 2)
+RES = REPO / "results" / "comparison"
+LOGS = [REPO / "data" / "runs" / "campaign.log",
+        REPO / "data" / "runs" / "extension.log"]
+
+
+def configure(study):
+    """Select the study. Study 1 keeps every constant above."""
+    global STUDY, PREFIX, SEEDS, SUFFIX, RES, LOGS, TSTAR_H, TSTAR_LABEL
+    STUDY = study
+    if study == 2:
+        import make_results as mr
+        mr.configure(2)
+        t = mr._tstar_hours()
+        assert t is not None, "T*' undefined: the five Study 2 grid clocks are not all present"
+        TSTAR_H = t
+        TSTAR_LABEL = f"T*\u2032 = {t:.2f} h"
+        PREFIX, SEEDS, SUFFIX = "cmp2", [11, 12, 13, 14, 15], "-study2"
+        RES = REPO / "results" / "study2"
+        LOGS = [REPO / "data" / "runs" / "campaign2.log"]
 
 
 def pop_score(run: Path, tag: str):
@@ -45,8 +77,8 @@ def pop_score(run: Path, tag: str):
 def fig1():
     plt.figure(figsize=(8, 5))
     for arm in ["grid", "graph"]:
-        for seed in [1, 2, 3, 4, 5]:
-            run = REPO / "data" / "runs" / f"cmp-{arm}-s{seed}"
+        for seed in SEEDS:
+            run = REPO / "data" / "runs" / f"{PREFIX}-{arm}-s{seed}"
             clock = json.load(open(run / "wallclock.json"))
             cum, xs, ys = 0.0, [], []
             for gen in sorted(clock):
@@ -56,12 +88,12 @@ def fig1():
                     xs.append(cum / 3600)
                     ys.append(s)
             plt.plot(xs, ys, marker="o", color=COL[arm], alpha=0.75,
-                     label=f"{arm}" if seed == 1 else None,
+                     label=f"{arm}" if seed == SEEDS[0] else None,
                      linewidth=1.5)
             plt.annotate(f"s{seed}", (xs[-1], ys[-1]), fontsize=7,
                          xytext=(3, 0), textcoords="offset points")
     plt.axvline(TSTAR_H, color="gray", linestyle="--", linewidth=1)
-    plt.text(TSTAR_H + 0.2, 0.02, "T* = 18.77 h", fontsize=8, color="gray")
+    plt.text(TSTAR_H + 0.2, 0.02, TSTAR_LABEL, fontsize=8, color="gray")
     plt.xlabel("training wall-clock (h)")
     plt.ylabel("mean score vs frozen population (excl. truncations)")
     plt.title("Score vs training time, all seeds, both arms\n"
@@ -69,7 +101,7 @@ def fig1():
     plt.legend()
     plt.grid(alpha=0.25)
     plt.tight_layout()
-    plt.savefig(FIG / "fig1-score-vs-time.png", dpi=150)
+    plt.savefig(FIG / f"fig1-score-vs-time{SUFFIX}.png", dpi=150)
     plt.close()
     print("fig1 written")
 
@@ -293,7 +325,7 @@ def fig2():
     import csv as _csv
     scores = {}
     for reading in ["same-examples", "same-wallclock"]:
-        f = REPO / "results" / "comparison" / f"results-{reading}.csv"
+        f = RES / f"results-{reading}.csv"
         per = {}
         for row in _csv.DictReader(open(f)):
             per.setdefault((row["arm"], row["opponent"]), []).append(
@@ -304,8 +336,8 @@ def fig2():
     clock, per_run = {}, {}
     for arm in ["grid", "graph"]:
         tots = []
-        for seed in [1, 2, 3, 4, 5]:
-            c = json.load(open(REPO / f"data/runs/cmp-{arm}-s{seed}/wallclock.json"))
+        for seed in SEEDS:
+            c = json.load(open(REPO / f"data/runs/{PREFIX}-{arm}-s{seed}/wallclock.json"))
             tots.append(sum(c.values()) / 3600)
         clock[arm] = sum(tots) / len(tots)
         per_run[arm] = tots
@@ -314,7 +346,7 @@ def fig2():
     wl = ["# Training wall-clock per run (derived from wallclock.json)", "",
           "Per-generation self-play generation + training seconds summed over "
           "the 10 generations of each run; evaluation games excluded. Hours.", "",
-          "| Arm | s1 | s2 | s3 | s4 | s5 | mean | sum |",
+          "| Arm | " + " | ".join(f"s{x}" for x in SEEDS) + " | mean | sum |",
           "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
     for arm in ["grid", "graph"]:
         t = per_run[arm]
@@ -327,20 +359,20 @@ def fig2():
            f"(same-examples), "
            f"{scores[('grid','same-wallclock')]-scores[('graph','same-wallclock')]:.3f} "
            f"(same-wall-clock)."]
-    wl += ["", "## Ablation runs (same accounting)", "",
-           "| Variant | s1 | s2 | s3 | mean |",
-           "| --- | ---: | ---: | ---: | ---: |"]
-    for label, arm in [("A1 untyped", "graph-untyped"),
-                       ("A2 no-gpool", "graph-nogpool"),
-                       ("A1' untyped+clip", "graph-untyped-clip")]:
-        t = []
-        for seed in [1, 2, 3]:
-            c = json.load(open(REPO / f"data/runs/cmp-{arm}-s{seed}/wallclock.json"))
-            t.append(sum(c.values()) / 3600)
-        wl.append(f"| {label} | " + " | ".join(f"{x:.2f}" for x in t)
-                  + f" | {sum(t)/len(t):.2f} |")
-    (REPO / "results" / "comparison" / "wallclock-per-run.md").write_text(
-        "\n".join(wl) + "\n")
+    if STUDY == 1:
+        wl += ["", "## Ablation runs (same accounting)", "",
+               "| Variant | s1 | s2 | s3 | mean |",
+               "| --- | ---: | ---: | ---: | ---: |"]
+        for label, arm in [("A1 untyped", "graph-untyped"),
+                           ("A2 no-gpool", "graph-nogpool"),
+                           ("A1' untyped+clip", "graph-untyped-clip")]:
+            t = []
+            for seed in [1, 2, 3]:
+                c = json.load(open(REPO / f"data/runs/cmp-{arm}-s{seed}/wallclock.json"))
+                t.append(sum(c.values()) / 3600)
+            wl.append(f"| {label} | " + " | ".join(f"{x:.2f}" for x in t)
+                      + f" | {sum(t)/len(t):.2f} |")
+    (RES / "wallclock-per-run.md").write_text("\n".join(wl) + "\n")
     lines = [
         "# Score / cost table (H6 task 7; fig2)", "",
         "| Metric | Grid arm | Graph arm |",
@@ -351,7 +383,7 @@ def fig2():
         f"| Mean self-play cost | {clock['grid']*3600/5000:.1f} s/game | {clock['graph']*3600/5000:.1f} s/game |",
         "| Training throughput benchmark (MPS, batch 128, fwd+bwd) | 274 pos/s | 138 pos/s |",
         f"| Population score, same-examples | {scores[('grid','same-examples')]:.3f} | {scores[('graph','same-examples')]:.3f} |",
-        f"| Population score, same-wall-clock (T*=18.77 h) | {scores[('grid','same-wallclock')]:.3f} | {scores[('graph','same-wallclock')]:.3f} |",
+        f"| Population score, same-wall-clock ({TSTAR_LABEL.replace(' = ', '=')}) | {scores[('grid','same-wallclock')]:.3f} | {scores[('graph','same-wallclock')]:.3f} |",
         "",
         "Population score = mean over the three frozen opponents of the "
         "seed-mean score (truncations excluded, reported separately in the "
@@ -362,7 +394,7 @@ def fig2():
         "measurements (journal H5-2026-09-10-encoders-01); journal "
         "H6-2026-09-19-comparison-01.",
     ]
-    (FIG / "fig2-score-cost.md").write_text("\n".join(lines) + "\n")
+    (FIG / f"fig2-score-cost{SUFFIX}.md").write_text("\n".join(lines) + "\n")
     print("fig2 written")
 
 
@@ -372,8 +404,8 @@ def fig5():
     fig, axes = plt.subplots(1, 3, figsize=(13, 4.2), sharey=False)
     for ax, opp in zip(axes, OPP):
         for arm in ["grid", "graph"]:
-            for seed in [1, 2, 3, 4, 5]:
-                run = REPO / "data" / "runs" / f"cmp-{arm}-s{seed}"
+            for seed in SEEDS:
+                run = REPO / "data" / "runs" / f"{PREFIX}-{arm}-s{seed}"
                 clock = json.load(open(run / "wallclock.json"))
                 xs, ys = [], []
                 for i, gen in enumerate(sorted(clock)):
@@ -383,14 +415,14 @@ def fig5():
                         ys.append(summarize(load(f)[1])["score"])
                 ax.plot(xs, ys, marker="o", markersize=3, linewidth=1.1,
                         color=COL[arm], alpha=0.7,
-                        label=arm if (seed == 1 and opp == OPP[0]) else None)
+                        label=arm if (seed == SEEDS[0] and opp == OPP[0]) else None)
         ax.set_title(f"vs {opp}", fontsize=10)
         ax.set_xlabel("generation")
         ax.grid(alpha=0.25)
     axes[0].set_ylabel("score (excl. truncations)")
     fig.legend(loc="upper center", ncol=2, frameon=False)
     plt.tight_layout(rect=(0, 0, 1, 0.93))
-    plt.savefig(FIG / "fig5-per-opponent.png", dpi=150)
+    plt.savefig(FIG / f"fig5-per-opponent{SUFFIX}.png", dpi=150)
     plt.close()
     print("fig5 written")
 
@@ -400,11 +432,10 @@ def fig6():
     self-play validation policy top-1 and value accuracy (epoch-1 line of
     each generation, per run)."""
     import re as _re
-    logs = [REPO / "data" / "runs" / "campaign.log",
-            REPO / "data" / "runs" / "extension.log"]
+    logs = LOGS
     runs = {}
     current = None
-    pat_run = _re.compile(r"=== run (cmp-(grid|graph)-s\d) start")
+    pat_run = _re.compile(r"=== run (" + PREFIX + r"-(grid|graph)-s\d+) start")
     pat_ep = _re.compile(
         r"=== epoch 1: policy top-1 ([\d.]+)%, value acc ([\d.]+)%")
     for lg in logs:
@@ -439,7 +470,7 @@ def fig6():
                         for a in COL], loc="upper center", ncol=2,
                frameon=False)
     plt.tight_layout(rect=(0, 0, 1, 0.92))
-    plt.savefig(FIG / "fig6-training-metrics.png", dpi=150)
+    plt.savefig(FIG / f"fig6-training-metrics{SUFFIX}.png", dpi=150)
     plt.close()
     print(f"fig6 written ({len(runs)} runs parsed)")
 
@@ -451,8 +482,8 @@ def fig7():
     xs, heights, colors, labels = [], [], [], []
     x = 0
     for arm in ["grid", "graph"]:
-        for seed in [1, 2, 3, 4, 5]:
-            f = (REPO / "data" / "runs" / f"cmp-{arm}-s{seed}" / "eval"
+        for seed in SEEDS:
+            f = (REPO / "data" / "runs" / f"{PREFIX}-{arm}-s{seed}" / "eval"
                  / "gen009-vs-B-RND.csv")
             tr = summarize(load(f)[1])["trunc_rate"]
             xs.append(x)
@@ -469,17 +500,22 @@ def fig7():
               fontsize=10)
     plt.grid(axis="y", alpha=0.25)
     plt.tight_layout()
-    plt.savefig(FIG / "fig7-truncation.png", dpi=150)
+    plt.savefig(FIG / f"fig7-truncation{SUFFIX}.png", dpi=150)
     plt.close()
     print("fig7 written")
 
 
 if __name__ == "__main__":
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--study", type=int, choices=[1, 2], default=1)
+    ap.add_argument("--only", nargs="*", default=None,
+                    help="subset of fig1 fig2 fig3 fig4 fig5 fig6 fig7")
+    args = ap.parse_args()
+    configure(args.study)
     FIG.mkdir(parents=True, exist_ok=True)
-    fig1()
-    fig2()
-    fig3()
-    fig5()
-    fig6()
-    fig7()
-    fig4()
+    order = (["fig1", "fig2", "fig3", "fig5", "fig6", "fig7", "fig4"] if STUDY == 1
+             else ["fig1", "fig2", "fig5", "fig6", "fig7"])
+    for name in order:
+        if args.only is None or name in args.only:
+            globals()[name]()
