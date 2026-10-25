@@ -9,14 +9,14 @@ La seconde étude (`@sec:study2`{=typst}) réutilise toutes les constantes du `@
 | Fenêtre de rejeu | 3 générations : la génération $g$ s'entraîne sur les enregistrements des générations $\max(0, g-2)$ à $g$, soit 500, 1,000, puis 1,500 parties à partir de la génération 2 ; 2 époques par génération | 13 oct. | l'auteur |
 | Politique d'hyperparamètres | option A : les réglages de la première étude dans les deux bras, sans ajustement ; option B (trois taux d'apprentissage sur une graine par bras) examinée et écartée | 13 oct. | l'auteur |
 | Graines d'entraînement | 11–15 par bras ; graine de base 100,000 × graine ; aucun flux aléatoire partagé avec les graines 1–5 | 13 oct. | l'auteur |
-| Seuil à temps mural égal de la seconde étude | médiane du temps mural total d'entraînement des cinq runs grille de la seconde étude (somme des dix horloges par génération ; évaluations exclues), calculée une seule fois depuis les fichiers d'horloge avant tout nombre inter-bras, jamais recalculée | règle 13 oct. ; valeur après le cinquième run grille | règle : l'auteur ; valeur : calcul mécanique |
+| Seuil à temps mural égal de la seconde étude | 17.63 h = médiane du temps mural total d'entraînement des cinq runs grille de la seconde étude (17.46, 17.95, 17.63, 17.46, 18.52 h ; somme des dix horloges par génération, évaluations exclues), calculée une seule fois depuis les fichiers d'horloge le 25 octobre 2026 avant tout nombre inter-bras, jamais recalculée | règle 13 oct. ; valeur 25 oct. | règle : l'auteur ; valeur : calcul mécanique |
 | Calendrier d'évaluation | générations 5 et 8 à 20 parties appariées par adversaire (descriptif seulement) ; point de contrôle final à 100 ; points de contrôle au seuil à 100 avec graine de réseau 9500 et graine d'appariement 888,000 | 13 oct. (comme dans la première étude) | l'auteur |
 | Actifs gelés réutilisés | population d'adversaires, 250 ouvertures, réglages d'évaluation épinglés, les deux réseaux et le décodeur partagé, intouchés | 13 oct. (réutilisation déclarée) | l'auteur |
 | Ordre d'exécution | dix runs séquentiels sur la machine de l'étude, en alternant grille puis graphe pour les graines 11 à 15 ; aucun autre processus lourd pendant la campagne | 13 oct. | l'auteur |
 | Document de protocole | version 2.0 ; tout changement ultérieur est une nouvelle étude | 13 oct. | l'auteur |
 
 Table: Constantes gelées de la seconde étude, avec la date à laquelle chacune a été fixée et l'approbation sous laquelle elle l'a été ; tout ce qui n'est pas listé est celui de la première étude. {#tbl:app-c-study2}
-<!-- src: docs/protocol-v2.md:3-12, 53-75, 88-130, 152-166 -->
+<!-- src: docs/protocol-v2.md:3-12, 53-75, 88-130, 152-166; journal/2026-10-25-h9-tstar-01.md:38-48 -->
 
 | Artefact | SHA-256 |
 | --- | --- |

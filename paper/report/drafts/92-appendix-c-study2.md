@@ -9,14 +9,14 @@ The second study (`@sec:study2`{=typst}) reuses every constant of `@tbl:app-c-fr
 | Replay window | 3 generations: generation $g$ trains on the records of generations $\max(0, g-2)$ to $g$, that is 500, 1,000, then 1,500 games from generation 2 onward; 2 epochs per generation | 13 Oct | the author |
 | Hyperparameter policy | option A: the first study's settings in both arms, no tuning; option B (three learning rates on one seed per arm) considered and rejected | 13 Oct | the author |
 | Training seeds | 11–15 per arm; base seed 100,000 × seed; no random stream shared with seeds 1–5 | 13 Oct | the author |
-| Equal-time cutoff of the second study | median of the total training wall-clock of the five grid runs of the second study (sum of the ten per-generation clocks; evaluations excluded), computed once from the clock files before any cross-arm number, never recomputed | rule 13 Oct; value after the fifth grid run | rule: the author; value: computed mechanically |
+| Equal-time cutoff of the second study | 17.63 h = median of the total training wall-clock of the five grid runs of the second study (17.46, 17.95, 17.63, 17.46, 18.52 h; sum of the ten per-generation clocks, evaluations excluded), computed once from the clock files on 25 October 2026 before any cross-arm number, never recomputed | rule 13 Oct; value 25 Oct | rule: the author; value: computed mechanically |
 | Evaluation schedule | generations 5 and 8 at 20 paired games per opponent (descriptive only); final checkpoint at 100; cutoff checkpoints at 100 with network seed 9500 and match seed 888,000 | 13 Oct (as in the first study) | the author |
 | Reused frozen assets | opponent population, 250 openings, pinned evaluation settings, both networks and the shared decoder, untouched | 13 Oct (reuse declared) | the author |
 | Execution order | ten runs sequential on the study machine, interleaved grid then graph for seeds 11 to 15; no other heavy process during the campaign | 13 Oct | the author |
 | Protocol document | version 2.0; any later change is a new study | 13 Oct | the author |
 
 Table: Frozen constants of the second study, with the date each was fixed and the approval under which it was fixed; everything not listed is the first study's. {#tbl:app-c-study2}
-<!-- src: docs/protocol-v2.md:3-12, 53-75, 88-130, 152-166 -->
+<!-- src: docs/protocol-v2.md:3-12, 53-75, 88-130, 152-166; journal/2026-10-25-h9-tstar-01.md:38-48 -->
 
 | Artifact | SHA-256 |
 | --- | --- |
