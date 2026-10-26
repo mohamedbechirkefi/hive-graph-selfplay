@@ -62,7 +62,7 @@ Le protocole a été gelé le 13 octobre 2026 sous son empreinte de contenu, ave
 | grille, graine 14 | 21 oct. 2026 17:55 | 22 oct. 2026 12:18 | 17.46 |
 | graphe, graine 14 | 22 oct. 2026 12:18 | 24 oct. 2026 10:44 | 42.20 |
 | grille, graine 15 | 24 oct. 2026 10:44 | 25 oct. 2026 06:27 | 18.52 |
-| graphe, graine 15 | 25 oct. 2026 06:27 | | |
+| graphe, graine 15 | 25 oct. 2026 06:27 | 26 oct. 2026 23:00 | 36.27 |
 
 Table: Registre d'exécution de la campagne de la seconde étude : début et fin de chaque run (CET) et son temps mural total d'entraînement, somme des dix horloges par génération (auto-jeu, entraînement et export ; temps d'évaluation exclu). Dix générations de 500 parties par run, démarrage à chaud et fenêtre de rejeu de trois générations, en séquence sur un portable. {#tbl:study2-runs}
 <!-- src: journal/2026-10-13-h9-campaign-01.md:58-72 -->
