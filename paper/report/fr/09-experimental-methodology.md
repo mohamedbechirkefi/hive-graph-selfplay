@@ -1,7 +1,7 @@
 # Méthodologie expérimentale : un protocole pré-enregistré et gelé {#sec:protocol}
 
-Ce chapitre énonce ce que la comparaison a fixé à l'avance, comment, quand et surtout pourquoi. Le protocole directeur a été gelé en version 1.0 le 10 septembre 2026, avant toute exécution de comparaison et après qu'un pilote eut confirmé chacune des valeurs mesurées qu'il contient ; il déclare que tout changement ultérieur constitue une nouvelle étude, et aucun n'a été fait. Les constantes, les hyperparamètres et les graines sont tabulés dans `@sec:app-c`{=typst} ; les tables brutes par graine et la carte des points de contrôle au seuil dans `@sec:app-d`{=typst}.
-<!-- src: docs/protocol.md:3-11; ../state/decisions.md:598-632 -->
+Ce chapitre énonce ce que la comparaison a fixé à l'avance, comment, quand et surtout pourquoi. Le protocole directeur a été gelé en version 1.0 le 10 septembre 2026, avant toute exécution de comparaison et après qu'un pilote eut confirmé chacune des valeurs mesurées qu'il contient ; il déclare que tout changement ultérieur constitue une nouvelle étude, et aucun n'a été fait. Les constantes, les hyperparamètres et les graines sont tabulés dans `@sec:app-c`{=typst} ; les tables brutes par graine et la carte des points de contrôle au seuil dans `@sec:app-d`{=typst}. Un second protocole, version 2.0, a été gelé le 13 octobre 2026 pour l'étude complémentaire rapportée dans `@sec:study2`{=typst} ; il change le régime d'entraînement et rien d'autre, et y est décrit.
+<!-- src: docs/protocol.md:3-11; ../state/decisions.md:598-632; docs/protocol-v2.md:3-12 -->
 
 ## Pourquoi pré-enregistrer, et pourquoi geler, à petit budget de calcul {#sec:protocol-why}
 

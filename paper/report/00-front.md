@@ -51,9 +51,18 @@ les deux lectures, à un coût en temps mural double, son déficit se
 concentrant dans la conversion des positions gagnées. Les ablations
 montrent que les relations d'arêtes typées du bras graphe sont
 nécessaires à la stabilité de l'optimisation, tandis que son agrégation
-globale (global pooling) est dispensable. Le résultat est négatif,
-pré-enregistré et entièrement reproductible à partir des enregistrements publiés.
-<!-- src: paper/fr/front-matter.md:33 -->
+globale (global pooling) est dispensable. Une seconde étude,
+pré-enregistrée séparément (protocole gelé le 13 octobre 2026) et menée
+sur cinq nouvelles graines par bras sous une boucle à démarrage à chaud
+avec une fenêtre de rejeu de trois générations, a testé la principale
+objection à ce verdict : aucun avantage du graphe n'a été détecté sous
+l'une ou l'autre lecture, chaque intervalle graphe−grille inclut zéro
+(plus grandes bornes supérieures +0.090 et +0.055), le déficit de la
+première étude n'est plus visible à exemples égaux et est réduit à temps
+mural égal, et la pathologie de conversion persiste dans trois graines
+graphe sur cinq, à 2.34 fois le coût. Les deux résultats sont
+pré-enregistrés et reproductibles à partir des enregistrements publiés.
+<!-- src: paper/fr/front-matter.md:33; results/study2/results-arm-difference.md; journal/2026-10-27-h9-analysis-01.md:95-123,186-205 -->
 
 **Mots-clés.** Hive ; AlphaZero ; réseaux de neurones en graphe ;
 apprentissage de représentations ; pré-enregistrement ; résultat négatif.

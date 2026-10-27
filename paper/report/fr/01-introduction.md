@@ -137,9 +137,23 @@ l'optimisation elle-même (les retirer a fait diverger l'entraînement
 pour chaque graine), tandis que son pooling global est dispensable.
 <!-- src: paper/ch1-introduction.md:32; results/comparison/results-arm-difference.md -->
 
+Une seconde étude, pré-enregistrée séparément et menée après la
+rédaction de la première, a testé la première objection à ce verdict :
+que la réinitialisation du réseau à chaque génération ait maintenu les
+deux bras dans un régime trop précoce pour qu'un a priori de graphe
+paie. Sous une boucle à démarrage à chaud avec une fenêtre de rejeu de
+trois générations, sur cinq nouvelles graines par bras, aucun avantage
+du graphe n'a été détecté sous l'une ou l'autre lecture du budget ;
+chaque intervalle graphe−grille inclut zéro, les plus grandes bornes
+supérieures étant +0.090 et +0.055 ; le déficit de la première étude
+n'est plus visible à exemples égaux et est réduit à temps égal ; la
+pathologie de conversion du bras graphe persiste dans trois graines sur
+cinq, et son rapport de coût monte à 2.34 (`@sec:study2`{=typst}).
+<!-- src: results/study2/results-arm-difference.md; results/study2/study1-vs-study2.md:7-25; journal/2026-10-27-h9-analysis-01.md:95-123,144-150 -->
+
 ## Contributions
 
-Trois contributions sont revendiquées, chacune vérifiable à partir du
+Quatre contributions sont revendiquées, chacune vérifiable à partir du
 dépôt publié.
 
 1. **La première comparaison grille-contre-graphe contrôlée, à budget
@@ -159,6 +173,11 @@ dépôt publié.
    les relations typées déterminent l'entraînabilité et le pooling a un
    effet nul, avec un supplément à deux composants honnêtement étiqueté
    (`@sec:results-ablations`{=typst}).
+4. **Une seconde comparaison pré-enregistrée sous le régime standard à
+   démarrage à chaud**, dont le protocole, le seuil à temps égal et les
+   graines ont été fixés avant toute exécution, et dont le résultat nul
+   borne le résultat négatif de la première étude et est rapporté à côté
+   de lui sans agrégation (`@sec:study2`{=typst}).
 
 La construction de logiciel, si substantielle soit-elle, n'est pas
 comptée comme une contribution scientifique en soi ; elle est rapportée
@@ -184,7 +203,8 @@ par question : la comparaison principale (`@sec:results-main`{=typst}),
 le coût et l'efficacité (`@sec:results-cost`{=typst}), les ablations
 (`@sec:results-ablations`{=typst}) et une analyse qualitative des
 positions d'échec et du comportement d'entraînement
-(`@sec:results-qualitative`{=typst}). La partie V discute les
+(`@sec:results-qualitative`{=typst}), puis la seconde étude sous le
+régime à démarrage à chaud (`@sec:study2`{=typst}). La partie V discute les
 mécanismes et les menaces à la validité (`@sec:discussion`{=typst}) et
 conclut (`@sec:conclusion`{=typst}). La bibliographie et la webographie
 suivent la conclusion. Les annexes contiennent les corpus de positions

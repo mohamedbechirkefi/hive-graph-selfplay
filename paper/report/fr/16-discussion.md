@@ -250,18 +250,26 @@ des conventions d'entraînement identiques plutôt qu'une politique
 particulière de démarrage à chaud. Pour la *généralisation* du résultat,
 c'est une limite qui s'ajoute à celles déjà énumérées : un pipeline qui
 accumulerait les données et reporterait les poids atteindrait un régime
-différent, dans lequel l'ordre des bras est une question ouverte. Une
-étude successeur devrait reporter les poids d'une génération à l'autre
-et s'entraîner sur une fenêtre de générations récentes, comme le font
-les grands systèmes d'auto-jeu, les deux changements étant appliqués à
-l'identique aux deux bras.
-<!-- src: scripts/run_comparison.py:119-129; python/hivenet/train.py:112-123; configs/comparison-matrix.yaml:36-41 -->
+différent, dans lequel l'ordre des bras est une question ouverte. Cette
+étude successeur a été menée après la première rédaction de ce rapport,
+les deux changements étant appliqués à l'identique aux deux bras sous
+un second protocole gelé, et elle est rapportée dans
+`@sec:study2`{=typst} : sous une boucle à démarrage à chaud avec une
+fenêtre de rejeu de trois générations, le déficit n'est plus visible à
+exemples égaux et est réduit à temps égal, aucun avantage du graphe
+n'apparaît, et la force atteinte contre les deux adversaires forts ne
+monte pas.
+<!-- src: scripts/run_comparison.py:119-129; python/hivenet/train.py:112-123; configs/comparison-matrix.yaml:36-41; results/study2/study1-vs-study2.md:7-25 -->
 
 ## Ce que nous ferions différemment
 
 Quatre changements renforceraient une étude successeur sans changer sa
-logique. Le premier est le démarrage à chaud et la fenêtre de rejeu qui
-viennent d'être décrits. Les évaluations intermédiaires (20 parties par
+logique. Le premier, le démarrage à chaud et la fenêtre de rejeu qui
+viennent d'être décrits, a été réalisé sous la forme de la seconde
+étude ; il laisse ouverte la question du réglage évoquée plus bas, et
+ses intervalles plus larges ont montré que la règle de rejet a besoin
+d'un seuil chiffré pour ce qui compte comme un avantage substantiel
+(`@sec:study2-results`{=typst}). Les évaluations intermédiaires (20 parties par
 adversaire aux générations 5 et 8) ont été dimensionnées pour le suivi
 et sont trop bruitées pour porter une inférence ; une étude successeur
 devrait évaluer chaque génération au volume final si les courbes doivent

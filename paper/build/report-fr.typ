@@ -45,28 +45,28 @@
     #v(1.6cm)
     #text(size: 10.5pt)[Rapport de recherche indépendant (non évalué par les pairs)]
     #v(0.35em)
-    #text(size: 10.5pt)[Version v2.0-draft, Octobre 2026]
+    #text(size: 10.5pt)[Version v2.1-draft, Octobre 2026]
   ]
 ]
 #counter(page).update(1)
 
 #heading(level: 1, numbering: none)[Résumé]
 <résumé>
-Hive est un jeu de stratégie hexagonal sans plateau dont les coups sont des paires (pièce, destination) sur un ensemble de cellules en perpétuel changement, ce qui en fait, en principe, un candidat naturel pour des encodages par réseaux de neurones en graphe plutôt que pour les encodages convolutifs en grille standards des systèmes de type AlphaZero. Nous testons cette intuition sous un protocole pré-enregistré, gelé avant toute exécution comparative : un CNN en grille et un réseau relationnel à passage de messages de capacité appariée (+1.5%) partagent un moteur validé côté règles, un décodeur d'actions unique, des réglages d'entraînement identiques, une population gelée de trois adversaires et 250 ouvertures gelées, évalués sous deux lectures budgétaires (à exemples d'entraînement égaux ; à temps mural égal à un seuil pré-enregistré), avec cinq graines indépendantes par bras et la troncature rapportée comme un résultat à part entière. L'hypothèse est rejetée : le bras graphe obtient un score inférieur contre deux des trois adversaires sous les deux lectures, à un coût en temps mural double, son déficit se concentrant dans la conversion des positions gagnées. Les ablations montrent que les relations d'arêtes typées du bras graphe sont nécessaires à la stabilité de l'optimisation, tandis que son agrégation globale (global pooling) est dispensable. Le résultat est négatif, pré-enregistré et entièrement reproductible à partir des enregistrements publiés.
+Hive est un jeu de stratégie hexagonal sans plateau dont les coups sont des paires (pièce, destination) sur un ensemble de cellules en perpétuel changement, ce qui en fait, en principe, un candidat naturel pour des encodages par réseaux de neurones en graphe plutôt que pour les encodages convolutifs en grille standards des systèmes de type AlphaZero. Nous testons cette intuition sous un protocole pré-enregistré, gelé avant toute exécution comparative : un CNN en grille et un réseau relationnel à passage de messages de capacité appariée (+1.5%) partagent un moteur validé côté règles, un décodeur d'actions unique, des réglages d'entraînement identiques, une population gelée de trois adversaires et 250 ouvertures gelées, évalués sous deux lectures budgétaires (à exemples d'entraînement égaux ; à temps mural égal à un seuil pré-enregistré), avec cinq graines indépendantes par bras et la troncature rapportée comme un résultat à part entière. L'hypothèse est rejetée : le bras graphe obtient un score inférieur contre deux des trois adversaires sous les deux lectures, à un coût en temps mural double, son déficit se concentrant dans la conversion des positions gagnées. Les ablations montrent que les relations d'arêtes typées du bras graphe sont nécessaires à la stabilité de l'optimisation, tandis que son agrégation globale (global pooling) est dispensable. Une seconde étude, pré-enregistrée séparément (protocole gelé le 13 octobre 2026) et menée sur cinq nouvelles graines par bras sous une boucle à démarrage à chaud avec une fenêtre de rejeu de trois générations, a testé la principale objection à ce verdict : aucun avantage du graphe n'a été détecté sous l'une ou l'autre lecture, chaque intervalle graphe−grille inclut zéro (plus grandes bornes supérieures +0.090 et +0.055), le déficit de la première étude n'est plus visible à exemples égaux et est réduit à temps mural égal, et la pathologie de conversion persiste dans trois graines graphe sur cinq, à 2.34 fois le coût. Les deux résultats sont pré-enregistrés et reproductibles à partir des enregistrements publiés.
 
 #strong[Mots-clés.] Hive ; AlphaZero ; réseaux de neurones en graphe ; apprentissage de représentations ; pré-enregistrement ; résultat négatif.
 
 #heading(level: 1, numbering: none)[Abstract]
 <abstract>
-Hive is a boardless hexagonal strategy game whose moves are (piece, destination) pairs over an ever-changing set of cells, which makes it, in principle, a natural candidate for graph neural encodings in place of the convolutional grid encodings standard in AlphaZero-style systems. We test that intuition under a pre-registered protocol frozen before any comparison run: one grid CNN and one capacity-matched (+1.5%) relational message-passing network share a rules-validated engine, one action decoder, identical training settings, a frozen three-opponent population and 250 frozen openings, evaluated under two budget readings (equal training examples; equal wall-clock at a pre-registered cutoff) with five independent seeds per arm and truncation reported as its own outcome. The hypothesis is rejected: the graph arm scores lower against two of three opponents under both readings, at twice the wall-clock cost, with its deficit concentrated in converting won positions. Ablations show that the graph arm's typed edge relations are necessary for optimization stability, while its global pooling is dispensable. The result is negative, pre-registered and fully reproducible from the released records.
+Hive is a boardless hexagonal strategy game whose moves are (piece, destination) pairs over an ever-changing set of cells, which makes it, in principle, a natural candidate for graph neural encodings in place of the convolutional grid encodings standard in AlphaZero-style systems. We test that intuition under a pre-registered protocol frozen before any comparison run: one grid CNN and one capacity-matched (+1.5%) relational message-passing network share a rules-validated engine, one action decoder, identical training settings, a frozen three-opponent population and 250 frozen openings, evaluated under two budget readings (equal training examples; equal wall-clock at a pre-registered cutoff) with five independent seeds per arm and truncation reported as its own outcome. The hypothesis is rejected: the graph arm scores lower against two of three opponents under both readings, at twice the wall-clock cost, with its deficit concentrated in converting won positions. Ablations show that the graph arm's typed edge relations are necessary for optimization stability, while its global pooling is dispensable. A second study, pre-registered separately (protocol frozen on 13 October 2026) and run on five new seeds per arm under a warm-started loop with a three-generation replay window, tested the main objection to that verdict: no graph advantage was detected under either reading, every graph−grid interval includes zero (largest upper bounds +0.090 and +0.055), the first study's deficit is no longer visible at equal examples and reduced at equal wall-clock, and the conversion pathology persists in three graph seeds of five at 2.34 times the cost. Both results are pre-registered and reproducible from the released records.
 
 #strong[Keywords.] Hive; AlphaZero; graph neural networks; representation learning; pre-registration; negative result.
 
 #heading(level: 1, numbering: none)[Statut, code et déclaration d'assistance]
 <statut-code-et-déclaration-dassistance>
-#strong[Statut.] Rapport de recherche indépendant préparé en vue d'une candidature au doctorat. Il n'est pas évalué par les pairs et n'est la publication d'aucune institution. Version 2.0-draft, octobre 2026 ; le contenu expérimental est définitif et aucun nombre ne diffère des résultats bruts gelés du 9 octobre 2026.
+#strong[Statut.] Rapport de recherche indépendant préparé en vue d'une candidature au doctorat. Il n'est pas évalué par les pairs et n'est la publication d'aucune institution. Version 2.1-draft, octobre 2026 ; le contenu expérimental est définitif et aucun nombre ne diffère des résultats bruts gelés du 9 octobre 2026 (première étude) et du 27 octobre 2026 (seconde étude).
 
-#strong[Code et artefacts.] Le moteur, le pipeline d'entraînement, les deux encodeurs, les configurations gelées, les enregistrements bruts d'évaluation par partie et les scripts qui régénèrent chaque table et chaque figure de ce rapport forment un seul dépôt public, publié à l'étiquette v2.0-report : https:\/\/github.com/mohamedbechirkefi/hive-graph-selfplay (l'archive des enregistrements est jointe à cette publication). Un scénario de reproduction en environnement vierge est décrit en @sec:app-g ; la provenance de chaque résultat est tabulée en @sec:app-e.
+#strong[Code et artefacts.] Le moteur, le pipeline d'entraînement, les deux encodeurs, les configurations gelées, les enregistrements bruts d'évaluation par partie et les scripts qui régénèrent chaque table et chaque figure de ce rapport forment un seul dépôt public, https:\/\/github.com/mohamedbechirkefi/hive-graph-selfplay, publié à l'étiquette v2.0-report le 9 octobre 2026 pour la première étude (l'archive des enregistrements est jointe à cette publication) ; les enregistrements de la seconde étude et la présente révision accompagnent la publication étiquetée v2.1-report. Un scénario de reproduction en environnement vierge est décrit en @sec:app-g ; la provenance de chaque résultat est tabulée en @sec:app-e.
 
 #strong[Déclaration d'assistance par un système d'intelligence artificielle.] Cette étude a été exécutée selon une méthodologie « l'humain comme chercheur principal », dans laquelle un assistant de recherche IA (Claude, Anthropic) a implémenté le code, mené les campagnes de calcul, tenu les journaux d'expériences et rédigé le texte, sous un système de six portes de décision réservant chaque engagement scientifique à l'auteur humain : le gel du protocole, des adversaires et des ouvertures, chaque dépense de calcul, tout ce qui est rendu public et la suppression de toute donnée. L'auteur humain a choisi la question, approuvé par écrit chaque décision soumise à une porte, vérifié les conclusions et assume chaque affirmation. @sec:working-method documente cette méthodologie de travail, sa justification et son historique.
 
@@ -110,19 +110,22 @@ Les deux encodages ont été construits derrière un décodeur d'actions partag�
 <ce-qui-a-été-trouvé>
 L'hypothèse est rejetée. Le bras grille obtient un score supérieur contre deux des trois adversaires sous les deux lectures budgétaires, pour environ la moitié du coût en temps mural ; la plus grande borne supérieure de tout intervalle sur un avantage du graphe est +0.028. Le déficit du bras graphe se concentre dans la conversion tactique locale : il gagne du matériel contre l'adversaire aléatoire puis échoue à conclure, tronquant 20--57% de ces parties là où le bras grille n'en tronque presque aucune. Les ablations localisent la machinerie du bras graphe : ses relations typées par direction sont nécessaires à l'optimisation elle-même (les retirer a fait diverger l'entraînement pour chaque graine), tandis que son pooling global est dispensable.
 
+Une seconde étude, pré-enregistrée séparément et menée après la rédaction de la première, a testé la première objection à ce verdict : que la réinitialisation du réseau à chaque génération ait maintenu les deux bras dans un régime trop précoce pour qu'un a priori de graphe paie. Sous une boucle à démarrage à chaud avec une fenêtre de rejeu de trois générations, sur cinq nouvelles graines par bras, aucun avantage du graphe n'a été détecté sous l'une ou l'autre lecture du budget ; chaque intervalle graphe−grille inclut zéro, les plus grandes bornes supérieures étant +0.090 et +0.055 ; le déficit de la première étude n'est plus visible à exemples égaux et est réduit à temps égal ; la pathologie de conversion du bras graphe persiste dans trois graines sur cinq, et son rapport de coût monte à 2.34 (@sec:study2).
+
 == Contributions
 <contributions>
-Trois contributions sont revendiquées, chacune vérifiable à partir du dépôt publié.
+Quatre contributions sont revendiquées, chacune vérifiable à partir du dépôt publié.
 
 + #strong[La première comparaison grille-contre-graphe contrôlée, à budget apparié et multi-graines pour Hive];, les deux bras étant placés sous le même pipeline de type AlphaZero, lus sous deux égalisations de budget, avec une réponse négative pré-enregistrée (@sec:results-main, @sec:results-cost ; enregistrements bruts publiés).
 + #strong[Un harnais de comparaison reproductible pour les jeux sans cadre et à empilement] : un moteur de règles validé indépendamment de l'apprentissage ; deux encodeurs épinglés à l'octet près entre deux langages d'implémentation ; un décodeur partagé sur un ensemble d'actions variable ; une évaluation consciente de la troncature ; et une discipline d'artefacts gelés (@sec:engine à @sec:protocol).
 + #strong[Une attribution par composant pour le bras graphe];, dans laquelle les relations typées déterminent l'entraînabilité et le pooling a un effet nul, avec un supplément à deux composants honnêtement étiqueté (@sec:results-ablations).
++ #strong[Une seconde comparaison pré-enregistrée sous le régime standard à démarrage à chaud];, dont le protocole, le seuil à temps égal et les graines ont été fixés avant toute exécution, et dont le résultat nul borne le résultat négatif de la première étude et est rapporté à côté de lui sans agrégation (@sec:study2).
 
 La construction de logiciel, si substantielle soit-elle, n'est pas comptée comme une contribution scientifique en soi ; elle est rapportée parce que le résultat ne peut être évalué sans elle.
 
 == Organisation de ce rapport
 <organisation-de-ce-rapport>
-La partie I pose le problème : @sec:background donne les règles de Hive, la formalisation utilisée et les éléments d'apprentissage par auto-jeu, de représentation d'état et d'évaluation sur petits échantillons dont un lecteur a besoin ; @sec:related positionne l'étude par rapport aux travaux antérieurs. La partie II décrit comment le système a été construit, et quand (@sec:chronology) : le moteur et sa validation (@sec:engine), le pipeline d'apprentissage (@sec:pipeline), les deux représentations et leurs réseaux (@sec:representations) et la population d'adversaires gelée (@sec:baselines). La partie III expose la méthodologie et les raisons de son choix : le protocole expérimental pré-enregistré (@sec:protocol) et la méthode de travail humain-IA à portes (@sec:working-method). La partie IV rapporte les résultats par question : la comparaison principale (@sec:results-main), le coût et l'efficacité (@sec:results-cost), les ablations (@sec:results-ablations) et une analyse qualitative des positions d'échec et du comportement d'entraînement (@sec:results-qualitative). La partie V discute les mécanismes et les menaces à la validité (@sec:discussion) et conclut (@sec:conclusion). La bibliographie et la webographie suivent la conclusion. Les annexes contiennent les corpus de positions annotées, les architectures et les formats de données en entier, chaque hyperparamètre et chaque graine, les procédures statistiques avec les tables brutes par graine, la provenance de chaque résultat, un glossaire avec les équivalents français et le guide de reproduction.
+La partie I pose le problème : @sec:background donne les règles de Hive, la formalisation utilisée et les éléments d'apprentissage par auto-jeu, de représentation d'état et d'évaluation sur petits échantillons dont un lecteur a besoin ; @sec:related positionne l'étude par rapport aux travaux antérieurs. La partie II décrit comment le système a été construit, et quand (@sec:chronology) : le moteur et sa validation (@sec:engine), le pipeline d'apprentissage (@sec:pipeline), les deux représentations et leurs réseaux (@sec:representations) et la population d'adversaires gelée (@sec:baselines). La partie III expose la méthodologie et les raisons de son choix : le protocole expérimental pré-enregistré (@sec:protocol) et la méthode de travail humain-IA à portes (@sec:working-method). La partie IV rapporte les résultats par question : la comparaison principale (@sec:results-main), le coût et l'efficacité (@sec:results-cost), les ablations (@sec:results-ablations) et une analyse qualitative des positions d'échec et du comportement d'entraînement (@sec:results-qualitative), puis la seconde étude sous le régime à démarrage à chaud (@sec:study2). La partie V discute les mécanismes et les menaces à la validité (@sec:discussion) et conclut (@sec:conclusion). La bibliographie et la webographie suivent la conclusion. Les annexes contiennent les corpus de positions annotées, les architectures et les formats de données en entier, chaque hyperparamètre et chaque graine, les procédures statistiques avec les tables brutes par graine, la provenance de chaque résultat, un glossaire avec les équivalents français et le guide de reproduction.
 
 == Comment lire les nombres
 <comment-lire-les-nombres>
@@ -385,11 +388,13 @@ La boucle est classée comme démonstration, non comme preuve, pour des raisons 
 
 #strong[19 septembre -- 9 octobre 2026 : ablations, extension, analyse finale.] Les configurations d'ablation ont été préparées le 19 septembre, avec une substitution décidée ce jour-là ; l'auteur a approuvé la campagne d'ablations le 20 septembre 2026, les deux ablations à pleine parité de trois graines avec la comparaison principale. La divergence de l'ablation du typage des arêtes (sorties non finies dès la génération 0 pour 3/3 graines) a été diagnostiquée le 23 septembre ; les exécutions de l'ablation du pooling global se sont achevées les 24, 26 et 27 septembre et ont été analysées le 2 octobre. Le 26 septembre 2026, l'auteur a approuvé, avec des pré-engagements énoncés avant toute nouvelle exécution, une extension symétrique à cinq graines par bras et le supplément à deux composants à l'ablation divergée. Les graines 4 et 5 ont tourné du 27 septembre au 2 octobre, avec les évaluations au seuil le 6 octobre ; le supplément a tourné du 2 au 6 octobre. L'analyse finale à cinq graines du 9 octobre 2026 a confirmé le rejet ; le rapport a été assemblé en anglais et en français le même jour, puis développé à la demande de l'auteur sans qu'aucun nombre, aucune affirmation ni aucun artefact gelé ne soit modifié.
 
+#strong[9--27 octobre 2026 : publication et seconde étude.] Le 9 octobre 2026, l'auteur a approuvé la publication : le dépôt a été rendu public sous son étiquette avec le rapport dans les deux langues, l'article court et l'archive des enregistrements. Le même jour, l'étude complémentaire a été mise en file d'attente et le support qu'elle exige du pilote de campagne a été écrit : deux options du pilote de campagne, démarrage à chaud et fenêtre de rejeu, désactivées par défaut, avec un test de non-régression montrant que les lignes de commande par défaut reproduisent les manifestes enregistrés de la première étude sur quatre exécutions et quarante générations. Un pilote approuvé le 12 octobre 2026 a exécuté deux générations de 200 parties par bras sous le nouveau régime ainsi que la batterie de vérifications sur ses segments fenêtrés, ce qui a conduit à généraliser une vérification ; le 13 octobre 2026, l'auteur a gelé le protocole en version 2.0 (option A d'hyperparamètres, fenêtre de trois générations, règle de seuil) et approuvé la campagne, lancée à 15 h 02. Dix exécutions se sont enchaînées en séquence sans incident et se sont achevées le 26 octobre 2026 à 23 h 00 ; le seuil à temps égal de la seconde étude a été calculé à partir des cinq horloges grille le 25 octobre, avant qu'aucun score n'ait été lu ; les évaluations au seuil ont tourné pendant la nuit et l'analyse du 27 octobre 2026 n'a trouvé aucun avantage du graphe sous l'une ou l'autre lecture. La présente révision du rapport a suivi le même jour.
+
 == Chronologie
 <chronologie>
 #figure(
   align(center)[#table(
-    columns: (18.1%, 47.46%, 34.44%),
+    columns: (17.62%, 48.9%, 33.48%),
     align: (left,left,left,),
     table.header([Date], [Jalon], [Preuve produite],),
     table.hline(),
@@ -406,6 +411,10 @@ La boucle est classée comme démonstration, non comme preuve, pour des raisons 
     [26 septembre 2026], [Extension à cinq graines et supplément à deux composants approuvés avec pré-engagements], [Enregistrements de décision citant les pré-engagements],
     [27 septembre -- 6 octobre 2026], [Graines 4--5 (jusqu'au 2 octobre), évaluations au seuil (6 octobre) ; supplément (2--6 octobre) ; ablation du pooling analysée (2 octobre)], [Journaux d'exécution ; entrées d'ablation],
     [9 octobre 2026], [Analyse finale à cinq graines (le rejet tient) ; supplément analysé ; rapport assemblé en anglais et en français, puis développé], [Tables de résultats finales ; rapport],
+    [9 octobre 2026], [Dépôt rendu public à l'étiquette v2.0-report avec le rapport, l'article court et l'archive des enregistrements ; seconde étude mise en file d'attente ; options du pilote de campagne pour le démarrage à chaud et la fenêtre de rejeu écrites et épinglées à la première étude par un test de non-régression], [Enregistrement de publication ; entrée du test du pilote de campagne],
+    [12--13 octobre 2026], [Pilote de la seconde étude (deux générations × 200 parties par bras ; batterie de vérifications sur segments fenêtrés) ; protocole v2 gelé ; campagne lancée à 15 h 02], [Entrée du pilote ; hachage du protocole v2 ; journal de campagne],
+    [13--26 octobre 2026], [Seconde campagne : dix exécutions à démarrage à chaud en séquence, achevées le 26 octobre à 23 h 00 ; seuil à temps égal de la seconde étude (17.63 h) calculé à partir des cinq horloges grille le 25 octobre, avant qu'aucun score n'ait été lu], [Journaux d'horloge par exécution, manifestes, enregistrements d'évaluation ; entrée du seuil],
+    [26--27 octobre 2026], [Évaluations au seuil (21 ensembles) ; analyse de la seconde étude : aucun avantage du graphe détecté ; rapport révisé], [Tables de résultats et figures de la seconde étude ; entrée d'analyse],
   )]
   , caption: [Chronologie du projet de moteur et de l'étude, d'après l'historique des commits du dépôt, la note d'état du 12 juillet 2026, les journaux de la boucle, les entrées de journal datées et les enregistrements de décision portant les approbations de l'auteur ; la dernière colonne nomme l'artefact qui documente chaque jalon.]
   , kind: table
@@ -413,7 +422,7 @@ La boucle est classée comme démonstration, non comme preuve, pour des raisons 
 
 #figure(image("figures/fig10-timeline.png", width: 90.0%),
   caption: [
-    Chronologie du projet, juillet--octobre 2026 : projet de moteur (12 juillet), boucle d'auto-jeu antérieure classée comme démonstration (13 juillet -- 14 août) et programme de recherche (9 septembre -- 9 octobre) avec les gels (population le 9 septembre ; protocole et ouvertures le 10 septembre), la campagne principale (10--17 septembre), le seuil à temps mural égal (16 septembre), l'analyse à trois graines (19 septembre), les ablations (20 septembre -- 6 octobre), l'extension des graines (27 septembre -- 6 octobre) et l'analyse finale à cinq graines (9 octobre).
+    Chronologie du projet, juillet--octobre 2026 : projet de moteur (12 juillet), boucle d'auto-jeu antérieure classée comme démonstration (13 juillet -- 14 août) et programme de recherche (9 septembre -- 9 octobre) avec les gels (population le 9 septembre ; protocole et ouvertures le 10 septembre), la campagne principale (10--17 septembre), le seuil à temps mural égal (16 septembre), l'analyse à trois graines (19 septembre), les ablations (20 septembre -- 6 octobre), l'extension des graines (27 septembre -- 6 octobre) et l'analyse finale à cinq graines (9 octobre) ; seconde étude (13--27 octobre) : protocole v2 gelé et campagne lancée (13 octobre), dix exécutions à démarrage à chaud (13--26 octobre), seuil à temps mural égal issu des horloges grille (25 octobre), analyse (27 octobre).
   ]
 )
 <fig:timeline>
@@ -1055,7 +1064,7 @@ Deux limites subsistent. Le volume de caractérisation est de 100 parties par co
 #part[Partie III. Méthodologie]
 = Méthodologie expérimentale : un protocole pré-enregistré et gelé
 <sec:protocol>
-Ce chapitre énonce ce que la comparaison a fixé à l'avance, comment, quand et surtout pourquoi. Le protocole directeur a été gelé en version 1.0 le 10 septembre 2026, avant toute exécution de comparaison et après qu'un pilote eut confirmé chacune des valeurs mesurées qu'il contient ; il déclare que tout changement ultérieur constitue une nouvelle étude, et aucun n'a été fait. Les constantes, les hyperparamètres et les graines sont tabulés dans @sec:app-c ; les tables brutes par graine et la carte des points de contrôle au seuil dans @sec:app-d.
+Ce chapitre énonce ce que la comparaison a fixé à l'avance, comment, quand et surtout pourquoi. Le protocole directeur a été gelé en version 1.0 le 10 septembre 2026, avant toute exécution de comparaison et après qu'un pilote eut confirmé chacune des valeurs mesurées qu'il contient ; il déclare que tout changement ultérieur constitue une nouvelle étude, et aucun n'a été fait. Les constantes, les hyperparamètres et les graines sont tabulés dans @sec:app-c ; les tables brutes par graine et la carte des points de contrôle au seuil dans @sec:app-d. Un second protocole, version 2.0, a été gelé le 13 octobre 2026 pour l'étude complémentaire rapportée dans @sec:study2 ; il change le régime d'entraînement et rien d'autre, et y est décrit.
 
 == Pourquoi pré-enregistrer, et pourquoi geler, à petit budget de calcul
 <sec:protocol-why>
@@ -1219,7 +1228,7 @@ La frontière est tracée mécaniquement plutôt que laissée au jugement. #stro
 
 #figure(
   align(center)[#table(
-    columns: (15.23%, 18.76%, 29.58%, 36.42%),
+    columns: (15.04%, 18.36%, 31.86%, 34.73%),
     align: (left,left,left,left,),
     table.header([Date], [Porte], [Décision], [Fondement et conditions consignés],),
     table.hline(),
@@ -1234,8 +1243,12 @@ La frontière est tracée mécaniquement plutôt que laissée au jugement. #stro
     [2026-09-20], [G-SPEND], [Campagne d'ablations : A1 et A2, 3 graines chacune à pleine parité, ≈9 jours estimés], [Approuvée à pleine parité de trois graines avec la comparaison principale, parmi les dimensionnements présentés à partir des coûts d'exécution mesurés du bras graphe],
     [2026-09-26], [G-SPEND], [Exécution supplémentaire A1′ à deux composants, à un dimensionnement corrigé de ≈4 jours], [Approuvée à un dimensionnement corrigé d'environ quatre jours, après révision de l'estimation initiale ; placée en file d'attente après l'extension ; ses résultats confinés à un supplément à deux composants étiqueté comme tel],
     [2026-09-26], [G-SPEND], [Comparaison principale étendue à 5 graines par bras, ≈4.8 jours, sous trois pré-engagements énoncés avant toute nouvelle exécution], [Approuvée avec trois pré-engagements écrits (analyse sur toutes les graines, seuil inchangé, collecte en deux temps divulguée) ; graines ajoutées symétriquement aux deux bras sous des réglages identiques],
+    [2026-10-09], [G-PUBLIC], [Dépôt rendu public à l'étiquette v2.0-report avec le rapport dans les deux langues, l'article court et l'archive des enregistrements ; soumission d'une prépublication et billet public de l'auteur approuvés], [Décidée sur instruction écrite de l'auteur après le relevé de contrôle final et un nettoyage préalable à la publication ; les autres dépôts du programme restent privés ; les moteurs de référence tiers s'étaient révélés sous licence MIT, ce qui a clos la question des droits sans ambiguïté],
+    [2026-10-12], [G-SPEND], [Pilote de la seconde étude : deux générations × 200 parties par bras sous démarrage à chaud et fenêtre de trois générations, une graine hors des ensembles de graines des deux études], [Approuvée pour mesurer le coût du régime et exercer le chemin complet avant le gel ; ses scores n'entrent dans aucune analyse],
+    [2026-10-13], [G-FREEZE], [Protocole v2 gelé : démarrage à chaud, fenêtre de rejeu de trois générations, option A d'hyperparamètres (sans ajustement), graines 11--15, règle du seuil à temps égal ; hachage et commit consignés], [Approuvée sur le budget mesuré du pilote ; option B (un petit budget de réglage identique par bras) examinée et écartée ; tout changement ultérieur constitue une nouvelle étude],
+    [2026-10-13], [G-SPEND], [Seconde campagne : 2 bras × 5 graines × 10 générations × 500 parties, ≈295 h estimées, évaluations au seuil comprises], [Approuvée après le gel et lancée le même jour sous les règles d'exécution de la première étude (séquentielle, reprenable, garde disque, aucune autre charge sur la machine)],
   )]
-  , caption: [Décisions de porte prises par l'auteur pendant l'étude, dans l'ordre consigné dans le journal des décisions. G-RIGHTS et G-ADMIN n'ont pas été franchies ; rien n'a quitté la machine, de sorte que G-PUBLIC reste ouverte pour la diffusion. ]
+  , caption: [Décisions de porte prises par l'auteur pendant l'étude, dans l'ordre consigné dans le journal des décisions. G-ADMIN n'a pas été franchie ; G-RIGHTS a été résolue sans ambiguïté une fois établies les licences des moteurs de référence ; G-PUBLIC a été franchie une fois, le 9 octobre 2026, pour la publication de la première étude. ]
   , kind: table
   ) <tbl:gates>
 
@@ -1263,7 +1276,7 @@ Les règles de fonctionnement exigent un journal en ajout seul de chaque inciden
 
 #figure(
   align(center)[#table(
-    columns: (15.23%, 28.92%, 24.94%, 30.91%),
+    columns: (14.98%, 30.62%, 24.23%, 30.18%),
     align: (left,left,left,left,),
     table.header([Date], [Incident], [Comment il a été attrapé], [Conséquence],),
     table.hline(),
@@ -1283,6 +1296,8 @@ Les règles de fonctionnement exigent un journal en ajout seul de chaque inciden
     [2026-10-09], [Nombres de graines périmés dans deux chapitres ; limites « en attente » périmées dans le registre des affirmations], [balayage des valeurs de substitution avant l'assemblage], [corrigé dans les deux langues ensemble],
     [2026-10-09], [Le générateur de la table des coûts divisait le temps mural de cinq exécutions par 3 (imprimant 30.0 h / 61.2 h pour 18.0 h / 36.7 h) et portait une ligne de débit d'entraînement (≈770 / ≈195 pos/s) mesurée en conditions pilotes mais présentée comme débit de campagne], [chaque nombre re-dérivé de sa source brute avec une définition explicite lors de la rédaction de ce rapport], [générateur corrigé (référence journalisée 274 / 138 pos/s au lot 128, conditions énoncées) ; aucun score, intervalle ni affirmation affecté ; des citations de source par paragraphe et un vérificateur de traçabilité au niveau des jetons encadrent désormais le rapport],
     [2026-10-09], [La différence de capacité « +2.1% » citée dans chaque document était le rapport des comptes de paramètres arrondis (1.47/1.44 M) ; les comptes exacts donnent +1.5%], [la tabulation couche par couche des architectures a recompté les paramètres à partir du code], [corrigé partout sauf dans les journaux en ajout seul ; les comptes exacts sont désormais un artefact de résultats généré ; aucun verdict n'en dépend],
+    [2026-10-12], [La vérification d'estampille de la batterie pré-entraînement a échoué sur l'ensemble de segments fenêtré de la seconde étude : des enregistrements de deux générations face à un seul manifeste], [l'épinglage existant, exécuté sur le nouveau régime avant le gel du protocole], [la vérification généralisée aux manifestes de chaque génération de la fenêtre plutôt qu'assouplie ; elle passe toujours sur les segments de la première étude et échoue toujours avec un mauvais manifeste],
+    [2026-10-27], [Le seuil « substantiel » de la règle de rejet, laissé non chiffré dans les deux protocoles, est devenu opérant : la plus grande borne supérieure de la seconde étude (+0.090) n'est plus assez petite pour que le verdict soit indépendant d'un seuil], [application de la règle telle que gelée], [verdict énoncé avec ses bornes et les seuils sous lesquels il tient ; un seuil chiffré à pré-enregistrer dans toute étude successeur],
   )]
   , caption: [Incidents consignés par le journal méthodologique et les journaux d'expériences pendant l'étude : ce qui s'est passé, quelle règle ou vérification l'a attrapé, et ce qui a suivi. ]
   , kind: table
@@ -1639,6 +1654,267 @@ Les métriques d'entraînement sont calculées sur la partition de validation d'
 
 Les trajectoires par adversaire décomposent les courbes agrégées de @sec:results-cost : contre l'adversaire aléatoire, les graines grille approchent tôt du plafond et y restent, tandis que les graines graphe se dispersent largement et bougent de façon non monotone ; contre l'heuristique et l'adversaire à recherche, les deux bras restent dans une bande basse dont le mouvement d'une génération à l'autre est de l'ordre du bruit lié au nombre de parties à 20 parties (les évaluations intermédiaires ont été dimensionnées pour le suivi et non pour l'inférence ; seules les évaluations finales à 100 parties entrent dans les tables).
 
+= Une seconde étude : la comparaison sous une boucle à démarrage à chaud avec fenêtre de rejeu
+<sec:study2>
+La première étude a répondu à sa question dans un pipeline qui entraînait le réseau de chaque génération depuis une initialisation nouvelle, sur les seules parties de cette génération (@sec:pipeline, @sec:discussion). Ce chapitre rend compte d'une seconde étude, pré-enregistrée séparément, qui applique les deux remèdes usuels, poids transmis d'une génération à la suivante et entraînement sur une fenêtre de générations récentes, à l'identique aux deux bras, et demande si l'ordre des deux représentations y survit. Son protocole a été gelé le 13 octobre 2026, avant toute exécution ; sa campagne a démarré le même jour. Tout ce que la première étude avait gelé (adversaires, ouvertures, réglages d'évaluation, réseaux, décodeur) est réutilisé sans modification, de sorte que les deux études diffèrent par le régime d'entraînement et par rien d'autre.
+
+== Pourquoi une seconde étude
+<sec:study2-why>
+La réinitialisation à chaque génération de la première étude est neutre pour la comparaison, puisque les deux encodeurs ont vu exactement les mêmes enregistrements sous les mêmes conventions, mais elle borne le régime atteint : chaque réseau a appris sur les positions de 500 parties, et la force absolue après dix générations est restée proche du plafond contre l'adversaire aléatoire et autour de 0.1 contre les deux adversaires forts. La première objection d'un relecteur à la généralité d'un verdict négatif est donc que la représentation en graphe pourrait avoir besoin de plus de données par réseau, ou d'une trajectoire d'optimisation plus longue, avant que son a priori structurel ne paie. Les grands systèmes d'auto-jeu transmettent les poids de génération en génération et s'entraînent sur une fenêtre de rejeu de parties récentes ; une seconde étude sous ce régime est le test direct de l'objection. La question posée est celle de la première étude sous le nouveau régime (RQ-H1′), avec la même hypothèse (H1′) : le bras graphe atteint un score moyen plus élevé que le bras grille contre la population gelée, à budget égal. Une question secondaire, descriptive, demande si le contraste graphe−grille se rapproche de zéro ou change de signe par rapport à la première étude ; les deux études sont comparées côte à côte et jamais agrégées.
+
+== Ce qui change, et ce qui ne change pas
+<sec:study2-protocol>
+Exactement deux choses changent, dans les deux bras. D'abord, le réseau de la génération $g$ est initialisé depuis le point de contrôle final de la génération $g - 1$ (poids du modèle seulement ; l'optimiseur et le calendrier cosinus du taux d'apprentissage redémarrent à chaque génération, comme avant), la génération 0 partant de l'initialisation aléatoire ensemencée. Ensuite, la génération $g$ s'entraîne sur les enregistrements des générations $max (0 \, g - 2)$ à $g$, une fenêtre de rejeu de trois générations : 500 parties à la génération 0, 1 000 à la génération 1 et 1 500 à partir de la génération 2, toujours pour deux époques, de sorte que le nombre de pas de gradient croît avec la fenêtre.
+
+La politique d'hyperparamètres a été décidée par l'auteur au gel et enregistrée avec lui. Les deux bras conservent sans changement les réglages d'entraînement de la première étude (taux d'apprentissage 0.02, lot 256, décroissance des poids $10^(- 4)$, poids de la perte de valeur 0.6, deux époques par génération, perte de politique masquée par la légalité ; 96 canaux et 8 blocs pour le réseau grille, 152 unités cachées et 8 couches pour le réseau graphe). L'alternative examinée était un budget identique et pré-enregistré de trois taux d'apprentissage (0.02, 0.01 et 0.005) pour les deux bras sur la première graine seulement, le meilleur taux par bras servant ensuite aux graines restantes. Elle a été écartée parce qu'elle aurait triplé le coût d'une graine par bras (environ quatre jours de calcul de plus), sélectionné sur une seule graine, et parce que le pilote décrit plus bas n'a montré aucun signe d'instabilité d'optimisation sous le régime à démarrage à chaud. L'objection selon laquelle les deux bras tournent sous des réglages par défaut non ajustés reste donc ouverte pour les deux études et est énoncée comme une limite.
+
+Tout le reste est celui de la première étude : le moteur et ses réglages de recherche (128 et 32 simulations avec randomisation du plafond de simulations, bruit d'exploration, 12 plis de température, abandon sous −0.92 avec l'audit à 10%, plafond de 300 plis), le format des enregistrements, la perte et le masquage, les deux encodeurs et réseaux à 1 443 168 et 1 465 452 paramètres, le décodeur partagé, les trois adversaires gelés, les 250 ouvertures gelées, l'évaluation épinglée (400 simulations, sans bruit, 100 parties appariées à couleurs échangées par adversaire), les statistiques (la graine comme unité, bootstrap percentile à 10 000 rééchantillonnages, ensembles de graines indépendants pour le contraste, la troncature comme issue à part entière) et la règle de rejet, qui est celle de la première étude mot pour mot dans sa forme : aucun avantage du graphe cohérent entre graines sous les deux lectures du budget, et des intervalles au niveau des graines sur la différence graphe−grille excluant un avantage graphe substantiel, la plus grande borne supérieure étant rapportée pour que le lecteur applique le seuil de son choix. Les évaluations intermédiaires sont descriptives et n'entrent dans aucun verdict. Les nouvelles exécutions utilisent les graines 11 à 15, de sorte qu'aucun flux aléatoire n'est partagé avec les graines 1 à 5 de la première étude.
+
+Le plan est de nouveau deux bras, cinq graines, dix générations de 500 parties, lues deux fois. La lecture à exemples égaux compare les points de contrôle finaux. La lecture à temps mural égal compare, pour chaque exécution, le dernier point de contrôle achevé au plus tard à un seuil à temps égal défini, comme dans la première étude, par une règle indépendante des scores et écrite avant toute exécution : la médiane du temps mural total d'entraînement des cinq exécutions grille de cette étude, chaque total étant la somme des dix horloges par génération (auto-jeu, entraînement et export ; évaluations exclues), calculée une seule fois depuis les fichiers d'horloge quand les cinq exécutions grille existent et avant qu'aucun nombre inter-bras ne soit assemblé, et jamais recalculée. Le seuil de la seconde étude est sa propre valeur, mesurée sous le nouveau régime ; ce n'est pas les 18.77 h de la première.
+
+Les pré-engagements reprennent ceux de la première étude : les cinq graines par bras entrent dans l'analyse finale quelle que soit leur direction ; une graine n'est exclue que pour un plantage, une corruption ou une erreur du moteur, chacun consigné ; aucun adversaire, ouverture, réglage d'évaluation, hyperparamètre ou architecture n'est touché ; le chapitre est écrit depuis les tables gelées. Les règles d'arrêt sont inchangées, avec un ajout rendu explicite : une campagne en cours n'est jamais interrompue ni relancée sans l'auteur.
+
+== Implémentation et vérification avant le gel
+<sec:study2-implementation>
+Les deux changements ont été implémentés comme deux options du pilote de campagne, identiques pour les deux bras et désactivées par défaut, de sorte que le pilote de campagne avec ses options par défaut produit toujours les commandes de la première étude. Cette propriété a été épinglée par un test de non-régression avant le gel du protocole : pour quatre exécutions de la première étude (deux par bras) et leurs dix générations chacune, la commande d'entraînement produite par défaut a été comparée à la configuration d'entraînement enregistrée de chaque génération (liste des segments, graine, nombre d'époques, absence de point de contrôle d'initialisation), et la commande d'auto-jeu au manifeste enregistré (graine, nombre de parties, budgets de simulation, indice de génération) ; les quarante générations concordent. Le même test vérifie qu'avec les deux options actives, seules la liste des segments et le point de contrôle d'initialisation changent, que la génération 0 ne démarre jamais à chaud, et que la génération $g$ s'initialise depuis la génération $g - 1$. Les exécutions de la seconde étude sont écrites dans leurs propres répertoires, et chaque exécution enregistre son régime dans un fichier de configuration, de sorte que les enregistrements de la première étude ne peuvent être ni touchés ni confondus avec les nouveaux.
+
+Un pilote approuvé par l'auteur le 12 octobre 2026 a ensuite parcouru le chemin complet sur les deux bras, une graine hors des ensembles de graines des deux études, deux générations de 200 parties, démarrage à chaud et fenêtre de trois générations, avec une évaluation finale réduite à 20 parties par adversaire qui servait de contrôle du chemin et n'entre dans aucune analyse. Le @tbl:study2-pilot donne les phases mesurées. Sur les deux bras, la seconde génération s'est entraînée depuis les poids de la première sur les segments des deux générations, comme l'enregistrent les fichiers de configuration et les journaux d'entraînement ; le temps d'entraînement a crû en proportion du nombre d'enregistrements (facteur 2.15 sur le bras grille et 2.02 sur le bras graphe à l'entrée de la seconde génération dans la fenêtre) et est resté une petite part d'une génération, parce que l'auto-jeu domine : dans la première étude, l'entraînement occupait 3% d'une exécution grille (194 à 250 s par génération) et 5% d'une exécution graphe (516 à 833 s). La fenêtre atteignant trois générations à partir de la génération 2, le temps d'entraînement sur une exécution vaut environ 2.7 fois celui de la première étude, ce qui ajoute environ une heure à une exécution grille et trois heures à une exécution graphe. Le coût projeté de la campagne est donc celui de la première étude plus cet incrément : environ 18 à 20 h par exécution grille, 30 à 53 h par exécution graphe, environ 295 h soit 12 à 13 jours de calcul séquentiel sur portable pour les dix exécutions, plus environ un jour d'évaluations.
+
+#figure(
+  align(center)[#table(
+    columns: (14.66%, 17.94%, 17.29%, 21.23%, 28.88%),
+    align: (left,left,right,right,right,),
+    table.header([Bras], [Génération], [Auto-jeu (s)], [Entraînement (s)], [Enregistrements d'entraînement (segments)],),
+    table.hline(),
+    [grille], [0], [2 196], [78], [10 188 (4)],
+    [grille], [1], [2 584], [168], [22 399 (8)],
+    [graphe], [0], [5 821], [303], [10 655 (4)],
+    [graphe], [1], [5 800], [613], [21 386 (8)],
+  )]
+  , caption: [Pilote de la seconde étude (12 octobre 2026) : temps mural des phases d'auto-jeu et d'entraînement de chaque génération, une graine par bras, 200 parties par génération, démarrage à chaud et fenêtre de rejeu de trois générations, sur le même portable que les campagnes. La génération 1 s'entraîne sur les enregistrements des générations 0 et 1 ; le nombre d'enregistrements d'entraînement exclut la partie de validation. L'export a pris 2 s par génération sur les deux bras. Le pilote a mesuré des coûts et exercé le chemin ; son évaluation à 20 parties n'a aucune signification statistique et n'est pas rapportée. ]
+  , kind: table
+  ) <tbl:study2-pilot>
+
+Les sept vérifications automatiques du pipeline (@sec:pipeline) ont ensuite été passées sur l'ensemble de segments fenêtré de chaque exécution du pilote. Une vérification a échoué comme prévu. La vérification d'estampille exigeait que chaque enregistrement d'un jeu d'entraînement porte l'estampille génération-réseau d'un seul manifeste, ce qui encode l'hypothèse d'une génération par entraînement de la première étude ; sur l'ensemble fenêtré, elle a signalé des enregistrements de deux générations face à un seul manifeste. La vérification a été généralisée plutôt qu'assouplie : elle prend désormais les manifestes de chaque génération de la fenêtre et exige que l'ensemble des estampilles des enregistrements soit égal à l'ensemble des estampilles listées, de sorte que chaque enregistrement provient d'une génération listée et que chaque génération listée est présente ; elle passe toujours sur un ensemble de segments de la première étude avec un seul manifeste et échoue toujours avec un mauvais manifeste. Avec cette généralisation, toutes les vérifications ont passé sur les deux bras (normalisation de la politique sous le masque de légalité sur une passe avant réelle, légalité de toutes les cibles stockées, domaine des issues avec 17 054 des 22 856 enregistrements grille et 11 298 des 21 822 enregistrements graphe tronqués et exclus de la perte de valeur, estampilles des enregistrements, sauvegarde et reprise identiques au bit près, et séparation des entrées d'entraînement d'avec les fichiers d'évaluation).
+
+== Exécution
+<sec:study2-execution>
+Le protocole a été gelé le 13 octobre 2026 sous son empreinte de contenu, avec la politique d'hyperparamètres, la fenêtre de trois générations et la règle de seuil décidées par l'auteur, et la campagne a été approuvée et lancée le même jour à 15:02 CET, après vérification que la machine était inoccupée, que 161 GB de disque étaient libres pour une garde de 20 GB, et que l'empreinte du protocole gelé était inchangée. Les dix exécutions se déroulent séquentiellement sur le même portable que la première étude, en alternant grille puis graphe pour chaque graine de 11 à 15, de sorte qu'une interruption laisserait aux deux bras un nombre égal de graines ; chaque exécution est reprenable à la granularité de la génération depuis ses manifestes enregistrés, et des évaluations intermédiaires de 20 parties par adversaire aux générations 5 et 8 ne servent qu'aux figures de trajectoire. Aucun autre processus lourd ne tourne sur la machine pendant la campagne, puisque les horloges par génération sont la mesure de la lecture à temps mural égal. Le @tbl:study2-runs enregistre chaque exécution à son achèvement.
+
+#figure(
+  align(center)[#table(
+    columns: (27.09%, 22.91%, 22.91%, 27.09%),
+    align: (left,left,left,right,),
+    table.header([Exécution], [Début], [Fin], [Horloge d'entraînement (h)],),
+    table.hline(),
+    [grille, graine 11], [13 oct. 2026 15:02], [14 oct. 2026 09:33], [17.46],
+    [graphe, graine 11], [14 oct. 2026 09:33], [16 oct. 2026 02:39], [39.28],
+    [grille, graine 12], [16 oct. 2026 02:39], [16 oct. 2026 21:46], [17.95],
+    [graphe, graine 12], [16 oct. 2026 21:46], [18 oct. 2026 13:40], [37.33],
+    [grille, graine 13], [18 oct. 2026 13:40], [19 oct. 2026 08:19], [17.63],
+    [graphe, graine 13], [19 oct. 2026 08:19], [21 oct. 2026 17:55], [52.85],
+    [grille, graine 14], [21 oct. 2026 17:55], [22 oct. 2026 12:18], [17.46],
+    [graphe, graine 14], [22 oct. 2026 12:18], [24 oct. 2026 10:44], [42.20],
+    [grille, graine 15], [24 oct. 2026 10:44], [25 oct. 2026 06:27], [18.52],
+    [graphe, graine 15], [25 oct. 2026 06:27], [26 oct. 2026 23:00], [36.27],
+  )]
+  , caption: [Registre d'exécution de la campagne de la seconde étude : début et fin de chaque exécution (CET) et son temps mural total d'entraînement, somme des dix horloges par génération (auto-jeu, entraînement et export ; temps d'évaluation exclu). Dix générations de 500 parties par exécution, démarrage à chaud et fenêtre de rejeu de trois générations, en séquence sur un portable. ]
+  , kind: table
+  ) <tbl:study2-runs>
+
+== Résultats
+<sec:study2-results>
+Chaque table de cette section montre chaque graine ; les scores excluent les parties tronquées, rapportées dans leur propre colonne ; les intervalles sont des intervalles bootstrap percentiles à 95% sur les graines (10 000 rééchantillonnages), les deux bras étant rééchantillonnés indépendamment pour les contrastes. Les tables brutes avec les colonnes de sensibilité se trouvent dans @sec:app-d-study2 ; la provenance de chaque nombre dans @sec:app-e.
+
+=== Le verdict en un paragraphe
+<le-verdict-en-un-paragraphe-1>
+Sous les deux lectures de budget, le bras graphe ne montre aucun avantage cohérent entre graines contre aucun adversaire, et chaque intervalle sur la différence de score graphe−grille inclut zéro : les six contrastes ponctuels se situent entre −0.052 et +0.013, et les plus grandes bornes supérieures sont +0.090 à exemples égaux, contre l'adversaire de recherche, et +0.055 à temps mural égal. La première condition de la règle gelée est donc remplie sous les deux lectures. Sa seconde condition parle, comme dans la première étude, d'un avantage « substantiel » sans en chiffrer le seuil ; les bornes sont donc énoncées plutôt qu'un seuil choisi après coup : la règle rejette H1′ pour tout seuil supérieur à +0.090 ; pour les seuils compris entre +0.055 et +0.090, la lecture à temps mural égal rejette tandis que la lecture à exemples égaux laisse non exclu un avantage du graphe contre l'adversaire de recherche ; la borne réalisée de la première étude était +0.028. #strong[H1′ n'est pas étayée] : aucun avantage du graphe n'a été détecté sous l'une ou l'autre lecture, et les données ne peuvent pas en exclure un petit, inférieur à environ 0.09, contre l'adversaire de recherche à exemples égaux. Le reste de la section présente la preuve graine par graine.
+
+=== Lecture 1 : nombre égal d'exemples d'entraînement
+<lecture-1-nombre-égal-dexemples-dentraînement-1>
+Les deux bras sont comparés à leurs points de contrôle de la génération 10, chaque exécution ayant engendré dix générations de 500 parties sous des budgets de simulation identiques et s'étant entraînée dessus ; sous le régime à démarrage à chaud, chaque point de contrôle a de plus hérité des poids des neuf qui le précèdent.
+
+#figure(
+  align(center)[#table(
+    columns: (16.81%, 14.85%, 15.72%, 20.09%, 15.72%, 16.81%),
+    align: (left,left,right,right,right,right,),
+    table.header([Bras], [Graine], [Score B-RND], [Troncature B-RND], [Score B-HEU], [Score B-MCTS],),
+    table.hline(),
+    [grille], [11], [0.984], [5%], [0.040], [0.100],
+    [grille], [12], [0.984], [4%], [0.055], [0.075],
+    [grille], [13], [0.995], [1%], [0.105], [0.175],
+    [grille], [14], [0.990], [2%], [0.120], [0.260],
+    [grille], [15], [0.989], [7%], [0.065], [0.045],
+    [graphe], [11], [1.000], [0%], [0.125], [0.245],
+    [graphe], [12], [0.995], [4%], [0.030], [0.070],
+    [graphe], [13], [0.940], [42%], [0.080], [0.145],
+    [graphe], [14], [0.928], [24%], [0.030], [0.100],
+    [graphe], [15], [0.992], [41%], [0.105], [0.110],
+  )]
+  , caption: [Seconde étude, lecture à exemples égaux. Score au point de contrôle final (génération 10) de chaque exécution contre chaque adversaire gelé, cinq exécutions d'entraînement indépendantes à démarrage à chaud par bras (graines 11 à 15, dix générations de 500 parties, fenêtre de rejeu de trois générations) ; 100 parties appariées à couleurs échangées par adversaire et par exécution sur les 250 ouvertures gelées, à 400 simulations par coup sans bruit d'exploration. Score = moyenne sur les parties décidées (victoire 1, nulle 0.5, défaite 0). Troncature = part des 100 parties arrêtées au plafond de 300 demi-coups ; aucune partie contre B-HEU ou B-MCTS n'a été tronquée par l'un ou l'autre bras. ]
+  , kind: table
+  ) <tbl:study2-same-examples>
+
+Contre l'adversaire aléatoire légal, les graines grille obtiennent de 0.984 à 0.995 et les graines graphe de 0.928 à 1.000 ; contre l'heuristique, les graines grille de 0.040 à 0.120 et les graines graphe de 0.030 à 0.125 ; contre l'adversaire de recherche, les graines grille de 0.045 à 0.260 et les graines graphe de 0.070 à 0.245. Le bras graphe tronque de 0 à 42% de ses parties contre l'adversaire aléatoire, trois graines entre 24 et 42% et deux entre 0 et 4% ; le bras grille de 1 à 7%. Les plages par graine des deux bras se recouvrent contre chaque adversaire, et la dispersion entre les graines d'un même bras contre l'adversaire de recherche (0.045 à 0.260 pour le bras grille) dépasse toute différence entre les bras. Cinq graines par bras ne peuvent pas résoudre des différences à l'intérieur d'une telle dispersion.
+
+#figure(
+  align(center)[#table(
+    columns: (18.5%, 27.09%, 27.09%, 27.31%),
+    align: (left,left,left,left,),
+    table.header([Bras], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
+    table.hline(),
+    [grille], [0.989 \[0.985, 0.992\]], [0.077 \[0.051, 0.104\]], [0.131 \[0.068, 0.200\]],
+    [graphe], [0.971 \[0.943, 0.996\]], [0.074 \[0.040, 0.108\]], [0.134 \[0.090, 0.196\]],
+  )]
+  , caption: [Seconde étude, lecture à exemples égaux. Score moyen au niveau des graines par bras et par adversaire, avec l'intervalle bootstrap à 95% sur les cinq graines (10 000 rééchantillonnages) ; mêmes exécutions, adversaires et volume d'évaluation que le @tbl:study2-same-examples. ]
+  , kind: table
+  ) <tbl:study2-same-examples-means>
+
+=== Lecture 2 : temps mural égal sur la même machine
+<lecture-2-temps-mural-égal-sur-la-même-machine-1>
+Chaque exécution est prise au dernier point de contrôle qu'elle avait achevé dans le seuil à temps mural égal propre à la seconde étude, 17.63 heures, la médiane du temps mural total d'entraînement des cinq exécutions grille (17.46, 17.95, 17.63, 17.46 et 18.52 heures), calculée le 25 octobre 2026 à partir des seuls fichiers d'horloge, avant qu'aucun score de l'étude n'ait été lu, et jamais recalculée. Le seuil sélectionne les générations 10, 9, 10, 10 et 9 pour les graines grille 11 à 15, et les générations 4, 5, 3, 3 et 4 pour les graines graphe 11 à 15 (en comptant le réseau initial comme génération 1 ; dans les journaux d'exécution, ces points de contrôle sont étiquetés gen009/gen008/gen009/gen009/gen008 et gen003/gen004/gen002/gen002/gen003). Lorsque le point de contrôle au seuil est le dernier, l'évaluation finale est réutilisée ; les sept autres ensembles ont été joués après la campagne, au même volume et avec les graines de seuil épinglées.
+
+#figure(
+  align(center)[#table(
+    columns: (16.81%, 14.85%, 15.72%, 20.09%, 15.72%, 16.81%),
+    align: (left,left,right,right,right,right,),
+    table.header([Bras], [Graine], [Score B-RND], [Troncature B-RND], [Score B-HEU], [Score B-MCTS],),
+    table.hline(),
+    [grille], [11], [0.984], [5%], [0.040], [0.100],
+    [grille], [12], [0.984], [5%], [0.060], [0.110],
+    [grille], [13], [0.995], [1%], [0.105], [0.175],
+    [grille], [14], [0.990], [2%], [0.120], [0.260],
+    [grille], [15], [0.973], [7%], [0.065], [0.075],
+    [graphe], [11], [0.995], [1%], [0.110], [0.160],
+    [graphe], [12], [0.984], [4%], [0.115], [0.095],
+    [graphe], [13], [0.762], [58%], [0.140], [0.140],
+    [graphe], [14], [0.965], [28%], [0.065], [0.120],
+    [graphe], [15], [0.958], [40%], [0.025], [0.080],
+  )]
+  , caption: [Seconde étude, lecture à temps mural égal. Score de chaque exécution à son dernier point de contrôle achevé dans le seuil de 17.63 heures (graines grille aux générations 10, 9, 10, 10, 9 ; graines graphe aux générations 4, 5, 3, 3, 4), contre chaque adversaire gelé ; même évaluation que le @tbl:study2-same-examples (100 parties appariées par adversaire, 250 ouvertures gelées, 400 simulations, sans bruit). Troncature = part des parties au plafond de 300 demi-coups ; aucune contre B-HEU ou B-MCTS. ]
+  , kind: table
+  ) <tbl:study2-same-wallclock>
+
+#figure(
+  align(center)[#table(
+    columns: (18.5%, 27.09%, 27.09%, 27.31%),
+    align: (left,left,left,left,),
+    table.header([Bras], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
+    table.hline(),
+    [grille], [0.985 \[0.979, 0.992\]], [0.078 \[0.053, 0.105\]], [0.144 \[0.092, 0.206\]],
+    [graphe], [0.933 \[0.846, 0.986\]], [0.091 \[0.056, 0.124\]], [0.119 \[0.094, 0.144\]],
+  )]
+  , caption: [Seconde étude, lecture à temps mural égal. Score moyen au niveau des graines par bras et par adversaire, avec l'intervalle bootstrap à 95% sur les cinq graines (10 000 rééchantillonnages) ; mêmes exécutions et volume d'évaluation que le @tbl:study2-same-wallclock. ]
+  , kind: table
+  ) <tbl:study2-same-wallclock-means>
+
+À temps égal, le bras graphe est lu à ses troisième à cinquième points de contrôle et le bras grille à son neuvième ou dixième. La moyenne du bras graphe contre l'adversaire aléatoire tombe à 0.933 \[0.846, 0.986\] contre 0.985 \[0.979, 0.992\], un écart porté par la graine 13 (0.762 avec 58% de troncature) et par les graines 14 et 15 (28% et 40% de troncature) ; contre l'heuristique, sa moyenne est de 0.091 \[0.056, 0.124\] contre 0.078 \[0.053, 0.105\], et contre l'adversaire de recherche de 0.119 \[0.094, 0.144\] contre 0.144 \[0.092, 0.206\], chaque intervalle recouvrant son homologue. Trois à cinq générations à démarrage à chaud du bras graphe atteignent donc, contre les deux adversaires forts, le niveau qu'atteignent neuf ou dix générations grille, et l'écart contre l'adversaire aléatoire est de nouveau le canal de troncature. La lecture impute au bras graphe son coût mesuré sur cette machine, 2.34 fois celui du bras grille par exécution, ce qui est son rôle ; ce qu'elle ne peut pas faire avec cinq graines, c'est séparer des moyennes dont les intervalles se recouvrent sur plus de la moitié de leur largeur.
+
+=== Le contraste entre bras
+<le-contraste-entre-bras-1>
+#figure(
+  align(center)[#table(
+    columns: (35.6%, 32.09%, 32.31%),
+    align: (left,right,right,),
+    table.header([Adversaire], [Exemples égaux : graphe − grille], [Temps mural égal : graphe − grille],),
+    table.hline(),
+    [B-RND (aléatoire légal)], [−0.018 \[−0.045, +0.008\]], [−0.052 \[−0.140, +0.002\]],
+    [B-HEU (heuristique)], [−0.003 \[−0.046, +0.039\]], [+0.013 \[−0.032, +0.055\]],
+    [B-MCTS (recherche, 6 400 simulations)], [+0.003 \[−0.082, +0.090\]], [−0.025 \[−0.091, +0.034\]],
+  )]
+  , caption: [Seconde étude, le contraste pré-enregistré : différence des scores moyens au niveau des graines (bras graphe moins bras grille), avec l'intervalle bootstrap à 95% sur les graines (cinq graines indépendantes à démarrage à chaud par bras, rééchantillonnées indépendamment, 10 000 rééchantillonnages), par adversaire gelé et par lecture de budget. Une valeur négative favorise le bras grille. ]
+  , kind: table
+  ) <tbl:study2-contrast>
+
+Aucun des six contrastes n'exclut zéro. Contre l'adversaire aléatoire légal, la différence graphe−grille est de −0.018 \[−0.045, +0.008\] à exemples égaux et de −0.052 \[−0.140, +0.002\] à temps égal ; contre l'heuristique, −0.003 \[−0.046, +0.039\] et +0.013 \[−0.032, +0.055\] ; contre l'adversaire de recherche, +0.003 \[−0.082, +0.090\] et −0.025 \[−0.091, +0.034\]. Les contrastes ponctuels sont à moins de 0.05 de zéro dans cinq cellules sur six, et la sixième touche zéro à sa borne supérieure. Les intervalles sont plus larges que ceux de la première étude dans quatre des six cellules, le plus large s'étendant sur 0.17 contre l'adversaire de recherche, où les graines des deux bras s'étalent de 0.045 à 0.260.
+
+La première condition de la règle gelée demande l'absence d'un ordre cohérent entre graines en faveur du bras graphe. Les graines graphe surpassent les graines grille dans 3, 2 et 2 des 5 paires de même indice contre les trois adversaires à exemples égaux (13, 11 et 13 des 25 paires croisées), et dans 2, 3 et 2 sur 5 (7, 15 et 11 sur 25) à temps égal : aucun adversaire n'ordonne les graines en faveur du bras graphe sous l'une ou l'autre lecture. La seconde condition demande des intervalles excluant un avantage graphe substantiel, sans nombre attaché : la plus grande borne supérieure est +0.090 à exemples égaux et +0.055 à temps égal. Le verdict est celui énoncé en tête de la section, dans ces termes ; l'étude ne revendique aucun seuil qu'elle n'a pas pré-enregistré, et le lecteur peut appliquer celui de son choix.
+
+=== Troncature et lecture de sensibilité
+<troncature-et-lecture-de-sensibilité>
+#figure(image("figures/fig7-truncation-study2.png", width: 85.0%),
+  caption: [
+    Seconde étude : part des 100 parties d'évaluation finale contre l'adversaire aléatoire légal (B-RND) arrêtées au plafond de 300 demi-coups, par exécution ; en bleu, les cinq graines grille (11 à 15, de gauche à droite) ; en rouge, les cinq graines graphe. Points de contrôle finaux (génération 10) de dix exécutions à démarrage à chaud, 100 parties appariées à couleurs échangées chacune sur les 250 ouvertures gelées à 400 simulations.
+  ]
+)
+<fig:study2-truncation>
+
+La troncature ne survient de nouveau que contre l'adversaire aléatoire, dans aucune des 20 cellules contre l'heuristique et l'adversaire de recherche. Aux points de contrôle finaux, le bras graphe tronque 0%, 4%, 42%, 24% et 41% de ses parties contre l'adversaire aléatoire pour les graines 11 à 15, le bras grille 5%, 4%, 1%, 2% et 7% (@fig:study2-truncation) ; aux points de contrôle au seuil, 1%, 4%, 58%, 28% et 40% contre 5%, 5%, 1%, 2% et 7%. La pathologie de conversion de la première étude, présente là dans chaque graine graphe (20 à 57%), persiste dans trois graines graphe sur cinq et est absente dans deux, dont les taux se situent dans la bande du bras grille. Le score qui exclut les troncatures est proche entre les bras, mais sous le traitement de sensibilité, chaque partie tronquée comptée 0.5, la différence graphe−grille contre l'adversaire aléatoire est de −0.101 \[−0.187, −0.012\] à exemples égaux et de −0.131 \[−0.256, −0.015\] à temps égal, et les deux intervalles excluent zéro ; les quatre autres contrastes sont inchangés sous tout traitement, n'ayant aucune troncature. Sous le régime à démarrage à chaud, le déficit du bras graphe contre l'adversaire le plus faible n'est donc plus un déficit dans les parties décidées ; c'est un déficit à les décider, concentré dans trois graines.
+
+=== Trajectoires et coût
+<trajectoires-et-coût>
+#figure(image("figures/fig1-score-vs-time-study2.png", width: 90.0%),
+  caption: [
+    Seconde étude : score moyen contre la population gelée (moyenne des trois adversaires, troncatures exclues) en fonction du temps mural d'entraînement cumulé, pour les dix exécutions à démarrage à chaud ; évaluations aux générations 5, 8 et 10 (20, 20 et 100 parties par adversaire). Bleu : bras grille ; rouge : bras graphe ; une ligne par graine, étiquetée à son extrémité. La ligne verticale en pointillés marque le seuil à temps mural égal de la seconde étude, 17.63 heures.
+  ]
+)
+<fig:study2-score-time>
+
+#figure(image("figures/fig5-per-opponent-study2.png", width: 100.0%),
+  caption: [
+    Seconde étude : score contre chaque adversaire gelé aux générations 5, 8 et 10 (20, 20 et 100 parties appariées par adversaire), une ligne par exécution, cinq graines à démarrage à chaud par bras ; en bleu, le bras grille ; en rouge, le bras graphe ; troncatures exclues. Les points intermédiaires reposent sur 20 parties et ne servent qu'à la trajectoire.
+  ]
+)
+<fig:study2-per-opponent>
+
+La @fig:study2-score-time place les dix exécutions sur un axe de temps commun : les exécutions grille s'achèvent entre 17.46 et 18.52 heures de temps mural d'entraînement, les exécutions graphe entre 36.27 et 52.85 heures, et au seuil les deux nuages se recouvrent en score. La @fig:study2-per-opponent montre les trajectoires par adversaire ; les points intermédiaires reposent sur 20 parties et ne se lisent que pour leur forme. Les profils d'horloge d'entraînement des exécutions graphe ont pris deux formes, une montée jusqu'à un pic vers la génération 4 suivie d'une descente vers des durées proches de celles de la grille à la génération 10 pour les graines 11 et 14, et un profil plat pour les graines 12, 13 et 15 ; l'horloge par génération de la graine 13 a crû de façon monotone de 14 456 s à 21 112 s et en a fait l'exécution la plus lente de la campagne, à 52.85 heures.
+
+#figure(
+  align(center)[#table(
+    columns: (50.11%, 24.62%, 25.27%),
+    align: (left,right,right,),
+    table.header([Métrique], [Bras grille], [Bras graphe],),
+    table.hline(),
+    [Temps mural d'entraînement par exécution, graines 11 à 15], [17.46 / 17.95 / 17.63 / 17.46 / 18.52 h], [39.28 / 37.33 / 52.85 / 42.20 / 36.27 h],
+    [Temps mural d'entraînement par exécution, moyenne de 5 graines], [17.80 h], [41.59 h (2.34×)],
+    [Coût moyen d'auto-jeu], [12.8 s/partie], [29.9 s/partie],
+    [Score contre la population, lecture à exemples égaux], [0.399], [0.393],
+    [Score contre la population, lecture à temps mural égal (seuil 17.63 h)], [0.402], [0.381],
+  )]
+  , caption: [Seconde étude, résumé des coûts et des scores par bras. Le temps mural d'entraînement couvre la génération en auto-jeu, l'entraînement et l'export pour les dix générations d'une exécution, parties d'évaluation exclues, sur la machine d'étude (Apple M1 Pro, quatre threads de travail, exécutions séquentielles) ; coût d'auto-jeu = ce temps mural divisé par 5 000 parties. Score contre la population = moyenne, sur les trois adversaires gelés, du score moyen au niveau des graines, troncatures exclues. Les paramètres, l'inférence et les mesures de référence du débit sont inchangés par rapport à la première étude. ]
+  , kind: table
+  ) <tbl:study2-cost>
+
+Les dix exécutions ont consommé 296.9 heures de temps mural d'entraînement (grille 89.0 h, graphe 207.9 h), contre une projection d'environ 295 heures issue du pilote, sur un seul ordinateur portable, sans calcul payant. Le bras graphe a coûté 2.34 fois le bras grille par exécution, contre 2.04 dans la première étude : la fenêtre de rejeu ajoute du temps d'entraînement en proportion du nombre d'enregistrements sur les deux bras, et l'entraînement du bras graphe est le plus coûteux des deux. Les scores contre la population diffèrent de 0.006 à exemples égaux et de 0.021 à temps égal en faveur du bras grille, contre 0.081 et 0.079 dans la première étude.
+
+== Les deux études côte à côte
+<sec:study2-interaction>
+La comparaison entre les études est descriptive. Les deux études utilisent des ensembles de graines différents, deux changements de régime ont été appliqués à la fois, et aucun intervalle n'est calculé d'une étude à l'autre ; les deux jeux d'intervalles sont placés l'un à côté de l'autre et lus comme tels.
+
+#figure(
+  align(center)[#table(
+    columns: (20.88%, 22.64%, 28.35%, 28.13%),
+    align: (left,left,right,right,),
+    table.header([Adversaire], [Lecture], [Première étude : graphe − grille], [Seconde étude : graphe − grille],),
+    table.hline(),
+    [B-RND], [exemples égaux], [−0.169 \[−0.272, −0.062\]], [−0.018 \[−0.045, +0.008\]],
+    [B-HEU], [exemples égaux], [−0.064 \[−0.111, −0.017\]], [−0.003 \[−0.046, +0.039\]],
+    [B-MCTS], [exemples égaux], [−0.009 \[−0.055, +0.028\]], [+0.003 \[−0.082, +0.090\]],
+    [B-RND], [temps mural égal], [−0.161 \[−0.278, −0.048\]], [−0.052 \[−0.140, +0.002\]],
+    [B-HEU], [temps mural égal], [−0.059 \[−0.087, −0.029\]], [+0.013 \[−0.032, +0.055\]],
+    [B-MCTS], [temps mural égal], [−0.018 \[−0.066, +0.025\]], [−0.025 \[−0.091, +0.034\]],
+  )]
+  , caption: [Le contraste graphe−grille des deux études, par adversaire gelé et par lecture de budget : différence des scores moyens au niveau des graines avec l'intervalle bootstrap à 95% sur les graines (cinq graines indépendantes par bras dans chaque étude, rééchantillonnées indépendamment, 10 000 rééchantillonnages). Première étude : graines 1 à 5, le réseau de chaque génération entraîné depuis une initialisation nouvelle sur les parties de cette génération (seuil 18.77 h). Seconde étude : graines 11 à 15, démarrage à chaud et fenêtre de rejeu de trois générations (seuil 17.63 h). Les études ne sont pas agrégées. ]
+  , kind: table
+  ) <tbl:study1-vs-study2>
+
+Le contraste s'est rapproché de zéro contre chaque adversaire sous les deux lectures. Contre l'adversaire aléatoire, il est passé de −0.169 à −0.018 à exemples égaux et de −0.161 à −0.052 à temps égal ; contre l'heuristique, de −0.064 à −0.003 et de −0.059 à +0.013 ; contre l'adversaire de recherche, de −0.009 à +0.003 et de −0.018 à −0.025. Quatre contrastes qui excluaient zéro dans la première étude l'incluent dans la seconde, et le signe a changé dans deux cellules, toutes deux à l'intérieur d'intervalles qui incluent zéro. Le déficit du bras graphe de la première étude n'est plus visible à exemples égaux et est réduit à temps mural égal, où il survit sous la forme d'un intervalle touchant zéro contre l'adversaire aléatoire. Ce que la seconde étude ne montre pas, c'est un avantage quelconque du bras graphe : ses deux contrastes ponctuels positifs (+0.003 et +0.013) sont les plus petits nombres de leurs lignes.
+
+Les niveaux absolus des bras ont bougé dans des directions différentes. La moyenne du bras graphe contre l'adversaire aléatoire est montée de 0.812 à 0.971 à exemples égaux, là où logeait son déficit de la première étude ; ses moyennes contre l'heuristique et l'adversaire de recherche sont passées de 0.065 à 0.074 et de 0.115 à 0.134. La moyenne du bras grille contre l'heuristique est descendue de 0.129 \[0.098, 0.165\] à 0.077 \[0.051, 0.104\], deux intervalles qui ne se recouvrent pas, tandis que ses moyennes contre l'adversaire aléatoire et l'adversaire de recherche sont restées à moins de 0.01 (0.981 à 0.988 ; 0.124 à 0.131). Lu de façon descriptive, le régime à démarrage à chaud avec fenêtre de trois générations n'a pas élevé la force atteinte contre les adversaires forts en dix générations à ces réglages ; il a resserré l'écart entre les bras, et pour le bras grille contre l'heuristique il a coïncidé avec un niveau plus bas. Que ce niveau plus bas soit un effet du régime (un réseau transmis de génération en génération s'entraîne sur une fenêtre qui comprend ses propres parties antérieures) ou de l'ensemble de graines ne peut être tranché à partir de deux études de cinq graines, et l'étude ne le tranche pas.
+
+#figure(image("figures/fig6-training-metrics-study2.png", width: 100.0%),
+  caption: [
+    Seconde étude : exactitude top-1 de la politique en validation (à gauche) et exactitude de la valeur sur les échantillons non tronqués (à droite) après la première époque de chaque génération, telles qu'imprimées par l'entraîneur sur la partition de validation de l'ensemble d'entraînement fenêtré de la génération ; une ligne par exécution, cinq graines à démarrage à chaud par bras ; en bleu, le bras grille ; en rouge, le bras graphe. Diagnostics d'entraînement, non mesures de force.
+  ]
+)
+<fig:study2-training>
+
+Les diagnostics d'entraînement (@fig:study2-training) séparent une exécution des neuf autres. Neuf exécutions terminent la dixième génération avec une exactitude de la valeur comprise entre 73.3% et 92.1% sur leur partition de validation ; la graine graphe 15 ne dépasse jamais 45% et termine à 35.2%, avec un top-1 de la politique qui descend de 7.9% à 4.7%, et pourtant son point de contrôle final obtient 0.992 contre l'adversaire aléatoire (41% de troncature), 0.105 contre l'heuristique et 0.110 contre l'adversaire de recherche, à l'intérieur des bandes des autres graines. Dans la première étude, l'exactitude de la valeur de chaque exécution graphe était montée dans la bande du bras grille. L'exécution est conservée, comme l'exigent les pré-engagements ; elle montre que sous ce régime un réseau peut jouer au niveau de ses pairs tout en ajustant mal ses propres données fenêtrées, et l'étude ne dispose d'aucune mesure qui l'explique.
+
+Trois limites bornent cette section. Le mouvement d'une étude à l'autre n'est pas attribuable séparément au démarrage à chaud ou à la fenêtre, puisque les deux ont été appliqués à la fois, par construction. Les hyperparamètres sont les réglages par défaut non ajustés de la première étude dans les deux bras, un choix fait au gel et énoncé comme une limite des deux études ; un bras graphe ajusté, ou un bras grille ajusté, pourrait se situer ailleurs. Et dix générations restent un régime précoce : la seconde étude a rapproché le pipeline de la pratique courante des systèmes d'auto-jeu, et la force absolue contre les adversaires forts n'a pas bougé avec lui, ce qui dit que le budget, et non seulement le régime, borne ce que l'une ou l'autre représentation montre ici.
+
+Dans ces limites, la seconde étude répond à l'objection qu'elle a été conçue pour tester. L'ordre de la première étude ne survit pas au régime à démarrage à chaud sous la forme d'un déficit : la représentation en graphe, transmise de génération en génération et entraînée sur une fenêtre de parties récentes, joue contre la population gelée aussi bien que la représentation en grille à exemples égaux, dans les limites d'intervalles à cinq graines, et à moins de 0.05 d'elle à temps égal, pour 2.34 fois le coût. Elle ne joue pas mieux. L'hypothèse d'origine, selon laquelle la représentation en graphe apprend une meilleure politique à budget égal, n'est étayée dans aucun des deux régimes ; ce qui a changé de l'un à l'autre est la taille de l'écart, d'un net avantage de la grille à aucun que cinq graines puissent détecter, avec une pathologie de conversion que le régime a fait disparaître dans deux graines graphe et laissée dans trois.
+
 #part[Partie V. Discussion et conclusion]
 = Discussion et menaces à la validité
 <sec:discussion>
@@ -1692,11 +1968,11 @@ Une variante (Hive de base, sans extensions), une machine, un petit budget (dix 
 
 == Une propriété du pipeline qui borne la force absolue atteinte
 <une-propriété-du-pipeline-qui-borne-la-force-absolue-atteinte>
-Une propriété du pipeline partagé mérite d'être énoncée aussi clairement que possible, parce qu'elle conditionne la manière dont les « dix générations » de cette étude doivent être lues. Le pilote de campagne entraîne le réseau de chaque génération à partir d'une initialisation fraîche issue de la graine, pendant deux époques, sur les seuls enregistrements de cette génération ; il ne transmet à l'entraîneur ni point de contrôle de démarrage à chaud ni fenêtre de rejeu (@sec:pipeline). La boucle s'améliore néanmoins de génération en génération, parce que le réseau de la génération $g$ est entraîné sur des parties jouées par la recherche guidée par le réseau de la génération $g - 1$, et que cette recherche est plus forte que le réseau brut ; mais aucun poids n'est reporté et aucun enregistrement n'est réutilisé. Chaque réseau voit donc les positions de 500 parties, ce qui est un petit ensemble d'entraînement au regard des standards de l'apprentissage par auto-jeu, et la force absolue atteinte après dix générations (près du plafond de score contre l'adversaire aléatoire, autour de 0.1 contre les deux adversaires forts) doit être lue à la lumière de ce fait. Pour la #emph[comparaison];, la propriété est neutre : elle est identique dans les deux bras, les deux encodeurs voient exactement les mêmes enregistrements, et le protocole gelé spécifiait des conventions d'entraînement identiques plutôt qu'une politique particulière de démarrage à chaud. Pour la #emph[généralisation] du résultat, c'est une limite qui s'ajoute à celles déjà énumérées : un pipeline qui accumulerait les données et reporterait les poids atteindrait un régime différent, dans lequel l'ordre des bras est une question ouverte. Une étude successeur devrait reporter les poids d'une génération à l'autre et s'entraîner sur une fenêtre de générations récentes, comme le font les grands systèmes d'auto-jeu, les deux changements étant appliqués à l'identique aux deux bras.
+Une propriété du pipeline partagé mérite d'être énoncée aussi clairement que possible, parce qu'elle conditionne la manière dont les « dix générations » de cette étude doivent être lues. Le pilote de campagne entraîne le réseau de chaque génération à partir d'une initialisation fraîche issue de la graine, pendant deux époques, sur les seuls enregistrements de cette génération ; il ne transmet à l'entraîneur ni point de contrôle de démarrage à chaud ni fenêtre de rejeu (@sec:pipeline). La boucle s'améliore néanmoins de génération en génération, parce que le réseau de la génération $g$ est entraîné sur des parties jouées par la recherche guidée par le réseau de la génération $g - 1$, et que cette recherche est plus forte que le réseau brut ; mais aucun poids n'est reporté et aucun enregistrement n'est réutilisé. Chaque réseau voit donc les positions de 500 parties, ce qui est un petit ensemble d'entraînement au regard des standards de l'apprentissage par auto-jeu, et la force absolue atteinte après dix générations (près du plafond de score contre l'adversaire aléatoire, autour de 0.1 contre les deux adversaires forts) doit être lue à la lumière de ce fait. Pour la #emph[comparaison];, la propriété est neutre : elle est identique dans les deux bras, les deux encodeurs voient exactement les mêmes enregistrements, et le protocole gelé spécifiait des conventions d'entraînement identiques plutôt qu'une politique particulière de démarrage à chaud. Pour la #emph[généralisation] du résultat, c'est une limite qui s'ajoute à celles déjà énumérées : un pipeline qui accumulerait les données et reporterait les poids atteindrait un régime différent, dans lequel l'ordre des bras est une question ouverte. Cette étude successeur a été menée après la première rédaction de ce rapport, les deux changements étant appliqués à l'identique aux deux bras sous un second protocole gelé, et elle est rapportée dans @sec:study2 : sous une boucle à démarrage à chaud avec une fenêtre de rejeu de trois générations, le déficit n'est plus visible à exemples égaux et est réduit à temps égal, aucun avantage du graphe n'apparaît, et la force atteinte contre les deux adversaires forts ne monte pas.
 
 == Ce que nous ferions différemment
 <ce-que-nous-ferions-différemment>
-Quatre changements renforceraient une étude successeur sans changer sa logique. Le premier est le démarrage à chaud et la fenêtre de rejeu qui viennent d'être décrits. Les évaluations intermédiaires (20 parties par adversaire aux générations 5 et 8) ont été dimensionnées pour le suivi et sont trop bruitées pour porter une inférence ; une étude successeur devrait évaluer chaque génération au volume final si les courbes doivent être analysées. La lecture à temps égal devrait être accompagnée d'une lecture à #emph[énergie] égale sur des accélérateurs hétérogènes, puisque le temps mural seul cache l'asymétrie de fournisseur. Et la symétrie du réglage nul devrait être complétée par un petit budget de réglage identique et pré-enregistré pour les deux bras, de sorte que la fragilité sous valeurs par défaut soit mesurée plutôt qu'héritée.
+Quatre changements renforceraient une étude successeur sans changer sa logique. Le premier, le démarrage à chaud et la fenêtre de rejeu qui viennent d'être décrits, a été réalisé sous la forme de la seconde étude ; il laisse ouverte la question du réglage évoquée plus bas, et ses intervalles plus larges ont montré que la règle de rejet a besoin d'un seuil chiffré pour ce qui compte comme un avantage substantiel (@sec:study2-results). Les évaluations intermédiaires (20 parties par adversaire aux générations 5 et 8) ont été dimensionnées pour le suivi et sont trop bruitées pour porter une inférence ; une étude successeur devrait évaluer chaque génération au volume final si les courbes doivent être analysées. La lecture à temps égal devrait être accompagnée d'une lecture à #emph[énergie] égale sur des accélérateurs hétérogènes, puisque le temps mural seul cache l'asymétrie de fournisseur. Et la symétrie du réglage nul devrait être complétée par un petit budget de réglage identique et pré-enregistré pour les deux bras, de sorte que la fragilité sous valeurs par défaut soit mesurée plutôt qu'héritée.
 
 = Conclusion et perspectives
 <sec:conclusion>
@@ -1704,15 +1980,17 @@ Quatre changements renforceraient une étude successeur sans changer sa logique.
 <la-réponse-à-la-question-de-recherche>
 Le périmètre testé est Hive en jeu de base, un réseau relationnel simple à passage de messages à capacité appariée contre un réseau convolutif en grille, dix générations d'auto-jeu à petit budget, cinq graines indépendantes par bras, une population gelée de trois adversaires et 250 ouvertures gelées. À l'intérieur de ce périmètre, #strong[la réponse à la question de recherche principale est non] : la représentation en graphe n'a pas appris une meilleure politique que la représentation en grille, ni lorsque les deux bras ont consommé le même nombre d'exemples d'entraînement, ni lorsque les deux ont reçu le même temps mural sur la même machine, et la règle de rejet pré-enregistrée s'est déclenchée exactement telle qu'elle avait été gelée. Le déficit du bras graphe est le plus grand là où Hive est le plus tactique (contre l'adversaire aléatoire légal, −0.169 et −0.161 sous les deux lectures) et net contre l'adversaire heuristique (−0.064 et −0.059) ; contre l'adversaire de recherche, les deux bras sont indiscernables (−0.009 et −0.018, intervalles chevauchant zéro). Le bras graphe paie environ deux fois le temps mural par exécution. Son mode de défaillance caractéristique consiste à gagner du matériel sans convertir le gain ; il se manifeste en ce que 20--57% de ses parties contre l'adversaire aléatoire se terminent au plafond de coups, et il n'est observable que parce que la troncature n'a jamais été repliée en nulles.
 
+La seconde étude, pré-enregistrée séparément et menée sous une boucle à démarrage à chaud avec une fenêtre de rejeu de trois générations sur cinq nouvelles graines par bras, a testé la principale objection à cette réponse. Elle n'a trouvé aucun avantage du graphe sous l'une ou l'autre lecture : chaque intervalle graphe−grille inclut zéro, les plus grandes bornes supérieures étant +0.090 et +0.055 ; le déficit de la première étude n'est plus visible à exemples égaux et est réduit à temps égal ; la pathologie de conversion persiste dans trois graines graphe sur cinq ; et le bras graphe coûte 2.34 fois le bras grille par exécution. La réponse à la question de recherche tient donc dans la forme que les deux études réunies autorisent : à ce budget, sur cette variante, la représentation en graphe n'a appris une meilleure politique que la représentation en grille dans aucun des deux régimes d'entraînement, et sous le régime standard elle en a appris une équivalente, dans les limites d'intervalles à cinq graines, pour plus du double du coût.
+
 Le résultat borne, plutôt qu'il ne contredit, les constats positifs rapportés pour les graphes à Hex sous apprentissage fondé sur la valeur et aux échecs sous auto-jeu. Là où les tactiques d'encerclement à courte portée décident des parties et où les budgets sont petits, les artefacts de cadre d'un encodage en grille se révèlent moins coûteux que l'absence de cadre. L'analyse par composant ajoute une lecture mécaniste : des deux composants distinctifs du bras graphe, les relations typées par direction sont nécessaires à l'optimisation elle-même (les retirer à réglages identiques a fait diverger l'entraînement pour chaque graine), tandis que le biais de pooling global est dispensable à cette échelle.
 
 == Contributions, telles que démontrées
 <contributions-telles-que-démontrées>
-Trois contributions ont été annoncées en @sec:introduction ; chacune est démontrée dans les chapitres qui y sont nommés. (1) Une comparaison grille-contre-graphe contrôlée, à budget apparié et multi-graines pour Hive, les deux bras sous un même pipeline d'auto-jeu, avec une réponse négative pré-enregistrée (@sec:results-main, @sec:results-cost). (2) Un harnais de comparaison reproductible pour les jeux sans cadre et à empilement, publié avec les enregistrements bruts : un moteur validé côté règles, deux encodeurs épinglés à l'octet près entre deux langages, un décodeur partagé à actions variables, une évaluation consciente de la troncature et une discipline d'artefacts gelés (@sec:engine à @sec:protocol). (3) Une attribution par composant pour le bras graphe, avec un supplément à deux composants honnêtement étiqueté (@sec:results-ablations).
+Quatre contributions ont été annoncées en @sec:introduction ; chacune est démontrée dans les chapitres qui y sont nommés. (1) Une comparaison grille-contre-graphe contrôlée, à budget apparié et multi-graines pour Hive, les deux bras sous un même pipeline d'auto-jeu, avec une réponse négative pré-enregistrée (@sec:results-main, @sec:results-cost). (2) Un harnais de comparaison reproductible pour les jeux sans cadre et à empilement, publié avec les enregistrements bruts : un moteur validé côté règles, deux encodeurs épinglés à l'octet près entre deux langages, un décodeur partagé à actions variables, une évaluation consciente de la troncature et une discipline d'artefacts gelés (@sec:engine à @sec:protocol). (3) Une attribution par composant pour le bras graphe, avec un supplément à deux composants honnêtement étiqueté (@sec:results-ablations). (4) Une seconde comparaison pré-enregistrée sous le régime standard à démarrage à chaud, dont le protocole, le seuil et les graines ont été fixés avant toute exécution, et dont le résultat nul borne le résultat négatif de la première étude (@sec:study2).
 
 == Deux suites motivées par les données
 <deux-suites-motivées-par-les-données>
-La première suite vise la #strong[pathologie de conversion];, que les données isolent comme un défaut de politique plutôt qu'un défaut de valeur : l'exactitude de la valeur du bras graphe en entraînement est comparable à celle du bras grille, tandis que sa politique échoue sur les séquences forcées (@sec:results-qualitative). Une expérience naturelle est un remède au moment de la recherche, appliqué à l'identique aux deux bras sous la même évaluation gelée, en tant que changement à un seul composant du pipeline partagé : un budget d'évaluation plus profond dans les positions que la tête de valeur juge déjà gagnées, ou des cibles d'entraînement auxiliaires pour les coups forçants. La seconde suite concerne le #strong[constat de stabilité] : l'ablation et son supplément ont montré que les relations typées par direction importent surtout pour l'optimisation à cette échelle, mais l'écrêtage de gradient du supplément confond l'attribution. Une étude contrôlée des choix de normalisation et d'échelle de gradient pour des couches de graphe à relations partagées découplerait l'entraînabilité du contenu représentationnel et dirait si l'adjacence naïve, correctement stabilisée, est suffisante pour Hive.
+La première suite vise la #strong[pathologie de conversion];, que les données isolent comme un défaut de politique plutôt qu'un défaut de valeur : l'exactitude de la valeur du bras graphe en entraînement est comparable à celle du bras grille, tandis que sa politique échoue sur les séquences forcées (@sec:results-qualitative). Une expérience naturelle est un remède au moment de la recherche, appliqué à l'identique aux deux bras sous la même évaluation gelée, en tant que changement à un seul composant du pipeline partagé : un budget d'évaluation plus profond dans les positions que la tête de valeur juge déjà gagnées, ou des cibles d'entraînement auxiliaires pour les coups forçants. La seconde suite concerne le #strong[constat de stabilité] : l'ablation et son supplément ont montré que les relations typées par direction importent surtout pour l'optimisation à cette échelle, mais l'écrêtage de gradient du supplément confond l'attribution. Une étude contrôlée des choix de normalisation et d'échelle de gradient pour des couches de graphe à relations partagées découplerait l'entraînabilité du contenu représentationnel et dirait si l'adjacence naïve, correctement stabilisée, est suffisante pour Hive. L'une et l'autre suite ont désormais le régime à démarrage à chaud pour ligne de base, et l'une et l'autre devraient pré-enregistrer un seuil chiffré pour un avantage substantiel, dont les intervalles de la seconde étude ont montré la nécessité.
 
 == Une méthode qui tient indépendamment du signe
 <une-méthode-qui-tient-indépendamment-du-signe>
@@ -2294,7 +2572,7 @@ Chaque choix aléatoire de l'étude descend d'une graine enregistrée, de sorte 
     [Réseau de la génération 0], [initialisation aléatoire à graine fixée avec la graine de base, exporté avant tout auto-jeu],
     [Réseau en cours d'évaluation], [9000 + #emph[g] pour les évaluations en cours d'exécution (générations 4, 7 et 9) ; 9500 pour les ensembles de points de contrôle au seuil],
     [Adversaires], [B-RND 9101 ; B-MCTS 9201 ; B-HEU déterministe (sans graine)],
-    [Lanceur d'affrontements], [777 000 + #emph[g] pour les évaluations en cours d'exécution ; 888 000 pour les ensembles au seuil ; avec des ouvertures fixes, le calendrier d'ouvertures et de couleurs est indépendant de la graine (hachage du calendrier 8cd84b6564440666 reproduit entre exécutions avec des agents et des graines d'affrontement différents)],
+    [Lanceur d'affrontements], [777 000 + #emph[g] pour les évaluations en cours d'exécution ; 888 000 pour les ensembles au seuil ; avec des ouvertures fixes, le calendrier d'ouvertures et de couleurs est indépendant de la graine (hachages du calendrier reproduits entre exécutions avec des agents et des graines d'affrontement différents : 8cd84b6564440666 pour les ensembles de 20 parties, 3bf5d3e51cea0c0d pour les ensembles de 100 parties, identiques dans les deux études)],
     [Générateur d'ouvertures], [20260910],
     [Bootstrap], [graine de rééchantillonnage fixe ; 10 000 rééchantillonnages],
   )]
@@ -2342,6 +2620,44 @@ Tous les chiffres de temps mural de ce rapport ont été mesurés sur un seul Ap
   ) <tbl:app-c-inference>
 
 Le débit d'entraînement a été mesuré le 10 septembre 2026 au lot 128, passes avant et arrière, sur le backend GPU de la machine : 274 positions/s pour le réseau grille et 138 positions/s pour le réseau graphe (passe avant seule sur le CPU : 138 et 478 positions/s ; le réseau graphe est plus rapide par position sur le CPU et plus lent sur le GPU). Les exécutions de campagne ont chargé leurs données en processus et se sont entraînées à ces chiffres ou en dessous ; la génération des parties en auto-jeu, et non l'entraînement, domine le temps mural d'une génération dans l'un et l'autre bras. Le temps mural d'entraînement par exécution (auto-jeu, entraînement et export sur 10 générations × 500 parties, parties d'évaluation exclues) était de 16.7--19.1 h pour les exécutions grille et de 26.6--49.9 h pour les exécutions graphe, avec des moyennes de 18.0 h et 36.7 h (valeurs par graine dans @tbl:d-wallclock). Une partie d'évaluation à 400 simulations prenait ≈23--32 s ; l'adversaire de recherche à 6 400 simulations décide en ≈27 ms sur un seul thread ; un aller-retour par sous-processus vers le moteur coûte 21.7 µs. L'usage disque a été estimé à ≈3--5 Go par campagne à trois graines, contre une garde de 20 Go d'espace libre.
+
+== La seconde étude : constantes gelées, régime et graines
+<sec:app-c-study2>
+La seconde étude (@sec:study2) réutilise toutes les constantes du @tbl:app-c-frozen sauf là où le @tbl:app-c-study2 en dispose autrement, et tous les hyperparamètres du @tbl:app-c-hyper sauf les données d'entraînement par génération. Son protocole a été gelé en version 2.0 le 13 octobre 2026 sous l'empreinte de contenu donnée au @tbl:app-c-study2-hash ; les deux bras sont les configurations des deux premières lignes du @tbl:app-c-configs, exécutées avec les graines 11 à 15, et aucune variante d'ablation n'a été exécutée.
+
+#figure(
+  align(center)[#table(
+    columns: (24.94%, 39.29%, 20.97%, 14.79%),
+    align: (left,left,left,left,),
+    table.header([Constante], [Valeur], [Fixée le (2026)], [Approuvée par],),
+    table.hline(),
+    [Régime d'entraînement], [démarrage à chaud : le réseau de la génération $g$ est initialisé depuis le point de contrôle final de la génération $g - 1$ (poids du modèle seulement ; l'optimiseur et le calendrier cosinus redémarrent à chaque génération) ; la génération 0 part de l'initialisation aléatoire ensemencée], [13 oct. (protocole v2)], [l'auteur],
+    [Fenêtre de rejeu], [3 générations : la génération $g$ s'entraîne sur les enregistrements des générations $max (0 \, g - 2)$ à $g$, soit 500, 1 000, puis 1 500 parties à partir de la génération 2 ; 2 époques par génération], [13 oct.], [l'auteur],
+    [Politique d'hyperparamètres], [option A : les réglages de la première étude dans les deux bras, sans ajustement ; option B (trois taux d'apprentissage sur une graine par bras) examinée et écartée], [13 oct.], [l'auteur],
+    [Graines d'entraînement], [11--15 par bras ; graine de base 100 000 × graine ; aucun flux aléatoire partagé avec les graines 1--5], [13 oct.], [l'auteur],
+    [Seuil à temps mural égal de la seconde étude], [17.63 h = médiane du temps mural total d'entraînement des cinq exécutions grille de la seconde étude (17.46, 17.95, 17.63, 17.46, 18.52 h ; somme des dix horloges par génération, évaluations exclues), calculée une seule fois depuis les fichiers d'horloge le 25 octobre 2026 avant tout nombre inter-bras, jamais recalculée], [règle 13 oct. ; valeur 25 oct.], [règle : l'auteur ; valeur : calcul mécanique],
+    [Calendrier d'évaluation], [générations 5 et 8 à 20 parties appariées par adversaire (descriptif seulement) ; point de contrôle final à 100 ; points de contrôle au seuil à 100 avec graine de réseau 9500 et graine d'appariement 888 000], [13 oct. (comme dans la première étude)], [l'auteur],
+    [Actifs gelés réutilisés], [population d'adversaires, 250 ouvertures, réglages d'évaluation épinglés, les deux réseaux et le décodeur partagé, intouchés], [13 oct. (réutilisation déclarée)], [l'auteur],
+    [Ordre d'exécution], [dix exécutions séquentielles sur la machine de l'étude, en alternant grille puis graphe pour les graines 11 à 15 ; aucun autre processus lourd pendant la campagne], [13 oct.], [l'auteur],
+    [Document de protocole], [version 2.0 ; tout changement ultérieur est une nouvelle étude], [13 oct.], [l'auteur],
+  )]
+  , caption: [Constantes gelées de la seconde étude, avec la date à laquelle chacune a été fixée et l'approbation sous laquelle elle l'a été ; tout ce qui n'est pas listé est celui de la première étude. ]
+  , kind: table
+  ) <tbl:app-c-study2>
+
+#figure(
+  align(center)[#table(
+    columns: (32.45%, 67.55%),
+    align: (left,left,),
+    table.header([Artefact], [SHA-256],),
+    table.hline(),
+    [Protocole, version 2.0], [e296a12e8d1e3dee36c3b210​ececced62314e64657aede1c​b91b1ea452b461eb],
+  )]
+  , caption: [Empreinte de contenu du protocole gelé de la seconde étude ; les empreintes des artefacts réutilisés sont celles du @tbl:app-c-hashes. ]
+  , kind: table
+  ) <tbl:app-c-study2-hash>
+
+La dérivation des graines du @tbl:app-c-seeds s'applique sans changement avec $s$ = 11 à 15 : la graine de base est 100 000 × $s$, la génération $g$ utilise base + $g$ pour l'auto-jeu et l'entraînement, le réseau de la génération 0 est initialisé depuis la graine de base, et les graines d'évaluation (9000 + $g$ en cours d'exécution, 9500 pour les ensembles au seuil ; appariement 777 000 + $g$ en cours d'exécution, 888 000 pour les ensembles au seuil) sont celles de la première étude. Le pilote de campagne enregistre le régime de chaque exécution (démarrage à chaud actif, fenêtre 3) dans un fichier de configuration conservé avec l'exécution, et la configuration d'entraînement de chaque génération liste le point de contrôle d'initialisation et les segments effectivement lus.
 
 = Procédures statistiques et tables de résultats brutes
 <sec:app-d>
@@ -2540,6 +2856,73 @@ La carte est le contenu mesuré de la seconde lecture : à temps mural égal, le
 <bornes-de-sensibilité-au-plafond>
 Le protocole encadre l'estimateur primaire (troncatures exclues) par trois traitements alternatifs de chaque partie tronquée : comptée 0.5 (les scores de sensibilité du @tbl:d-sens), comptée comme défaite pour le bras testé, et comptée comme victoire pour lui ; ce dernier traitement est une borne supérieure de ce que tout plafond plus grand pourrait apporter à un bras qui tronque. Les bornes ont été calculées à partir des enregistrements par partie dans l'analyse du 19 septembre 2026 (trois graines par bras) : chaque partie tronquée étant comptée comme victoire pour le bras testé, le contraste graphe moins grille contre l'aléatoire légal reste de −0.072 sous la lecture à exemples égaux et de −0.058 sous la lecture à temps mural égal, et sa direction est inchangée sous chaque traitement (exclue, 0.5, défaite, victoire). Contre B-HEU et B-MCTS, aucune partie d'aucun des deux bras n'a été tronquée, de sorte que tous les traitements y coïncident. Le relevé d'analyse final ne réénonce pas les bornes à cinq graines. Parce que le bras graphe a tronqué 20--57% de ses parties contre l'aléatoire légal sur les graines originales et 23--44% sur les graines d'extension (grille : 0--1%, avec une graine d'extension à 11%), son score primaire contre cet adversaire est une moyenne sur moins de parties décidées (43 à 80 par graine) que celui du bras grille.
 
+== La seconde étude : scores de sensibilité, carte des seuils et temps mural
+<sec:app-d-study2>
+La seconde étude (@sec:study2) utilise sans changement les estimateurs de cette annexe : le même score, le même taux de troncature et le même score de sensibilité par cellule (graine, adversaire), le même bootstrap percentile au niveau des graines avec $B$ = 10 000 et le même rééchantillonnage indépendant des deux bras pour le contraste. Ses tables de scores par graine sous les deux lectures, ses moyennes au niveau des graines et ses contrastes sont donnés dans le chapitre (@tbl:study2-same-examples à @tbl:study2-contrast) et ne sont pas répétés ; cette section ajoute les scores de sensibilité, la carte des seuils avec les horloges cumulées qui la sous-tendent, et le temps mural par exécution.
+
+#figure(
+  align(center)[#table(
+    columns: (23.96%, 20.44%, 28.79%, 26.81%),
+    align: (left,left,right,right,),
+    table.header([Bras], [Graine], [Exemples égaux : sens. B-RND], [Temps mural égal : sens. B-RND],),
+    table.hline(),
+    [grille], [11], [0.9600], [0.9600],
+    [grille], [12], [0.9650], [0.9600],
+    [grille], [13], [0.9900], [0.9900],
+    [grille], [14], [0.9800], [0.9800],
+    [grille], [15], [0.9550], [0.9400],
+    [graphe], [11], [1.0000], [0.9900],
+    [graphe], [12], [0.9750], [0.9650],
+    [graphe], [13], [0.7550], [0.6100],
+    [graphe], [14], [0.8250], [0.8350],
+    [graphe], [15], [0.7900], [0.7750],
+  )]
+  , caption: [Seconde étude, scores de sensibilité contre l'aléatoire légal (B-RND) sous les deux lectures, pour les exécutions, points de contrôle et volume d'évaluation des @tbl:study2-same-examples et @tbl:study2-same-wallclock : la moyenne sur toutes les 100 parties de la cellule, chaque partie tronquée comptant 0.5, à la précision de quatre décimales des fichiers de résultats à valeurs séparées par des virgules. Contre B-HEU et B-MCTS, aucune partie d'aucune exécution n'a été tronquée sous l'une ou l'autre lecture, de sorte que le score de sensibilité y est égal au score des tables principales dans chaque cellule. Valeurs brutes, sans intervalle.]
+  , kind: table
+  ) <tbl:d2-sens>
+
+Sous le traitement de sensibilité, le contraste graphe moins grille contre l'aléatoire légal est de −0.101 \[−0.187, −0.012\] sous la lecture à exemples égaux et de −0.131 \[−0.256, −0.015\] sous la lecture à temps mural égal ; les quatre autres contrastes sont ceux du @tbl:study2-contrast, puisqu'il n'y a aucune troncature contre les deux autres adversaires. Les deux traitements de bornage (chaque partie tronquée comptée comme défaite ou comme victoire pour le bras testé) n'ont pas été calculés pour la seconde étude.
+
+Le seuil de la seconde étude a été fixé par la règle de son protocole : la médiane des temps muraux d'entraînement d'exécution complète de ses cinq exécutions grille, chacun étant la somme des dix horloges par génération, calculée exactement à partir des fichiers d'horloge le 25 octobre 2026, quelques minutes après la fin de la cinquième exécution grille et alors que la dernière exécution graphe en était à sa première génération, avant qu'aucun score de l'étude n'ait été lu. Les cinq totaux étaient de 17.4567, 17.9540, 17.6263, 17.4592 et 18.5176 h ; la médiane, 17.6263 h (63 454.8 s), est le total de la graine grille 13, dont le point de contrôle final se situe donc au seuil, inclusivement. Pour chaque exécution, le point de contrôle retenu est le dernier dont le temps mural d'entraînement cumulé n'excède pas le seuil (@tbl:d2-cutoff).
+
+#figure(
+  align(center)[#table(
+    columns: (16.08%, 14.32%, 20.26%, 17.4%, 31.94%),
+    align: (left,left,left,right,left,),
+    table.header([Bras], [Graine], [Point de contrôle au seuil], [Temps mural cumulé], [Ensemble d'évaluation],),
+    table.hline(),
+    [grille], [11], [gen009 (final)], [17.46 h], [ensemble final réutilisé],
+    [grille], [12], [gen008], [16.54 h], [ensemble à temps égal],
+    [grille], [13], [gen009 (final)], [17.63 h], [ensemble final réutilisé (exécution définissant le seuil)],
+    [grille], [14], [gen009 (final)], [17.46 h], [ensemble final réutilisé],
+    [grille], [15], [gen008], [16.77 h], [ensemble à temps égal],
+    [graphe], [11], [gen003], [17.25 h], [ensemble à temps égal],
+    [graphe], [12], [gen004], [17.51 h], [ensemble à temps égal],
+    [graphe], [13], [gen002], [13.95 h], [ensemble à temps égal],
+    [graphe], [14], [gen002], [15.38 h], [ensemble à temps égal],
+    [graphe], [15], [gen003], [14.93 h], [ensemble à temps égal],
+  )]
+  , caption: [Seconde étude, point de contrôle retenu pour la lecture à temps mural égal dans chacune des dix exécutions à démarrage à chaud : le dernier point de contrôle achevé dans le seuil à temps égal de 17.63 h de temps mural d'entraînement cumulé (identifiants indexés à partir de zéro ; gen009 est la dixième et dernière génération), avec les heures cumulées à ce point de contrôle d'après les fichiers d'horloge. Lorsque le point de contrôle retenu est le dernier, l'ensemble d'évaluation final (100 parties appariées par adversaire) sert aux deux lectures ; sinon, un ensemble à temps égal distinct, de même volume, a été évalué les 26--27 octobre 2026 avec les graines de seuil épinglées (réseau 9500, lanceur d'affrontements 888 000).]
+  , kind: table
+  ) <tbl:d2-cutoff>
+
+À temps mural égal, le bras graphe avait achevé 3--5 de ses dix générations, le bras grille neuf ou dix (première étude : 3--6 et neuf ou dix). Le @tbl:d2-wallclock donne les temps muraux d'entraînement d'exécution complète qui sous-tendent la carte ; leurs moyennes sont de 17.80 h (grille) et 41.59 h (graphe), soit un rapport de 2.34× (première étude : 2.04×).
+
+#figure(
+  align(center)[#table(
+    columns: (13.79%, 14.22%, 14.22%, 14.22%, 14.22%, 14.22%, 15.1%),
+    align: (left,right,right,right,right,right,right,),
+    table.header([Bras], [Graine 11], [Graine 12], [Graine 13], [Graine 14], [Graine 15], [Moyenne],),
+    table.hline(),
+    [grille], [17.46], [17.95], [17.63], [17.46], [18.52], [17.80],
+    [graphe], [39.28], [37.33], [52.85], [42.20], [36.27], [41.59],
+  )]
+  , caption: [Seconde étude, temps mural d'entraînement de chacune des dix exécutions à démarrage à chaud, en heures : les secondes de génération en auto-jeu, d'entraînement et d'export par génération, sommées sur les 10 générations de l'exécution (10 × 500 parties, fenêtre de rejeu de trois générations), parties d'évaluation exclues, d'après le journal de chronométrage de chaque exécution ; une seule machine, quatre threads de travail, exécutions séquentielles. Les sommes sont de 89.0 h (grille) et 207.9 h (graphe), soit 296.9 h au total. Le seuil à temps égal est la médiane des cinq valeurs grille.]
+  , kind: table
+  ) <tbl:d2-wallclock>
+
+Les figures de trajectoire de la seconde étude sont tracées comme celles de la première, directement à partir des enregistrements d'évaluation de chaque exécution aux points de contrôle des générations 5, 8 et 10 et de son journal de chronométrage ; la figure des métriques d'entraînement est extraite du journal de la seconde campagne, et les valeurs par exécution qu'elle montre à la première et à la dixième génération sont tabulées dans le relevé d'analyse.
+
 == Tables brutes des ablations
 <tables-brutes-des-ablations>
 Trois variantes du bras graphe ont été entraînées avec trois graines chacune au budget complet (10 générations × 500 parties, réglages d'auto-jeu, d'entraînement et d'évaluation identiques) et évaluées à leur point de contrôle de dixième génération sous la lecture à exemples égaux. Le @tbl:d-abl-runs résume les variantes ; les @tbl:d-abl-a2 et @tbl:d-abl-a1prime donnent les scores par graine des deux variantes qui se sont entraînées ; le @tbl:d-abl-contrast donne les contrastes contre le bras graphe complet.
@@ -2622,7 +3005,7 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
 
 #figure(
   align(center)[#table(
-    columns: (18.54%, 38.85%, 26.05%, 16.56%),
+    columns: (18.32%, 38.41%, 25.83%, 17.44%),
     align: (left,left,left,left,),
     table.header([Résultat dans le rapport], [Artefact généré], [Entrée brute], [Entrée de journal],),
     table.hline(),
@@ -2640,6 +3023,13 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
     [Taux de troncature à l'évaluation finale contre l'aléatoire légal par exécution], [`paper/`#sym.zws`figures/`#sym.zws`fig7-`#sym.zws`truncation.`#sym.zws`png`], [`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`B-`#sym.zws`RND.`#sym.zws`csv` par exécution], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01`],
     [Table d'ablation : divergence A1, effet nul A2, supplément A1′], [`results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [`data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`graph-`#sym.zws`{untyped,`#sym.zws`nogpool,`#sym.zws`untyped-`#sym.zws`clip}-`#sym.zws`s{1,`#sym.zws`2,`#sym.zws`3}/`#sym.zws`eval/` contre les finales du bras graphe complet], [`H7-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`23-`#sym.zws`a1-`#sym.zws`divergence-`#sym.zws`01` ; `H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`02-`#sym.zws`a2-`#sym.zws`nogpool-`#sym.zws`01` ; `H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`a1prime-`#sym.zws`01`],
     [Schémas du pipeline, des architectures et de la chronologie], [`paper/`#sym.zws`figures/`#sym.zws`fig8-`#sym.zws`pipeline.`#sym.zws`png`, `fig9-`#sym.zws`architectures.`#sym.zws`png`, `fig10-`#sym.zws`timeline.`#sym.zws`png` (`scripts/`#sym.zws`make_`#sym.zws`report_`#sym.zws`figures.`#sym.zws`py`)], [la documentation du système (`docs/inventory.md`), les en-têtes de journaux et le journal des décisions ; aucune quantité mesurée], [aucune],
+    [Seconde étude : scores par graine et taux de troncature, lecture à exemples égaux (2 bras × 5 graines × 3 adversaires, 100 parties chacun)], [`results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`{md,`#sym.zws`csv}`], [`data/`#sym.zws`runs/`#sym.zws`cmp2-`#sym.zws`{grid,`#sym.zws`graph}-`#sym.zws`s{11.`#sym.zws`.`#sym.zws`15}/`#sym.zws`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`*.`#sym.zws`csv`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`],
+    [Seconde étude : scores par graine, lecture à temps mural égal], [`results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`{md,`#sym.zws`csv}`], [`eval/`#sym.zws`tstar-`#sym.zws`gen00N-`#sym.zws`vs-`#sym.zws`*.`#sym.zws`csv` de chaque exécution `cmp2-*` (les fichiers du point de contrôle final lorsque le point de contrôle au seuil est le dernier) et `wallclock.json`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`],
+    [Seconde étude : contraste entre bras, les deux lectures ; table étude 1 contre étude 2], [`results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md` ; `results/`#sym.zws`study2/`#sym.zws`study1-`#sym.zws`vs-`#sym.zws`study2.`#sym.zws`md`], [les deux fichiers CSV ci-dessus et `results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`*.`#sym.zws`csv`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`],
+    [Seconde étude : seuil à temps égal T\*′ = 17.6263 h et carte des points de contrôle], [nombres dans le journal ; carte re-dérivée par `make_results.py --study 2`], [`wallclock.json` de `cmp2-grid-s11..15` (médiane des cinq totaux), puis de chaque exécution `cmp2-*`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`25-`#sym.zws`tstar-`#sym.zws`01`],
+    [Seconde étude : table des coûts et temps mural par exécution], [`paper/`#sym.zws`figures/`#sym.zws`fig2-`#sym.zws`score-`#sym.zws`cost-`#sym.zws`study2.`#sym.zws`md` ; `results/`#sym.zws`study2/`#sym.zws`wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md`], [`wallclock.json` par exécution `cmp2-*` ; `results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`*.`#sym.zws`csv`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01` ; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`13-`#sym.zws`campaign-`#sym.zws`01`],
+    [Seconde étude : score en fonction du temps mural, trajectoires par adversaire, troncature par exécution, métriques d'entraînement], [`paper/`#sym.zws`figures/`#sym.zws`fig{1,`#sym.zws`5,`#sym.zws`7}-`#sym.zws`*-`#sym.zws`study2.`#sym.zws`png`, `fig6-`#sym.zws`training-`#sym.zws`metrics-`#sym.zws`study2.`#sym.zws`png` (`make_figures.py --study 2`)], [`eval/*.csv` et `wallclock.json` par exécution `cmp2-*` ; `data/`#sym.zws`runs/`#sym.zws`campaign2.`#sym.zws`log`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01` (métriques d'entraînement tabulées dans son addendum)],
+    [Seconde étude : durées des phases du pilote ; registre d'exécution des dix exécutions], [nombres dans les journaux], [`data/`#sym.zws`runs/`#sym.zws`pilot2-`#sym.zws`{grid,`#sym.zws`graph}-`#sym.zws`s10/` ; `data/`#sym.zws`runs/`#sym.zws`cmp2-`#sym.zws`*/`#sym.zws`wallclock.`#sym.zws`json`, `data/`#sym.zws`runs/`#sym.zws`campaign2.`#sym.zws`log`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`12-`#sym.zws`pilot-`#sym.zws`01` ; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`13-`#sym.zws`campaign-`#sym.zws`01`],
   )]
   , caption: [Provenance de chaque table et figure générée : l'artefact dont elle est tirée, les enregistrements bruts à partir desquels cet artefact est calculé, et l'entrée de journal qui a consigné le résultat. Les répertoires d'exécution sont abrégés en `eval/…` pour `data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`<arm>-`#sym.zws`s<seed>/`#sym.zws`eval/`#sym.zws`…`. ]
   , kind: table
@@ -2647,7 +3037,7 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
 
 #figure(
   align(center)[#table(
-    columns: (41.94%, 32.67%, 25.39%),
+    columns: (42.26%, 32.74%, 25%),
     align: (left,left,left,),
     table.header([Preuve dans les chapitres de méthode], [Où elle réside], [Entrée de journal (date)],),
     table.hline(),
@@ -2662,6 +3052,9 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
     [Miroir Rust de l'encodeur graphe, vérification croisée dorée (160 positions), bras graphe de bout en bout à travers la même recherche], [`scripts/`#sym.zws`crosscheck_`#sym.zws`graph.`#sym.zws`py`, module graphe de `hive-nn`], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`graph-`#sym.zws`wiring-`#sym.zws`01` (2026-09-10)],
     [Matrice de comparaison, génération des ouvertures, test du harnais à calendrier fixe, dimensionnement de la campagne], [`configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`, `results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`, `results/`#sym.zws`comparison/`#sym.zws`opponents-`#sym.zws`manifest.`#sym.zws`md`], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`matrix-`#sym.zws`01` (2026-09-10)],
     [Vérifications d'assemblage du rapport et le défaut d'obsolescence trouvé par la passe de rendu], [`paper/`#sym.zws`final-`#sym.zws`control.`#sym.zws`md`], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01` (2026-10-09)],
+    [Seconde étude : options du pilote de campagne pour le démarrage à chaud et la fenêtre de rejeu, test de non-régression contre les manifestes enregistrés de la première étude (4 exécutions × 10 générations)], [`scripts/`#sym.zws`run_`#sym.zws`comparison.`#sym.zws`py`, `scripts/`#sym.zws`test_`#sym.zws`driver_`#sym.zws`equivalence.`#sym.zws`py`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`driver-`#sym.zws`01` (2026-10-09)],
+    [Seconde étude : pilote (2 générations × 200 parties par bras), batterie de vérifications sur shards fenêtrés, vérification d'estampille généralisée à plusieurs manifestes], [`scripts/`#sym.zws`pilot_`#sym.zws`h9.`#sym.zws`sh`, `scripts/`#sym.zws`run_`#sym.zws`h4_`#sym.zws`checks.`#sym.zws`sh`, `python/`#sym.zws`hivenet/`#sym.zws`checks.`#sym.zws`py`, `data/`#sym.zws`runs/`#sym.zws`pilot2-`#sym.zws`h4-`#sym.zws`checks.`#sym.zws`log`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`12-`#sym.zws`pilot-`#sym.zws`01` (2026-10-12)],
+    [Seconde étude : protocole v2 gelé, script de campagne, pilote des évaluations au seuil, commutateur d'analyse], [`docs/`#sym.zws`protocol-`#sym.zws`v2.`#sym.zws`md`, `scripts/`#sym.zws`campaign2.`#sym.zws`sh`, `scripts/`#sym.zws`tstar_`#sym.zws`evals_`#sym.zws`study2.`#sym.zws`py`, `scripts/make_results.py --study 2`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`13-`#sym.zws`campaign-`#sym.zws`01`, `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`25-`#sym.zws`tstar-`#sym.zws`01`, `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`],
   )]
   , caption: [Provenance des preuves des chapitres de méthode (validation du moteur, lignes de base, pipeline, encodeurs, conception de la campagne) : les artefacts et l'entrée de journal consignant chaque mesure. ]
   , kind: table
@@ -2669,11 +3062,11 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
 
 == Index des décisions
 <index-des-décisions>
-@tbl:prov-decisions liste les entrées du journal des décisions pertinentes pour cette étude avec leurs dates ; les entrées D-002, D-013 et D-018 concernent les autres projets du programme de recherche et sont omises. Les franchissements de porte sont marqués de leur porte.
+@tbl:prov-decisions liste les entrées du journal des décisions pertinentes pour cette étude avec leurs dates ; les entrées D-002, D-013, D-018 et D-040 concernent les autres projets du programme de recherche et sont omises. Les franchissements de porte sont marqués de leur porte.
 
 #figure(
   align(center)[#table(
-    columns: (14.13%, 20.31%, 65.56%),
+    columns: (13.91%, 19.87%, 66.23%),
     align: (left,left,left,),
     table.header([Entrée], [Date], [Décision],),
     table.hline(),
@@ -2706,6 +3099,13 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
     [D-030], [2026-09-26], [#strong[G-SPEND] : supplément A1′ à deux composants approuvé à son dimensionnement corrigé],
     [D-031], [2026-09-26], [#strong[G-SPEND] : extension à 5 graines par bras approuvée avec trois pré-engagements énoncés avant toute nouvelle exécution],
     [D-032], [2026-10-09], [Portée du rapport : édition détaillée, aucun artefact gelé, nombre ou affirmation modifié],
+    [D-033], [2026-10-09], [Forme du rapport : rapport académique autonome expliquant quoi, comment, quand et pourquoi, sans référence à des fichiers internes dans le corps],
+    [D-034], [2026-10-09], [Droits : les moteurs de référence tiers (Mzinga, nokamute) sont sous licence MIT ; résultats de validation publiables ; G-RIGHTS close],
+    [D-035], [2026-10-09], [Plan de diffusion (publication du dépôt, prépublication, billet public), chaque étape étant une décision G-PUBLIC distincte ; étude complémentaire mise en file d'attente avec un projet de protocole],
+    [D-036], [2026-10-09], [#strong[G-PUBLIC] : dépôt rendu public à l'étiquette v2.0-report avec le rapport, l'article court et l'archive des enregistrements ; prépublication et billet approuvés],
+    [D-037], [2026-10-12], [#strong[G-SPEND] : pilote de la seconde étude (2 générations × 200 parties par bras, démarrage à chaud et fenêtre de trois générations, graine hors des ensembles des deux études)],
+    [D-038], [2026-10-13], [#strong[G-FREEZE] : protocole v2 gelé (option A, fenêtre 3, graines 11--15, règle du seuil) ; sha256 e296a12e…b461eb, commit 4a22a24],
+    [D-039], [2026-10-13], [#strong[G-SPEND] : seconde campagne lancée (2 bras × 5 graines × 10 générations × 500 parties, évaluations au seuil comprises)],
   )]
   , caption: [Index des entrées du journal des décisions pertinentes pour cette étude, dans l'ordre de leur consignation. ]
   , kind: table
@@ -2748,6 +3148,12 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
     [#strong[Analyse finale à 5 graines (pré-engagée, D-031) : H1 reste rejetée.] Contrastes graphe−grille : B-RND −0.169 \[−0.272, −0.062\] / −0.161 \[−0.278, −0.048\] ; B-HEU −0.064 \[−0.111, −0.017\] / −0.059 \[−0.087, −0.029\] ; B-MCTS −0.009 \[−0.055, +0.028\] / −0.018 \[−0.066, +0.025\] (exemples égaux / temps mural égal) ; plus grande borne supérieure +0.028. Remplace les tables à 3 graines comme nombres finaux de l'étude.], [`H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01` ; `results/`#sym.zws`comparison/`], [graines 4--5 collectées après l'analyse à 3 graines (divulgué) ; T\* fixé à la valeur pré-enregistrée],
     [Supplément A1′ (à deux composants : arêtes non typées + écrêtage de gradient) : s'entraîne de façon finie et obtient des scores dans la bande du bras graphe complet (tous les IC de différence chevauchent 0) ; avec A1, la contribution mesurable des relations typées à cette échelle se concentre dans la stabilité d'optimisation ; elle n'est jamais attribuée au seul typage (facteur de confusion de l'écrêtage).], [`H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`a1prime-`#sym.zws`01` ; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [3 vs 5 graines ; intervalles larges ; confondu par construction],
     [La méthodologie de travail (délégation à l'IA au niveau des objectifs sous six portes réservées à l'humain, état dans des fichiers, vérification mécanique) a attrapé au moins cinq défauts de harnais ou de processus avant qu'ils ne puissent contaminer les résultats (interblocage du pipeline, erreur de mise en place du corpus, défaut d'adversaire du harnais d'évaluation, chemin silencieux de perte d'enregistrements, divergence NaN silencieuse), chacun journalisé au moment de sa détection.], [`docs/`#sym.zws`methodology-`#sym.zws`log.`#sym.zws`md` (espace de travail) ; journaux cités par incident dans @sec:working-method], [observations de processus issues d'une seule étude ; aucun contrôle contrefactuel],
+    [#strong[Seconde étude (protocole v2, démarrage à chaud + fenêtre de rejeu 3, graines 11--15) : H1′ n'est pas étayée.] Graphe−grille : B-RND −0.018 \[−0.045, +0.008\] / −0.052 \[−0.140, +0.002\] ; B-HEU −0.003 \[−0.046, +0.039\] / +0.013 \[−0.032, +0.055\] ; B-MCTS +0.003 \[−0.082, +0.090\] / −0.025 \[−0.091, +0.034\] (exemples égaux / temps mural égal à 17.63 h) ; aucun avantage graphe cohérent entre graines ; plus grandes bornes supérieures +0.090 et +0.055.], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01` ; `results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`], [5 graines par bras ; intervalles plus larges que ceux de la première étude ; un avantage graphe inférieur à ≈ 0.09 contre B-MCTS non exclu à exemples égaux ; aucun seuil chiffré dans la règle gelée],
+    [Seconde étude contre première (descriptif, sans agrégation) : le contraste s'est rapproché de zéro contre chaque adversaire sous les deux lectures (B-RND −0.169 → −0.018 et −0.161 → −0.052 ; B-HEU −0.064 → −0.003 et −0.059 → +0.013 ; B-MCTS −0.009 → +0.003 et −0.018 → −0.025).], [`results/`#sym.zws`study2/`#sym.zws`study1-`#sym.zws`vs-`#sym.zws`study2.`#sym.zws`md` ; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`], [ensembles de graines différents ; deux changements de régime à la fois ; aucun intervalle inter-études],
+    [Seconde étude : la pathologie de conversion persiste dans trois graines graphe sur cinq (24--42% de troncature contre B-RND aux points de contrôle finaux, 28--58% aux seuils) et est absente dans deux (0--4%) ; grille 1--7% ; avec les troncatures comptées 0.5, le contraste B-RND est de −0.101 \[−0.187, −0.012\] et −0.131 \[−0.256, −0.015\].], [`results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`*.`#sym.zws`csv` ; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`], [troncature contre B-RND seulement ; plafond de 300 plis ; lecture de sensibilité, non le score primaire],
+    [Coût de la seconde étude : horloge d'entraînement grille 17.46--18.52 h (moyenne 17.80 h), graphe 36.27--52.85 h (moyenne 41.59 h), rapport 2.34× (première étude 2.04×) ; la fenêtre ajoute du temps d'entraînement en proportion du nombre d'enregistrements, 3--5% d'une exécution ; au seuil, le bras grille avait achevé 9--10 générations, le bras graphe 3--5.], [`results/`#sym.zws`study2/`#sym.zws`wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md` ; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`13-`#sym.zws`campaign-`#sym.zws`01`, `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`12-`#sym.zws`pilot-`#sym.zws`01`, `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`25-`#sym.zws`tstar-`#sym.zws`01`], [une seule machine ; temps mural sur les fournisseurs de cette machine],
+    [Seconde étude : la force absolue contre les adversaires forts n'a pas monté sous le régime à démarrage à chaud en dix générations (grille vs B-HEU 0.077 contre 0.129 dans la première étude ; vs B-MCTS 0.131 contre 0.124) ; le score du bras graphe contre B-RND est monté de 0.812 à 0.971.], [`results/`#sym.zws`study2/`#sym.zws`study1-`#sym.zws`vs-`#sym.zws`study2.`#sym.zws`md`], [descriptif ; graines différentes ; réglages par défaut non ajustés dans les deux bras],
+    [La seconde étude a été pré-enregistrée : protocole v2 gelé le 13 octobre 2026 (sha256 e296a12e…b461eb) avant toute exécution ; son seuil calculé à partir des horloges grille le 25 octobre 2026 avant qu'aucun score n'ait été lu ; les cinq graines par bras analysées ; aucune relance ni exclusion.], [`docs/`#sym.zws`protocol-`#sym.zws`v2.`#sym.zws`md` ; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`25-`#sym.zws`tstar-`#sym.zws`01`, `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`13-`#sym.zws`campaign-`#sym.zws`01` ; D-038, D-039], [hyperparamètres non ajustés par choix (option A), énoncé comme une limite],
   )]
   , caption: [Le registre des affirmations et des preuves de ce rapport, reproduit depuis le fichier du dépôt sans sa colonne de section. Chaque affirmation faite dans le corps correspond à une ligne ; la colonne des limites énonce ce qui empêche une lecture plus large. ]
   , kind: table
@@ -2755,9 +3161,9 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
 
 == Données brutes, identifiants et hachages gelés
 <données-brutes-identifiants-et-hachages-gelés>
-#strong[Emplacement et agencement.] Les enregistrements bruts résident sur disque sous `data/runs/` dans le dépôt de l'étude ; ils ne sont pas sous contrôle de version. Il y a un répertoire par exécution d'entraînement, `cmp-<arm>-s<seed>`, avec `<arm>` dans {`grid`, `graph`} pour la comparaison principale (graines 1--5) et dans {`graph-untyped`, `graph-nogpool`, `graph-`#sym.zws`untyped-`#sym.zws`clip`} pour les ablations A1, A2 et A1′ (graines 1--3), plus `pilot0/` pour le pilote du pipeline. Chaque répertoire d'exécution contient : `selfplay/`#sym.zws`gen00N-`#sym.zws`*.`#sym.zws`bin` (shards binaires d'enregistrements de la génération N, format v3, estampillés par le modèle) avec `gen00N-`#sym.zws`manifest.`#sym.zws`json` (réseau et son empreinte, génération du modèle, version des enregistrements, type de partie, graine, nombre de parties, nombres de simulations complètes et économiques, fraction de coups complets, plis en température, réglages d'abandon, nombres de parties abandonnées et tronquées, nombre de positions, liste des shards) ; `checkpoints/`#sym.zws`gen00N/` (`hivenet-e0.pt`, `hivenet-e1.pt`, `train-config.json`) et le `gen00N-b1.onnx` exporté utilisé pour le jeu ; `eval/`#sym.zws`<checkpoint>-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`csv` avec son `.log` pour les évaluations intermédiaires (gen004, gen007) et finale (gen009), et `eval/`#sym.zws`tstar-`#sym.zws`gen00N-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`{csv,`#sym.zws`log}` pour le point de contrôle au seuil à temps égal ; et `wallclock.json`, le temps mural par génération en secondes dont dérivent chaque chiffre de temps et le seuil. Les journaux au niveau de la campagne sont `data/`#sym.zws`runs/`#sym.zws`campaign.`#sym.zws`log` (exécutions principales, graines 1--3), `extension.log` (graines 4--5), `ablations.log` et `tstar-evals.log`. Dérivation des graines : graine de base = 100 000 × graine ; la génération g utilise graine de base + g ; graine du réseau d'évaluation 9000 + gen (finales) ou 9500 (ensembles au seuil), graines des adversaires 9101 (aléatoire légal) et 9201 (recherche).
+#strong[Emplacement et agencement.] Les enregistrements bruts résident sur disque sous `data/runs/` dans le dépôt de l'étude ; ils ne sont pas sous contrôle de version. Il y a un répertoire par exécution d'entraînement, `cmp-<arm>-s<seed>`, avec `<arm>` dans {`grid`, `graph`} pour la comparaison principale (graines 1--5) et dans {`graph-untyped`, `graph-nogpool`, `graph-`#sym.zws`untyped-`#sym.zws`clip`} pour les ablations A1, A2 et A1′ (graines 1--3), plus `pilot0/` pour le pilote du pipeline. Chaque répertoire d'exécution contient : `selfplay/`#sym.zws`gen00N-`#sym.zws`*.`#sym.zws`bin` (shards binaires d'enregistrements de la génération N, format v3, estampillés par le modèle) avec `gen00N-`#sym.zws`manifest.`#sym.zws`json` (réseau et son empreinte, génération du modèle, version des enregistrements, type de partie, graine, nombre de parties, nombres de simulations complètes et économiques, fraction de coups complets, plis en température, réglages d'abandon, nombres de parties abandonnées et tronquées, nombre de positions, liste des shards) ; `checkpoints/`#sym.zws`gen00N/` (`hivenet-e0.pt`, `hivenet-e1.pt`, `train-config.json`) et le `gen00N-b1.onnx` exporté utilisé pour le jeu ; `eval/`#sym.zws`<checkpoint>-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`csv` avec son `.log` pour les évaluations intermédiaires (gen004, gen007) et finale (gen009), et `eval/`#sym.zws`tstar-`#sym.zws`gen00N-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`{csv,`#sym.zws`log}` pour le point de contrôle au seuil à temps égal ; et `wallclock.json`, le temps mural par génération en secondes dont dérivent chaque chiffre de temps et le seuil. Les journaux au niveau de la campagne sont `data/`#sym.zws`runs/`#sym.zws`campaign.`#sym.zws`log` (exécutions principales, graines 1--3), `extension.log` (graines 4--5), `ablations.log` et `tstar-evals.log`. Les exécutions de la seconde étude suivent le même agencement sous `cmp2-`#sym.zws`<arm>-`#sym.zws`s<seed>` (graines 11--15), chacune avec un `driver-`#sym.zws`config.`#sym.zws`json` consignant le régime (démarrage à chaud actif, fenêtre 3) ; son journal de campagne est `campaign2.log`, son journal d'évaluations au seuil `tstar2.log`, et les exécutions du pilote sont `pilot2-`#sym.zws`{grid,`#sym.zws`graph}-`#sym.zws`s10`. Dérivation des graines : graine de base = 100 000 × graine ; la génération g utilise graine de base + g ; graine du réseau d'évaluation 9000 + gen (finales) ou 9500 (ensembles au seuil), graines des adversaires 9101 (aléatoire légal) et 9201 (recherche).
 
-#strong[Volumes.] La campagne principale a compris 10 générations × 500 parties d'auto-jeu par exécution (30 000 parties d'auto-jeu par bras à trois graines au stade à 3 graines) et 100 parties appariées par évaluation (point de contrôle, adversaire) sur les ouvertures gelées ; la campagne s'est déroulée du 2026-09-10 12:42 au 2026-09-17 22:31 pour les graines 1--3 (≈163 h de temps machine, évaluations au seuil comprises), les graines 4--5 ayant été collectées du 2026-09-27 au 2026-10-02. L'empreinte disque n'est consignée dans la base de preuves que sous la forme des estimations au lancement (≈3--5 Go pour la campagne principale, ≈3--4 Go pour les ablations) contre 164 Go libres au lancement avec une garde de 20 Go ; les tailles exactes par exécution n'ont pas été journalisées. Depuis la suppression consignée dans D-024, le dépôt de l'étude est la seule copie du matériel antérieur à l'étude dont il a hérité (le point de contrôle de la boucle antérieure et ses données, 412 Mo et 75 Mo), ce qui explique que ces fichiers soient protégés par la porte des actions destructrices.
+#strong[Volumes.] La campagne principale a compris 10 générations × 500 parties d'auto-jeu par exécution (30 000 parties d'auto-jeu par bras à trois graines au stade à 3 graines) et 100 parties appariées par évaluation (point de contrôle, adversaire) sur les ouvertures gelées ; la campagne s'est déroulée du 2026-09-10 12:42 au 2026-09-17 22:31 pour les graines 1--3 (≈163 h de temps machine, évaluations au seuil comprises), les graines 4--5 ayant été collectées du 2026-09-27 au 2026-10-02. L'empreinte disque n'est consignée dans la base de preuves que sous la forme des estimations au lancement (≈3--5 Go pour la campagne principale, ≈3--4 Go pour les ablations) contre 164 Go libres au lancement avec une garde de 20 Go ; les tailles exactes par exécution n'ont pas été journalisées. La seconde campagne s'est déroulée du 2026-10-13 15:02 au 2026-10-26 23:00 (296.9 h de temps mural d'entraînement sur les dix exécutions), suivie d'environ 14 h d'évaluations au seuil les 26--27 octobre ; ses dix répertoires d'exécution totalisent 4.8 Go. Depuis la suppression consignée dans D-024, le dépôt de l'étude est la seule copie du matériel antérieur à l'étude dont il a hérité (le point de contrôle de la boucle antérieure et ses données, 412 Mo et 75 Mo), ce qui explique que ces fichiers soient protégés par la porte des actions destructrices.
 
 #strong[Artefacts gelés et leurs hachages.] @tbl:prov-hashes liste chaque artefact gelé ou épinglé avec l'identifiant consigné lors de son gel. Le hachage du protocole est consigné dans le journal des décisions sous forme abrégée ; la valeur complète a été recalculée à partir du commit gelé lors de la préparation de cette annexe et est identique au hachage du fichier actuel, ce qui confirme que le protocole n'a pas changé depuis son gel.
 
@@ -2773,11 +3179,14 @@ Chaque nombre de ce rapport est atteignable le long d'une seule chaîne. Les #st
     [Adversaire B-MCTS (`configs/`#sym.zws`baselines/`#sym.zws`mcts-`#sym.zws`nonet.`#sym.zws`toml`)], [2026-09-09], [sha256 3fc8f75cf2b4f21012dd61e9​924408fbfc32c8ea561aa96e​b44f1091ba07364e], [D-017],
     [Poids de l'heuristique (`configs/`#sym.zws`baselines/`#sym.zws`heuristic-`#sym.zws`weights.`#sym.zws`toml`)], [2026-09-09], [sha256 d0602f1895fbed70b6f84ac2​a3eb87bd68e811e53acf24d4​d7814a1495b0b97a ; épinglé par le test `weights_`#sym.zws`pinned_`#sym.zws`for_`#sym.zws`h3_`#sym.zws`baselines`], [D-014, D-017],
     [Code du moteur au gel de la population], [2026-09-09], [commit b94e7c1], [D-017],
-    [Ouvertures partagées (`results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`, 250 lignes)], [2026-09-10], [sha256 du contenu 63b318d071dfc3ecfae35856​36c8e6f7327ddc08e7aed86a​466f915f8005af7b ; sha256 du fichier gelé 538497390a3787299c67c3ca​138b8feacb369d55dc562881​d1aee45200cbccb2 ; graine du générateur 20260910 ; hachage du calendrier 8cd84b6564440666], [D-025],
+    [Ouvertures partagées (`results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`, 250 lignes)], [2026-09-10], [sha256 du contenu 63b318d071dfc3ecfae35856​36c8e6f7327ddc08e7aed86a​466f915f8005af7b ; sha256 du fichier gelé 538497390a3787299c67c3ca​138b8feacb369d55dc562881​d1aee45200cbccb2 ; graine du générateur 20260910 ; hachages du calendrier 8cd84b6564440666 (ensembles de 20 parties) et 3bf5d3e51cea0c0d (ensembles de 100 parties, les deux études)], [D-025 ; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`],
     [Réglages d'évaluation (`configs/`#sym.zws`eval-`#sym.zws`settings.`#sym.zws`toml`)], [2026-09-09], [400 simulations, aucun bruit d'exploration, argmax déterministe, plafond de 300 plis], [D-019],
     [Matrice de comparaison (`configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`)], [2026-09-10], [tailles pré-enregistrées et règle du seuil], [D-026],
     [Seuil à temps mural égal T\*], [2026-09-16], [18.77 h = médiane des totaux des trois exécutions grille originales (18.77, 16.73, 19.07 h)], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`16-`#sym.zws`progress-`#sym.zws`01` ; D-031],
     [Code de campagne et d'analyse], [2026-09-10 → 2026-10-09], [campagne ac58773 ; analyse 1c65269 (3 graines), 7db074d (5 graines) ; ablations 216fded → bffeea9 (garde contre les valeurs non finies) ; file d'attente A1′ 1fdd7ec], [journaux `H6-…`, `H7-…`],
+    [Protocole v2.0 (`docs/`#sym.zws`protocol-`#sym.zws`v2.`#sym.zws`md`), seconde étude], [2026-10-13], [sha256 e296a12e…b461eb au commit 4a22a24 (complet : e296a12e8d1e3dee36c3b210​ececced62314e64657aede1c​b91b1ea452b461eb)], [D-038],
+    [Seuil à temps mural égal T\*′, seconde étude], [2026-10-25], [17.6263 h = médiane des totaux des cinq exécutions grille (17.4567, 17.9540, 17.6263, 17.4592, 18.5176 h)], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`25-`#sym.zws`tstar-`#sym.zws`01`],
+    [Code de la seconde étude], [2026-10-09 → 2026-10-27], [options du pilote de campagne 008aaee ; batterie de vérifications 99be4ef ; script de campagne dc0b6c2 ; commutateur d'analyse b0f1598 ; figures 32297fe], [journaux `H9-…`],
   )]
   , caption: [Artefacts gelés et épinglés de l'étude avec les identifiants consignés lors de leur gel (hachages, commits, graines) et l'entrée du journal des décisions ou du journal qui les consigne. ]
   , kind: table
@@ -2789,7 +3198,7 @@ Les tables ci-dessous fixent les termes français utilisés dans cette édition,
 
 #figure(
   align(center)[#table(
-    columns: (28.04%, 48.12%, 23.84%),
+    columns: (27.37%, 49.45%, 23.18%),
     align: (left,left,left,),
     table.header([Terme (français)], [Définition], [Équivalent anglais],),
     table.hline(),
@@ -2807,6 +3216,10 @@ Les tables ci-dessous fixent les termes français utilisés dans cette édition,
     [point de contrôle], [Le réseau exporté à la fin d'une génération ; identifiants indexés à partir de zéro (gen000 à gen009).], [checkpoint],
     [parties appariées, à couleurs échangées], [Chaque ligne d'ouverture jouée une fois avec chaque couleur, de sorte que tous les bras, graines et adversaires font face à des calendriers identiques.], [paired colour-swapped games],
     [réglages d'évaluation épinglés], [400 simulations par décision, aucun bruit d'exploration, argmax déterministe ; fixés par fichier et par test.], [pinned evaluation settings],
+    [démarrage à chaud], [Initialisation du réseau de la génération $g$ depuis les poids du point de contrôle final de la génération $g - 1$, l'optimiseur et le calendrier redémarrant ; utilisé dans la seconde étude seulement, la première réinitialisant chaque génération.], [warm start],
+    [fenêtre de rejeu], [Les générations récentes dont les enregistrements servent à l'entraînement d'une génération ; 3 générations dans la seconde étude, la génération courante seule dans la première.], [replay window],
+    [seuil à temps mural égal de la seconde étude\*], [La médiane du temps mural total d'entraînement des cinq exécutions grille de la seconde étude, calculée une seule fois depuis les fichiers d'horloge avant tout nombre inter-bras ; une valeur propre, distincte des 18.77 h de la première étude.], [equal-time cutoff of the second study],
+    [seconde étude], [La comparaison pré-enregistrée séparément sous démarrage à chaud et fenêtre de rejeu (protocole version 2.0, gelé le 13 octobre 2026, graines 11 à 15) ; rapportée à côté de la première étude, jamais agrégée avec elle.], [second study],
   )]
   , caption: [Termes du plan d'étude.]
   , kind: table
@@ -2916,13 +3329,13 @@ C'est le seul endroit du rapport où commandes, noms de fichiers et identifiants
 
 == Ce qui est publié
 <ce-qui-est-publié>
-L'ensemble publié (release) est le dépôt `hive-`#sym.zws`graph-`#sym.zws`selfplay` et les enregistrements qu'il contient. Son accès et son étiquette de publication (release tag) sont fixés au moment de la diffusion ; au moment de la rédaction, rien n'a quitté la machine d'étude, et les licences des moteurs de référence tiers, utilisés uniquement pour la validation des règles, sont encore à l'examen.
+L'ensemble publié (release) est le dépôt `hive-`#sym.zws`graph-`#sym.zws`selfplay` et les enregistrements qu'il contient. La première étude a été publiée le 9 octobre 2026 à l'étiquette `v2.0-report` du dépôt public https:\/\/github.com/mohamedbechirkefi/hive-graph-selfplay, avec le rapport dans les deux langues, l'article court et une archive des enregistrements jointe à la publication ; les enregistrements de la seconde étude et la présente révision accompagnent la publication étiquetée `v2.1-report`. Les moteurs de référence tiers utilisés uniquement pour la validation des règles sont sous licence MIT et ne sont pas redistribués.
 
 - #strong[Code.] Le moteur Rust (noyau de règles, serveur de protocole, recherche, arène, travailleurs d'auto-jeu), le code Python d'entraînement et d'export sous `python/hivenet/`, les scripts sous `scripts/`.
 - #strong[Configurations gelées.] `configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`, `configs/`#sym.zws`eval-`#sym.zws`settings.`#sym.zws`toml`, les configurations des adversaires et le fichier de poids de l'heuristique sous `configs/`#sym.zws`baselines/`, les spécifications d'ablation sous `configs/`#sym.zws`ablations/`.
 - #strong[Ouvertures gelées et manifeste de la population.] `results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt` (250 lignes de quatre plis) et `opponents-`#sym.zws`manifest.`#sym.zws`md`, qui consigne les hachages du @tbl:g-identifiers.
-- #strong[Tables de résultats.] `results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`, `wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md` ; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`.
-- #strong[Enregistrements par exécution];, sous `data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`<arm>-`#sym.zws`s<seed>/` : `eval/` (un fichier à valeurs séparées par des virgules par point de contrôle et par adversaire, une ligne par partie : `opening_id, a_is_white, score_a, truncated, plies, outcome`, métadonnées dans les lignes d'en-tête `#`) ; `wallclock.json` (secondes par génération) ; les manifestes `selfplay/` liant chaque shard à son réseau générateur, et les shards ; `checkpoints/`#sym.zws`gen000-`#sym.zws`b1.`#sym.zws`onnx` à `gen009-b1.onnx`. Les tables et les figures n'ont besoin que de `eval/` et de `wallclock.json` ; le rejeu n'a besoin que d'un point de contrôle.
+- #strong[Tables de résultats.] `results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`, `wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md` ; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md` ; pour la seconde étude, les quatre mêmes tables plus `study1-`#sym.zws`vs-`#sym.zws`study2.`#sym.zws`md` sous `results/study2/`.
+- #strong[Enregistrements par exécution];, sous `data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`<arm>-`#sym.zws`s<seed>/` (première étude, graines 1--5) et `data/`#sym.zws`runs/`#sym.zws`cmp2-`#sym.zws`<arm>-`#sym.zws`s<seed>/` (seconde étude, graines 11--15, chacune avec un `driver-`#sym.zws`config.`#sym.zws`json` consignant le régime) : `eval/` (un fichier à valeurs séparées par des virgules par point de contrôle et par adversaire, une ligne par partie : `opening_id, a_is_white, score_a, truncated, plies, outcome`, métadonnées dans les lignes d'en-tête `#`) ; `wallclock.json` (secondes par génération) ; les manifestes `selfplay/` liant chaque shard à son réseau générateur, et les shards ; `checkpoints/`#sym.zws`gen000-`#sym.zws`b1.`#sym.zws`onnx` à `gen009-b1.onnx`. Les tables et les figures n'ont besoin que de `eval/` et de `wallclock.json` ; le rejeu n'a besoin que d'un point de contrôle.
 
 Les moteurs tiers utilisés dans la validation des règles (Mzinga, nokamute) ne sont pas livrés et ne sont pas nécessaires : aucun nombre de l'étude n'en dérive.
 
@@ -2958,6 +3371,14 @@ bash scripts/tstar_evals2.sh               # graph seeds 4–5
 python3 scripts/make_results.py
 python/.venv/bin/python scripts/make_figures.py
 
+# second study (protocol v2): driver defaults reproduce the first study (regression test),
+# then the ten warm-started runs, the cutoff evaluations and the analysis
+python3 scripts/test_driver_equivalence.py
+bash scripts/campaign2.sh                  # seeds 11–15, --warm-start --window 3 --run-prefix cmp2
+python3 scripts/tstar_evals_study2.py      # T*' from the five grid clocks, then the seven cutoff sets
+python3 scripts/make_results.py --study 2
+python/.venv/bin/python scripts/make_figures.py --study 2
+
 # pre-training check battery on any shard set
 bash scripts/run_h4_checks.sh '<abs>/gen000-*.bin' '<abs>/gen000-manifest.json'
 
@@ -2977,7 +3398,7 @@ Toutes les durées du @tbl:g-durations ont été mesurées sur la machine d'étu
 
 #figure(
   align(center)[#table(
-    columns: (65.64%, 34.36%),
+    columns: (66.08%, 33.92%),
     align: (left,right,),
     table.header([Étape], [Durée mesurée],),
     table.hline(),
@@ -2990,21 +3411,27 @@ Toutes les durées du @tbl:g-durations ont été mesurées sur la machine d'étu
     [Ensembles d'évaluation à temps égal, graines 1--3 (quatre points de contrôle × trois adversaires)], [≈11 h, 18 septembre 2026],
     [Ensembles d'évaluation à temps égal, graines 4--5 du graphe (deux points de contrôle × trois adversaires)], [≈6 h, 6 octobre 2026],
     [Exécutions d'ablation A1 / A2 / A1′ (par graine), temps mural d'entraînement], [7.61--8.01 h (un symptôme de divergence) / 32.05--47.44 h / 23.89--30.35 h],
+    [Seconde étude, une exécution grille (démarrage à chaud, fenêtre 3) : temps mural d'entraînement], [17.46--18.52 h],
+    [Seconde étude, une exécution graphe (même régime) : temps mural d'entraînement], [36.27--52.85 h],
+    [Seconde étude, les dix exécutions, temps mural d'entraînement sommé], [296.9 h (grille 89.0 h, graphe 207.9 h)],
+    [Seconde campagne (graines 11--15, les deux bras, séquentielles), temps écoulé], [13--26 octobre 2026, 13 jours 8 h],
+    [Seconde étude, ensembles d'évaluation à temps égal (sept points de contrôle × trois adversaires)], [≈ 14 h, 26--27 octobre 2026],
+    [Seconde étude, pilote (2 générations × 200 parties, évaluation à 20 parties par adversaire)], [grille 1 h 35 min ; graphe 4 h 17 min],
     [Construction du moteur ; scénario minimal], [non mesuré],
   )]
   , caption: [Durées mesurées des calculs de l'étude sur la machine d'étude (Apple M1 Pro, quatre threads de travail par exécution, exécutions séquentielles), telles que consignées dans les relevés d'exécution et d'analyse ; les plages couvrent les exécutions de l'étape. Le temps mural d'entraînement est la somme des secondes d'auto-jeu et d'entraînement par génération d'une exécution, parties d'évaluation exclues ; les chiffres de campagne, d'extension et d'ablation sont des temps écoulés tels que consignés. Les exécutions courtes de A1 reflètent sa divergence (une politique NaN joue des parties dégénérées courtes) plutôt qu'un coût moindre. La construction du moteur et le scénario minimal n'ont pas été chronométrés.]
   , kind: table
   ) <tbl:g-durations>
 
-Disque : avant la campagne, la matrice de six exécutions a été dimensionnée à environ 3--5 Go de shards, de points de contrôle et d'enregistrements, pour 164 Go libres avec une garde de 20 Go ; à mi-campagne, la machine indiquait 200 Go libres. L'empreinte finale des répertoires d'exécution n'a pas été consignée.
+Disque : avant la campagne, la matrice de six exécutions a été dimensionnée à environ 3--5 Go de shards, de points de contrôle et d'enregistrements, pour 164 Go libres avec une garde de 20 Go ; à mi-campagne, la machine indiquait 200 Go libres. L'empreinte finale des répertoires d'exécution de la première étude n'a pas été consignée ; les dix répertoires d'exécution de la seconde étude totalisent 4.8 Go.
 
 == Identifiants qu'une reproduction doit retrouver
 <identifiants-quune-reproduction-doit-retrouver>
-Une reproduction est fidèle lorsqu'elle utilise les artefacts gelés identifiés ci-dessous et, pour le scénario minimal, reproduit la ligne de partie livrée et les tables identiques à l'octet près. Les constantes expérimentales gelées que chaque commande doit laisser intactes sont tabulées dans l'@sec:app-c : jeu de base avec la règle d'ouverture de tournoi, plafond de 300 plis, 128/32 simulations d'auto-jeu avec une fraction complète de 0.25, 12 plis en température, abandon à −0.92 avec un audit de 10%, 400 simulations d'évaluation sans bruit, 100 parties par adversaire, 250 ouvertures, le seuil de 18.77 h, graines 1--5 par bras.
+Une reproduction est fidèle lorsqu'elle utilise les artefacts gelés identifiés ci-dessous et, pour le scénario minimal, reproduit la ligne de partie livrée et les tables identiques à l'octet près. Les constantes expérimentales gelées que chaque commande doit laisser intactes sont tabulées dans l'@sec:app-c : jeu de base avec la règle d'ouverture de tournoi, plafond de 300 plis, 128/32 simulations d'auto-jeu avec une fraction complète de 0.25, 12 plis en température, abandon à −0.92 avec un audit de 10%, 400 simulations d'évaluation sans bruit, 100 parties par adversaire, 250 ouvertures, le seuil de 18.77 h, graines 1--5 par bras ; pour la seconde étude, les mêmes constantes avec le démarrage à chaud, la fenêtre de trois générations, les graines 11--15 et le seuil de 17.63 h du protocole version 2.0 (@sec:app-c-study2).
 
 #figure(
   align(center)[#table(
-    columns: (58.72%, 41.28%),
+    columns: (44.15%, 55.85%),
     align: (left,left,),
     table.header([Artefact], [Identifiant],),
     table.hline(),
@@ -3014,16 +3441,19 @@ Une reproduction est fidèle lorsqu'elle utilise les artefacts gelés identifié
     [Configuration de B-MCTS (`configs/`#sym.zws`baselines/`#sym.zws`mcts-`#sym.zws`nonet.`#sym.zws`toml`), SHA-256], [`3fc8f75cf2b4f21012dd61e9924408fb`#sym.zws`fc32c8ea561aa96eb44f1091ba07364e`],
     [Ouvertures gelées, contenu des 250 lignes, SHA-256], [`63b318d071dfc3ecfae3585636c8e6f7`#sym.zws`327ddc08e7aed86a466f915f8005af7b`],
     [Ouvertures gelées, fichier tel que gelé, SHA-256], [`538497390a3787299c67c3ca138b8fea`#sym.zws`cb369d55dc562881d1aee45200cbccb2`],
-    [Calendrier d'ouvertures et de couleurs de chaque affrontement de 100 parties], [`8cd84b6564440666`],
+    [Calendrier d'ouvertures et de couleurs de chaque affrontement de 100 parties (ensembles finaux et au seuil, les deux études)], [`3bf5d3e51cea0c0d`],
+    [Calendrier d'ouvertures et de couleurs de chaque affrontement intermédiaire de 20 parties (les deux études)], [`8cd84b6564440666`],
     [Document de protocole gelé], [`f340a6b6…aefeb5` (consigné sous forme abrégée), commit `44a74ff`],
+    [Document de protocole gelé, version 2.0 (seconde étude)], [`e296a12e8d1e3dee36c3b210ececced6`#sym.zws`2314e64657aede1cb91b1ea452b461eb`, commit `4a22a24`],
     [Code du moteur au gel de la population], [commit `b94e7c1`],
     [Code de campagne (comparaison principale)], [commit `ac58773`],
     [Code d'ablation ; garde contre les pertes non finies], [commits `216fded` ; `bffeea9`],
     [Code d'analyse (tables finales à cinq graines)], [commit `7db074d`],
+    [Seconde étude : options du pilote de campagne ; script de campagne ; commutateur d'analyse ; commutateur de figures], [commits `008aaee` ; `dc0b6c2` ; `b0f1598` ; `32297fe`],
   )]
-  , caption: [Identifiants des artefacts gelés et des états du code de l'étude. Les hachages sont des condensés hexadécimaux SHA-256 du contenu des fichiers tels que consignés au gel ; le hachage du calendrier est le préfixe du condensé imprimé par l'outil d'analyse pour le calendrier (ouverture, couleur), identique pour chaque affrontement de l'étude ; les commits sont des identifiants de commit abrégés du dépôt.]
+  , caption: [Identifiants des artefacts gelés et des états du code de l'étude. Les hachages sont des condensés hexadécimaux SHA-256 du contenu des fichiers tels que consignés au gel ; les hachages du calendrier sont les préfixes des condensés imprimés par l'outil d'analyse pour le calendrier (ouverture, couleur), identiques pour chaque affrontement d'un volume donné dans les deux études (la première édition de ce rapport attribuait le hachage des 20 parties aux affrontements de 100 parties) ; les commits sont des identifiants de commit abrégés du dépôt.]
   , kind: table
   ) <tbl:g-identifiers>
 
 #v(2em)
-#align(center)[#text(size: 8.5pt, fill: luma(110))[v2.0-draft, 2026-10-09]]
+#align(center)[#text(size: 8.5pt, fill: luma(110))[v2.1-draft, 2026-10-27]]

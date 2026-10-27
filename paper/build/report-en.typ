@@ -45,28 +45,28 @@
     #v(1.6cm)
     #text(size: 10.5pt)[Independent research report (not peer-reviewed)]
     #v(0.35em)
-    #text(size: 10.5pt)[Version v2.0-draft, October 2026]
+    #text(size: 10.5pt)[Version v2.1-draft, October 2026]
   ]
 ]
 #counter(page).update(1)
 
 #heading(level: 1, numbering: none)[Abstract]
 <abstract>
-Hive is a boardless hexagonal strategy game whose moves are (piece, destination) pairs over an ever-changing set of cells, which makes it, in principle, a natural candidate for graph neural encodings in place of the convolutional grid encodings standard in AlphaZero-style systems. We test that intuition under a pre-registered protocol frozen before any comparison run: one grid CNN and one capacity-matched (+1.5%) relational message-passing network share a rules-validated engine, one action decoder, identical training settings, a frozen three-opponent population and 250 frozen openings, evaluated under two budget readings (equal training examples; equal wall-clock at a pre-registered cutoff) with five independent seeds per arm and truncation reported as its own outcome. The hypothesis is rejected: the graph arm scores lower against two of three opponents under both readings, at twice the wall-clock cost, with its deficit concentrated in converting won positions. Ablations show that the graph arm's typed edge relations are necessary for optimization stability, while its global pooling is dispensable. The result is negative, pre-registered and fully reproducible from the released records.
+Hive is a boardless hexagonal strategy game whose moves are (piece, destination) pairs over an ever-changing set of cells, which makes it, in principle, a natural candidate for graph neural encodings in place of the convolutional grid encodings standard in AlphaZero-style systems. We test that intuition under a pre-registered protocol frozen before any comparison run: one grid CNN and one capacity-matched (+1.5%) relational message-passing network share a rules-validated engine, one action decoder, identical training settings, a frozen three-opponent population and 250 frozen openings, evaluated under two budget readings (equal training examples; equal wall-clock at a pre-registered cutoff) with five independent seeds per arm and truncation reported as its own outcome. The hypothesis is rejected: the graph arm scores lower against two of three opponents under both readings, at twice the wall-clock cost, with its deficit concentrated in converting won positions. Ablations show that the graph arm's typed edge relations are necessary for optimization stability, while its global pooling is dispensable. A second study, pre-registered separately (protocol frozen on 13 October 2026) and run on five new seeds per arm under a warm-started loop with a three-generation replay window, tested the main objection to that verdict: no graph advantage was detected under either reading, every graph−grid interval includes zero (largest upper bounds +0.090 and +0.055), the first study's deficit is no longer visible at equal examples and reduced at equal wall-clock, and the conversion pathology persists in three graph seeds of five at 2.34 times the cost. Both results are pre-registered and reproducible from the released records.
 
 #strong[Keywords.] Hive; AlphaZero; graph neural networks; representation learning; pre-registration; negative result.
 
 #heading(level: 1, numbering: none)[Résumé]
 <résumé>
-Hive est un jeu de stratégie hexagonal sans plateau dont les coups sont des paires (pièce, destination) sur un ensemble de cellules en perpétuel changement, ce qui en fait, en principe, un candidat naturel pour des encodages par réseaux de neurones en graphe plutôt que pour les encodages convolutifs en grille standards des systèmes de type AlphaZero. Nous testons cette intuition sous un protocole pré-enregistré, gelé avant toute exécution comparative : un CNN en grille et un réseau relationnel à passage de messages de capacité appariée (+1.5%) partagent un moteur validé côté règles, un décodeur d'actions unique, des réglages d'entraînement identiques, une population gelée de trois adversaires et 250 ouvertures gelées, évalués sous deux lectures budgétaires (à exemples d'entraînement égaux ; à temps mural égal à un seuil pré-enregistré), avec cinq graines indépendantes par bras et la troncature rapportée comme un résultat à part entière. L'hypothèse est rejetée : le bras graphe obtient un score inférieur contre deux des trois adversaires sous les deux lectures, à un coût en temps mural double, son déficit se concentrant dans la conversion des positions gagnées. Les ablations montrent que les relations d'arêtes typées du bras graphe sont nécessaires à la stabilité de l'optimisation, tandis que son agrégation globale (global pooling) est dispensable. Le résultat est négatif, pré-enregistré et entièrement reproductible à partir des enregistrements publiés.
+Hive est un jeu de stratégie hexagonal sans plateau dont les coups sont des paires (pièce, destination) sur un ensemble de cellules en perpétuel changement, ce qui en fait, en principe, un candidat naturel pour des encodages par réseaux de neurones en graphe plutôt que pour les encodages convolutifs en grille standards des systèmes de type AlphaZero. Nous testons cette intuition sous un protocole pré-enregistré, gelé avant toute exécution comparative : un CNN en grille et un réseau relationnel à passage de messages de capacité appariée (+1.5%) partagent un moteur validé côté règles, un décodeur d'actions unique, des réglages d'entraînement identiques, une population gelée de trois adversaires et 250 ouvertures gelées, évalués sous deux lectures budgétaires (à exemples d'entraînement égaux ; à temps mural égal à un seuil pré-enregistré), avec cinq graines indépendantes par bras et la troncature rapportée comme un résultat à part entière. L'hypothèse est rejetée : le bras graphe obtient un score inférieur contre deux des trois adversaires sous les deux lectures, à un coût en temps mural double, son déficit se concentrant dans la conversion des positions gagnées. Les ablations montrent que les relations d'arêtes typées du bras graphe sont nécessaires à la stabilité de l'optimisation, tandis que son agrégation globale (global pooling) est dispensable. Une seconde étude, pré-enregistrée séparément (protocole gelé le 13 octobre 2026) et menée sur cinq nouvelles graines par bras sous une boucle à démarrage à chaud avec une fenêtre de rejeu de trois générations, a testé la principale objection à ce verdict : aucun avantage du graphe n'a été détecté sous l'une ou l'autre lecture, chaque intervalle graphe−grille inclut zéro (plus grandes bornes supérieures +0.090 et +0.055), le déficit de la première étude n'est plus visible à exemples égaux et est réduit à temps mural égal, et la pathologie de conversion persiste dans trois graines graphe sur cinq, à 2.34 fois le coût. Les deux résultats sont pré-enregistrés et reproductibles à partir des enregistrements publiés.
 
 #strong[Mots-clés.] Hive ; AlphaZero ; réseaux de neurones en graphe ; apprentissage de représentations ; pré-enregistrement ; résultat négatif.
 
 #heading(level: 1, numbering: none)[Status, code and declaration of assistance]
 <status-code-and-declaration-of-assistance>
-#strong[Status.] Independent research report prepared in view of a doctoral application. It is not peer-reviewed and is not a publication of any institution. Version 2.0-draft, October 2026; the experimental content is final and no number differs from the frozen raw results of 9 October 2026.
+#strong[Status.] Independent research report prepared in view of a doctoral application. It is not peer-reviewed and is not a publication of any institution. Version 2.1-draft, October 2026; the experimental content is final and no number differs from the frozen raw results of 9 October 2026 (first study) and 27 October 2026 (second study).
 
-#strong[Code and artifacts.] The engine, the training pipeline, both encoders, the frozen configurations, the raw per-game evaluation records and the scripts that regenerate every table and figure of this report form one public repository, released at tag v2.0-report: https:\/\/github.com/mohamedbechirkefi/hive-graph-selfplay (the records archive is attached to that release). A fresh-environment reproduction scenario is described in @sec:app-g; the provenance of every result is tabulated in @sec:app-e.
+#strong[Code and artifacts.] The engine, the training pipeline, both encoders, the frozen configurations, the raw per-game evaluation records and the scripts that regenerate every table and figure of this report form one public repository, https:\/\/github.com/mohamedbechirkefi/hive-graph-selfplay, released at tag v2.0-report on 9 October 2026 for the first study (the records archive is attached to that release); the second study's records and this revision accompany the release tagged v2.1-report. A fresh-environment reproduction scenario is described in @sec:app-g; the provenance of every result is tabulated in @sec:app-e.
 
 #strong[Declaration of assistance by an artificial-intelligence system.] This study was executed under a human-as-principal-investigator methodology in which an AI research assistant (Claude, Anthropic) implemented code, ran the computational campaigns, kept the experiment journals and drafted text, under a system of six decision gates reserving every scientific commitment to the human author: the freezing of protocol, opponents and openings, every expenditure of compute, anything made public and the deletion of any data. The human author chose the question, approved each gated decision in writing, verified the conclusions and owns every claim. @sec:working-method documents this working methodology, its rationale and its record.
 
@@ -110,19 +110,22 @@ Both encodings were built behind one shared action decoder on one rules-validate
 <what-was-found>
 The hypothesis is rejected. The grid arm scores higher against two of the three opponents under both budget readings, at roughly half the wall-clock cost; the largest upper bound of any interval on a graph advantage is +0.028. The graph arm's deficit concentrates in local tactical conversion: it wins material against the random opponent and then fails to close, truncating 20--57% of those games where the grid arm truncates almost none. The ablations localise the graph arm's machinery: its direction-typed relations are necessary for optimization itself (removing them made training diverge in every seed), while its global pooling is dispensable.
 
+A second study, pre-registered separately and run after the first had been written up, tested the first objection to that verdict: that re-initialising the network at every generation had kept both arms in a regime too early for a graph prior to pay. Under a warm-started loop with a three-generation replay window, on five new seeds per arm, no graph advantage was detected under either budget reading; every graph−grid interval includes zero, with the largest upper bounds at +0.090 and +0.055; the first study's deficit is no longer visible at equal examples and reduced at equal time; the graph arm's conversion pathology persists in three seeds of five, and its cost ratio rises to 2.34 (@sec:study2).
+
 == Contributions
 <contributions>
-Three contributions are claimed, each verifiable from the released repository.
+Four contributions are claimed, each verifiable from the released repository.
 
 + #strong[The first controlled, budget-matched, multi-seed grid-versus-graph comparison for Hive];, with both arms under the same AlphaZero-style pipeline, read under two budget equalisations, and a pre-registered negative answer (@sec:results-main, @sec:results-cost; raw records released).
 + #strong[A reproducible comparison harness for frameless, stacking games];: a rules engine validated independently of learning; two encoders pinned byte-exactly across two implementation languages; a shared decoder over a variable action set; truncation-aware evaluation; and a frozen-artifact discipline (@sec:engine to @sec:protocol).
 + #strong[A component attribution for the graph arm];, in which the typed relations determine trainability and the pooling has a null effect, with an honestly labelled two-component supplement (@sec:results-ablations).
++ #strong[A second pre-registered comparison under the standard warm-started regime];, with its protocol, equal-time cutoff and seeds fixed before any run, whose null result bounds the first study's negative one and is reported beside it without pooling (@sec:study2).
 
 The construction of software, however substantial, is not counted as a scientific contribution in itself; it is reported because the result cannot be evaluated without it.
 
 == How this report is organised
 <how-this-report-is-organised>
-Part I states the problem: @sec:background gives the rules of Hive, the formalisation used, and the elements of self-play learning, state representation and small-sample evaluation a reader needs; @sec:related positions the study against prior work. Part II describes how the system was built and when (@sec:chronology): the engine and its validation (@sec:engine), the learning pipeline (@sec:pipeline), the two representations and networks (@sec:representations), and the frozen opponent population (@sec:baselines). Part III explains the methodology and why it was chosen: the pre-registered experimental protocol (@sec:protocol) and the gated human-AI working method (@sec:working-method). Part IV reports the results by question: the main comparison (@sec:results-main), cost and efficiency (@sec:results-cost), ablations (@sec:results-ablations) and a qualitative analysis of failure positions and training behaviour (@sec:results-qualitative). Part V discusses mechanisms and threats to validity (@sec:discussion) and concludes (@sec:conclusion). The bibliography and webography follow the conclusion. The appendices contain the annotated position corpora, the architectures and data formats in full, every hyperparameter and seed, the statistical procedures with the raw per-seed tables, the provenance of every result, a glossary with French equivalents, and the reproduction guide.
+Part I states the problem: @sec:background gives the rules of Hive, the formalisation used, and the elements of self-play learning, state representation and small-sample evaluation a reader needs; @sec:related positions the study against prior work. Part II describes how the system was built and when (@sec:chronology): the engine and its validation (@sec:engine), the learning pipeline (@sec:pipeline), the two representations and networks (@sec:representations), and the frozen opponent population (@sec:baselines). Part III explains the methodology and why it was chosen: the pre-registered experimental protocol (@sec:protocol) and the gated human-AI working method (@sec:working-method). Part IV reports the results by question: the main comparison (@sec:results-main), cost and efficiency (@sec:results-cost), ablations (@sec:results-ablations) and a qualitative analysis of failure positions and training behaviour (@sec:results-qualitative), then the second study under the warm-started regime (@sec:study2). Part V discusses mechanisms and threats to validity (@sec:discussion) and concludes (@sec:conclusion). The bibliography and webography follow the conclusion. The appendices contain the annotated position corpora, the architectures and data formats in full, every hyperparameter and seed, the statistical procedures with the raw per-seed tables, the provenance of every result, a glossary with French equivalents, and the reproduction guide.
 
 == How to read the numbers
 <how-to-read-the-numbers>
@@ -385,11 +388,13 @@ The loop is classified as a demonstration, not evidence, for reasons fixed in wr
 
 #strong[19 September -- 9 October 2026: ablations, extension, final analysis.] Ablation configurations were prepared on 19 September, with one substitution decided that day; the author approved the ablation campaign on 20 September 2026, both ablations at full three-seed parity with the main comparison. The edge-typing ablation's divergence (non-finite outputs in generation 0 for 3/3 seeds) was diagnosed on 23 September; the pooling ablation's runs completed on 24, 26 and 27 September and were analysed on 2 October. On 26 September 2026 the author approved, with pre-commitments stated before any new run, a symmetric extension to five seeds per arm and the two-component supplement to the diverged ablation. Seeds 4 and 5 ran from 27 September to 2 October, with cutoff evaluations on 6 October; the supplement ran from 2 to 6 October. The final five-seed analysis of 9 October 2026 confirmed the rejection; the report was assembled in English and French the same day, then expanded at the author's request with no number, claim or frozen artifact changed.
 
+#strong[9--27 October 2026: release and the second study.] On 9 October 2026 the author approved the release: the repository was made public under its tag with the report in both languages, the short article and the records archive. The same day the complementary study was queued and its driver support written: two options of the campaign driver, warm start and replay window, off by default, with a regression test showing that the default command lines reproduce the first study's recorded manifests on four runs and forty generations. A pilot approved on 12 October 2026 ran two generations of 200 games per arm under the new regime and the check battery on its windowed shards, which generalised one check; on 13 October 2026 the author froze protocol version 2.0 (hyperparameter option A, window of three generations, cutoff rule) and approved the campaign, launched at 15:02. Ten runs executed in sequence without incident and finished on 26 October 2026 at 23:00; the second study's equal-time cutoff was computed from the five grid clocks on 25 October, before any score had been read; the cutoff evaluations ran overnight and the analysis of 27 October 2026 found no graph advantage under either reading. This revision of the report followed the same day.
+
 == Timeline
 <timeline>
 #figure(
   align(center)[#table(
-    columns: (19.21%, 46.8%, 34%),
+    columns: (18.76%, 48.57%, 32.67%),
     align: (left,left,left,),
     table.header([Date], [Milestone], [Evidence produced],),
     table.hline(),
@@ -406,6 +411,10 @@ The loop is classified as a demonstration, not evidence, for reasons fixed in wr
     [26 September 2026], [Five-seed extension and two-component supplement approved with pre-commitments], [Decision records quoting the pre-commitments],
     [27 September -- 6 October 2026], [Seeds 4--5 (to 2 October), cutoff evaluations (6 October); supplement (2--6 October); pooling ablation analysed (2 October)], [Run logs; ablation entries],
     [9 October 2026], [Final five-seed analysis (rejection stands); supplement analysed; report assembled in English and French, then expanded], [Final result tables; report],
+    [9 October 2026], [Repository made public at tag v2.0-report with the report, the short article and the records archive; second study queued; driver options for warm start and replay window written and pinned to the first study by a regression test], [Release record; driver test entry],
+    [12--13 October 2026], [Pilot of the second study (two generations × 200 games per arm; check battery on windowed shards); protocol v2 frozen; campaign launched 15:02], [Pilot entry; protocol v2 hash; campaign log],
+    [13--26 October 2026], [Second campaign: ten warm-started runs in sequence, finished 26 October 23:00; equal-time cutoff of the second study (17.63 h) computed from the five grid clocks on 25 October before any score was read], [Per-run clock logs, manifests, evaluation records; cutoff entry],
+    [26--27 October 2026], [Cutoff evaluations (21 sets); second-study analysis: no graph advantage detected; report revised], [Second-study result tables and figures; analysis entry],
   )]
   , caption: [Chronology of the engine project and the study, from the repository's commit history, the status note of 12 July 2026, the loop logs, the dated journal entries and the decision records carrying the author's approvals; the last column names the artifact documenting each milestone.]
   , kind: table
@@ -413,7 +422,7 @@ The loop is classified as a demonstration, not evidence, for reasons fixed in wr
 
 #figure(image("figures/fig10-timeline.png", width: 90.0%),
   caption: [
-    Project chronology, July--October 2026: engine project (12 July), prior self-play loop classified as a demonstration (13 July -- 14 August), and research programme (9 September -- 9 October) with freezes (population 9 September; protocol and openings 10 September), main campaign (10--17 September), equal-time cutoff (16 September), three-seed analysis (19 September), ablations (20 September -- 6 October), seed extension (27 September -- 6 October) and final five-seed analysis (9 October).
+    Project chronology, July--October 2026: engine project (12 July), prior self-play loop classified as a demonstration (13 July -- 14 August), and research programme (9 September -- 9 October) with freezes (population 9 September; protocol and openings 10 September), main campaign (10--17 September), equal-time cutoff (16 September), three-seed analysis (19 September), ablations (20 September -- 6 October), seed extension (27 September -- 6 October) and final five-seed analysis (9 October); second study (13--27 October): protocol v2 frozen and campaign launched (13 October), ten warm-started runs (13--26 October), equal-time cutoff from the grid clocks (25 October), analysis (27 October).
   ]
 )
 <fig:timeline>
@@ -1055,7 +1064,7 @@ Two limits carry forward. The characterisation volume is 100 games per pairing w
 #part[Part III. Methodology]
 = Experimental methodology: a pre-registered, frozen protocol
 <sec:protocol>
-This chapter states what the comparison fixed in advance, how, when, and above all why. The governing protocol was frozen as version 1.0 on 10 September 2026, before any comparison run and after a pilot had confirmed every measured value in it; it declares any later change a new study, and none was made. Constants, hyperparameters and seeds are tabulated in @sec:app-c; raw per-seed tables and the cutoff checkpoint map in @sec:app-d.
+This chapter states what the comparison fixed in advance, how, when, and above all why. The governing protocol was frozen as version 1.0 on 10 September 2026, before any comparison run and after a pilot had confirmed every measured value in it; it declares any later change a new study, and none was made. Constants, hyperparameters and seeds are tabulated in @sec:app-c; raw per-seed tables and the cutoff checkpoint map in @sec:app-d. A second protocol, version 2.0, was frozen on 13 October 2026 for the complementary study reported in @sec:study2; it changes the training regime and nothing else, and is described there.
 
 == Why pre-register, and why freeze, at small compute
 <sec:protocol-why>
@@ -1219,7 +1228,7 @@ The boundary is drawn mechanically rather than left to judgement. #strong[G-FREE
 
 #figure(
   align(center)[#table(
-    columns: (15.45%, 18.76%, 28.48%, 37.31%),
+    columns: (15.23%, 18.54%, 30.02%, 36.2%),
     align: (left,left,left,left,),
     table.header([Date], [Gate], [Decision], [Basis and conditions recorded],),
     table.hline(),
@@ -1234,8 +1243,12 @@ The boundary is drawn mechanically rather than left to judgement. #strong[G-FREE
     [2026-09-20], [G-SPEND], [Ablation campaign: A1 and A2, 3 seeds each at full parity, ≈9 days estimated], [Approved at full three-seed parity with the main comparison, among the sizings presented from measured graph-arm run costs],
     [2026-09-26], [G-SPEND], [Supplementary two-component A1′ run at a corrected ≈4-day sizing], [Approved at a corrected sizing of about four days, after the initial estimate had been revised; queued after the extension; its results confined to a labelled two-component supplement],
     [2026-09-26], [G-SPEND], [Main comparison extended to 5 seeds per arm, ≈4.8 days, under three pre-commitments stated before any new run], [Approved with three written pre-commitments (all-seeds analysis, cutoff unchanged, two-stage collection disclosed); seeds added symmetrically to both arms under identical settings],
+    [2026-10-09], [G-PUBLIC], [Repository made public at tag v2.0-report with the report in both languages, the short article and the records archive; preprint submission and a public post by the author approved], [Decided on the author's written instruction after the final-control record and a pre-release scrub; the programme's other repositories stay private; the third-party reference engines had been found MIT-licensed, closing the rights question without ambiguity],
+    [2026-10-12], [G-SPEND], [Pilot of the second study: two generations × 200 games per arm under warm start and a three-generation window, one seed outside both studies' seed sets], [Approved to measure the regime's cost and exercise the full path before the freeze; its scores enter no analysis],
+    [2026-10-13], [G-FREEZE], [Protocol v2 frozen: warm start, replay window of three generations, hyperparameter option A (no tuning), seeds 11--15, equal-time cutoff rule; hash and commit recorded], [Approved on the pilot's measured budget; option B (an identical small tuning budget per arm) considered and rejected; any later change a new study],
+    [2026-10-13], [G-SPEND], [Second campaign: 2 arms × 5 seeds × 10 generations × 500 games, ≈295 h estimated, cutoff evaluations included], [Approved after the freeze and launched the same day under the first study's execution rules (sequential, resumable, disk guard, no other load on the machine)],
   )]
-  , caption: [Gate decisions taken by the author during the study, in the order recorded in the decision log. G-RIGHTS and G-ADMIN were not crossed; nothing has left the machine, so G-PUBLIC remains open for diffusion. ]
+  , caption: [Gate decisions taken by the author during the study, in the order recorded in the decision log. G-ADMIN was not crossed; G-RIGHTS was resolved without ambiguity when the reference engines' licences were established; G-PUBLIC was crossed once, on 9 October 2026, for the first study's release. ]
   , kind: table
   ) <tbl:gates>
 
@@ -1263,7 +1276,7 @@ The operating rules require an append-only log of every incident in which the me
 
 #figure(
   align(center)[#table(
-    columns: (15.04%, 32.3%, 27.88%, 24.78%),
+    columns: (15.01%, 32.45%, 27.59%, 24.94%),
     align: (left,left,left,left,),
     table.header([Date], [Incident], [How it was caught], [Consequence],),
     table.hline(),
@@ -1283,6 +1296,8 @@ The operating rules require an append-only log of every incident in which the me
     [2026-10-09], [Stale seed counts in two chapters; stale "pending" limits in the claims register], [placeholder sweep before assembly], [fixed in both languages together],
     [2026-10-09], [Cost-table generator divided five runs' wall-clock by 3 (printing 30.0 h / 61.2 h for 18.0 h / 36.7 h) and carried a training-throughput row (≈770 / ≈195 pos/s) measured under pilot conditions but presented as campaign throughput], [every number re-derived from its raw source with an explicit definition while writing this report], [generator fixed (journaled benchmark 274 / 138 pos/s at batch 128, conditions stated); no score, interval or claim affected; per-paragraph source citations and a token-level traceability checker now gate the report],
     [2026-10-09], [The capacity difference "+2.1%" quoted in every document was the ratio of the rounded parameter counts (1.47/1.44 M); the exact counts give +1.5%], [layer-by-layer tabulation of the architectures recounted the parameters from the code], [corrected everywhere except the append-only journals; exact counts now a generated results artifact; no verdict depends on it],
+    [2026-10-12], [The stamp check of the pre-training battery failed on the second study's windowed shard set: records of two generations against a single manifest], [the existing pin, run on the new regime before the protocol was frozen], [the check generalised to the manifests of every generation in the window rather than relaxed; it still passes on first-study shards and still fails on a wrong manifest],
+    [2026-10-27], [The rejection rule's "meaningful" threshold, left non-numeric in both protocols, became operative: the second study's largest upper bound (+0.090) is no longer small enough for the verdict to be independent of a threshold], [applying the rule as frozen], [verdict stated with its bounds and the thresholds under which it holds; a numeric threshold to be pre-registered in any successor],
   )]
   , caption: [Incidents recorded by the methodology log and the experiment journals during the study: what happened, which rule or check caught it, and what followed. ]
   , kind: table
@@ -1639,6 +1654,267 @@ Training metrics are computed on each run's own self-play validation split, whos
 
 The per-opponent trajectories decompose the aggregate curves of @sec:results-cost: against the random opponent, grid seeds approach the ceiling early and stay there, while graph seeds spread widely and move non-monotonically; against the heuristic and the search opponent, both arms remain in a low band whose generation-to-generation movement is of the order of the game-count noise at 20 games (the intermediate evaluations were sized for monitoring and not for inference; only the 100-game final evaluations enter the tables).
 
+= A second study: the comparison under a warm-started loop with a replay window
+<sec:study2>
+The first study answered its question inside a pipeline that trained every generation's network from a fresh initialisation on that generation's games alone (@sec:pipeline, @sec:discussion). This chapter reports a second, separately pre-registered study that applies the two standard remedies, weights carried across generations and training on a window of recent generations, identically to both arms, and asks whether the ordering of the two representations survives. Its protocol was frozen on 13 October 2026, before any run; its campaign started the same day. Everything the first study froze (opponents, openings, evaluation settings, networks, decoder) is reused untouched, so that the two studies differ in the training regime and in nothing else.
+
+== Why a second study
+<sec:study2-why>
+The per-generation re-initialisation of the first study is neutral for the comparison, since both encoders saw exactly the same records under the same conventions, but it bounds the regime reached: each network learned from the positions of 500 games, and the absolute strength after ten generations stayed near the ceiling against the random opponent and around 0.1 against the two strong opponents. A reviewer's first objection to the generality of a negative verdict is therefore that the graph representation might need more data per network, or a longer optimisation trajectory, before its structural prior pays. The large self-play systems carry weights from generation to generation and train on a replay window of recent games; a second study under that regime is the direct test of the objection. The question it asks is the first study's question under the new regime (RQ-H1′), with the same hypothesis (H1′): the graph arm reaches a higher mean score against the frozen population than the grid arm at equal budget. A secondary, descriptive question asks whether the graph−grid contrast moves toward zero or changes sign relative to the first study; the two studies are compared side by side and never pooled.
+
+== What changed, and what did not
+<sec:study2-protocol>
+Exactly two things change, in both arms. First, the network of generation $g$ is initialised from the final checkpoint of generation $g - 1$ (model weights only; the optimizer and the cosine learning-rate schedule restart at every generation, as before), generation 0 starting from the seeded random initialisation. Second, generation $g$ trains on the records of generations $max (0 \, g - 2)$ to $g$, a replay window of three generations: 500 games at generation 0, 1,000 at generation 1 and 1,500 from generation 2 onward, still for two epochs, so that the number of gradient steps grows with the window.
+
+The hyperparameter policy was decided by the author at the freeze and recorded with it. Both arms keep the first study's training settings unchanged (learning rate 0.02, batch 256, weight decay $10^(- 4)$, value-loss weight 0.6, two epochs per generation, legal-masked policy loss; 96 channels and 8 blocks for the grid network, 152 hidden units and 8 layers for the graph network). The alternative considered was an identical, pre-registered budget of three learning rates (0.02, 0.01 and 0.005) for both arms on the first seed only, the best rate per arm then used for the remaining seeds. It was rejected because it would have tripled the cost of one seed per arm (about four more days of compute), selected on a single seed, and the pilot described below showed no sign of optimisation instability under the warm-started regime. The objection that both arms run under untuned defaults therefore remains open for both studies and is stated as a limit.
+
+Everything else is the first study's: the engine and its search settings (128 and 32 simulations with playout-cap randomization, exploration noise, 12 temperature plies, resignation below −0.92 with the 10% audit, the 300-ply cap), the record format, the loss and masking, both encoders and networks at 1,443,168 and 1,465,452 parameters, the shared decoder, the three frozen opponents, the 250 frozen openings, the pinned evaluation (400 simulations, no noise, 100 paired colour-swapped games per opponent), the statistics (the seed as the unit, 10,000-resample percentile bootstrap, independent seed sets for the contrast, truncation as an outcome of its own) and the rejection rule, which is the first study's rule word for word in its form: no seed-consistent graph advantage under both budget readings, and seed-level intervals on the graph−grid difference excluding a meaningful graph advantage, with the largest upper bound reported so that any threshold can be applied by the reader. Intermediate evaluations are descriptive and enter no verdict. The new runs use seeds 11 to 15, so that no random stream is shared with the first study's seeds 1 to 5.
+
+The design is again two arms, five seeds, ten generations of 500 games, read twice. The same-examples reading compares final checkpoints. The same-wall-clock reading compares each run's last checkpoint completed at or before an equal-time cutoff defined, as in the first study, by a score-free rule written before any run: the median of the total training wall-clock of the five grid runs of this study, each total being the sum of the ten per-generation clocks (self-play, training and export; evaluations excluded), computed once from the clock files when the five grid runs exist and before any cross-arm number is assembled, and never recomputed. The cutoff of the second study is its own value, measured under the new regime; it is not the first study's 18.77 h.
+
+The pre-commitments repeat the first study's: all five seeds per arm enter the final analysis whatever their direction; a seed is excluded only for a crash, a corruption or an engine error, each recorded; no opponent, opening, evaluation setting, hyperparameter or architecture is touched; the chapter is written from the frozen tables. The stop rules are unchanged, with one addition made explicit: a running campaign is never killed or restarted without the author.
+
+== Implementation and verification before the freeze
+<sec:study2-implementation>
+The two changes were implemented as two options of the campaign driver, identical for both arms and switched off by default, so that the driver with default options still produces the first study's commands. That property was pinned by a regression test before the protocol was frozen: for four runs of the first study (two per arm) and their ten generations each, the training command produced by the driver with default options was compared with the recorded training configuration of every generation (shard list, seed, epoch count, absence of an initialisation checkpoint), and the self-play command with the recorded manifest (seed, number of games, simulation budgets, generation index); all forty generations matched. The same test checks that, with the two options on, only the shard list and the initialisation checkpoint change, that generation 0 never warm-starts, and that generation $g$ initialises from generation $g - 1$. The second study's runs are written in their own directories, and each run records its regime in a configuration file, so that the first study's records cannot be touched or confused with the new ones.
+
+A pilot approved by the author on 12 October 2026 then ran the complete path on both arms, one seed outside both studies' seed sets, two generations of 200 games, warm start and three-generation window, with a reduced final evaluation of 20 games per opponent that served as a check of the path and entered no analysis. @tbl:study2-pilot gives the measured phases. On both arms the second generation trained from the first generation's weights on the shards of both generations, as the configuration files and the training logs record; training time grew in proportion to the number of records (a factor 2.15 on the grid arm and 2.02 on the graph arm when the second generation entered the window) and remained a small share of a generation, because self-play dominates: in the first study training took 3% of a grid run (194 to 250 s per generation) and 5% of a graph run (516 to 833 s). With the window reaching three generations from generation 2, training time over a run is about 2.7 times the first study's, which adds about one hour to a grid run and three hours to a graph run. The projected cost of the campaign is therefore the first study's plus that increment: about 18 to 20 h per grid run, 30 to 53 h per graph run, about 295 h or 12 to 13 days of sequential laptop time for the ten runs, plus about one day of evaluations.
+
+#figure(
+  align(center)[#table(
+    columns: (15.35%, 19.96%, 21.49%, 19.08%, 24.12%),
+    align: (left,left,right,right,right,),
+    table.header([Arm], [Generation], [Self-play (s)], [Training (s)], [Training records (shards)],),
+    table.hline(),
+    [grid], [0], [2,196], [78], [10,188 (4)],
+    [grid], [1], [2,584], [168], [22,399 (8)],
+    [graph], [0], [5,821], [303], [10,655 (4)],
+    [graph], [1], [5,800], [613], [21,386 (8)],
+  )]
+  , caption: [Pilot of the second study (12 October 2026): wall-clock of the self-play and training phases of each generation, one seed per arm, 200 games per generation, warm start and three-generation replay window, on the same laptop as the campaigns. Generation 1 trains on the records of generations 0 and 1; the training record count excludes the validation split. Export took 2 s per generation on both arms. The pilot measured costs and exercised the path; its 20-game evaluation carries no statistical meaning and is not reported. ]
+  , kind: table
+  ) <tbl:study2-pilot>
+
+The seven automated checks of the pipeline (@sec:pipeline) were then run on each pilot run's windowed shard set. One check failed as designed. The stamp check required every record of a training set to carry the generation-and-network stamp of a single manifest, which encodes the first study's one-generation-per-training assumption; on the windowed set it reported records of two generations against one manifest. The check was generalised rather than relaxed: it now takes the manifests of every generation in the window and requires the set of record stamps to equal the set of listed stamps, so that every record comes from a listed generation and every listed generation is present; it still passes on a first-study shard set with one manifest and still fails with a wrong manifest. With that generalisation all checks passed on both arms (policy normalisation under the legal mask on a real forward pass, legality of all stored targets, outcome domain with 17,054 of 22,856 grid records and 11,298 of 21,822 graph records truncated and excluded from the value loss, record stamps, bitwise-identical save and resume, and separation of training inputs from the evaluation files).
+
+== Execution
+<sec:study2-execution>
+The protocol was frozen on 13 October 2026 under its content hash, with the hyperparameter policy, the window of three generations and the cutoff rule decided by the author, and the campaign was approved and launched the same day at 15:02 CET, after a check that the machine was idle, that 161 GB of disk were free against a 20 GB guard, and that the frozen protocol's hash was unchanged. The ten runs execute sequentially on the same laptop as the first study, interleaved grid then graph for each seed from 11 to 15, so that an interruption would leave both arms with equal seed counts; each run is resumable at generation granularity from its recorded manifests, and intermediate evaluations of 20 games per opponent at generations 5 and 8 serve the trajectory figures only. No other heavy process runs on the machine during the campaign, since the per-generation clocks are the measurement of the same-wall-clock reading. @tbl:study2-runs records each run as it completes.
+
+#figure(
+  align(center)[#table(
+    columns: (24.89%, 26.43%, 26.21%, 22.47%),
+    align: (left,left,left,right,),
+    table.header([Run], [Start], [End], [Training clock (h)],),
+    table.hline(),
+    [grid, seed 11], [13 Oct 2026 15:02], [14 Oct 2026 09:33], [17.46],
+    [graph, seed 11], [14 Oct 2026 09:33], [16 Oct 2026 02:39], [39.28],
+    [grid, seed 12], [16 Oct 2026 02:39], [16 Oct 2026 21:46], [17.95],
+    [graph, seed 12], [16 Oct 2026 21:46], [18 Oct 2026 13:40], [37.33],
+    [grid, seed 13], [18 Oct 2026 13:40], [19 Oct 2026 08:19], [17.63],
+    [graph, seed 13], [19 Oct 2026 08:19], [21 Oct 2026 17:55], [52.85],
+    [grid, seed 14], [21 Oct 2026 17:55], [22 Oct 2026 12:18], [17.46],
+    [graph, seed 14], [22 Oct 2026 12:18], [24 Oct 2026 10:44], [42.20],
+    [grid, seed 15], [24 Oct 2026 10:44], [25 Oct 2026 06:27], [18.52],
+    [graph, seed 15], [25 Oct 2026 06:27], [26 Oct 2026 23:00], [36.27],
+  )]
+  , caption: [Execution record of the second study's campaign: start and end of each run (CET) and its total training wall-clock, the sum of the ten per-generation clocks (self-play, training and export; evaluation time excluded). Ten generations of 500 games per run, warm start and three-generation replay window, sequential on one laptop. ]
+  , kind: table
+  ) <tbl:study2-runs>
+
+== Results
+<sec:study2-results>
+Every table in this section shows every seed; scores exclude truncated games, reported in their own column; intervals are 95% percentile bootstrap intervals over seeds (10,000 resamples), the two arms resampled independently for the contrasts. The raw tables with the sensitivity columns are in @sec:app-d-study2; the provenance of every number in @sec:app-e.
+
+=== The verdict in one paragraph
+<the-verdict-in-one-paragraph-1>
+Under both budget readings the graph arm shows no seed-consistent advantage against any opponent, and every interval on the graph−grid score difference includes zero: the six point contrasts lie between −0.052 and +0.013, and the largest upper bounds are +0.090 at equal examples, against the search opponent, and +0.055 at equal wall-clock. The first condition of the frozen rule therefore holds under both readings. Its second condition speaks, as in the first study, of a "meaningful" advantage without a number, so the bounds are stated rather than a threshold chosen after the fact: the rule rejects H1′ for any threshold above +0.090; for thresholds between +0.055 and +0.090 the same-wall-clock reading rejects while the same-examples reading leaves a graph advantage against the search opponent unexcluded; the first study's realised bound was +0.028. #strong[H1′ is not supported];: no graph advantage was detected under either reading, and the data cannot exclude a small one, below about 0.09, against the search opponent at equal examples. The rest of the section shows the evidence seed by seed.
+
+=== Reading 1: equal number of training examples
+<reading-1-equal-number-of-training-examples-1>
+Both arms are compared at their generation-10 checkpoints, each run having generated and trained on ten generations of 500 games under identical simulation budgets; under the warm-started regime each checkpoint has also inherited the weights of the nine before it.
+
+#figure(
+  align(center)[#table(
+    columns: (15.54%, 13.13%, 16.41%, 20.79%, 16.41%, 17.72%),
+    align: (left,left,right,right,right,right,),
+    table.header([Arm], [Seed], [B-RND score], [B-RND truncation], [B-HEU score], [B-MCTS score],),
+    table.hline(),
+    [grid], [11], [0.984], [5%], [0.040], [0.100],
+    [grid], [12], [0.984], [4%], [0.055], [0.075],
+    [grid], [13], [0.995], [1%], [0.105], [0.175],
+    [grid], [14], [0.990], [2%], [0.120], [0.260],
+    [grid], [15], [0.989], [7%], [0.065], [0.045],
+    [graph], [11], [1.000], [0%], [0.125], [0.245],
+    [graph], [12], [0.995], [4%], [0.030], [0.070],
+    [graph], [13], [0.940], [42%], [0.080], [0.145],
+    [graph], [14], [0.928], [24%], [0.030], [0.100],
+    [graph], [15], [0.992], [41%], [0.105], [0.110],
+  )]
+  , caption: [Second study, same-examples reading. Final-checkpoint (generation 10) score of every run against each frozen opponent, five independent warm-started training runs per arm (seeds 11 to 15, ten generations of 500 games, replay window of three generations); 100 paired colour-swapped games per opponent per run on the 250 frozen openings at 400 simulations per move without exploration noise. Score = mean over decided games (win 1, draw 0.5, loss 0). Truncation = share of the 100 games stopped at the 300-ply cap; no game against B-HEU or B-MCTS was truncated by either arm. ]
+  , kind: table
+  ) <tbl:study2-same-examples>
+
+Against the legal-random opponent grid seeds score 0.984 to 0.995 and graph seeds 0.928 to 1.000; against the heuristic, grid seeds 0.040 to 0.120 and graph seeds 0.030 to 0.125; against the search opponent, grid seeds 0.045 to 0.260 and graph seeds 0.070 to 0.245. The graph arm truncates 0 to 42% of its games against the random opponent, three seeds at 24 to 42% and two at 0 to 4%; the grid arm 1 to 7%. The per-seed ranges of the two arms overlap against every opponent, and the spread between seeds of one arm against the search opponent (0.045 to 0.260 for the grid arm) is larger than any difference between the arms. Five seeds per arm cannot resolve differences inside such a spread.
+
+#figure(
+  align(center)[#table(
+    columns: (16.81%, 27.65%, 27.65%, 27.88%),
+    align: (left,left,left,left,),
+    table.header([Arm], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
+    table.hline(),
+    [grid], [0.989 \[0.985, 0.992\]], [0.077 \[0.051, 0.104\]], [0.131 \[0.068, 0.200\]],
+    [graph], [0.971 \[0.943, 0.996\]], [0.074 \[0.040, 0.108\]], [0.134 \[0.090, 0.196\]],
+  )]
+  , caption: [Second study, same-examples reading. Seed-level mean score per arm and opponent with the 95% bootstrap interval over the five seeds (10,000 resamples); same runs, opponents and evaluation volume as @tbl:study2-same-examples. ]
+  , kind: table
+  ) <tbl:study2-same-examples-means>
+
+=== Reading 2: equal wall-clock on the same machine
+<reading-2-equal-wall-clock-on-the-same-machine-1>
+Each run is taken at the last checkpoint it had completed within the second study's own equal-time cutoff, 17.63 hours, the median of the total training wall-clock of the five grid runs (17.46, 17.95, 17.63, 17.46 and 18.52 hours), computed on 25 October 2026 from the clock files alone, before any score of the study had been read, and never recomputed. The cutoff selects generation 10, 9, 10, 10 and 9 for grid seeds 11 to 15, and generations 4, 5, 3, 3 and 4 for graph seeds 11 to 15 (counting the initial network as generation 1; in the run logs these checkpoints are labelled gen009/gen008/gen009/gen009/gen008 and gen003/gen004/gen002/gen002/gen003). Where the cutoff checkpoint is the final one the final evaluation is reused; the other seven sets were played after the campaign at the same volume and with the pinned cutoff seeds.
+
+#figure(
+  align(center)[#table(
+    columns: (15.54%, 13.13%, 16.41%, 20.79%, 16.41%, 17.72%),
+    align: (left,left,right,right,right,right,),
+    table.header([Arm], [Seed], [B-RND score], [B-RND truncation], [B-HEU score], [B-MCTS score],),
+    table.hline(),
+    [grid], [11], [0.984], [5%], [0.040], [0.100],
+    [grid], [12], [0.984], [5%], [0.060], [0.110],
+    [grid], [13], [0.995], [1%], [0.105], [0.175],
+    [grid], [14], [0.990], [2%], [0.120], [0.260],
+    [grid], [15], [0.973], [7%], [0.065], [0.075],
+    [graph], [11], [0.995], [1%], [0.110], [0.160],
+    [graph], [12], [0.984], [4%], [0.115], [0.095],
+    [graph], [13], [0.762], [58%], [0.140], [0.140],
+    [graph], [14], [0.965], [28%], [0.065], [0.120],
+    [graph], [15], [0.958], [40%], [0.025], [0.080],
+  )]
+  , caption: [Second study, same-wall-clock reading. Score of every run at its last checkpoint completed within the 17.63-hour cutoff (grid seeds at generations 10, 9, 10, 10, 9; graph seeds at generations 4, 5, 3, 3, 4), against each frozen opponent; same evaluation as @tbl:study2-same-examples (100 paired games per opponent, 250 frozen openings, 400 simulations, no noise). Truncation = share of games at the 300-ply cap; none against B-HEU or B-MCTS. ]
+  , kind: table
+  ) <tbl:study2-same-wallclock>
+
+#figure(
+  align(center)[#table(
+    columns: (16.81%, 27.65%, 27.65%, 27.88%),
+    align: (left,left,left,left,),
+    table.header([Arm], [vs B-RND], [vs B-HEU], [vs B-MCTS],),
+    table.hline(),
+    [grid], [0.985 \[0.979, 0.992\]], [0.078 \[0.053, 0.105\]], [0.144 \[0.092, 0.206\]],
+    [graph], [0.933 \[0.846, 0.986\]], [0.091 \[0.056, 0.124\]], [0.119 \[0.094, 0.144\]],
+  )]
+  , caption: [Second study, same-wall-clock reading. Seed-level mean score per arm and opponent with the 95% bootstrap interval over the five seeds (10,000 resamples); same runs and evaluation volume as @tbl:study2-same-wallclock. ]
+  , kind: table
+  ) <tbl:study2-same-wallclock-means>
+
+At equal time the graph arm is read at its third to fifth checkpoints and the grid arm at its ninth or tenth. The graph arm's mean against the random opponent falls to 0.933 \[0.846, 0.986\] against 0.985 \[0.979, 0.992\], a gap carried by seed 13 (0.762 with 58% truncation) and seeds 14 and 15 (28% and 40% truncation); against the heuristic its mean is 0.091 \[0.056, 0.124\] against 0.078 \[0.053, 0.105\], and against the search opponent 0.119 \[0.094, 0.144\] against 0.144 \[0.092, 0.206\], every interval overlapping its counterpart. Three to five warm-started generations of the graph arm therefore reach, against the two strong opponents, the level that nine or ten grid generations reach, and the random-opponent gap is the truncation channel again. The reading charges the graph arm its measured cost on this machine, 2.34 times the grid arm's per run, which is what it should do; what it cannot do with five seeds is separate means whose intervals overlap by more than half their width.
+
+=== The arm contrast
+<the-arm-contrast-1>
+#figure(
+  align(center)[#table(
+    columns: (31.06%, 33.26%, 35.68%),
+    align: (left,right,right,),
+    table.header([Opponent], [Same-examples: graph − grid], [Same-wall-clock: graph − grid],),
+    table.hline(),
+    [B-RND (legal-random)], [−0.018 \[−0.045, +0.008\]], [−0.052 \[−0.140, +0.002\]],
+    [B-HEU (heuristic)], [−0.003 \[−0.046, +0.039\]], [+0.013 \[−0.032, +0.055\]],
+    [B-MCTS (search, 6,400 simulations)], [+0.003 \[−0.082, +0.090\]], [−0.025 \[−0.091, +0.034\]],
+  )]
+  , caption: [Second study, the pre-registered contrast: difference of seed-level mean scores (graph arm minus grid arm) with the 95% bootstrap interval over seeds (five independent warm-started seeds per arm, resampled independently, 10,000 resamples), per frozen opponent and budget reading. A negative value favours the grid arm. ]
+  , kind: table
+  ) <tbl:study2-contrast>
+
+None of the six contrasts excludes zero. Against the legal-random opponent the graph−grid difference is −0.018 \[−0.045, +0.008\] at equal examples and −0.052 \[−0.140, +0.002\] at equal time; against the heuristic, −0.003 \[−0.046, +0.039\] and +0.013 \[−0.032, +0.055\]; against the search opponent, +0.003 \[−0.082, +0.090\] and −0.025 \[−0.091, +0.034\]. The point contrasts are within 0.05 of zero in five cells of six and the sixth touches zero at its upper bound. The intervals are wider than the first study's in four of the six cells, the widest spanning 0.17 against the search opponent, where the two arms' seeds spread from 0.045 to 0.260.
+
+The frozen rule's first condition asks for the absence of a seed-consistent ordering in the graph arm's favour. Graph seeds outscore grid seeds in 3, 2 and 2 of the 5 same-index pairs against the three opponents at equal examples (13, 11 and 13 of the 25 cross pairs), and in 2, 3 and 2 of 5 (7, 15 and 11 of 25) at equal time: no opponent orders the seeds in the graph arm's favour under either reading. The second condition asks for intervals excluding a meaningful graph advantage, with no number attached: the largest upper bound is +0.090 at equal examples and +0.055 at equal time. The verdict is the one stated at the head of the section, in those terms; the study claims no threshold it did not pre-register, and the reader can apply any.
+
+=== Truncation and the sensitivity reading
+<truncation-and-the-sensitivity-reading>
+#figure(image("figures/fig7-truncation-study2.png", width: 85.0%),
+  caption: [
+    Second study: share of the 100 final-evaluation games against the legal-random opponent (B-RND) stopped at the 300-ply cap, per run; blue, the five grid seeds (11 to 15, left to right); red, the five graph seeds. Final checkpoints (generation 10) of ten warm-started runs, 100 paired colour-swapped games each on the 250 frozen openings at 400 simulations.
+  ]
+)
+<fig:study2-truncation>
+
+Truncation again occurs only against the random opponent, in none of the 20 cells against the heuristic and the search opponent. At the final checkpoints the graph arm truncates 0%, 4%, 42%, 24% and 41% of its games against the random opponent for seeds 11 to 15, the grid arm 5%, 4%, 1%, 2% and 7% (@fig:study2-truncation); at the cutoff checkpoints, 1%, 4%, 58%, 28% and 40% against 5%, 5%, 1%, 2% and 7%. The conversion pathology of the first study, present in every graph seed there (20 to 57%), persists in three graph seeds of five and is absent in two, whose rates sit inside the grid arm's band. The score that excludes truncations is close between the arms, but under the sensitivity treatment, every truncated game counted 0.5, the graph−grid difference against the random opponent is −0.101 \[−0.187, −0.012\] at equal examples and −0.131 \[−0.256, −0.015\] at equal time, and both intervals exclude zero; the other four contrasts are unchanged under every treatment, having no truncations. Under the warm-started regime the graph arm's deficit against the weakest opponent is therefore no longer a deficit in decided games; it is a deficit in deciding them, concentrated in three seeds.
+
+=== Trajectories and cost
+<trajectories-and-cost>
+#figure(image("figures/fig1-score-vs-time-study2.png", width: 90.0%),
+  caption: [
+    Second study: mean score against the frozen population (average of the three opponents, truncations excluded) as a function of cumulative training wall-clock, for all ten warm-started runs; evaluations at generations 5, 8 and 10 (20, 20 and 100 games per opponent). Blue: grid arm; red: graph arm; one line per seed, labelled at its end. The dashed vertical line marks the second study's equal-time cutoff of 17.63 hours.
+  ]
+)
+<fig:study2-score-time>
+
+#figure(image("figures/fig5-per-opponent-study2.png", width: 100.0%),
+  caption: [
+    Second study: score against each frozen opponent at generations 5, 8 and 10 (20, 20 and 100 paired games per opponent), one line per run, five warm-started seeds per arm; blue, grid arm; red, graph arm; truncations excluded. Intermediate points carry 20 games and serve the trajectory only.
+  ]
+)
+<fig:study2-per-opponent>
+
+@fig:study2-score-time places the ten runs on a common time axis: the grid runs finish between 17.46 and 18.52 hours of training wall-clock, the graph runs between 36.27 and 52.85 hours, and at the cutoff the two clouds overlap in score. @fig:study2-per-opponent shows the per-opponent trajectories; the intermediate points rest on 20 games and are read for shape only. The training-clock profiles of the graph runs took two shapes, a rise to a peak around generation 4 followed by a fall to grid-like durations by generation 10 in seeds 11 and 14, and a flat profile in seeds 12, 13 and 15; the per-generation clock of seed 13 rose monotonically from 14,456 s to 21,112 s and made it the slowest run of the campaign at 52.85 hours.
+
+#figure(
+  align(center)[#table(
+    columns: (49.67%, 24.18%, 26.15%),
+    align: (left,right,right,),
+    table.header([Metric], [Grid arm], [Graph arm],),
+    table.hline(),
+    [Training wall-clock per run, seeds 11 to 15], [17.46 / 17.95 / 17.63 / 17.46 / 18.52 h], [39.28 / 37.33 / 52.85 / 42.20 / 36.27 h],
+    [Training wall-clock per run, mean of 5 seeds], [17.80 h], [41.59 h (2.34×)],
+    [Mean self-play cost], [12.8 s/game], [29.9 s/game],
+    [Population score, same-examples reading], [0.399], [0.393],
+    [Population score, same-wall-clock reading (cutoff 17.63 h)], [0.402], [0.381],
+  )]
+  , caption: [Second study, cost and score summary per arm. Training wall-clock covers self-play generation, training and export for the ten generations of a run, evaluation games excluded, on the study machine (Apple M1 Pro, four worker threads, sequential runs); self-play cost = that wall-clock divided by 5,000 games. Population score = mean over the three frozen opponents of the seed-level mean score, truncations excluded. Parameters, inference and throughput benchmarks are unchanged from the first study. ]
+  , kind: table
+  ) <tbl:study2-cost>
+
+The ten runs consumed 296.9 hours of training wall-clock (grid 89.0 h, graph 207.9 h), against a projection of about 295 hours from the pilot, on one laptop with no paid compute. The graph arm cost 2.34 times the grid arm per run, against 2.04 in the first study: the replay window adds training time in proportion to the record count on both arms, and the graph arm's training is the more expensive. The population scores differ by 0.006 at equal examples and 0.021 at equal time in the grid arm's favour, against 0.081 and 0.079 in the first study.
+
+== The two studies side by side
+<sec:study2-interaction>
+The comparison between the studies is descriptive. The two studies use different seed sets, two regime changes were applied at once, and no interval is computed across studies; the two sets of intervals are placed beside each other and read as such.
+
+#figure(
+  align(center)[#table(
+    columns: (18.02%, 29.01%, 26.37%, 26.59%),
+    align: (left,left,right,right,),
+    table.header([Opponent], [Reading], [First study: graph − grid], [Second study: graph − grid],),
+    table.hline(),
+    [B-RND], [same-examples], [−0.169 \[−0.272, −0.062\]], [−0.018 \[−0.045, +0.008\]],
+    [B-HEU], [same-examples], [−0.064 \[−0.111, −0.017\]], [−0.003 \[−0.046, +0.039\]],
+    [B-MCTS], [same-examples], [−0.009 \[−0.055, +0.028\]], [+0.003 \[−0.082, +0.090\]],
+    [B-RND], [same-wall-clock], [−0.161 \[−0.278, −0.048\]], [−0.052 \[−0.140, +0.002\]],
+    [B-HEU], [same-wall-clock], [−0.059 \[−0.087, −0.029\]], [+0.013 \[−0.032, +0.055\]],
+    [B-MCTS], [same-wall-clock], [−0.018 \[−0.066, +0.025\]], [−0.025 \[−0.091, +0.034\]],
+  )]
+  , caption: [The graph−grid contrast of the two studies, per frozen opponent and budget reading: difference of seed-level mean scores with the 95% bootstrap interval over seeds (five independent seeds per arm in each study, resampled independently, 10,000 resamples). First study: seeds 1 to 5, each generation's network trained from a fresh initialisation on that generation's games (cutoff 18.77 h). Second study: seeds 11 to 15, warm start and three-generation replay window (cutoff 17.63 h). The studies are not pooled. ]
+  , kind: table
+  ) <tbl:study1-vs-study2>
+
+The contrast moved toward zero on every opponent under both readings. Against the random opponent it went from −0.169 to −0.018 at equal examples and from −0.161 to −0.052 at equal time; against the heuristic from −0.064 to −0.003 and from −0.059 to +0.013; against the search opponent from −0.009 to +0.003 and from −0.018 to −0.025. Four contrasts that excluded zero in the first study include it in the second, and the sign changed in two cells, both inside intervals that include zero. The graph arm's deficit of the first study is no longer visible at equal examples and is reduced at equal wall-clock, where it survives as an interval touching zero against the random opponent. What the second study does not show is any advantage of the graph arm: its two positive point contrasts (+0.003 and +0.013) are the smallest numbers in their rows.
+
+The arms' absolute levels moved in different directions. The graph arm's mean against the random opponent rose from 0.812 to 0.971 at equal examples, which is where its first-study deficit lived; its means against the heuristic and the search opponent moved from 0.065 to 0.074 and from 0.115 to 0.134. The grid arm's mean against the heuristic fell from 0.129 \[0.098, 0.165\] to 0.077 \[0.051, 0.104\], two intervals that do not overlap, while its means against the random and the search opponent stayed within 0.01 (0.981 to 0.988; 0.124 to 0.131). Read descriptively, the warm-started regime with a three-generation window did not raise the strength reached against the strong opponents within ten generations at these settings; it narrowed the gap between the arms, and for the grid arm against the heuristic it coincided with a lower level. Whether the lower level is an effect of the regime (a network carried across generations trains on a window that includes its own earlier games) or of the seed set cannot be decided from two studies of five seeds, and the study does not decide it.
+
+#figure(image("figures/fig6-training-metrics-study2.png", width: 100.0%),
+  caption: [
+    Second study: validation policy top-1 accuracy (left) and value accuracy on non-truncated samples (right) after the first epoch of each generation, as printed by the trainer on the held-out split of the generation's windowed training set; one line per run, five warm-started seeds per arm; blue, grid arm; red, graph arm. Training diagnostics, not strength measurements.
+  ]
+)
+<fig:study2-training>
+
+The training diagnostics (@fig:study2-training) separate one run from the other nine. Nine runs end the tenth generation with a value accuracy between 73.3% and 92.1% on their held-out split; graph seed 15 never exceeds 45% and ends at 35.2%, with a policy top-1 falling from 7.9% to 4.7%, yet its final checkpoint scores 0.992 against the random opponent (41% truncation), 0.105 against the heuristic and 0.110 against the search opponent, inside the other seeds' bands. In the first study every graph run's value accuracy rose into the grid arm's band. The run is kept, as the pre-commitments require; it shows that under this regime a network can play at the level of its peers while fitting its own windowed data poorly, and the study has no measurement that explains why.
+
+Three limits bound this section. The between-study movement is not attributable to the warm start or to the window separately, since both were applied at once by design. The hyperparameters are the first study's untuned defaults in both arms, a choice made at the freeze and stated as a limit of both studies; a tuned graph arm, or a tuned grid arm, might sit elsewhere. And ten generations remain an early regime: the second study moved the pipeline toward the standard practice of self-play systems and the absolute strength against the strong opponents did not move with it, which says that the budget, not only the regime, bounds what either representation shows here.
+
+Within these limits the second study answers the objection it was designed to test. The ordering of the first study does not survive the warm-started regime as a deficit: the graph representation, carried across generations and trained on a window of recent games, plays the frozen population as well as the grid representation at equal examples, within five-seed intervals, and within 0.05 of it at equal time, at 2.34 times the cost. It does not play better. The original hypothesis, that the graph representation learns a better policy at equal budget, is unsupported in both regimes; what changed between them is the size of the gap, from a clear grid advantage to none that five seeds can detect, with a conversion pathology that the regime removed in two graph seeds and left in three.
+
 #part[Part V. Discussion and conclusion]
 = Discussion and threats to validity
 <sec:discussion>
@@ -1692,11 +1968,11 @@ One variant (base Hive without expansions), one machine, one small budget (ten g
 
 == A property of the pipeline that bounds the absolute strength reached
 <a-property-of-the-pipeline-that-bounds-the-absolute-strength-reached>
-One property of the shared pipeline deserves to be stated as plainly as possible, because it shapes how the "ten generations" of this study should be read. The campaign driver trains the network of each generation from a fresh seeded initialisation, for two epochs, on the records of that generation alone; it passes neither a warm-start checkpoint nor a replay window to the trainer (@sec:pipeline). The loop still improves across generations, because the network of generation $g$ is trained on games played by the search guided by the network of generation $g - 1$, and that search is stronger than the raw network; but no weights are carried forward and no record is reused. Each network therefore sees the positions of 500 games, which is a small training set by the standards of self-play learning, and the absolute strength reached after ten generations (near the ceiling against the random opponent, around 0.1 against the two strong opponents) must be read against that fact. For the #emph[comparison] the property is neutral: it is identical in both arms, both encoders see exactly the same records, and the frozen protocol specified identical training conventions rather than a particular warm-start policy. For the #emph[generalisation] of the result it is a limit in addition to those already listed: a pipeline that accumulated data and carried weights would reach a different regime, in which the ordering of the arms is an open question. A successor study should carry weights across generations and train on a window of recent generations, as the large self-play systems do, with both changes applied identically to both arms.
+One property of the shared pipeline deserves to be stated as plainly as possible, because it shapes how the "ten generations" of this study should be read. The campaign driver trains the network of each generation from a fresh seeded initialisation, for two epochs, on the records of that generation alone; it passes neither a warm-start checkpoint nor a replay window to the trainer (@sec:pipeline). The loop still improves across generations, because the network of generation $g$ is trained on games played by the search guided by the network of generation $g - 1$, and that search is stronger than the raw network; but no weights are carried forward and no record is reused. Each network therefore sees the positions of 500 games, which is a small training set by the standards of self-play learning, and the absolute strength reached after ten generations (near the ceiling against the random opponent, around 0.1 against the two strong opponents) must be read against that fact. For the #emph[comparison] the property is neutral: it is identical in both arms, both encoders see exactly the same records, and the frozen protocol specified identical training conventions rather than a particular warm-start policy. For the #emph[generalisation] of the result it is a limit in addition to those already listed: a pipeline that accumulated data and carried weights would reach a different regime, in which the ordering of the arms is an open question. That successor study was run after this report had first been written, with both changes applied identically to both arms under a second frozen protocol, and is reported in @sec:study2: under a warm-started loop with a three-generation replay window the deficit is no longer visible at equal examples and reduced at equal time, no graph advantage appears, and the strength reached against the two strong opponents does not rise.
 
 == What we would do differently
 <what-we-would-do-differently>
-Four changes would strengthen a successor study without changing its logic. The first is the warm-start and replay window just described. The intermediate evaluations (20 games per opponent at generations 5 and 8) were sized for monitoring and are too noisy to carry inference; a successor should evaluate every generation at the final volume if the curves are to be analysed. The equal-time reading should be accompanied by an equal-#emph[energy] reading on heterogeneous accelerators, since wall-clock alone hides the provider asymmetry. And the zero-tuning symmetry should be complemented by a small, identical, pre-registered tuning budget for both arms, so that fragility under defaults is measured rather than inherited.
+Four changes would strengthen a successor study without changing its logic. The first, the warm start and replay window just described, was carried out as the second study; it leaves the tuning question below open, and its wider intervals showed that the rejection rule needs a numeric threshold for what counts as a meaningful advantage (@sec:study2-results). The intermediate evaluations (20 games per opponent at generations 5 and 8) were sized for monitoring and are too noisy to carry inference; a successor should evaluate every generation at the final volume if the curves are to be analysed. The equal-time reading should be accompanied by an equal-#emph[energy] reading on heterogeneous accelerators, since wall-clock alone hides the provider asymmetry. And the zero-tuning symmetry should be complemented by a small, identical, pre-registered tuning budget for both arms, so that fragility under defaults is measured rather than inherited.
 
 = Conclusion and perspectives
 <sec:conclusion>
@@ -1704,15 +1980,17 @@ Four changes would strengthen a successor study without changing its logic. The 
 <the-answer-to-the-research-question>
 The tested perimeter is base-game Hive, one capacity-matched simple relational message-passing network against one grid convolutional network, ten generations of small-budget self-play, five independent seeds per arm, a frozen three-opponent population and 250 frozen openings. Within that perimeter, #strong[the answer to the main research question is no];: the graph representation did not learn a better policy than the grid representation, neither when both arms consumed the same number of training examples nor when both received the same wall-clock on the same machine, and the pre-registered rejection rule fired exactly as it had been frozen. The graph arm's deficit is largest where Hive is most tactical (against the legal-random opponent, −0.169 and −0.161 under the two readings) and clear against the heuristic opponent (−0.064 and −0.059); against the search opponent the two arms are indistinguishable (−0.009 and −0.018, intervals straddling zero). The graph arm pays roughly twice the wall-clock per run. Its characteristic failure is to win material without converting the win; this shows as 20--57% of its games against the random opponent ending at the move cap, and it is observable only because truncation was never folded into draws.
 
+The second study, pre-registered separately and run under a warm-started loop with a three-generation replay window on five new seeds per arm, tested the main objection to that answer. It found no graph advantage under either reading: every graph−grid interval includes zero, with the largest upper bounds at +0.090 and +0.055; the first study's deficit is no longer visible at equal examples and reduced at equal time; the conversion pathology persists in three graph seeds of five; and the graph arm costs 2.34 times the grid arm per run. The answer to the research question therefore stands in the form the two studies together allow: at this budget, on this variant, the graph representation did not learn a better policy than the grid representation in either training regime, and under the standard regime it learned an equivalent one, within five-seed intervals, at more than twice the cost.
+
 The result bounds, rather than contradicts, the positive graph findings reported for Hex under value-based learning and for chess under self-play. Where short-range surround tactics decide games and budgets are small, the frame artifacts of a grid encoding turn out to be cheaper than framelessness. The component analysis adds a mechanistic reading: of the graph arm's two distinctive components, the direction-typed relations are necessary for optimization itself (removing them at identical settings made training diverge in every seed), while the global-pooling bias is dispensable at this scale.
 
 == Contributions, as demonstrated
 <contributions-as-demonstrated>
-Three contributions were announced in @sec:introduction; each is demonstrated in the chapters named there. (1) A controlled, budget-matched, multi-seed grid-versus-graph comparison for Hive, with both arms under one self-play pipeline and a pre-registered negative answer (@sec:results-main, @sec:results-cost). (2) A reproducible comparison harness for frameless, stacking games, released with the raw records: a rules-validated engine, two encoders pinned byte-exactly across two languages, a shared variable-action decoder, truncation-aware evaluation and frozen-artifact discipline (@sec:engine to @sec:protocol). (3) A component attribution for the graph arm with an honestly labelled two-component supplement (@sec:results-ablations).
+Four contributions were announced in @sec:introduction; each is demonstrated in the chapters named there. (1) A controlled, budget-matched, multi-seed grid-versus-graph comparison for Hive, with both arms under one self-play pipeline and a pre-registered negative answer (@sec:results-main, @sec:results-cost). (2) A reproducible comparison harness for frameless, stacking games, released with the raw records: a rules-validated engine, two encoders pinned byte-exactly across two languages, a shared variable-action decoder, truncation-aware evaluation and frozen-artifact discipline (@sec:engine to @sec:protocol). (3) A component attribution for the graph arm with an honestly labelled two-component supplement (@sec:results-ablations). (4) A second pre-registered comparison under the standard warm-started regime, with its protocol, cutoff and seeds fixed before any run, whose null result bounds the first study's negative one (@sec:study2).
 
 == Two follow-ups motivated by the data
 <two-follow-ups-motivated-by-the-data>
-The first follow-up targets the #strong[conversion pathology];, which the data isolate as a policy defect rather than a value defect: the graph arm's value accuracy in training is comparable to the grid arm's while its policy fails at forcing sequences (@sec:results-qualitative). A natural experiment is a search-time remedy applied identically to both arms under the same frozen evaluation, as a one-component change to the shared pipeline: a deeper evaluation budget in positions the value head already judges won, or auxiliary training targets for forcing moves. The second follow-up concerns the #strong[stability finding];: the ablation and its supplement showed that direction-typed relations matter mostly for optimization at this scale, but the supplement's gradient clipping confounds the attribution. A controlled study of normalisation and gradient-scale choices for relation-shared graph layers would decouple trainability from representational content and would say whether naive adjacency, properly stabilised, is sufficient for Hive.
+The first follow-up targets the #strong[conversion pathology];, which the data isolate as a policy defect rather than a value defect: the graph arm's value accuracy in training is comparable to the grid arm's while its policy fails at forcing sequences (@sec:results-qualitative). A natural experiment is a search-time remedy applied identically to both arms under the same frozen evaluation, as a one-component change to the shared pipeline: a deeper evaluation budget in positions the value head already judges won, or auxiliary training targets for forcing moves. The second follow-up concerns the #strong[stability finding];: the ablation and its supplement showed that direction-typed relations matter mostly for optimization at this scale, but the supplement's gradient clipping confounds the attribution. A controlled study of normalisation and gradient-scale choices for relation-shared graph layers would decouple trainability from representational content and would say whether naive adjacency, properly stabilised, is sufficient for Hive. Either follow-up now has the warm-started regime as its baseline, and either should pre-register a numeric threshold for a meaningful advantage, which the second study's intervals showed to be necessary.
 
 == A method that stands regardless of the sign
 <a-method-that-stands-regardless-of-the-sign>
@@ -2285,7 +2563,7 @@ Every random choice in the study descends from a recorded seed, so that a run, a
 
 #figure(
   align(center)[#table(
-    columns: (31.13%, 68.87%),
+    columns: (30.02%, 69.98%),
     align: (left,left,),
     table.header([Quantity], [Seed],),
     table.hline(),
@@ -2294,7 +2572,7 @@ Every random choice in the study descends from a recorded seed, so that a run, a
     [Generation-0 network], [seeded random initialisation with the base seed, exported before any self-play],
     [Network under evaluation], [9000 + #emph[g] for in-run evaluations (generations 4, 7 and 9); 9500 for cutoff-checkpoint sets],
     [Opponents], [B-RND 9101; B-MCTS 9201; B-HEU deterministic (no seed)],
-    [Match runner], [777,000 + #emph[g] for in-run evaluations; 888,000 for cutoff sets; with fixed openings the opening/colour schedule is seed-independent (schedule hash 8cd84b6564440666 reproduced across runs with different agents and match seeds)],
+    [Match runner], [777,000 + #emph[g] for in-run evaluations; 888,000 for cutoff sets; with fixed openings the opening/colour schedule is seed-independent (schedule hashes reproduced across runs with different agents and match seeds: 8cd84b6564440666 for the 20-game sets, 3bf5d3e51cea0c0d for the 100-game sets, identical in both studies)],
     [Opening generator], [20260910],
     [Bootstrap], [fixed resampling seed; 10,000 resamples],
   )]
@@ -2342,6 +2620,44 @@ All wall-clock figures in this report were measured on one Apple M1 Pro (10 core
   ) <tbl:app-c-inference>
 
 Training throughput was benchmarked on 10 September 2026 at batch 128, forward and backward, on the machine's GPU backend: 274 positions/s for the grid network and 138 positions/s for the graph network (forward-only on the CPU: 138 and 478 positions/s; the graph network is faster per position on the CPU and slower on the GPU). The campaign runs loaded their data in-process and trained at or below these figures; generation, not training, dominates a generation's wall-clock in either arm. Per-run training wall-clock (self-play, training and export over 10 generations × 500 games, evaluation games excluded) was 16.7--19.1 h for grid runs and 26.6--49.9 h for graph runs, with means of 18.0 h and 36.7 h (per-seed values in @tbl:d-wallclock). An evaluation game at 400 simulations took ≈23--32 s; the search opponent at 6,400 simulations decides in ≈27 ms single-threaded; a subprocess round-trip to the engine costs 21.7 µs. Disk use was estimated at ≈3--5 GB per three-seed campaign against a 20 GB free-space guard.
+
+== The second study: frozen constants, regime and seeds
+<sec:app-c-study2>
+The second study (@sec:study2) reuses every constant of @tbl:app-c-frozen except where @tbl:app-c-study2 states otherwise, and every hyperparameter of @tbl:app-c-hyper except the training data per generation. Its protocol was frozen as version 2.0 on 13 October 2026 under the content hash given in @tbl:app-c-study2-hash; the two arms are the configurations of the first two rows of @tbl:app-c-configs, run with seeds 11 to 15, and no ablation variant was run.
+
+#figure(
+  align(center)[#table(
+    columns: (22.3%, 41.94%, 16.34%, 19.43%),
+    align: (left,left,left,left,),
+    table.header([Constant], [Value], [Fixed on (2026)], [Approved by],),
+    table.hline(),
+    [Training regime], [warm start: the network of generation $g$ is initialised from the final checkpoint of generation $g - 1$ (model weights only; optimizer and cosine schedule restart every generation); generation 0 starts from the seeded random initialisation], [13 Oct (protocol v2)], [the author],
+    [Replay window], [3 generations: generation $g$ trains on the records of generations $max (0 \, g - 2)$ to $g$, that is 500, 1,000, then 1,500 games from generation 2 onward; 2 epochs per generation], [13 Oct], [the author],
+    [Hyperparameter policy], [option A: the first study's settings in both arms, no tuning; option B (three learning rates on one seed per arm) considered and rejected], [13 Oct], [the author],
+    [Training seeds], [11--15 per arm; base seed 100,000 × seed; no random stream shared with seeds 1--5], [13 Oct], [the author],
+    [Equal-time cutoff of the second study], [17.63 h = median of the total training wall-clock of the five grid runs of the second study (17.46, 17.95, 17.63, 17.46, 18.52 h; sum of the ten per-generation clocks, evaluations excluded), computed once from the clock files on 25 October 2026 before any cross-arm number, never recomputed], [rule 13 Oct; value 25 Oct], [rule: the author; value: computed mechanically],
+    [Evaluation schedule], [generations 5 and 8 at 20 paired games per opponent (descriptive only); final checkpoint at 100; cutoff checkpoints at 100 with network seed 9500 and match seed 888,000], [13 Oct (as in the first study)], [the author],
+    [Reused frozen assets], [opponent population, 250 openings, pinned evaluation settings, both networks and the shared decoder, untouched], [13 Oct (reuse declared)], [the author],
+    [Execution order], [ten runs sequential on the study machine, interleaved grid then graph for seeds 11 to 15; no other heavy process during the campaign], [13 Oct], [the author],
+    [Protocol document], [version 2.0; any later change is a new study], [13 Oct], [the author],
+  )]
+  , caption: [Frozen constants of the second study, with the date each was fixed and the approval under which it was fixed; everything not listed is the first study's. ]
+  , kind: table
+  ) <tbl:app-c-study2>
+
+#figure(
+  align(center)[#table(
+    columns: (31.35%, 68.65%),
+    align: (left,left,),
+    table.header([Artifact], [SHA-256],),
+    table.hline(),
+    [Protocol, version 2.0], [e296a12e8d1e3dee36c3b210​ececced62314e64657aede1c​b91b1ea452b461eb],
+  )]
+  , caption: [Content hash of the second study's frozen protocol; the hashes of the reused artifacts are those of @tbl:app-c-hashes. ]
+  , kind: table
+  ) <tbl:app-c-study2-hash>
+
+The seed derivation of @tbl:app-c-seeds applies unchanged with $s$ = 11 to 15: the base seed is 100,000 × $s$, generation $g$ uses base + $g$ for self-play and training, the generation-0 network is initialised from the base seed, and the evaluation seeds (9000 + $g$ in-run, 9500 for cutoff sets; match runner 777,000 + $g$ in-run, 888,000 for cutoff sets) are the first study's. The campaign driver records the regime of every run (warm start on, window 3) in a configuration file kept with the run, and every generation's training configuration lists the initialisation checkpoint and the shards actually read.
 
 = Statistical procedures and raw result tables
 <sec:app-d>
@@ -2540,6 +2856,73 @@ The map is the measured content of the second reading: at equal wall-clock the g
 <cap-sensitivity-bounds>
 The protocol brackets the primary estimator (truncations excluded) with three alternative treatments of every truncated game: counted 0.5 (the sensitivity scores of @tbl:d-sens), counted as a loss for the arm under test, and counted as a win for it; the last is an upper bound on what any larger cap could do for an arm that truncates. The bounds were computed from the per-game records in the analysis of 19 September 2026 (three seeds per arm): with every truncated game scored as a win for the arm under test, the graph-minus-grid contrast against legal-random is still −0.072 under the same-examples reading and −0.058 under the same-wall-clock reading, and its direction is unchanged under every treatment (excluded, 0.5, loss, win). Against B-HEU and B-MCTS no game of either arm was truncated, so all treatments coincide there. The final analysis record does not restate the bounds at five seeds. Because the graph arm truncated 20--57% of its games against legal-random in the original seeds and 23--44% in the extension seeds (grid: 0--1%, one extension seed at 11%), its primary score against that opponent is a mean over fewer decided games (43 to 80 per seed) than the grid arm's.
 
+== The second study: sensitivity scores, cutoff map and wall-clock
+<sec:app-d-study2>
+The second study (@sec:study2) uses the estimators of this appendix unchanged: the same score, truncation rate and sensitivity score per (seed, opponent) cell, the same seed-level percentile bootstrap with $B$ = 10,000 and the same independent resampling of the two arms for the contrast. Its per-seed score tables under both readings, its seed-level means and its contrasts are given in the chapter (@tbl:study2-same-examples to @tbl:study2-contrast) and are not repeated; this section adds the sensitivity scores, the cutoff map with the cumulative clocks behind it, and the per-run wall-clock.
+
+#figure(
+  align(center)[#table(
+    columns: (18.68%, 15.6%, 31.65%, 34.07%),
+    align: (left,left,right,right,),
+    table.header([Arm], [Seed], [Same-examples: B-RND sens.], [Same-wall-clock: B-RND sens.],),
+    table.hline(),
+    [grid], [11], [0.9600], [0.9600],
+    [grid], [12], [0.9650], [0.9600],
+    [grid], [13], [0.9900], [0.9900],
+    [grid], [14], [0.9800], [0.9800],
+    [grid], [15], [0.9550], [0.9400],
+    [graph], [11], [1.0000], [0.9900],
+    [graph], [12], [0.9750], [0.9650],
+    [graph], [13], [0.7550], [0.6100],
+    [graph], [14], [0.8250], [0.8350],
+    [graph], [15], [0.7900], [0.7750],
+  )]
+  , caption: [Second study, sensitivity scores against legal-random (B-RND) under both readings, for the runs, checkpoints and evaluation volume of @tbl:study2-same-examples and @tbl:study2-same-wallclock: the mean over all 100 games of the cell with every truncated game counted 0.5, at the four-decimal precision of the comma-separated result files. Against B-HEU and B-MCTS no game of any run was truncated under either reading, so there the sensitivity score equals the score of the main tables in every cell. Raw values, no interval.]
+  , kind: table
+  ) <tbl:d2-sens>
+
+Under the sensitivity treatment the graph-minus-grid contrast against legal-random is −0.101 \[−0.187, −0.012\] under the same-examples reading and −0.131 \[−0.256, −0.015\] under the same-wall-clock reading; the other four contrasts are those of @tbl:study2-contrast, there being no truncation against the other two opponents. The two bounding treatments (every truncated game scored as a loss or as a win for the arm under test) were not computed for the second study.
+
+The second study's cutoff was fixed by the rule of its protocol: the median of the full-run training wall-clocks of its five grid runs, each the sum of the ten per-generation clocks, computed exactly from the clock files on 25 October 2026, minutes after the fifth grid run had finished and while the last graph run was in its first generation, before any score of the study had been read. The five totals were 17.4567, 17.9540, 17.6263, 17.4592 and 18.5176 h; the median, 17.6263 h (63,454.8 s), is the total of grid seed 13, whose own final checkpoint therefore sits at the cutoff inclusively. For each run the checkpoint retained is the last whose cumulative training wall-clock does not exceed the cutoff (@tbl:d2-cutoff).
+
+#figure(
+  align(center)[#table(
+    columns: (14.76%, 12.56%, 23.35%, 22.69%, 26.65%),
+    align: (left,left,left,right,left,),
+    table.header([Arm], [Seed], [Checkpoint at the cutoff], [Cumulative wall-clock], [Evaluation set],),
+    table.hline(),
+    [grid], [11], [gen009 (final)], [17.46 h], [final set reused],
+    [grid], [12], [gen008], [16.54 h], [equal-time set],
+    [grid], [13], [gen009 (final)], [17.63 h], [final set reused (defining run)],
+    [grid], [14], [gen009 (final)], [17.46 h], [final set reused],
+    [grid], [15], [gen008], [16.77 h], [equal-time set],
+    [graph], [11], [gen003], [17.25 h], [equal-time set],
+    [graph], [12], [gen004], [17.51 h], [equal-time set],
+    [graph], [13], [gen002], [13.95 h], [equal-time set],
+    [graph], [14], [gen002], [15.38 h], [equal-time set],
+    [graph], [15], [gen003], [14.93 h], [equal-time set],
+  )]
+  , caption: [Second study, checkpoint retained for the same-wall-clock reading in each of the ten warm-started runs: the last checkpoint completed within the equal-time cutoff of 17.63 h of cumulative training wall-clock (identifiers zero-based; gen009 is the tenth and final generation), with the cumulative hours at that checkpoint from the clock files. Where the retained checkpoint is the final one, the final evaluation set (100 paired games per opponent) serves both readings; otherwise a separate equal-time set of the same volume was evaluated on 26--27 October 2026 with the pinned cutoff seeds (network 9500, match runner 888,000).]
+  , kind: table
+  ) <tbl:d2-cutoff>
+
+At equal wall-clock the graph arm had completed 3--5 of its ten generations, the grid arm nine or ten (first study: 3--6 and nine or ten). @tbl:d2-wallclock gives the full-run training wall-clocks behind the map; their means are 17.80 h (grid) and 41.59 h (graph), a ratio of 2.34× (first study: 2.04×).
+
+#figure(
+  align(center)[#table(
+    columns: (13.45%, 14.53%, 14.53%, 14.53%, 14.53%, 14.53%, 13.88%),
+    align: (left,right,right,right,right,right,right,),
+    table.header([Arm], [Seed 11], [Seed 12], [Seed 13], [Seed 14], [Seed 15], [Mean],),
+    table.hline(),
+    [grid], [17.46], [17.95], [17.63], [17.46], [18.52], [17.80],
+    [graph], [39.28], [37.33], [52.85], [42.20], [36.27], [41.59],
+  )]
+  , caption: [Second study, training wall-clock of each of the ten warm-started runs, in hours: the per-generation self-play generation, training and export seconds summed over the 10 generations of the run (10 × 500 games, replay window of three generations), evaluation games excluded, from each run's clock log; one machine, four worker threads, sequential runs. The sums are 89.0 h (grid) and 207.9 h (graph), 296.9 h in all. The equal-time cutoff is the median of the five grid values.]
+  , kind: table
+  ) <tbl:d2-wallclock>
+
+The trajectory figures of the second study are drawn as the first study's, directly from each run's evaluation records at the checkpoints of generations 5, 8 and 10 and its clock log; the training-metric figure is parsed from the second campaign's log, and the per-run values it shows at the first and tenth generation are tabulated in the analysis record.
+
 == Ablation raw tables
 <ablation-raw-tables>
 Three variants of the graph arm were trained with three seeds each at the full budget (10 generations × 500 games, identical self-play, training and evaluation settings) and evaluated at their tenth-generation checkpoint under the same-examples reading. @tbl:d-abl-runs summarises the variants; @tbl:d-abl-a2 and @tbl:d-abl-a1prime give the per-seed scores of the two that trained; @tbl:d-abl-contrast gives the contrasts against the full graph arm.
@@ -2640,6 +3023,13 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
     [Final-evaluation truncation rate versus legal-random per run], [`paper/`#sym.zws`figures/`#sym.zws`fig7-`#sym.zws`truncation.`#sym.zws`png`], [`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`B-`#sym.zws`RND.`#sym.zws`csv` per run], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01`],
     [Ablation table: A1 divergence, A2 null effect, A1′ supplement], [`results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [`data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`graph-`#sym.zws`{untyped,`#sym.zws`nogpool,`#sym.zws`untyped-`#sym.zws`clip}-`#sym.zws`s{1,`#sym.zws`2,`#sym.zws`3}/`#sym.zws`eval/` against the full graph arm's finals], [`H7-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`23-`#sym.zws`a1-`#sym.zws`divergence-`#sym.zws`01`; `H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`02-`#sym.zws`a2-`#sym.zws`nogpool-`#sym.zws`01`; `H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`a1prime-`#sym.zws`01`],
     [Pipeline, architecture and chronology schematics], [`paper/`#sym.zws`figures/`#sym.zws`fig8-`#sym.zws`pipeline.`#sym.zws`png`, `fig9-`#sym.zws`architectures.`#sym.zws`png`, `fig10-`#sym.zws`timeline.`#sym.zws`png` (`scripts/`#sym.zws`make_`#sym.zws`report_`#sym.zws`figures.`#sym.zws`py`)], [the system documentation (`docs/inventory.md`), the journal headers and the decision log; no measured quantity], [none],
+    [Second study: per-seed scores and truncation rates, same-examples reading (2 arms × 5 seeds × 3 opponents, 100 games each)], [`results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`{md,`#sym.zws`csv}`], [`data/`#sym.zws`runs/`#sym.zws`cmp2-`#sym.zws`{grid,`#sym.zws`graph}-`#sym.zws`s{11.`#sym.zws`.`#sym.zws`15}/`#sym.zws`eval/`#sym.zws`gen009-`#sym.zws`vs-`#sym.zws`*.`#sym.zws`csv`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`],
+    [Second study: per-seed scores, same-wall-clock reading], [`results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`{md,`#sym.zws`csv}`], [`eval/`#sym.zws`tstar-`#sym.zws`gen00N-`#sym.zws`vs-`#sym.zws`*.`#sym.zws`csv` of each `cmp2-*` run (final files where the cutoff checkpoint is the last one) and `wallclock.json`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`],
+    [Second study: arm contrast, both readings; Study 1 vs Study 2 table], [`results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`; `results/`#sym.zws`study2/`#sym.zws`study1-`#sym.zws`vs-`#sym.zws`study2.`#sym.zws`md`], [the two CSV files above and `results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`*.`#sym.zws`csv`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`],
+    [Second study: equal-time cutoff T\*′ = 17.6263 h and the checkpoint map], [numbers in the journal; map re-derived by `make_results.py --study 2`], [`wallclock.json` of `cmp2-grid-s11..15` (median of the five totals), then of every `cmp2-*` run], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`25-`#sym.zws`tstar-`#sym.zws`01`],
+    [Second study: cost table and per-run wall-clock], [`paper/`#sym.zws`figures/`#sym.zws`fig2-`#sym.zws`score-`#sym.zws`cost-`#sym.zws`study2.`#sym.zws`md`; `results/`#sym.zws`study2/`#sym.zws`wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md`], [`wallclock.json` per `cmp2-*` run; `results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`*.`#sym.zws`csv`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`13-`#sym.zws`campaign-`#sym.zws`01`],
+    [Second study: score versus wall-clock, per-opponent trajectories, truncation per run, training metrics], [`paper/`#sym.zws`figures/`#sym.zws`fig{1,`#sym.zws`5,`#sym.zws`7}-`#sym.zws`*-`#sym.zws`study2.`#sym.zws`png`, `fig6-`#sym.zws`training-`#sym.zws`metrics-`#sym.zws`study2.`#sym.zws`png` (`make_figures.py --study 2`)], [`eval/*.csv` and `wallclock.json` per `cmp2-*` run; `data/`#sym.zws`runs/`#sym.zws`campaign2.`#sym.zws`log`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01` (training metrics tabulated in its addendum)],
+    [Second study: pilot phase durations; execution record of the ten runs], [numbers in the journals], [`data/`#sym.zws`runs/`#sym.zws`pilot2-`#sym.zws`{grid,`#sym.zws`graph}-`#sym.zws`s10/`; `data/`#sym.zws`runs/`#sym.zws`cmp2-`#sym.zws`*/`#sym.zws`wallclock.`#sym.zws`json`, `data/`#sym.zws`runs/`#sym.zws`campaign2.`#sym.zws`log`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`12-`#sym.zws`pilot-`#sym.zws`01`; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`13-`#sym.zws`campaign-`#sym.zws`01`],
   )]
   , caption: [Provenance of every generated table and figure: the artifact it is taken from, the raw records that artifact is computed from, and the journal entry that recorded the result. Run directories are abbreviated as `eval/…` for `data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`<arm>-`#sym.zws`s<seed>/`#sym.zws`eval/`#sym.zws`…`. ]
   , kind: table
@@ -2647,7 +3037,7 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
 
 #figure(
   align(center)[#table(
-    columns: (40.4%, 33.55%, 26.05%),
+    columns: (40.18%, 34%, 25.83%),
     align: (left,left,left,),
     table.header([Evidence in the method chapters], [Where it lives], [Journal entry (date)],),
     table.hline(),
@@ -2662,6 +3052,9 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
     [Rust mirror of the graph encoder, golden crosscheck (160 positions), end-to-end graph arm through the same search], [`scripts/`#sym.zws`crosscheck_`#sym.zws`graph.`#sym.zws`py`, `hive-nn` graph module], [`H5-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`graph-`#sym.zws`wiring-`#sym.zws`01` (2026-09-10)],
     [Comparison matrix, opening generation, fixed-schedule harness test, campaign sizing], [`configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`, `results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`, `results/`#sym.zws`comparison/`#sym.zws`opponents-`#sym.zws`manifest.`#sym.zws`md`], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`10-`#sym.zws`matrix-`#sym.zws`01` (2026-09-10)],
     [Report assembly checks and the staleness defect found by the render pass], [`paper/`#sym.zws`final-`#sym.zws`control.`#sym.zws`md`], [`H8-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`detailed-`#sym.zws`edition-`#sym.zws`01` (2026-10-09)],
+    [Second study: driver options for warm start and replay window, regression test against the first study's recorded manifests (4 runs × 10 generations)], [`scripts/`#sym.zws`run_`#sym.zws`comparison.`#sym.zws`py`, `scripts/`#sym.zws`test_`#sym.zws`driver_`#sym.zws`equivalence.`#sym.zws`py`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`driver-`#sym.zws`01` (2026-10-09)],
+    [Second study: pilot (2 generations × 200 games per arm), check battery on windowed shards, stamp check generalised to several manifests], [`scripts/`#sym.zws`pilot_`#sym.zws`h9.`#sym.zws`sh`, `scripts/`#sym.zws`run_`#sym.zws`h4_`#sym.zws`checks.`#sym.zws`sh`, `python/`#sym.zws`hivenet/`#sym.zws`checks.`#sym.zws`py`, `data/`#sym.zws`runs/`#sym.zws`pilot2-`#sym.zws`h4-`#sym.zws`checks.`#sym.zws`log`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`12-`#sym.zws`pilot-`#sym.zws`01` (2026-10-12)],
+    [Second study: frozen protocol v2, campaign script, cutoff evaluation driver, analysis switch], [`docs/`#sym.zws`protocol-`#sym.zws`v2.`#sym.zws`md`, `scripts/`#sym.zws`campaign2.`#sym.zws`sh`, `scripts/`#sym.zws`tstar_`#sym.zws`evals_`#sym.zws`study2.`#sym.zws`py`, `scripts/make_results.py --study 2`], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`13-`#sym.zws`campaign-`#sym.zws`01`, `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`25-`#sym.zws`tstar-`#sym.zws`01`, `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`],
   )]
   , caption: [Provenance of the method-chapter evidence (engine validation, baselines, pipeline, encoders, campaign design): the artifacts and the journal entry recording each measurement. ]
   , kind: table
@@ -2669,11 +3062,11 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
 
 == Decision index
 <decision-index>
-@tbl:prov-decisions lists the decision-log entries relevant to this study with their dates; entries D-002, D-013 and D-018 concern the other projects of the research programme and are omitted. Gate crossings are marked with their gate.
+@tbl:prov-decisions lists the decision-log entries relevant to this study with their dates; entries D-002, D-013, D-018 and D-040 concern the other projects of the research programme and are omitted. Gate crossings are marked with their gate.
 
 #figure(
   align(center)[#table(
-    columns: (13.91%, 21.63%, 64.46%),
+    columns: (13.5%, 21.02%, 65.49%),
     align: (left,left,left,),
     table.header([Entry], [Date], [Decision],),
     table.hline(),
@@ -2706,6 +3099,13 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
     [D-030], [2026-09-26], [#strong[G-SPEND];: supplementary two-component A1′ approved at its corrected sizing],
     [D-031], [2026-09-26], [#strong[G-SPEND];: extension to 5 seeds per arm approved with three pre-commitments stated before any new run],
     [D-032], [2026-10-09], [Report scope: detailed edition, no frozen artifact, number or claim changed],
+    [D-033], [2026-10-09], [Report form: standalone academic report explaining what, how, when and why, with no internal file references in the body],
+    [D-034], [2026-10-09], [Rights: the third-party reference engines (Mzinga, nokamute) are MIT-licensed; validation results publishable; G-RIGHTS closed],
+    [D-035], [2026-10-09], [Diffusion plan (repository release, preprint, public post), each step a separate G-PUBLIC decision; complementary study queued with a draft protocol],
+    [D-036], [2026-10-09], [#strong[G-PUBLIC];: repository made public at tag v2.0-report with the report, the short article and the records archive; preprint and post approved],
+    [D-037], [2026-10-12], [#strong[G-SPEND];: pilot of the second study (2 generations × 200 games per arm, warm start and three-generation window, seed outside both studies' sets)],
+    [D-038], [2026-10-13], [#strong[G-FREEZE];: protocol v2 frozen (option A, window 3, seeds 11--15, cutoff rule); sha256 e296a12e…b461eb, commit 4a22a24],
+    [D-039], [2026-10-13], [#strong[G-SPEND];: second campaign launched (2 arms × 5 seeds × 10 generations × 500 games, cutoff evaluations included)],
   )]
   , caption: [Index of the decision-log entries relevant to this study, in order of recording. ]
   , kind: table
@@ -2748,6 +3148,12 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
     [#strong[Final 5-seed analysis (pre-committed, D-031): H1 remains rejected.] Graph−grid contrasts: B-RND −0.169 \[−0.272, −0.062\] / −0.161 \[−0.278, −0.048\]; B-HEU −0.064 \[−0.111, −0.017\] / −0.059 \[−0.087, −0.029\]; B-MCTS −0.009 \[−0.055, +0.028\] / −0.018 \[−0.066, +0.025\] (same-examples / same-wall-clock); largest upper bound +0.028. Supersedes the 3-seed tables as the study's final numbers.], [`H6-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`5seed-`#sym.zws`final-`#sym.zws`01`; `results/`#sym.zws`comparison/`], [seeds 4--5 collected after the 3-seed analysis (disclosed); T\* fixed at the pre-registered value],
     [A1′ supplement (two-component: untyped edges + grad-clip): trains finite and scores within the full graph arm's band (all diff CIs straddle 0); with A1, the typed relations' measurable contribution at this scale concentrates in optimization stability; it is never attributed to typing alone (clip confound).], [`H7-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`09-`#sym.zws`a1prime-`#sym.zws`01`; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`], [3 vs 5 seeds; wide intervals; confounded by construction],
     [The working methodology (goal-level AI delegation under six human-only gates, file-based state, mechanical verification) caught at least five harness/process defects before they could contaminate results (pipeline deadlock, corpus setup error, eval-harness opponent defect, silent record-loss path, silent NaN divergence), each journaled at detection time.], [`docs/`#sym.zws`methodology-`#sym.zws`log.`#sym.zws`md` (workspace); journals cited per incident in @sec:working-method], [process observations from one study; no counterfactual control],
+    [#strong[Second study (protocol v2, warm start + replay window 3, seeds 11--15): H1′ not supported.] Graph−grid: B-RND −0.018 \[−0.045, +0.008\] / −0.052 \[−0.140, +0.002\]; B-HEU −0.003 \[−0.046, +0.039\] / +0.013 \[−0.032, +0.055\]; B-MCTS +0.003 \[−0.082, +0.090\] / −0.025 \[−0.091, +0.034\] (same-examples / same-wall-clock at 17.63 h); no seed-consistent graph advantage; largest upper bounds +0.090 and +0.055.], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`; `results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`], [5 seeds per arm; intervals wider than the first study's; a graph advantage below ≈ 0.09 against B-MCTS not excluded at equal examples; no numeric threshold in the frozen rule],
+    [Second study vs first (descriptive, no pooling): the contrast moved toward zero on every opponent under both readings (B-RND −0.169 → −0.018 and −0.161 → −0.052; B-HEU −0.064 → −0.003 and −0.059 → +0.013; B-MCTS −0.009 → +0.003 and −0.018 → −0.025).], [`results/`#sym.zws`study2/`#sym.zws`study1-`#sym.zws`vs-`#sym.zws`study2.`#sym.zws`md`; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`], [different seed sets; two regime changes at once; no cross-study interval],
+    [Second study: the conversion pathology persists in three graph seeds of five (24--42% truncation vs B-RND at the final checkpoints, 28--58% at the cutoffs) and is absent in two (0--4%); grid 1--7%; with truncations scored 0.5 the B-RND contrast is −0.101 \[−0.187, −0.012\] and −0.131 \[−0.256, −0.015\].], [`results/`#sym.zws`study2/`#sym.zws`results-`#sym.zws`*.`#sym.zws`csv`; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`], [truncation against B-RND only; 300-ply cap; sensitivity reading, not the primary score],
+    [Second study cost: training clock grid 17.46--18.52 h (mean 17.80 h), graph 36.27--52.85 h (mean 41.59 h), ratio 2.34× (first study 2.04×); the window adds training time in proportion to the record count, 3--5% of a run; at the cutoff the grid arm had completed 9--10 generations, the graph arm 3--5.], [`results/`#sym.zws`study2/`#sym.zws`wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md`; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`13-`#sym.zws`campaign-`#sym.zws`01`, `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`12-`#sym.zws`pilot-`#sym.zws`01`, `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`25-`#sym.zws`tstar-`#sym.zws`01`], [one machine; wall-clock on this machine's providers],
+    [Second study: absolute strength against the strong opponents did not rise under the warm-started regime within ten generations (grid vs B-HEU 0.077 against 0.129; vs B-MCTS 0.131 against 0.124); the graph arm's score against B-RND rose from 0.812 to 0.971.], [`results/`#sym.zws`study2/`#sym.zws`study1-`#sym.zws`vs-`#sym.zws`study2.`#sym.zws`md`], [descriptive; different seeds; untuned defaults in both arms],
+    [The second study was pre-registered: protocol v2 frozen on 13 October 2026 (sha256 e296a12e…b461eb) before any run; its cutoff computed from grid clocks on 25 October 2026 before any score was read; all five seeds per arm analysed; no restart or exclusion.], [`docs/`#sym.zws`protocol-`#sym.zws`v2.`#sym.zws`md`; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`25-`#sym.zws`tstar-`#sym.zws`01`, `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`13-`#sym.zws`campaign-`#sym.zws`01`; D-038, D-039], [hyperparameters untuned by choice (option A), stated as a limit],
   )]
   , caption: [The claims--evidence register of this report, reproduced from the repository file with the section column removed. Every claim made in the body corresponds to one row; the limit column states what prevents a broader reading. ]
   , kind: table
@@ -2755,9 +3161,9 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
 
 == Raw data, identifiers and frozen hashes
 <raw-data-identifiers-and-frozen-hashes>
-#strong[Location and layout.] Raw records live on disk under `data/runs/` in the study repository; they are not under version control. There is one directory per training run, `cmp-<arm>-s<seed>`, with `<arm>` in {`grid`, `graph`} for the main comparison (seeds 1--5) and in {`graph-untyped`, `graph-nogpool`, `graph-`#sym.zws`untyped-`#sym.zws`clip`} for the ablations A1, A2 and A1′ (seeds 1--3), plus `pilot0/` for the pipeline pilot. Each run directory contains: `selfplay/`#sym.zws`gen00N-`#sym.zws`*.`#sym.zws`bin` (binary record shards of generation N, v3 format, model-stamped) with `gen00N-`#sym.zws`manifest.`#sym.zws`json` (network and its fingerprint, model generation, record version, game type, seed, game count, full and cheap simulation counts, full-move fraction, temperature plies, resignation settings, counts of resigned and truncated games, number of positions, shard list); `checkpoints/`#sym.zws`gen00N/` (`hivenet-e0.pt`, `hivenet-e1.pt`, `train-config.json`) and the exported `gen00N-b1.onnx` used for play; `eval/`#sym.zws`<checkpoint>-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`csv` with its `.log` for the intermediate (gen004, gen007) and final (gen009) evaluations, and `eval/`#sym.zws`tstar-`#sym.zws`gen00N-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`{csv,`#sym.zws`log}` for the equal-time cutoff checkpoint; and `wallclock.json`, the per-generation wall-clock in seconds from which every time figure and the cutoff are derived. Campaign-level logs are `data/`#sym.zws`runs/`#sym.zws`campaign.`#sym.zws`log` (main runs, seeds 1--3), `extension.log` (seeds 4--5), `ablations.log` and `tstar-evals.log`. Seed derivation: base seed = 100,000 × seed; generation g uses base seed + g; evaluation network seed 9000 + gen (finals) or 9500 (cutoff sets), opponent seeds 9101 (legal-random) and 9201 (search).
+#strong[Location and layout.] Raw records live on disk under `data/runs/` in the study repository; they are not under version control. There is one directory per training run, `cmp-<arm>-s<seed>`, with `<arm>` in {`grid`, `graph`} for the main comparison (seeds 1--5) and in {`graph-untyped`, `graph-nogpool`, `graph-`#sym.zws`untyped-`#sym.zws`clip`} for the ablations A1, A2 and A1′ (seeds 1--3), plus `pilot0/` for the pipeline pilot. Each run directory contains: `selfplay/`#sym.zws`gen00N-`#sym.zws`*.`#sym.zws`bin` (binary record shards of generation N, v3 format, model-stamped) with `gen00N-`#sym.zws`manifest.`#sym.zws`json` (network and its fingerprint, model generation, record version, game type, seed, game count, full and cheap simulation counts, full-move fraction, temperature plies, resignation settings, counts of resigned and truncated games, number of positions, shard list); `checkpoints/`#sym.zws`gen00N/` (`hivenet-e0.pt`, `hivenet-e1.pt`, `train-config.json`) and the exported `gen00N-b1.onnx` used for play; `eval/`#sym.zws`<checkpoint>-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`csv` with its `.log` for the intermediate (gen004, gen007) and final (gen009) evaluations, and `eval/`#sym.zws`tstar-`#sym.zws`gen00N-`#sym.zws`vs-`#sym.zws`<opponent>.`#sym.zws`{csv,`#sym.zws`log}` for the equal-time cutoff checkpoint; and `wallclock.json`, the per-generation wall-clock in seconds from which every time figure and the cutoff are derived. Campaign-level logs are `data/`#sym.zws`runs/`#sym.zws`campaign.`#sym.zws`log` (main runs, seeds 1--3), `extension.log` (seeds 4--5), `ablations.log` and `tstar-evals.log`. The second study's runs follow the same layout under `cmp2-`#sym.zws`<arm>-`#sym.zws`s<seed>` (seeds 11--15), each with a `driver-`#sym.zws`config.`#sym.zws`json` recording the regime (warm start on, window 3); its campaign log is `campaign2.log`, its cutoff-evaluation log `tstar2.log`, and the pilot runs are `pilot2-`#sym.zws`{grid,`#sym.zws`graph}-`#sym.zws`s10`. Seed derivation: base seed = 100,000 × seed; generation g uses base seed + g; evaluation network seed 9000 + gen (finals) or 9500 (cutoff sets), opponent seeds 9101 (legal-random) and 9201 (search).
 
-#strong[Volumes.] The main campaign comprised 10 generations × 500 self-play games per run (30,000 self-play games per three-seed arm at the 3-seed stage) and 100 paired games per (checkpoint, opponent) evaluation on the frozen openings; the campaign ran from 2026-09-10 12:42 to 2026-09-17 22:31 for seeds 1--3 (≈163 h of machine time including the cutoff evaluations), with seeds 4--5 collected 2026-09-27 to 2026-10-02. Disk footprint is recorded in the evidence base only as the launch estimates (≈3--5 GB for the main campaign, ≈3--4 GB for the ablations) against 164 GB free at launch with a 20 GB guard; exact per-run sizes were not journaled. Since the deletion recorded in D-024, the study repository is the sole copy of the pre-study material it inherited (the prior-loop checkpoint and its data, 412 MB and 75 MB), which is why those files are protected by the destructive-action gate.
+#strong[Volumes.] The main campaign comprised 10 generations × 500 self-play games per run (30,000 self-play games per three-seed arm at the 3-seed stage) and 100 paired games per (checkpoint, opponent) evaluation on the frozen openings; the campaign ran from 2026-09-10 12:42 to 2026-09-17 22:31 for seeds 1--3 (≈163 h of machine time including the cutoff evaluations), with seeds 4--5 collected 2026-09-27 to 2026-10-02. Disk footprint is recorded in the evidence base only as the launch estimates (≈3--5 GB for the main campaign, ≈3--4 GB for the ablations) against 164 GB free at launch with a 20 GB guard; exact per-run sizes were not journaled. The second campaign ran from 2026-10-13 15:02 to 2026-10-26 23:00 (296.9 h of training wall-clock over the ten runs), followed by about 14 h of cutoff evaluations on 26--27 October; its ten run directories total 4.8 GB. Since the deletion recorded in D-024, the study repository is the sole copy of the pre-study material it inherited (the prior-loop checkpoint and its data, 412 MB and 75 MB), which is why those files are protected by the destructive-action gate.
 
 #strong[Frozen artifacts and their hashes.] @tbl:prov-hashes lists every frozen or pinned artifact with the identifier recorded at its freeze. The protocol hash is recorded in the decision log in abbreviated form; the full value was recomputed from the frozen commit while preparing this appendix and is identical to the hash of the current file, confirming that the protocol has not changed since its freeze.
 
@@ -2773,11 +3179,14 @@ Every number in this report is reachable along one chain. #strong[Raw per-game r
     [Opponent B-MCTS (`configs/`#sym.zws`baselines/`#sym.zws`mcts-`#sym.zws`nonet.`#sym.zws`toml`)], [2026-09-09], [sha256 3fc8f75cf2b4f21012dd61e9​924408fbfc32c8ea561aa96e​b44f1091ba07364e], [D-017],
     [Heuristic weights (`configs/`#sym.zws`baselines/`#sym.zws`heuristic-`#sym.zws`weights.`#sym.zws`toml`)], [2026-09-09], [sha256 d0602f1895fbed70b6f84ac2​a3eb87bd68e811e53acf24d4​d7814a1495b0b97a; pinned by test `weights_`#sym.zws`pinned_`#sym.zws`for_`#sym.zws`h3_`#sym.zws`baselines`], [D-014, D-017],
     [Engine code at the population freeze], [2026-09-09], [commit b94e7c1], [D-017],
-    [Shared openings (`results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`, 250 lines)], [2026-09-10], [content sha256 63b318d071dfc3ecfae35856​36c8e6f7327ddc08e7aed86a​466f915f8005af7b; frozen-file sha256 538497390a3787299c67c3ca​138b8feacb369d55dc562881​d1aee45200cbccb2; generator seed 20260910; schedule hash 8cd84b6564440666], [D-025],
+    [Shared openings (`results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt`, 250 lines)], [2026-09-10], [content sha256 63b318d071dfc3ecfae35856​36c8e6f7327ddc08e7aed86a​466f915f8005af7b; frozen-file sha256 538497390a3787299c67c3ca​138b8feacb369d55dc562881​d1aee45200cbccb2; generator seed 20260910; schedule hashes 8cd84b6564440666 (20-game sets) and 3bf5d3e51cea0c0d (100-game sets, both studies)], [D-025; `H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`27-`#sym.zws`analysis-`#sym.zws`01`],
     [Evaluation settings (`configs/`#sym.zws`eval-`#sym.zws`settings.`#sym.zws`toml`)], [2026-09-09], [400 simulations, no exploration noise, deterministic argmax, 300-ply cap], [D-019],
     [Comparison matrix (`configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`)], [2026-09-10], [pre-registered sizes and the cutoff rule], [D-026],
     [Equal-time cutoff T\*], [2026-09-16], [18.77 h = median of the three original grid run totals (18.77, 16.73, 19.07 h)], [`H6-`#sym.zws`2026-`#sym.zws`09-`#sym.zws`16-`#sym.zws`progress-`#sym.zws`01`; D-031],
     [Campaign and analysis code], [2026-09-10 → 2026-10-09], [campaign ac58773; analysis 1c65269 (3 seeds), 7db074d (5 seeds); ablations 216fded → bffeea9 (non-finite guard); A1′ queue 1fdd7ec], [journals `H6-…`, `H7-…`],
+    [Protocol v2.0 (`docs/`#sym.zws`protocol-`#sym.zws`v2.`#sym.zws`md`), second study], [2026-10-13], [sha256 e296a12e…b461eb at commit 4a22a24 (full: e296a12e8d1e3dee36c3b210​ececced62314e64657aede1c​b91b1ea452b461eb)], [D-038],
+    [Equal-time cutoff T\*′, second study], [2026-10-25], [17.6263 h = median of the five grid run totals (17.4567, 17.9540, 17.6263, 17.4592, 18.5176 h)], [`H9-`#sym.zws`2026-`#sym.zws`10-`#sym.zws`25-`#sym.zws`tstar-`#sym.zws`01`],
+    [Second-study code], [2026-10-09 → 2026-10-27], [driver options 008aaee; check battery 99be4ef; campaign script dc0b6c2; analysis switch b0f1598; figures 32297fe], [journals `H9-…`],
   )]
   , caption: [Frozen and pinned artifacts of the study with the identifiers recorded at their freeze (hashes, commits, seeds) and the decision-log or journal entry that records them. ]
   , kind: table
@@ -2789,7 +3198,7 @@ The tables below fix the English terms used in this report, their meaning within
 
 #figure(
   align(center)[#table(
-    columns: (24.78%, 45.58%, 29.65%),
+    columns: (24.06%, 47.24%, 28.7%),
     align: (left,left,left,),
     table.header([Term], [Definition], [French equivalent],),
     table.hline(),
@@ -2807,6 +3216,10 @@ The tables below fix the English terms used in this report, their meaning within
     [checkpoint], [The exported network at the end of a generation; identifiers zero-based (gen000 to gen009).], [point de contrôle],
     [paired colour-swapped games], [Each opening line played once with each colour, so all arms, seeds and opponents face identical schedules.], [parties appariées, à couleurs échangées],
     [pinned evaluation settings], [400 simulations per decision, no exploration noise, deterministic argmax; fixed by file and test.], [réglages d'évaluation épinglés],
+    [warm start], [Initialising the network of generation $g$ from the weights of generation $g - 1$'s final checkpoint, with the optimizer and the schedule restarted; used in the second study only, the first study re-initialised every generation.], [démarrage à chaud],
+    [replay window], [The recent generations whose records a generation trains on; 3 generations in the second study, the current generation alone in the first.], [fenêtre de rejeu],
+    [equal-time cutoff of the second study], [The median total training wall-clock of the five grid runs of the second study, computed once from the clock files before any cross-arm number; a value of its own, distinct from the first study's 18.77 h.], [seuil à temps mural égal de la seconde étude\*],
+    [second study], [The separately pre-registered comparison under warm start and replay window (protocol version 2.0, frozen 13 October 2026, seeds 11 to 15); reported beside the first study, never pooled with it.], [seconde étude],
   )]
   , caption: [Study-design terms.]
   , kind: table
@@ -2916,13 +3329,13 @@ This is the one place in the report where commands, file names and identifiers a
 
 == What is released
 <what-is-released>
-The release set is the repository `hive-`#sym.zws`graph-`#sym.zws`selfplay` and the records under it. Its access and release tag are fixed at diffusion time; at the time of writing nothing has left the study machine, and the licences of the third-party reference engines used only for rules validation are still under review.
+The release set is the repository `hive-`#sym.zws`graph-`#sym.zws`selfplay` and the records under it. The first study was released on 9 October 2026 at tag `v2.0-report` of the public repository https:\/\/github.com/mohamedbechirkefi/hive-graph-selfplay, with the report in both languages, the short article and a records archive attached to the release; the second study's records and this revision accompany the release tagged `v2.1-report`. The third-party reference engines used only for rules validation are MIT-licensed and are not redistributed.
 
 - #strong[Code.] The Rust engine (rules kernel, protocol server, search, arena, self-play workers), the Python training and export code under `python/hivenet/`, the scripts under `scripts/`.
 - #strong[Frozen configurations.] `configs/`#sym.zws`comparison-`#sym.zws`matrix.`#sym.zws`yaml`, `configs/`#sym.zws`eval-`#sym.zws`settings.`#sym.zws`toml`, the opponent configurations and heuristic weight file under `configs/`#sym.zws`baselines/`, the ablation specifications under `configs/`#sym.zws`ablations/`.
 - #strong[Frozen openings and population manifest.] `results/`#sym.zws`comparison/`#sym.zws`openings-`#sym.zws`v1.`#sym.zws`txt` (250 four-ply lines) and `opponents-`#sym.zws`manifest.`#sym.zws`md`, which records the hashes of @tbl:g-identifiers.
-- #strong[Result tables.] `results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`, `wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md`; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`.
-- #strong[Per-run records];, under `data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`<arm>-`#sym.zws`s<seed>/`: `eval/` (one comma-separated file per checkpoint and opponent, one row per game: `opening_id, a_is_white, score_a, truncated, plies, outcome`, metadata in `#` header lines); `wallclock.json` (seconds per generation); `selfplay/` manifests tying each shard to its generating network, and the shards; `checkpoints/`#sym.zws`gen000-`#sym.zws`b1.`#sym.zws`onnx` to `gen009-b1.onnx`. Tables and figures need only `eval/` and `wallclock.json`; the replay needs one checkpoint.
+- #strong[Result tables.] `results/`#sym.zws`comparison/`#sym.zws`results-`#sym.zws`same-`#sym.zws`examples.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`same-`#sym.zws`wallclock.`#sym.zws`{md,`#sym.zws`csv}`, `results-`#sym.zws`arm-`#sym.zws`difference.`#sym.zws`md`, `wallclock-`#sym.zws`per-`#sym.zws`run.`#sym.zws`md`; `results/`#sym.zws`ablations/`#sym.zws`README.`#sym.zws`md`; for the second study, the same four tables plus `study1-`#sym.zws`vs-`#sym.zws`study2.`#sym.zws`md` under `results/study2/`.
+- #strong[Per-run records];, under `data/`#sym.zws`runs/`#sym.zws`cmp-`#sym.zws`<arm>-`#sym.zws`s<seed>/` (first study, seeds 1--5) and `data/`#sym.zws`runs/`#sym.zws`cmp2-`#sym.zws`<arm>-`#sym.zws`s<seed>/` (second study, seeds 11--15, each with a `driver-`#sym.zws`config.`#sym.zws`json` recording the regime): `eval/` (one comma-separated file per checkpoint and opponent, one row per game: `opening_id, a_is_white, score_a, truncated, plies, outcome`, metadata in `#` header lines); `wallclock.json` (seconds per generation); `selfplay/` manifests tying each shard to its generating network, and the shards; `checkpoints/`#sym.zws`gen000-`#sym.zws`b1.`#sym.zws`onnx` to `gen009-b1.onnx`. Tables and figures need only `eval/` and `wallclock.json`; the replay needs one checkpoint.
 
 The third-party engines used in rules validation (Mzinga, nokamute) are not shipped and are not needed: no study number derives from them.
 
@@ -2958,6 +3371,14 @@ bash scripts/tstar_evals2.sh               # graph seeds 4–5
 python3 scripts/make_results.py
 python/.venv/bin/python scripts/make_figures.py
 
+# second study (protocol v2): driver defaults reproduce the first study (regression test),
+# then the ten warm-started runs, the cutoff evaluations and the analysis
+python3 scripts/test_driver_equivalence.py
+bash scripts/campaign2.sh                  # seeds 11–15, --warm-start --window 3 --run-prefix cmp2
+python3 scripts/tstar_evals_study2.py      # T*' from the five grid clocks, then the seven cutoff sets
+python3 scripts/make_results.py --study 2
+python/.venv/bin/python scripts/make_figures.py --study 2
+
 # pre-training check battery on any shard set
 bash scripts/run_h4_checks.sh '<abs>/gen000-*.bin' '<abs>/gen000-manifest.json'
 
@@ -2977,7 +3398,7 @@ All durations in @tbl:g-durations were measured on the study machine (Apple M1 P
 
 #figure(
   align(center)[#table(
-    columns: (61.45%, 38.55%),
+    columns: (62.56%, 37.44%),
     align: (left,right,),
     table.header([Step], [Measured duration],),
     table.hline(),
@@ -2990,21 +3411,27 @@ All durations in @tbl:g-durations were measured on the study machine (Apple M1 P
     [Equal-time evaluation sets, seeds 1--3 (four checkpoints × three opponents)], [≈11 h, 18 September 2026],
     [Equal-time evaluation sets, graph seeds 4--5 (two checkpoints × three opponents)], [≈6 h, 6 October 2026],
     [Ablation runs A1 / A2 / A1′ (per seed), training wall-clock], [7.61--8.01 h (a divergence symptom) / 32.05--47.44 h / 23.89--30.35 h],
+    [Second study, one grid run (warm start, window 3): training wall-clock], [17.46--18.52 h],
+    [Second study, one graph run (same regime): training wall-clock], [36.27--52.85 h],
+    [Second study, all ten runs, training wall-clock summed], [296.9 h (grid 89.0 h, graph 207.9 h)],
+    [Second campaign (seeds 11--15, both arms, sequential), elapsed], [13--26 October 2026, 13 days 8 h],
+    [Second study, equal-time evaluation sets (seven checkpoints × three opponents)], [≈ 14 h, 26--27 October 2026],
+    [Second study, pilot (2 generations × 200 games, evaluation at 20 games per opponent)], [grid 1 h 35 min; graph 4 h 17 min],
     [Engine build; minimal scenario], [not measured],
   )]
   , caption: [Measured durations of the study's computations on the study machine (Apple M1 Pro, four worker threads per run, sequential runs), as recorded in the run and analysis records; ranges span the runs of the step. Training wall-clock is the sum of a run's per-generation self-play and training seconds, evaluation games excluded; campaign, extension and ablation figures are elapsed times as recorded. A1's short runs reflect its divergence (a NaN policy plays short degenerate games) rather than a lower cost. The engine build and the minimal scenario were not timed.]
   , kind: table
   ) <tbl:g-durations>
 
-Disk: before the campaign the six-run matrix was sized at about 3--5 GB of shards, checkpoints and records, against 164 GB free with a 20 GB guard; mid-campaign the machine reported 200 GB free. The final footprint of the run directories was not recorded.
+Disk: before the campaign the six-run matrix was sized at about 3--5 GB of shards, checkpoints and records, against 164 GB free with a 20 GB guard; mid-campaign the machine reported 200 GB free. The final footprint of the first study's run directories was not recorded; the second study's ten run directories total 4.8 GB.
 
 == Identifiers a reproduction must match
 <identifiers-a-reproduction-must-match>
-A reproduction is faithful when it uses the frozen artifacts identified below and, for the minimal scenario, reproduces the shipped game row and the byte-identical tables. The frozen experimental constants that every command must leave untouched are tabulated in @sec:app-c: base game with the tournament opening rule, 300-ply cap, 128/32 self-play simulations with full fraction 0.25, 12 temperature plies, resignation at −0.92 with a 10% audit, 400 evaluation simulations without noise, 100 games per opponent, 250 openings, the 18.77 h cutoff, seeds 1--5 per arm.
+A reproduction is faithful when it uses the frozen artifacts identified below and, for the minimal scenario, reproduces the shipped game row and the byte-identical tables. The frozen experimental constants that every command must leave untouched are tabulated in @sec:app-c: base game with the tournament opening rule, 300-ply cap, 128/32 self-play simulations with full fraction 0.25, 12 temperature plies, resignation at −0.92 with a 10% audit, 400 evaluation simulations without noise, 100 games per opponent, 250 openings, the 18.77 h cutoff, seeds 1--5 per arm; for the second study, the same constants with the warm start, the three-generation window, seeds 11--15 and the 17.63 h cutoff of protocol version 2.0 (@sec:app-c-study2).
 
 #figure(
   align(center)[#table(
-    columns: (58.28%, 41.72%),
+    columns: (44.15%, 55.85%),
     align: (left,left,),
     table.header([Artifact], [Identifier],),
     table.hline(),
@@ -3014,16 +3441,19 @@ A reproduction is faithful when it uses the frozen artifacts identified below an
     [B-MCTS configuration (`configs/`#sym.zws`baselines/`#sym.zws`mcts-`#sym.zws`nonet.`#sym.zws`toml`), SHA-256], [`3fc8f75cf2b4f21012dd61e9924408fb`#sym.zws`fc32c8ea561aa96eb44f1091ba07364e`],
     [Frozen openings, content of the 250 lines, SHA-256], [`63b318d071dfc3ecfae3585636c8e6f7`#sym.zws`327ddc08e7aed86a466f915f8005af7b`],
     [Frozen openings, file as frozen, SHA-256], [`538497390a3787299c67c3ca138b8fea`#sym.zws`cb369d55dc562881d1aee45200cbccb2`],
-    [Opening/colour schedule of every 100-game match], [`8cd84b6564440666`],
+    [Opening/colour schedule of every 100-game match (final and cutoff sets, both studies)], [`3bf5d3e51cea0c0d`],
+    [Opening/colour schedule of every 20-game intermediate match (both studies)], [`8cd84b6564440666`],
     [Frozen protocol document], [`f340a6b6…aefeb5` (recorded abbreviated), commit `44a74ff`],
+    [Frozen protocol document, version 2.0 (second study)], [`e296a12e8d1e3dee36c3b210ececced6`#sym.zws`2314e64657aede1cb91b1ea452b461eb`, commit `4a22a24`],
     [Engine code at the population freeze], [commit `b94e7c1`],
     [Campaign code (main comparison)], [commit `ac58773`],
     [Ablation code; non-finite-loss guard], [commits `216fded`; `bffeea9`],
     [Analysis code (final five-seed tables)], [commit `7db074d`],
+    [Second study: driver options; campaign script; analysis switch; figure switch], [commits `008aaee`; `dc0b6c2`; `b0f1598`; `32297fe`],
   )]
-  , caption: [Identifiers of the frozen artifacts and code states of the study. Hashes are SHA-256 hexadecimal digests of file content as recorded at the freeze; the schedule hash is the digest prefix printed by the analysis tool for the (opening, colour) schedule, identical for every match of the study; commits are abbreviated repository commit identifiers.]
+  , caption: [Identifiers of the frozen artifacts and code states of the study. Hashes are SHA-256 hexadecimal digests of file content as recorded at the freeze; the schedule hashes are the digest prefixes printed by the analysis tool for the (opening, colour) schedule, identical for every match of a given volume in both studies (the first edition of this report attributed the 20-game hash to the 100-game matches); commits are abbreviated repository commit identifiers.]
   , kind: table
   ) <tbl:g-identifiers>
 
 #v(2em)
-#align(center)[#text(size: 8.5pt, fill: luma(110))[v2.0-draft, 2026-10-09]]
+#align(center)[#text(size: 8.5pt, fill: luma(110))[v2.1-draft, 2026-10-27]]

@@ -7,20 +7,30 @@ encoders and every artifact of a pre-registered comparison of grid and
 graph representations for AlphaZero-style self-play in base-game Hive.
 The hypothesis (graph learns better at equal budget) was rejected under
 the frozen rule: five seeds per arm, two budget readings, truncation as a
-separate outcome, byte-identical fresh-environment reproduction.
+separate outcome, byte-identical fresh-environment reproduction. A second,
+separately pre-registered study (protocol v2, October 2026: warm start and
+a three-generation replay window, five new seeds per arm) detected no
+graph advantage under either reading; the first study's deficit is no
+longer visible at equal examples and reduced at equal wall-clock, at
+2.34 times the cost. Both studies are reported side by side, never
+pooled (report chapter 15).
 
-- Full report (English, 152 pp): `paper/build/report-en.pdf`
-- Rapport complet (français, 166 pp) : `paper/build/report-fr.pdf`
-- Short article (17 pp): `paper/build/article-en.pdf`
+- Full report (English, 173 pp): `paper/build/report-en.pdf`
+- Rapport complet (français, 188 pp) : `paper/build/report-fr.pdf`
+- Short article (18 pp): `paper/build/article-en.pdf` (French: `article-fr.pdf`)
 - Sources of the report: `paper/report/` (EN) and `paper/report/fr/` (FR);
   build with `python/.venv/bin/python scripts/build_report.py all`
 - Raw evaluation records, clock files, manifests and checkpoints: the
-  records archive attached to release `v2.0-report`; place its `data/runs/`
-  at the repository root and run `python3 scripts/make_results.py` to
-  regenerate every table; `scripts/reproduce_minimal.sh` runs the minimal
-  fresh-environment scenario.
-- Frozen protocol: `docs/protocol.md` (v1.0, 2026-09-10); frozen opponents
-  and openings: `docs/baselines.md`, `results/comparison/`.
+  records archive attached to the release (`v2.0-report` for the first
+  study; `v2.1-report` adds the second study's runs `cmp2-*`); place its
+  `data/runs/` at the repository root and run `python3 scripts/make_results.py`
+  (first study) and `python3 scripts/make_results.py --study 2` (second
+  study) to regenerate every table; `scripts/reproduce_minimal.sh` runs the
+  minimal fresh-environment scenario.
+- Frozen protocols: `docs/protocol.md` (v1.0, 2026-09-10) and
+  `docs/protocol-v2.md` (v2.0, 2026-10-13); frozen opponents and openings:
+  `docs/baselines.md`, `results/comparison/`; second-study tables:
+  `results/study2/`.
 
 The study was carried out by the author with an AI research assistant
 under a gated methodology that reserved every scientific decision to the

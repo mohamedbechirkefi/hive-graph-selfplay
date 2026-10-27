@@ -18,6 +18,10 @@ Les tables ci-dessous fixent les termes français utilisés dans cette édition,
 | point de contrôle | Le réseau exporté à la fin d'une génération ; identifiants indexés à partir de zéro (gen000 à gen009). | checkpoint |
 | parties appariées, à couleurs échangées | Chaque ligne d'ouverture jouée une fois avec chaque couleur, de sorte que tous les bras, graines et adversaires font face à des calendriers identiques. | paired colour-swapped games |
 | réglages d'évaluation épinglés | 400 simulations par décision, aucun bruit d'exploration, argmax déterministe ; fixés par fichier et par test. | pinned evaluation settings |
+| démarrage à chaud | Initialisation du réseau de la génération $g$ depuis les poids du point de contrôle final de la génération $g-1$, l'optimiseur et le calendrier redémarrant ; utilisé dans la seconde étude seulement, la première réinitialisant chaque génération. | warm start |
+| fenêtre de rejeu | Les générations récentes dont les enregistrements servent à l'entraînement d'une génération ; 3 générations dans la seconde étude, la génération courante seule dans la première. | replay window |
+| seuil à temps mural égal de la seconde étude\* | La médiane du temps mural total d'entraînement des cinq exécutions grille de la seconde étude, calculée une seule fois depuis les fichiers d'horloge avant tout nombre inter-bras ; une valeur propre, distincte des 18.77 h de la première étude. | equal-time cutoff of the second study |
+| seconde étude | La comparaison pré-enregistrée séparément sous démarrage à chaud et fenêtre de rejeu (protocole version 2.0, gelé le 13 octobre 2026, graines 11 à 15) ; rapportée à côté de la première étude, jamais agrégée avec elle. | second study |
 
 Table: Termes du plan d'étude. {#tbl:f-design}
 

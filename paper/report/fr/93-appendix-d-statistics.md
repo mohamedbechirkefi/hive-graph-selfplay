@@ -165,6 +165,61 @@ Table: Temps mural d'entraînement de chacune des dix exécutions de la campagne
 
 Le protocole encadre l'estimateur primaire (troncatures exclues) par trois traitements alternatifs de chaque partie tronquée : comptée 0.5 (les scores de sensibilité du `@tbl:d-sens`{=typst}), comptée comme défaite pour le bras testé, et comptée comme victoire pour lui ; ce dernier traitement est une borne supérieure de ce que tout plafond plus grand pourrait apporter à un bras qui tronque. Les bornes ont été calculées à partir des enregistrements par partie dans l'analyse du 19 septembre 2026 (trois graines par bras) : chaque partie tronquée étant comptée comme victoire pour le bras testé, le contraste graphe moins grille contre l'aléatoire légal reste de −0.072 sous la lecture à exemples égaux et de −0.058 sous la lecture à temps mural égal, et sa direction est inchangée sous chaque traitement (exclue, 0.5, défaite, victoire). Contre B-HEU et B-MCTS, aucune partie d'aucun des deux bras n'a été tronquée, de sorte que tous les traitements y coïncident. Le relevé d'analyse final ne réénonce pas les bornes à cinq graines. Parce que le bras graphe a tronqué 20–57% de ses parties contre l'aléatoire légal sur les graines originales et 23–44% sur les graines d'extension (grille : 0–1%, avec une graine d'extension à 11%), son score primaire contre cet adversaire est une moyenne sur moins de parties décidées (43 à 80 par graine) que celui du bras grille. <!-- src: journal/2026-09-19-h6-comparison-01.md:64-70 --> <!-- src: paper/ch5-protocol.md:45-49 --> <!-- src: paper/results-comparison.md:51-61 --> <!-- src: paper/ch7-discussion.md:58-61 -->
 
+## La seconde étude : scores de sensibilité, carte des seuils et temps mural {#sec:app-d-study2}
+
+La seconde étude (`@sec:study2`{=typst}) utilise sans changement les estimateurs de cette annexe : le même score, le même taux de troncature et le même score de sensibilité par cellule (graine, adversaire), le même bootstrap percentile au niveau des graines avec $B$ = 10,000 et le même rééchantillonnage indépendant des deux bras pour le contraste. Ses tables de scores par graine sous les deux lectures, ses moyennes au niveau des graines et ses contrastes sont donnés dans le chapitre (`@tbl:study2-same-examples`{=typst} à `@tbl:study2-contrast`{=typst}) et ne sont pas répétés ; cette section ajoute les scores de sensibilité, la carte des seuils avec les horloges cumulées qui la sous-tendent, et le temps mural par exécution. <!-- src: scripts/make_results.py:13-16,47-62,79-94 --> <!-- src: journal/2026-10-27-h9-analysis-01.md:34-51 -->
+
+| Bras | Graine | Exemples égaux : sens. B-RND | Temps mural égal : sens. B-RND |
+| --- | --- | ---: | ---: |
+| grille | 11 | 0.9600 | 0.9600 |
+| grille | 12 | 0.9650 | 0.9600 |
+| grille | 13 | 0.9900 | 0.9900 |
+| grille | 14 | 0.9800 | 0.9800 |
+| grille | 15 | 0.9550 | 0.9400 |
+| graphe | 11 | 1.0000 | 0.9900 |
+| graphe | 12 | 0.9750 | 0.9650 |
+| graphe | 13 | 0.7550 | 0.6100 |
+| graphe | 14 | 0.8250 | 0.8350 |
+| graphe | 15 | 0.7900 | 0.7750 |
+
+Table: Seconde étude, scores de sensibilité contre l'aléatoire légal (B-RND) sous les deux lectures, pour les exécutions, points de contrôle et volume d'évaluation des `@tbl:study2-same-examples`{=typst} et `@tbl:study2-same-wallclock`{=typst} : la moyenne sur toutes les 100 parties de la cellule, chaque partie tronquée comptant 0.5, à la précision de quatre décimales des fichiers de résultats à valeurs séparées par des virgules. Contre B-HEU et B-MCTS, aucune partie d'aucune exécution n'a été tronquée sous l'une ou l'autre lecture, de sorte que le score de sensibilité y est égal au score des tables principales dans chaque cellule. Valeurs brutes, sans intervalle. {#tbl:d2-sens}
+
+<!-- src: results/study2/results-same-examples.csv:2-31 --> <!-- src: results/study2/results-same-wallclock.csv:2-31 -->
+
+Sous le traitement de sensibilité, le contraste graphe moins grille contre l'aléatoire légal est de −0.101 [−0.187, −0.012] sous la lecture à exemples égaux et de −0.131 [−0.256, −0.015] sous la lecture à temps mural égal ; les quatre autres contrastes sont ceux du `@tbl:study2-contrast`{=typst}, puisqu'il n'y a aucune troncature contre les deux autres adversaires. Les deux traitements de bornage (chaque partie tronquée comptée comme défaite ou comme victoire pour le bras testé) n'ont pas été calculés pour la seconde étude. <!-- src: journal/2026-10-27-h9-analysis-01.md:114-123 -->
+
+Le seuil de la seconde étude a été fixé par la règle de son protocole : la médiane des temps muraux d'entraînement d'exécution complète de ses cinq exécutions grille, chacun étant la somme des dix horloges par génération, calculée exactement à partir des fichiers d'horloge le 25 octobre 2026, quelques minutes après la fin de la cinquième exécution grille et alors que la dernière exécution graphe en était à sa première génération, avant qu'aucun score de l'étude n'ait été lu. Les cinq totaux étaient de 17.4567, 17.9540, 17.6263, 17.4592 et 18.5176 h ; la médiane, 17.6263 h (63,454.8 s), est le total de la graine grille 13, dont le point de contrôle final se situe donc au seuil, inclusivement. Pour chaque exécution, le point de contrôle retenu est le dernier dont le temps mural d'entraînement cumulé n'excède pas le seuil (`@tbl:d2-cutoff`{=typst}). <!-- src: journal/2026-10-25-h9-tstar-01.md:22-48 --> <!-- src: docs/protocol-v2.md:105-120 -->
+
+| Bras | Graine | Point de contrôle au seuil | Temps mural cumulé | Ensemble d'évaluation |
+| --- | --- | --- | ---: | --- |
+| grille | 11 | gen009 (final) | 17.46 h | ensemble final réutilisé |
+| grille | 12 | gen008 | 16.54 h | ensemble à temps égal |
+| grille | 13 | gen009 (final) | 17.63 h | ensemble final réutilisé (exécution définissant le seuil) |
+| grille | 14 | gen009 (final) | 17.46 h | ensemble final réutilisé |
+| grille | 15 | gen008 | 16.77 h | ensemble à temps égal |
+| graphe | 11 | gen003 | 17.25 h | ensemble à temps égal |
+| graphe | 12 | gen004 | 17.51 h | ensemble à temps égal |
+| graphe | 13 | gen002 | 13.95 h | ensemble à temps égal |
+| graphe | 14 | gen002 | 15.38 h | ensemble à temps égal |
+| graphe | 15 | gen003 | 14.93 h | ensemble à temps égal |
+
+Table: Seconde étude, point de contrôle retenu pour la lecture à temps mural égal dans chacune des dix exécutions à démarrage à chaud : le dernier point de contrôle achevé dans le seuil à temps égal de 17.63 h de temps mural d'entraînement cumulé (identifiants indexés à partir de zéro ; gen009 est la dixième et dernière génération), avec les heures cumulées à ce point de contrôle d'après les fichiers d'horloge. Lorsque le point de contrôle retenu est le dernier, l'ensemble d'évaluation final (100 parties appariées par adversaire) sert aux deux lectures ; sinon, un ensemble à temps égal distinct, de même volume, a été évalué les 26–27 octobre 2026 avec les graines de seuil épinglées (réseau 9500, lanceur d'affrontements 888,000). {#tbl:d2-cutoff}
+
+<!-- src: journal/2026-10-25-h9-tstar-01.md:50-66 --> <!-- src: journal/2026-10-27-h9-analysis-01.md:40-46 -->
+
+À temps mural égal, le bras graphe avait achevé 3–5 de ses dix générations, le bras grille neuf ou dix (première étude : 3–6 et neuf ou dix). Le `@tbl:d2-wallclock`{=typst} donne les temps muraux d'entraînement d'exécution complète qui sous-tendent la carte ; leurs moyennes sont de 17.80 h (grille) et 41.59 h (graphe), soit un rapport de 2.34× (première étude : 2.04×). <!-- src: journal/2026-10-25-h9-tstar-01.md:68-71 --> <!-- src: results/study2/wallclock-per-run.md:1-11 -->
+
+| Bras | Graine 11 | Graine 12 | Graine 13 | Graine 14 | Graine 15 | Moyenne |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| grille | 17.46 | 17.95 | 17.63 | 17.46 | 18.52 | 17.80 |
+| graphe | 39.28 | 37.33 | 52.85 | 42.20 | 36.27 | 41.59 |
+
+Table: Seconde étude, temps mural d'entraînement de chacune des dix exécutions à démarrage à chaud, en heures : les secondes de génération en auto-jeu, d'entraînement et d'export par génération, sommées sur les 10 générations de l'exécution (10 × 500 parties, fenêtre de rejeu de trois générations), parties d'évaluation exclues, d'après le journal de chronométrage de chaque exécution ; une seule machine, quatre threads de travail, exécutions séquentielles. Les sommes sont de 89.0 h (grille) et 207.9 h (graphe), soit 296.9 h au total. Le seuil à temps égal est la médiane des cinq valeurs grille. {#tbl:d2-wallclock}
+
+<!-- src: results/study2/wallclock-per-run.md:1-11 -->
+
+Les figures de trajectoire de la seconde étude sont tracées comme celles de la première, directement à partir des enregistrements d'évaluation de chaque exécution aux points de contrôle des générations 5, 8 et 10 et de son journal de chronométrage ; la figure des métriques d'entraînement est extraite du journal de la seconde campagne, et les valeurs par exécution qu'elle montre à la première et à la dixième génération sont tabulées dans le relevé d'analyse. <!-- src: scripts/make_figures.py:34-74,357-372 --> <!-- src: journal/2026-10-27-h9-analysis-01.md:206-232 -->
+
 ## Tables brutes des ablations
 
 Trois variantes du bras graphe ont été entraînées avec trois graines chacune au budget complet (10 générations × 500 parties, réglages d'auto-jeu, d'entraînement et d'évaluation identiques) et évaluées à leur point de contrôle de dixième génération sous la lecture à exemples égaux. Le `@tbl:d-abl-runs`{=typst} résume les variantes ; les `@tbl:d-abl-a2`{=typst} et `@tbl:d-abl-a1prime`{=typst} donnent les scores par graine des deux variantes qui se sont entraînées ; le `@tbl:d-abl-contrast`{=typst} donne les contrastes contre le bras graphe complet. <!-- src: results/ablations/README.md:1-10 -->

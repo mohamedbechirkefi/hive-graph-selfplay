@@ -25,6 +25,23 @@ terminent au plafond de coups, et il n'est observable que parce que la
 troncature n'a jamais été repliée en nulles.
 <!-- src: results/comparison/results-arm-difference.md; paper/ch8-conclusion.md:5 -->
 
+La seconde étude, pré-enregistrée séparément et menée sous une boucle à
+démarrage à chaud avec une fenêtre de rejeu de trois générations sur
+cinq nouvelles graines par bras, a testé la principale objection à cette
+réponse. Elle n'a trouvé aucun avantage du graphe sous l'une ou l'autre
+lecture : chaque intervalle graphe−grille inclut zéro, les plus grandes
+bornes supérieures étant +0.090 et +0.055 ; le déficit de la première
+étude n'est plus visible à exemples égaux et est réduit à temps égal ;
+la pathologie de conversion persiste dans trois graines graphe sur
+cinq ; et le bras graphe coûte 2.34 fois le bras grille par exécution.
+La réponse à la question de recherche tient donc dans la forme que les
+deux études réunies autorisent : à ce budget, sur cette variante, la
+représentation en graphe n'a appris une meilleure politique que la
+représentation en grille dans aucun des deux régimes d'entraînement, et
+sous le régime standard elle en a appris une équivalente, dans les
+limites d'intervalles à cinq graines, pour plus du double du coût.
+<!-- src: results/study2/results-arm-difference.md; results/study2/study1-vs-study2.md:7-25; results/study2/wallclock-per-run.md:7-10; journal/2026-10-27-h9-analysis-01.md:114-123 -->
+
 Le résultat borne, plutôt qu'il ne contredit, les constats positifs
 rapportés pour les graphes à Hex sous apprentissage fondé sur la valeur
 et aux échecs sous auto-jeu. Là où les tactiques d'encerclement à courte
@@ -39,7 +56,7 @@ tandis que le biais de pooling global est dispensable à cette échelle.
 
 ## Contributions, telles que démontrées
 
-Trois contributions ont été annoncées en `@sec:introduction`{=typst} ;
+Quatre contributions ont été annoncées en `@sec:introduction`{=typst} ;
 chacune est démontrée dans les chapitres qui y sont nommés. (1) Une
 comparaison grille-contre-graphe contrôlée, à budget apparié et
 multi-graines pour Hive, les deux bras sous un même pipeline d'auto-jeu,
@@ -52,7 +69,11 @@ actions variables, une évaluation consciente de la troncature et une
 discipline d'artefacts gelés (`@sec:engine`{=typst} à
 `@sec:protocol`{=typst}). (3) Une attribution par composant pour le bras
 graphe, avec un supplément à deux composants honnêtement étiqueté
-(`@sec:results-ablations`{=typst}).
+(`@sec:results-ablations`{=typst}). (4) Une seconde comparaison
+pré-enregistrée sous le régime standard à démarrage à chaud, dont le
+protocole, le seuil et les graines ont été fixés avant toute exécution,
+et dont le résultat nul borne le résultat négatif de la première étude
+(`@sec:study2`{=typst}).
 
 ## Deux suites motivées par les données
 
@@ -73,8 +94,12 @@ supplément confond l'attribution. Une étude contrôlée des choix de
 normalisation et d'échelle de gradient pour des couches de graphe à
 relations partagées découplerait l'entraînabilité du contenu
 représentationnel et dirait si l'adjacence naïve, correctement
-stabilisée, est suffisante pour Hive.
-<!-- src: paper/ch8-conclusion.md:19 -->
+stabilisée, est suffisante pour Hive. L'une et l'autre suite ont
+désormais le régime à démarrage à chaud pour ligne de base, et l'une et
+l'autre devraient pré-enregistrer un seuil chiffré pour un avantage
+substantiel, dont les intervalles de la seconde étude ont montré la
+nécessité.
+<!-- src: paper/ch8-conclusion.md:19; journal/2026-10-27-h9-analysis-01.md:186-199 -->
 
 ## Une méthode qui tient indépendamment du signe
 
