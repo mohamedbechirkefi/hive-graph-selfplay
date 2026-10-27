@@ -4,6 +4,11 @@
 claim without evidence is removed or reworded. Numbers must match raw
 results across abstract, figures, and conclusion before diffusion.
 
+**Diffusion record.** First study released 2026-10-09 at tag `v2.0-report`
+(D-036); revision with the second study released 2026-10-27 at tag
+`v2.1-report` (D-041), https://github.com/mohamedbechirkefi/hive-graph-selfplay/releases/tag/v2.1-report.
+arXiv identifier: to be recorded when assigned.
+
 | Claim | Evidence (journal id / result table) | Report section | Limit |
 | --- | --- | --- | --- |
 | The rules engine reproduces Mzinga's published perft tables for all 8 game types to depth 6 (depth ≤5 in the standard suite, depth 7 in nightly runs). | journal `H2-2026-09-09-suite-rerun-01` | Method / engine validation | depth-bounded node-count equality; d7 re-run not repeated on 2026-09-09 (d≤6 confirmed) |
