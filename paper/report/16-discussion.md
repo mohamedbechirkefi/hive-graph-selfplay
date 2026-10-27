@@ -223,17 +223,24 @@ conventions rather than a particular warm-start policy. For the
 *generalisation* of the result it is a limit in addition to those
 already listed: a pipeline that accumulated data and carried weights
 would reach a different regime, in which the ordering of the arms is an
-open question. A successor study should carry weights across
-generations and train on a window of recent generations, as the large
-self-play systems do, with both changes applied identically to both
-arms.
-<!-- src: scripts/run_comparison.py:119-129; python/hivenet/train.py:112-123; configs/comparison-matrix.yaml:36-41 -->
+open question. That successor study was run after this report had
+first been written, with both changes applied identically to both arms
+under a second frozen protocol, and is reported in
+`@sec:study2`{=typst}: under a warm-started loop with a
+three-generation replay window the deficit is no longer visible at
+equal examples and reduced at equal time, no graph advantage appears,
+and the strength reached against the two strong opponents does not
+rise.
+<!-- src: scripts/run_comparison.py:119-129; python/hivenet/train.py:112-123; configs/comparison-matrix.yaml:36-41; results/study2/study1-vs-study2.md:7-25 -->
 
 ## What we would do differently
 
 Four changes would strengthen a successor study without changing its
-logic. The first is the warm-start and replay window just described.
-The intermediate evaluations (20 games per opponent at generations 5
+logic. The first, the warm start and replay window just described, was
+carried out as the second study; it leaves the tuning question below
+open, and its wider intervals showed that the rejection rule needs a
+numeric threshold for what counts as a meaningful advantage
+(`@sec:study2-results`{=typst}). The intermediate evaluations (20 games per opponent at generations 5
 and 8) were sized for monitoring and are too noisy to carry inference;
 a successor should evaluate every generation at the final volume if the
 curves are to be analysed. The equal-time reading

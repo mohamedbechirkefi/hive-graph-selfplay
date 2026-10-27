@@ -4,13 +4,13 @@ This is the one place in the report where commands, file names and identifiers a
 
 ## What is released
 
-The release set is the repository `hive-graph-selfplay` and the records under it. Its access and release tag are fixed at diffusion time; at the time of writing nothing has left the study machine, and the licences of the third-party reference engines used only for rules validation are still under review. <!-- src: paper/front-matter.md:12-16 --> <!-- src: paper/final-control.md:15,24-28 -->
+The release set is the repository `hive-graph-selfplay` and the records under it. The first study was released on 9 October 2026 at tag `v2.0-report` of the public repository https://github.com/mohamedbechirkefi/hive-graph-selfplay, with the report in both languages, the short article and a records archive attached to the release; the second study's records and this revision accompany the release tagged `v2.1-report`. The third-party reference engines used only for rules validation are MIT-licensed and are not redistributed. <!-- src: ../state/decisions.md (D-034, D-036) --> <!-- src: paper/final-control.md:15,24-28 -->
 
 - **Code.** The Rust engine (rules kernel, protocol server, search, arena, self-play workers), the Python training and export code under `python/hivenet/`, the scripts under `scripts/`.
 - **Frozen configurations.** `configs/comparison-matrix.yaml`, `configs/eval-settings.toml`, the opponent configurations and heuristic weight file under `configs/baselines/`, the ablation specifications under `configs/ablations/`.
 - **Frozen openings and population manifest.** `results/comparison/openings-v1.txt` (250 four-ply lines) and `opponents-manifest.md`, which records the hashes of `@tbl:g-identifiers`{=typst}.
-- **Result tables.** `results/comparison/results-same-examples.{md,csv}`, `results-same-wallclock.{md,csv}`, `results-arm-difference.md`, `wallclock-per-run.md`; `results/ablations/README.md`.
-- **Per-run records**, under `data/runs/cmp-<arm>-s<seed>/`: `eval/` (one comma-separated file per checkpoint and opponent, one row per game: `opening_id, a_is_white, score_a, truncated, plies, outcome`, metadata in `#` header lines); `wallclock.json` (seconds per generation); `selfplay/` manifests tying each shard to its generating network, and the shards; `checkpoints/gen000-b1.onnx` to `gen009-b1.onnx`. Tables and figures need only `eval/` and `wallclock.json`; the replay needs one checkpoint.
+- **Result tables.** `results/comparison/results-same-examples.{md,csv}`, `results-same-wallclock.{md,csv}`, `results-arm-difference.md`, `wallclock-per-run.md`; `results/ablations/README.md`; for the second study, the same four tables plus `study1-vs-study2.md` under `results/study2/`.
+- **Per-run records**, under `data/runs/cmp-<arm>-s<seed>/` (first study, seeds 1–5) and `data/runs/cmp2-<arm>-s<seed>/` (second study, seeds 11–15, each with a `driver-config.json` recording the regime): `eval/` (one comma-separated file per checkpoint and opponent, one row per game: `opening_id, a_is_white, score_a, truncated, plies, outcome`, metadata in `#` header lines); `wallclock.json` (seconds per generation); `selfplay/` manifests tying each shard to its generating network, and the shards; `checkpoints/gen000-b1.onnx` to `gen009-b1.onnx`. Tables and figures need only `eval/` and `wallclock.json`; the replay needs one checkpoint.
 
 The third-party engines used in rules validation (Mzinga, nokamute) are not shipped and are not needed: no study number derives from them. <!-- src: scripts/analyze_comparison.py:3-6 --> <!-- src: scripts/reproduce_minimal.sh:20-31 --> <!-- src: results/comparison/opponents-manifest.md:25-28 --> <!-- src: paper/annex-reproduction.md:3-5 -->
 
@@ -46,6 +46,14 @@ bash scripts/tstar_evals2.sh               # graph seeds 4–5
 python3 scripts/make_results.py
 python/.venv/bin/python scripts/make_figures.py
 
+# second study (protocol v2): driver defaults reproduce the first study (regression test),
+# then the ten warm-started runs, the cutoff evaluations and the analysis
+python3 scripts/test_driver_equivalence.py
+bash scripts/campaign2.sh                  # seeds 11–15, --warm-start --window 3 --run-prefix cmp2
+python3 scripts/tstar_evals_study2.py      # T*' from the five grid clocks, then the seven cutoff sets
+python3 scripts/make_results.py --study 2
+python/.venv/bin/python scripts/make_figures.py --study 2
+
 # pre-training check battery on any shard set
 bash scripts/run_h4_checks.sh '<abs>/gen000-*.bin' '<abs>/gen000-manifest.json'
 
@@ -57,7 +65,7 @@ python3 scripts/check_fr_numbers.py
 python/.venv/bin/python scripts/build_report.py all
 ```
 
-<!-- src: paper/annex-reproduction.md:43-66 --> <!-- src: scripts/run_comparison.py:11-14 --> <!-- src: scripts/run_h4_checks.sh:3 --> <!-- src: scripts/build_report.py:3 --> <!-- src: scripts/tstar_evals.sh:2-4 --> <!-- src: scripts/tstar_evals2.sh:2-3 --> <!-- src: CLAUDE.md:33-35,41 -->
+<!-- src: paper/annex-reproduction.md:43-66 --> <!-- src: scripts/run_comparison.py:11-25 --> <!-- src: scripts/campaign2.sh:1-9 --> <!-- src: scripts/tstar_evals_study2.py:1-20 --> <!-- src: scripts/test_driver_equivalence.py:1-11 --> <!-- src: scripts/run_h4_checks.sh:3 --> <!-- src: scripts/build_report.py:3 --> <!-- src: scripts/tstar_evals.sh:2-4 --> <!-- src: scripts/tstar_evals2.sh:2-3 --> <!-- src: CLAUDE.md:33-35,41 -->
 
 The training driver is resumable per generation: a re-run skips completed generations and continues with the same learning-rate schedule, and every run writes its generator settings, seeds and model stamps into its manifests. Seeds derive from the run's seed number: base seed = 100,000 × seed, generation $g$ using base seed + $g$; evaluation uses network seed 9000 + generation (final sets) or 9500 (equal-time sets), opponent seeds 9101 (B-RND) and 9201 (B-MCTS). <!-- src: scripts/run_comparison.py:2-10 --> <!-- src: paper/annex-reproduction.md:33-41 -->
 
@@ -76,17 +84,23 @@ All durations in `@tbl:g-durations`{=typst} were measured on the study machine (
 | Equal-time evaluation sets, seeds 1–3 (four checkpoints × three opponents) | ≈11 h, 18 September 2026 |
 | Equal-time evaluation sets, graph seeds 4–5 (two checkpoints × three opponents) | ≈6 h, 6 October 2026 |
 | Ablation runs A1 / A2 / A1′ (per seed), training wall-clock | 7.61–8.01 h (a divergence symptom) / 32.05–47.44 h / 23.89–30.35 h |
+| Second study, one grid run (warm start, window 3): training wall-clock | 17.46–18.52 h |
+| Second study, one graph run (same regime): training wall-clock | 36.27–52.85 h |
+| Second study, all ten runs, training wall-clock summed | 296.9 h (grid 89.0 h, graph 207.9 h) |
+| Second campaign (seeds 11–15, both arms, sequential), elapsed | 13–26 October 2026, 13 days 8 h |
+| Second study, equal-time evaluation sets (seven checkpoints × three opponents) | ≈ 14 h, 26–27 October 2026 |
+| Second study, pilot (2 generations × 200 games, evaluation at 20 games per opponent) | grid 1 h 35 min; graph 4 h 17 min |
 | Engine build; minimal scenario | not measured |
 
 Table: Measured durations of the study's computations on the study machine (Apple M1 Pro, four worker threads per run, sequential runs), as recorded in the run and analysis records; ranges span the runs of the step. Training wall-clock is the sum of a run's per-generation self-play and training seconds, evaluation games excluded; campaign, extension and ablation figures are elapsed times as recorded. A1's short runs reflect its divergence (a NaN policy plays short degenerate games) rather than a lower cost. The engine build and the minimal scenario were not timed. {#tbl:g-durations}
 
-<!-- src: paper/annex-reproduction.md:75-77 --> <!-- src: results/comparison/wallclock-per-run.md:1-10 --> <!-- src: journal/2026-09-19-h6-comparison-01.md:24-26 --> <!-- src: journal/2026-10-09-h6-5seed-final-01.md:3,12-16 --> <!-- src: journal/2026-09-23-h7-a1-divergence-01.md:15-17 --> <!-- src: journal/2026-10-02-h7-a2-nogpool-01.md:16-17 --> <!-- src: journal/2026-10-09-h7-a1prime-01.md:13 -->
+<!-- src: paper/annex-reproduction.md:75-77 --> <!-- src: results/comparison/wallclock-per-run.md:1-10 --> <!-- src: journal/2026-09-19-h6-comparison-01.md:24-26 --> <!-- src: journal/2026-10-09-h6-5seed-final-01.md:3,12-16 --> <!-- src: journal/2026-09-23-h7-a1-divergence-01.md:15-17 --> <!-- src: journal/2026-10-02-h7-a2-nogpool-01.md:16-17 --> <!-- src: journal/2026-10-09-h7-a1prime-01.md:13 --> <!-- src: results/study2/wallclock-per-run.md:7-11 --> <!-- src: journal/2026-10-13-h9-campaign-01.md:67-78 --> <!-- src: journal/2026-10-27-h9-analysis-01.md:26-29 --> <!-- src: journal/2026-10-12-h9-pilot-01.md:17-19 -->
 
-Disk: before the campaign the six-run matrix was sized at about 3–5 GB of shards, checkpoints and records, against 164 GB free with a 20 GB guard; mid-campaign the machine reported 200 GB free. The final footprint of the run directories was not recorded. <!-- src: journal/2026-09-10-h6-matrix-01.md:50-55 --> <!-- src: journal/2026-09-16-h6-progress-01.md:28-29 -->
+Disk: before the campaign the six-run matrix was sized at about 3–5 GB of shards, checkpoints and records, against 164 GB free with a 20 GB guard; mid-campaign the machine reported 200 GB free. The final footprint of the first study's run directories was not recorded; the second study's ten run directories total 4.8 GB. <!-- src: journal/2026-09-10-h6-matrix-01.md:50-55 --> <!-- src: journal/2026-09-16-h6-progress-01.md:28-29 --> <!-- src: journal/2026-10-13-h9-campaign-01.md:72-75 -->
 
 ## Identifiers a reproduction must match
 
-A reproduction is faithful when it uses the frozen artifacts identified below and, for the minimal scenario, reproduces the shipped game row and the byte-identical tables. The frozen experimental constants that every command must leave untouched are tabulated in `@sec:app-c`{=typst}: base game with the tournament opening rule, 300-ply cap, 128/32 self-play simulations with full fraction 0.25, 12 temperature plies, resignation at −0.92 with a 10% audit, 400 evaluation simulations without noise, 100 games per opponent, 250 openings, the 18.77 h cutoff, seeds 1–5 per arm. <!-- src: results/comparison/opponents-manifest.md:3-44 --> <!-- src: paper/annex-reproduction.md:7-19 -->
+A reproduction is faithful when it uses the frozen artifacts identified below and, for the minimal scenario, reproduces the shipped game row and the byte-identical tables. The frozen experimental constants that every command must leave untouched are tabulated in `@sec:app-c`{=typst}: base game with the tournament opening rule, 300-ply cap, 128/32 self-play simulations with full fraction 0.25, 12 temperature plies, resignation at −0.92 with a 10% audit, 400 evaluation simulations without noise, 100 games per opponent, 250 openings, the 18.77 h cutoff, seeds 1–5 per arm; for the second study, the same constants with the warm start, the three-generation window, seeds 11–15 and the 17.63 h cutoff of protocol version 2.0 (`@sec:app-c-study2`{=typst}). <!-- src: results/comparison/opponents-manifest.md:3-44 --> <!-- src: paper/annex-reproduction.md:7-19 -->
 
 | Artifact | Identifier |
 | --- | --- |
@@ -96,13 +110,16 @@ A reproduction is faithful when it uses the frozen artifacts identified below an
 | B-MCTS configuration (`configs/baselines/mcts-nonet.toml`), SHA-256 | `3fc8f75cf2b4f21012dd61e9924408fbfc32c8ea561aa96eb44f1091ba07364e` |
 | Frozen openings, content of the 250 lines, SHA-256 | `63b318d071dfc3ecfae3585636c8e6f7327ddc08e7aed86a466f915f8005af7b` |
 | Frozen openings, file as frozen, SHA-256 | `538497390a3787299c67c3ca138b8feacb369d55dc562881d1aee45200cbccb2` |
-| Opening/colour schedule of every 100-game match | `8cd84b6564440666` |
+| Opening/colour schedule of every 100-game match (final and cutoff sets, both studies) | `3bf5d3e51cea0c0d` |
+| Opening/colour schedule of every 20-game intermediate match (both studies) | `8cd84b6564440666` |
 | Frozen protocol document | `f340a6b6…aefeb5` (recorded abbreviated), commit `44a74ff` |
+| Frozen protocol document, version 2.0 (second study) | `e296a12e8d1e3dee36c3b210ececced62314e64657aede1cb91b1ea452b461eb`, commit `4a22a24` |
 | Engine code at the population freeze | commit `b94e7c1` |
 | Campaign code (main comparison) | commit `ac58773` |
 | Ablation code; non-finite-loss guard | commits `216fded`; `bffeea9` |
 | Analysis code (final five-seed tables) | commit `7db074d` |
+| Second study: driver options; campaign script; analysis switch; figure switch | commits `008aaee`; `dc0b6c2`; `b0f1598`; `32297fe` |
 
-Table: Identifiers of the frozen artifacts and code states of the study. Hashes are SHA-256 hexadecimal digests of file content as recorded at the freeze; the schedule hash is the digest prefix printed by the analysis tool for the (opening, colour) schedule, identical for every match of the study; commits are abbreviated repository commit identifiers. {#tbl:g-identifiers}
+Table: Identifiers of the frozen artifacts and code states of the study. Hashes are SHA-256 hexadecimal digests of file content as recorded at the freeze; the schedule hashes are the digest prefixes printed by the analysis tool for the (opening, colour) schedule, identical for every match of a given volume in both studies (the first edition of this report attributed the 20-game hash to the 100-game matches); commits are abbreviated repository commit identifiers. {#tbl:g-identifiers}
 
-<!-- src: results/comparison/opponents-manifest.md:10-44 --> <!-- src: journal/2026-09-19-h6-comparison-01.md:10-11 --> <!-- src: journal/2026-10-02-h7-a2-nogpool-01.md:9-11 --> <!-- src: journal/2026-10-09-h6-5seed-final-01.md:9-10 -->
+<!-- src: results/comparison/opponents-manifest.md:10-44 --> <!-- src: journal/2026-09-19-h6-comparison-01.md:10-11 --> <!-- src: journal/2026-10-02-h7-a2-nogpool-01.md:9-11 --> <!-- src: journal/2026-10-09-h6-5seed-final-01.md:9-10 --> <!-- src: journal/2026-10-27-h9-analysis-01.md:234-246 -->

@@ -140,9 +140,10 @@ notes `docs/reading/*.md` + `docs/reading/matrix.md`.
 | 12-results-cost.md | RQ-H2: cost table; score vs time; per-example vs per-hour | 2 | paper/figures/fig2-score-cost.md, docs/representations/comparison-controls.md, wallclock figures in journals |
 | 13-results-ablations.md | RQ-H3: H-T3 table; A1 divergence; A2 null; A1′ supplement; training metrics figure | 4 | results/ablations/README.md, journals 2026-09-23, 2026-10-02, 2026-10-09-h7-a1prime |
 | 14-results-qualitative.md | Three failure positions with selection criteria; the conversion/truncation pathology; what the training curves show | 3 | paper/figures/fig4-failures.md, fig6/fig7, journal entries |
-| 15-discussion.md | Reading the result; mechanisms (plausible vs demonstrated); comparison with Keller, Rigaux & Kashima, AZ-Hive; threats to validity (internal, measurement, statistical, external); lessons | 5 | paper/ch7-discussion.md, journals, matrix.md |
-| 16-conclusion.md | Answer to RQ-H1 in perimeter; contributions; two motivated follow-ups | 1.5 | paper/ch8-conclusion.md |
-| 17-bibliography.md | Bibliography (scientific) and Webography, academic style, alphabetical | 2 | paper/bibliography.md, docs/reading/*.md metadata |
+| 15-study2.md | The second study (protocol v2, frozen 13 October 2026): why; what changed (warm start, replay window 3, option A) and what did not; implementation and pilot; execution record; results under both readings with the verdict under the frozen rule; the two studies side by side (descriptive, no pooling) | 8 | docs/protocol-v2.md, results/study2/**, paper/figures/*-study2.*, journals 2026-10-09-h9-driver-01, 2026-10-12-h9-pilot-01, 2026-10-13-h9-campaign-01, 2026-10-25-h9-tstar-01, 2026-10-27-h9-analysis-01 |
+| 16-discussion.md | Reading the result; mechanisms (plausible vs demonstrated); comparison with Keller, Rigaux & Kashima, AZ-Hive; threats to validity (internal, measurement, statistical, external); lessons | 5 | paper/ch7-discussion.md, journals, matrix.md |
+| 17-conclusion.md | Answer to RQ-H1 in perimeter; contributions; two motivated follow-ups | 1.5 | paper/ch8-conclusion.md |
+| 18-bibliography.md | Bibliography (scientific) and Webography, academic style, alphabetical | 2 | paper/bibliography.md, docs/reading/*.md metadata |
 | 90-appendix-a-corpus.md | Hive rules reference and the 35 annotated positions (generated) | 10 | tests/*/cases/*.toml via scripts/make_annex_corpus.py |
 | 91-appendix-b-architectures.md | Layer-by-layer tables; record format; search settings | 4 | paper/annex-architectures.md, python/hivenet |
 | 92-appendix-c-hyperparameters.md | Frozen constants; hyperparameters; seed derivation; configurations; machine profile | 3 | paper/annex-reproduction.md, configs/** |

@@ -1,7 +1,7 @@
 # Experimental methodology: a pre-registered, frozen protocol {#sec:protocol}
 
-This chapter states what the comparison fixed in advance, how, when, and above all why. The governing protocol was frozen as version 1.0 on 10 September 2026, before any comparison run and after a pilot had confirmed every measured value in it; it declares any later change a new study, and none was made. Constants, hyperparameters and seeds are tabulated in `@sec:app-c`{=typst}; raw per-seed tables and the cutoff checkpoint map in `@sec:app-d`{=typst}.
-<!-- src: docs/protocol.md:3-11; ../state/decisions.md:598-632 -->
+This chapter states what the comparison fixed in advance, how, when, and above all why. The governing protocol was frozen as version 1.0 on 10 September 2026, before any comparison run and after a pilot had confirmed every measured value in it; it declares any later change a new study, and none was made. Constants, hyperparameters and seeds are tabulated in `@sec:app-c`{=typst}; raw per-seed tables and the cutoff checkpoint map in `@sec:app-d`{=typst}. A second protocol, version 2.0, was frozen on 13 October 2026 for the complementary study reported in `@sec:study2`{=typst}; it changes the training regime and nothing else, and is described there.
+<!-- src: docs/protocol.md:3-11; ../state/decisions.md:598-632; docs/protocol-v2.md:3-12 -->
 
 ## Why pre-register, and why freeze, at small compute {#sec:protocol-why}
 

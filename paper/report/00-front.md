@@ -15,9 +15,17 @@ hypothesis is rejected: the graph arm scores lower against two of three
 opponents under both readings, at twice the wall-clock cost, with its
 deficit concentrated in converting won positions. Ablations show that
 the graph arm's typed edge relations are necessary for optimization
-stability, while its global pooling is dispensable. The result is
-negative, pre-registered and fully reproducible from the released records.
-<!-- src: paper/front-matter.md:26 -->
+stability, while its global pooling is dispensable. A second study,
+pre-registered separately (protocol frozen on 13 October 2026) and run
+on five new seeds per arm under a warm-started loop with a
+three-generation replay window, tested the main objection to that
+verdict: no graph advantage was detected under either reading, every
+graph−grid interval includes zero (largest upper bounds +0.090 and
++0.055), the first study's deficit is no longer visible at equal
+examples and reduced at equal wall-clock, and the conversion pathology
+persists in three graph seeds of five at 2.34 times the cost. Both
+results are pre-registered and reproducible from the released records.
+<!-- src: paper/front-matter.md:26; results/study2/results-arm-difference.md; journal/2026-10-27-h9-analysis-01.md:95-123,186-205 -->
 
 **Keywords.** Hive; AlphaZero; graph neural networks; representation
 learning; pre-registration; negative result.
@@ -54,17 +62,18 @@ apprentissage de représentations ; pré-enregistrement ; résultat négatif.
 
 **Status.** Independent research report prepared in view of a doctoral
 application. It is not peer-reviewed and is not a publication of any
-institution. Version 2.0-draft, October 2026; the experimental content
+institution. Version 2.1-draft, October 2026; the experimental content
 is final and no number differs from the frozen raw results of 9 October
-2026.
-<!-- src: paper/front-matter.md:10 -->
+2026 (first study) and 27 October 2026 (second study).
+<!-- src: paper/front-matter.md:10; journal/2026-10-27-h9-analysis-01.md:1-30 -->
 
 **Code and artifacts.** The engine, the training pipeline, both
 encoders, the frozen configurations, the raw per-game evaluation records
 and the scripts that regenerate every table and figure of this report
-form one public repository, released at tag v2.0-report:
-https://github.com/mohamedbechirkefi/hive-graph-selfplay (the records
-archive is attached to that release). A fresh-environment reproduction scenario is described in
+form one public repository, https://github.com/mohamedbechirkefi/hive-graph-selfplay,
+released at tag v2.0-report on 9 October 2026 for the first study (the
+records archive is attached to that release); the second study's
+records and this revision accompany the release tagged v2.1-report. A fresh-environment reproduction scenario is described in
 `@sec:app-g`{=typst}; the provenance of every result is tabulated in
 `@sec:app-e`{=typst}.
 

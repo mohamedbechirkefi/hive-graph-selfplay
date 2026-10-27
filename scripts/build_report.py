@@ -27,7 +27,7 @@ BUILD = REPO / "paper" / "build"
 PANDOC = REPO / ".tools" / "pandoc"
 FONT_PATHS = ["/System/Library/Fonts", "/System/Library/Fonts/Supplemental",
               "/Library/Fonts"]
-VERSION = "v2.0-draft"
+VERSION = "v2.1-draft"
 NAME = "report"
 SHORT = False
 
@@ -46,7 +46,7 @@ STR = {
                "04": "Part II. Building the system",
                "09": "Part III. Methodology",
                "11": "Part IV. Results",
-               "15": "Part V. Discussion and conclusion",
+               "16": "Part V. Discussion and conclusion",
                "90": "Appendices"},
     ),
     "fr": dict(
@@ -63,7 +63,7 @@ STR = {
                "04": "Partie II. Construction du système",
                "09": "Partie III. Méthodologie",
                "11": "Partie IV. Résultats",
-               "15": "Partie V. Discussion et conclusion",
+               "16": "Partie V. Discussion et conclusion",
                "90": "Annexes"},
     ),
 }
@@ -314,7 +314,7 @@ def assemble(lang):
         key = f.name[:2]
         if key in s["parts"] and not SHORT:
             parts.append(f"```{{=typst}}\n#part[{s['parts'][key]}]\n```\n")
-        if key == "17":
+        if key == "18":
             # bibliography: hanging indent, unjustified, clickable URLs
             bib = linkify(attach_labels(pandoc_body(md_of(f), work)))
             parts.append("```{=typst}\n#[\n#set par(hanging-indent: 1.8em, justify: false, first-line-indent: 0em)\n#set text(size: 10pt)\n"

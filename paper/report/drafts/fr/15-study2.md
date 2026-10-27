@@ -6,7 +6,7 @@ La première étude a répondu à sa question dans un pipeline qui entraînait l
 ## Pourquoi une seconde étude {#sec:study2-why}
 
 La réinitialisation à chaque génération de la première étude est neutre pour la comparaison, puisque les deux encodeurs ont vu exactement les mêmes enregistrements sous les mêmes conventions, mais elle borne le régime atteint : chaque réseau a appris sur les positions de 500 parties, et la force absolue après dix générations est restée proche du plafond contre l'adversaire aléatoire et autour de 0.1 contre les deux adversaires forts. La première objection d'un relecteur à la généralité d'un verdict négatif est donc que la représentation en graphe pourrait avoir besoin de plus de données par réseau, ou d'une trajectoire d'optimisation plus longue, avant que son a priori structurel ne paie. Les grands systèmes d'auto-jeu transmettent les poids de génération en génération et s'entraînent sur une fenêtre de rejeu de parties récentes ; une seconde étude sous ce régime est le test direct de l'objection. La question posée est celle de la première étude sous le nouveau régime (RQ-H1′), avec la même hypothèse (H1′) : le bras graphe atteint un score moyen plus élevé que le bras grille contre la population gelée, à budget égal. Une question secondaire, descriptive, demande si le contraste graphe−grille se rapproche de zéro ou change de signe par rapport à la première étude ; les deux études sont comparées côte à côte et jamais agrégées.
-<!-- src: docs/protocol-v2.md:14-45; paper/report/15-discussion.md:205-229 -->
+<!-- src: docs/protocol-v2.md:14-45; paper/report/16-discussion.md:205-229 -->
 
 ## Ce qui change, et ce qui ne change pas {#sec:study2-protocol}
 

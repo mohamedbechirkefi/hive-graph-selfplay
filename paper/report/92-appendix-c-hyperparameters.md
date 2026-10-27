@@ -65,12 +65,12 @@ Every random choice in the study descends from a recorded seed, so that a run, a
 | Generation-0 network | seeded random initialisation with the base seed, exported before any self-play |
 | Network under evaluation | 9000 + *g* for in-run evaluations (generations 4, 7 and 9); 9500 for cutoff-checkpoint sets |
 | Opponents | B-RND 9101; B-MCTS 9201; B-HEU deterministic (no seed) |
-| Match runner | 777,000 + *g* for in-run evaluations; 888,000 for cutoff sets; with fixed openings the opening/colour schedule is seed-independent (schedule hash 8cd84b6564440666 reproduced across runs with different agents and match seeds) |
+| Match runner | 777,000 + *g* for in-run evaluations; 888,000 for cutoff sets; with fixed openings the opening/colour schedule is seed-independent (schedule hashes reproduced across runs with different agents and match seeds: 8cd84b6564440666 for the 20-game sets, 3bf5d3e51cea0c0d for the 100-game sets, identical in both studies) |
 | Opening generator | 20260910 |
 | Bootstrap | fixed resampling seed; 10,000 resamples |
 
 Table: Derivation of every seed used in training, evaluation and analysis. {#tbl:app-c-seeds}
-<!-- src: paper/annex-reproduction.md:33-41; ../state/decisions.md:948; results/comparison/opponents-manifest.md:39-44; journal/2026-09-19-h6-comparison-01.md:39; scripts/run_comparison.py:86, 148, 155; scripts/tstar_evals.sh:24-26 -->
+<!-- src: paper/annex-reproduction.md:33-41; ../state/decisions.md:948; results/comparison/opponents-manifest.md:39-44; journal/2026-09-19-h6-comparison-01.md:39; journal/2026-10-27-h9-analysis-01.md:234-246; scripts/run_comparison.py:86, 148, 155; scripts/tstar_evals.sh:24-26 -->
 
 ## Configuration of each arm and variant {#sec:app-c-configs}
 
@@ -105,3 +105,33 @@ Table: Inference cost per network evaluation on the study machine, measured on 1
 
 Training throughput was benchmarked on 10 September 2026 at batch 128, forward and backward, on the machine's GPU backend: 274 positions/s for the grid network and 138 positions/s for the graph network (forward-only on the CPU: 138 and 478 positions/s; the graph network is faster per position on the CPU and slower on the GPU). The campaign runs loaded their data in-process and trained at or below these figures; generation, not training, dominates a generation's wall-clock in either arm. Per-run training wall-clock (self-play, training and export over 10 generations × 500 games, evaluation games excluded) was 16.7–19.1 h for grid runs and 26.6–49.9 h for graph runs, with means of 18.0 h and 36.7 h (per-seed values in `@tbl:d-wallclock`{=typst}). An evaluation game at 400 simulations took ≈23–32 s; the search opponent at 6,400 simulations decides in ≈27 ms single-threaded; a subprocess round-trip to the engine costs 21.7 µs. Disk use was estimated at ≈3–5 GB per three-seed campaign against a 20 GB free-space guard.
 <!-- src: docs/representations/comparison-controls.md:34-44; results/comparison/wallclock-per-run.md:3-8; scripts/run_comparison.py:126-129; paper/annex-reproduction.md:70-75; docs/baselines.md:54-56; journal/2026-09-09-throughput-profile-01.md:72-73; journal/2026-09-10-h6-matrix-01.md:50-55; configs/comparison-matrix.yaml:62 -->
+
+## The second study: frozen constants, regime and seeds {#sec:app-c-study2}
+
+The second study (`@sec:study2`{=typst}) reuses every constant of `@tbl:app-c-frozen`{=typst} except where `@tbl:app-c-study2`{=typst} states otherwise, and every hyperparameter of `@tbl:app-c-hyper`{=typst} except the training data per generation. Its protocol was frozen as version 2.0 on 13 October 2026 under the content hash given in `@tbl:app-c-study2-hash`{=typst}; the two arms are the configurations of the first two rows of `@tbl:app-c-configs`{=typst}, run with seeds 11 to 15, and no ablation variant was run.
+<!-- src: docs/protocol-v2.md:3-12, 88-101 -->
+
+| Constant | Value | Fixed on (2026) | Approved by |
+| --- | --- | --- | --- |
+| Training regime | warm start: the network of generation $g$ is initialised from the final checkpoint of generation $g-1$ (model weights only; optimizer and cosine schedule restart every generation); generation 0 starts from the seeded random initialisation | 13 Oct (protocol v2) | the author |
+| Replay window | 3 generations: generation $g$ trains on the records of generations $\max(0, g-2)$ to $g$, that is 500, 1,000, then 1,500 games from generation 2 onward; 2 epochs per generation | 13 Oct | the author |
+| Hyperparameter policy | option A: the first study's settings in both arms, no tuning; option B (three learning rates on one seed per arm) considered and rejected | 13 Oct | the author |
+| Training seeds | 11–15 per arm; base seed 100,000 × seed; no random stream shared with seeds 1–5 | 13 Oct | the author |
+| Equal-time cutoff of the second study | 17.63 h = median of the total training wall-clock of the five grid runs of the second study (17.46, 17.95, 17.63, 17.46, 18.52 h; sum of the ten per-generation clocks, evaluations excluded), computed once from the clock files on 25 October 2026 before any cross-arm number, never recomputed | rule 13 Oct; value 25 Oct | rule: the author; value: computed mechanically |
+| Evaluation schedule | generations 5 and 8 at 20 paired games per opponent (descriptive only); final checkpoint at 100; cutoff checkpoints at 100 with network seed 9500 and match seed 888,000 | 13 Oct (as in the first study) | the author |
+| Reused frozen assets | opponent population, 250 openings, pinned evaluation settings, both networks and the shared decoder, untouched | 13 Oct (reuse declared) | the author |
+| Execution order | ten runs sequential on the study machine, interleaved grid then graph for seeds 11 to 15; no other heavy process during the campaign | 13 Oct | the author |
+| Protocol document | version 2.0; any later change is a new study | 13 Oct | the author |
+
+Table: Frozen constants of the second study, with the date each was fixed and the approval under which it was fixed; everything not listed is the first study's. {#tbl:app-c-study2}
+<!-- src: docs/protocol-v2.md:3-12, 53-75, 88-130, 152-166; journal/2026-10-25-h9-tstar-01.md:38-48 -->
+
+| Artifact | SHA-256 |
+| --- | --- |
+| Protocol, version 2.0 | e296a12e8d1e3dee36c3b210ececced62314e64657aede1cb91b1ea452b461eb |
+
+Table: Content hash of the second study's frozen protocol; the hashes of the reused artifacts are those of `@tbl:app-c-hashes`{=typst}. {#tbl:app-c-study2-hash}
+<!-- src: ../state/decisions.md (D-038) -->
+
+The seed derivation of `@tbl:app-c-seeds`{=typst} applies unchanged with $s$ = 11 to 15: the base seed is 100,000 × $s$, generation $g$ uses base + $g$ for self-play and training, the generation-0 network is initialised from the base seed, and the evaluation seeds (9000 + $g$ in-run, 9500 for cutoff sets; match runner 777,000 + $g$ in-run, 888,000 for cutoff sets) are the first study's. The campaign driver records the regime of every run (warm start on, window 3) in a configuration file kept with the run, and every generation's training configuration lists the initialisation checkpoint and the shards actually read.
+<!-- src: docs/protocol-v2.md:88-101, 105-120; journal/2026-10-09-h9-driver-01.md:30-45 -->

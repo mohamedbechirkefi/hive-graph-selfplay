@@ -18,6 +18,10 @@ The tables below fix the English terms used in this report, their meaning within
 | checkpoint | The exported network at the end of a generation; identifiers zero-based (gen000 to gen009). | point de contrôle |
 | paired colour-swapped games | Each opening line played once with each colour, so all arms, seeds and opponents face identical schedules. | parties appariées, à couleurs échangées |
 | pinned evaluation settings | 400 simulations per decision, no exploration noise, deterministic argmax; fixed by file and test. | réglages d'évaluation épinglés |
+| warm start | Initialising the network of generation $g$ from the weights of generation $g-1$'s final checkpoint, with the optimizer and the schedule restarted; used in the second study only, the first study re-initialised every generation. | démarrage à chaud |
+| replay window | The recent generations whose records a generation trains on; 3 generations in the second study, the current generation alone in the first. | fenêtre de rejeu |
+| equal-time cutoff of the second study | The median total training wall-clock of the five grid runs of the second study, computed once from the clock files before any cross-arm number; a value of its own, distinct from the first study's 18.77 h. | seuil à temps mural égal de la seconde étude\* |
+| second study | The separately pre-registered comparison under warm start and replay window (protocol version 2.0, frozen 13 October 2026, seeds 11 to 15); reported beside the first study, never pooled with it. | seconde étude |
 
 Table: Study-design terms. {#tbl:f-design}
 

@@ -23,6 +23,22 @@ games against the random opponent ending at the move cap, and it is
 observable only because truncation was never folded into draws.
 <!-- src: results/comparison/results-arm-difference.md; paper/ch8-conclusion.md:5 -->
 
+The second study, pre-registered separately and run under a
+warm-started loop with a three-generation replay window on five new
+seeds per arm, tested the main objection to that answer. It found no
+graph advantage under either reading: every graph−grid interval
+includes zero, with the largest upper bounds at +0.090 and +0.055; the
+first study's deficit is no longer visible at equal examples and
+reduced at equal time; the conversion pathology persists in three graph
+seeds of five; and the graph arm costs 2.34 times the grid arm per run.
+The answer to the research question therefore stands in the form the
+two studies together allow: at this budget, on this variant, the graph
+representation did not learn a better policy than the grid
+representation in either training regime, and under the standard
+regime it learned an equivalent one, within five-seed intervals, at
+more than twice the cost.
+<!-- src: results/study2/results-arm-difference.md; results/study2/study1-vs-study2.md:7-25; results/study2/wallclock-per-run.md:7-10; journal/2026-10-27-h9-analysis-01.md:114-123 -->
+
 The result bounds, rather than contradicts, the positive graph findings
 reported for Hex under value-based learning and for chess under
 self-play. Where short-range surround tactics decide games and budgets are
@@ -36,7 +52,7 @@ dispensable at this scale.
 
 ## Contributions, as demonstrated
 
-Three contributions were announced in `@sec:introduction`{=typst}; each
+Four contributions were announced in `@sec:introduction`{=typst}; each
 is demonstrated in the chapters named there. (1) A controlled,
 budget-matched, multi-seed grid-versus-graph comparison for Hive, with
 both arms under one self-play pipeline and a pre-registered negative
@@ -47,7 +63,10 @@ byte-exactly across two languages, a shared variable-action decoder,
 truncation-aware evaluation and frozen-artifact discipline
 (`@sec:engine`{=typst} to `@sec:protocol`{=typst}). (3) A component
 attribution for the graph arm with an honestly labelled two-component
-supplement (`@sec:results-ablations`{=typst}).
+supplement (`@sec:results-ablations`{=typst}). (4) A second
+pre-registered comparison under the standard warm-started regime, with
+its protocol, cutoff and seeds fixed before any run, whose null result
+bounds the first study's negative one (`@sec:study2`{=typst}).
 
 ## Two follow-ups motivated by the data
 
@@ -66,7 +85,10 @@ clipping confounds the attribution. A controlled study of normalisation
 and gradient-scale choices for relation-shared graph layers would
 decouple trainability from representational content and would say
 whether naive adjacency, properly stabilised, is sufficient for Hive.
-<!-- src: paper/ch8-conclusion.md:19 -->
+Either follow-up now has the warm-started regime as its baseline, and
+either should pre-register a numeric threshold for a meaningful
+advantage, which the second study's intervals showed to be necessary.
+<!-- src: paper/ch8-conclusion.md:19; journal/2026-10-27-h9-analysis-01.md:186-199 -->
 
 ## A method that stands regardless of the sign
 

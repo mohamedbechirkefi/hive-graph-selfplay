@@ -165,6 +165,61 @@ Table: Training wall-clock of each of the ten main-campaign runs, in hours: the 
 
 The protocol brackets the primary estimator (truncations excluded) with three alternative treatments of every truncated game: counted 0.5 (the sensitivity scores of `@tbl:d-sens`{=typst}), counted as a loss for the arm under test, and counted as a win for it; the last is an upper bound on what any larger cap could do for an arm that truncates. The bounds were computed from the per-game records in the analysis of 19 September 2026 (three seeds per arm): with every truncated game scored as a win for the arm under test, the graph-minus-grid contrast against legal-random is still −0.072 under the same-examples reading and −0.058 under the same-wall-clock reading, and its direction is unchanged under every treatment (excluded, 0.5, loss, win). Against B-HEU and B-MCTS no game of either arm was truncated, so all treatments coincide there. The final analysis record does not restate the bounds at five seeds. Because the graph arm truncated 20–57% of its games against legal-random in the original seeds and 23–44% in the extension seeds (grid: 0–1%, one extension seed at 11%), its primary score against that opponent is a mean over fewer decided games (43 to 80 per seed) than the grid arm's. <!-- src: journal/2026-09-19-h6-comparison-01.md:64-70 --> <!-- src: paper/ch5-protocol.md:45-49 --> <!-- src: paper/results-comparison.md:51-61 --> <!-- src: paper/ch7-discussion.md:58-61 -->
 
+## The second study: sensitivity scores, cutoff map and wall-clock {#sec:app-d-study2}
+
+The second study (`@sec:study2`{=typst}) uses the estimators of this appendix unchanged: the same score, truncation rate and sensitivity score per (seed, opponent) cell, the same seed-level percentile bootstrap with $B$ = 10,000 and the same independent resampling of the two arms for the contrast. Its per-seed score tables under both readings, its seed-level means and its contrasts are given in the chapter (`@tbl:study2-same-examples`{=typst} to `@tbl:study2-contrast`{=typst}) and are not repeated; this section adds the sensitivity scores, the cutoff map with the cumulative clocks behind it, and the per-run wall-clock. <!-- src: scripts/make_results.py:13-16,47-62,79-94 --> <!-- src: journal/2026-10-27-h9-analysis-01.md:34-51 -->
+
+| Arm | Seed | Same-examples: B-RND sens. | Same-wall-clock: B-RND sens. |
+| --- | --- | ---: | ---: |
+| grid | 11 | 0.9600 | 0.9600 |
+| grid | 12 | 0.9650 | 0.9600 |
+| grid | 13 | 0.9900 | 0.9900 |
+| grid | 14 | 0.9800 | 0.9800 |
+| grid | 15 | 0.9550 | 0.9400 |
+| graph | 11 | 1.0000 | 0.9900 |
+| graph | 12 | 0.9750 | 0.9650 |
+| graph | 13 | 0.7550 | 0.6100 |
+| graph | 14 | 0.8250 | 0.8350 |
+| graph | 15 | 0.7900 | 0.7750 |
+
+Table: Second study, sensitivity scores against legal-random (B-RND) under both readings, for the runs, checkpoints and evaluation volume of `@tbl:study2-same-examples`{=typst} and `@tbl:study2-same-wallclock`{=typst}: the mean over all 100 games of the cell with every truncated game counted 0.5, at the four-decimal precision of the comma-separated result files. Against B-HEU and B-MCTS no game of any run was truncated under either reading, so there the sensitivity score equals the score of the main tables in every cell. Raw values, no interval. {#tbl:d2-sens}
+
+<!-- src: results/study2/results-same-examples.csv:2-31 --> <!-- src: results/study2/results-same-wallclock.csv:2-31 -->
+
+Under the sensitivity treatment the graph-minus-grid contrast against legal-random is −0.101 [−0.187, −0.012] under the same-examples reading and −0.131 [−0.256, −0.015] under the same-wall-clock reading; the other four contrasts are those of `@tbl:study2-contrast`{=typst}, there being no truncation against the other two opponents. The two bounding treatments (every truncated game scored as a loss or as a win for the arm under test) were not computed for the second study. <!-- src: journal/2026-10-27-h9-analysis-01.md:114-123 -->
+
+The second study's cutoff was fixed by the rule of its protocol: the median of the full-run training wall-clocks of its five grid runs, each the sum of the ten per-generation clocks, computed exactly from the clock files on 25 October 2026, minutes after the fifth grid run had finished and while the last graph run was in its first generation, before any score of the study had been read. The five totals were 17.4567, 17.9540, 17.6263, 17.4592 and 18.5176 h; the median, 17.6263 h (63,454.8 s), is the total of grid seed 13, whose own final checkpoint therefore sits at the cutoff inclusively. For each run the checkpoint retained is the last whose cumulative training wall-clock does not exceed the cutoff (`@tbl:d2-cutoff`{=typst}). <!-- src: journal/2026-10-25-h9-tstar-01.md:22-48 --> <!-- src: docs/protocol-v2.md:105-120 -->
+
+| Arm | Seed | Checkpoint at the cutoff | Cumulative wall-clock | Evaluation set |
+| --- | --- | --- | ---: | --- |
+| grid | 11 | gen009 (final) | 17.46 h | final set reused |
+| grid | 12 | gen008 | 16.54 h | equal-time set |
+| grid | 13 | gen009 (final) | 17.63 h | final set reused (defining run) |
+| grid | 14 | gen009 (final) | 17.46 h | final set reused |
+| grid | 15 | gen008 | 16.77 h | equal-time set |
+| graph | 11 | gen003 | 17.25 h | equal-time set |
+| graph | 12 | gen004 | 17.51 h | equal-time set |
+| graph | 13 | gen002 | 13.95 h | equal-time set |
+| graph | 14 | gen002 | 15.38 h | equal-time set |
+| graph | 15 | gen003 | 14.93 h | equal-time set |
+
+Table: Second study, checkpoint retained for the same-wall-clock reading in each of the ten warm-started runs: the last checkpoint completed within the equal-time cutoff of 17.63 h of cumulative training wall-clock (identifiers zero-based; gen009 is the tenth and final generation), with the cumulative hours at that checkpoint from the clock files. Where the retained checkpoint is the final one, the final evaluation set (100 paired games per opponent) serves both readings; otherwise a separate equal-time set of the same volume was evaluated on 26–27 October 2026 with the pinned cutoff seeds (network 9500, match runner 888,000). {#tbl:d2-cutoff}
+
+<!-- src: journal/2026-10-25-h9-tstar-01.md:50-66 --> <!-- src: journal/2026-10-27-h9-analysis-01.md:40-46 -->
+
+At equal wall-clock the graph arm had completed 3–5 of its ten generations, the grid arm nine or ten (first study: 3–6 and nine or ten). `@tbl:d2-wallclock`{=typst} gives the full-run training wall-clocks behind the map; their means are 17.80 h (grid) and 41.59 h (graph), a ratio of 2.34× (first study: 2.04×). <!-- src: journal/2026-10-25-h9-tstar-01.md:68-71 --> <!-- src: results/study2/wallclock-per-run.md:1-11 -->
+
+| Arm | Seed 11 | Seed 12 | Seed 13 | Seed 14 | Seed 15 | Mean |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| grid | 17.46 | 17.95 | 17.63 | 17.46 | 18.52 | 17.80 |
+| graph | 39.28 | 37.33 | 52.85 | 42.20 | 36.27 | 41.59 |
+
+Table: Second study, training wall-clock of each of the ten warm-started runs, in hours: the per-generation self-play generation, training and export seconds summed over the 10 generations of the run (10 × 500 games, replay window of three generations), evaluation games excluded, from each run's clock log; one machine, four worker threads, sequential runs. The sums are 89.0 h (grid) and 207.9 h (graph), 296.9 h in all. The equal-time cutoff is the median of the five grid values. {#tbl:d2-wallclock}
+
+<!-- src: results/study2/wallclock-per-run.md:1-11 -->
+
+The trajectory figures of the second study are drawn as the first study's, directly from each run's evaluation records at the checkpoints of generations 5, 8 and 10 and its clock log; the training-metric figure is parsed from the second campaign's log, and the per-run values it shows at the first and tenth generation are tabulated in the analysis record. <!-- src: scripts/make_figures.py:34-74,357-372 --> <!-- src: journal/2026-10-27-h9-analysis-01.md:206-232 -->
+
 ## Ablation raw tables
 
 Three variants of the graph arm were trained with three seeds each at the full budget (10 generations × 500 games, identical self-play, training and evaluation settings) and evaluated at their tenth-generation checkpoint under the same-examples reading. `@tbl:d-abl-runs`{=typst} summarises the variants; `@tbl:d-abl-a2`{=typst} and `@tbl:d-abl-a1prime`{=typst} give the per-seed scores of the two that trained; `@tbl:d-abl-contrast`{=typst} gives the contrasts against the full graph arm. <!-- src: results/ablations/README.md:1-10 -->

@@ -122,9 +122,22 @@ its direction-typed relations are necessary for optimization itself
 pooling is dispensable.
 <!-- src: paper/ch1-introduction.md:32; results/comparison/results-arm-difference.md -->
 
+A second study, pre-registered separately and run after the first had
+been written up, tested the first objection to that verdict: that
+re-initialising the network at every generation had kept both arms in a
+regime too early for a graph prior to pay. Under a warm-started loop
+with a three-generation replay window, on five new seeds per arm, no
+graph advantage was detected under either budget reading; every
+graph−grid interval includes zero, with the largest upper bounds at
++0.090 and +0.055; the first study's deficit is no longer visible at
+equal examples and reduced at equal time; the graph arm's conversion
+pathology persists in three seeds of five, and its cost ratio rises to
+2.34 (`@sec:study2`{=typst}).
+<!-- src: results/study2/results-arm-difference.md; results/study2/study1-vs-study2.md:7-25; journal/2026-10-27-h9-analysis-01.md:95-123,144-150 -->
+
 ## Contributions
 
-Three contributions are claimed, each verifiable from the released
+Four contributions are claimed, each verifiable from the released
 repository.
 
 1. **The first controlled, budget-matched, multi-seed grid-versus-graph
@@ -142,6 +155,10 @@ repository.
    relations determine trainability and the pooling has a null effect,
    with an honestly labelled two-component supplement
    (`@sec:results-ablations`{=typst}).
+4. **A second pre-registered comparison under the standard warm-started
+   regime**, with its protocol, equal-time cutoff and seeds fixed before
+   any run, whose null result bounds the first study's negative one and
+   is reported beside it without pooling (`@sec:study2`{=typst}).
 
 The construction of software, however substantial, is not counted as a
 scientific contribution in itself; it is reported because the result
@@ -165,8 +182,9 @@ was chosen: the pre-registered experimental protocol
 question: the main comparison (`@sec:results-main`{=typst}), cost and
 efficiency (`@sec:results-cost`{=typst}), ablations
 (`@sec:results-ablations`{=typst}) and a qualitative analysis of failure
-positions and training behaviour (`@sec:results-qualitative`{=typst}).
-Part V discusses mechanisms and threats to validity
+positions and training behaviour (`@sec:results-qualitative`{=typst}),
+then the second study under the warm-started regime
+(`@sec:study2`{=typst}). Part V discusses mechanisms and threats to validity
 (`@sec:discussion`{=typst}) and concludes (`@sec:conclusion`{=typst}).
 The bibliography and webography follow the conclusion. The appendices
 contain the annotated position corpora, the architectures and data

@@ -321,12 +321,13 @@ BAR = {
 
 
 def fig10():
-    W, H = 7.0, 4.45
+    W, H = 7.8, 4.45
     Y_TOP, Y_BOT = 1.95, 2.35                # inches above / below baseline
     fig = plt.figure(figsize=(W, H))
     left_in, gap_in, right_margin = 0.3, 0.22, 0.12
-    wl = 1.85
-    wr = W - left_in - gap_in - wl - right_margin
+    wl = 1.5
+    ws = 1.4                                  # second-study segment
+    wr = W - left_in - 2 * gap_in - wl - ws - right_margin
     y0 = (H - (Y_TOP + Y_BOT)) / 2 / H
     hf = (Y_TOP + Y_BOT) / H
     width_in = {}
@@ -342,6 +343,8 @@ def fig10():
 
     axL = make_ax(left_in, wl, d("2026-07-01"), d("2026-08-31"))
     axR = make_ax(left_in + wl + gap_in, wr, d("2026-09-07"), d("2026-10-12"))
+    axS = make_ax(left_in + wl + gap_in + wr + gap_in, ws,
+                  d("2026-10-12"), d("2026-10-29"))
 
     def days_per_in(ax):
         return (ax.get_xlim()[1] - ax.get_xlim()[0]) / width_in[ax]
@@ -357,9 +360,11 @@ def fig10():
     ticks(axR, [("2026-09-08", "8 Sep"), ("2026-09-15", "15 Sep"),
                 ("2026-09-22", "22 Sep"), ("2026-09-29", "29 Sep"),
                 ("2026-10-06", "6 Oct")])
+    ticks(axS, [("2026-10-13", "13 Oct"), ("2026-10-20", "20 Oct"),
+                ("2026-10-27", "27 Oct")])
 
     # axis break glyph
-    for ax, xfrac in ((axL, 1.0), (axR, 0.0)):
+    for ax, xfrac in ((axL, 1.0), (axR, 0.0), (axR, 1.0), (axS, 0.0)):
         xa = ax.get_xlim()[0] + xfrac * (ax.get_xlim()[1] - ax.get_xlim()[0])
         dx = days_per_in(ax) * 0.05
         for off in (-0.6, 0.6):
@@ -415,6 +420,9 @@ def fig10():
     axR.text(mdates.date2num(d("2026-09-07")), Y_TOP - 0.02,
              "Research programme (H0–H8)", fontsize=7.5, color=MUTED,
              fontweight="bold", ha="left", va="top")
+    axS.text(mdates.date2num(d("2026-10-12")), Y_TOP - 0.02,
+             "Second study (H9)", fontsize=7.5, color=MUTED,
+             fontweight="bold", ha="left", va="top")
 
     L1, L2, L3 = -0.5, -1.15, -1.8
 
@@ -455,6 +463,17 @@ def fig10():
         below=["extension runs", "27 Sep – 6 Oct"])
     bar(axR, "2026-09-18", "2026-09-20", L3, "analysis",
         right=["18–19 Sep: analysis, H1 rejected", "(3 seeds, both readings)"])
+
+    # ---- second study ----
+    milestone(axS, "2026-10-13", ["13 Oct: protocol v2 frozen;",
+                                  "Study 2 campaign launched"], 1.3)
+    milestone(axS, "2026-10-25", ["25 Oct: cutoff T*\u2032",
+                                  "from grid clocks"], 0.3, ha="right")
+    milestone(axS, "2026-10-27", ["27 Oct: Study 2 analysed",
+                                  "(no graph advantage)"], 0.8, ha="right")
+    bar(axS, "2026-10-13 15:02", "2026-10-26 23:00", L2, "both",
+        inside="Study 2 campaign",
+        below=["13–26 Oct: 10 runs", "(5 seeds × 2 arms, warm start)"])
 
     handles = [Patch(facecolor=BAR[k]["fc"], edgecolor=BAR[k]["ec"],
                      hatch=BAR[k]["hatch"], label=t)
