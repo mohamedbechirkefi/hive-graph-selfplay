@@ -374,7 +374,8 @@ def fig2():
                       + f" | {sum(t)/len(t):.2f} |")
     (RES / "wallclock-per-run.md").write_text("\n".join(wl) + "\n")
     lines = [
-        "# Score / cost table (H6 task 7; fig2)", "",
+        "# Score / cost table (H6 task 7; fig2)" if STUDY == 1 else
+        "# Score / cost table, Study 2 (H9 task 6; fig2, protocol v2)", "",
         "| Metric | Grid arm | Graph arm |",
         "| --- | --- | --- |",
         "| Parameters | 1.44 M | 1.47 M (+1.5%) |",
@@ -392,7 +393,9 @@ def fig2():
         "self-play cost = that wall-clock / 5,000 games. Sources: "
         "results-*.csv, wallclock.json per run, comparison-controls.md "
         "measurements (journal H5-2026-09-10-encoders-01); journal "
-        "H6-2026-09-19-comparison-01.",
+        + ("H6-2026-09-19-comparison-01." if STUDY == 1 else
+           "H9-2026-10-27-analysis-01 (Study 2: warm start, replay window 3, "
+           "seeds 11-15; parameters and inference rows unchanged from Study 1)."),
     ]
     (FIG / f"fig2-score-cost{SUFFIX}.md").write_text("\n".join(lines) + "\n")
     print("fig2 written")
