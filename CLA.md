@@ -149,14 +149,7 @@ license permissions.
 The Contributor cannot grant rights belonging to another
 person or organization.
 
-## 10. Governing law
-
-This Agreement is governed by the laws of [FILL IN: country], without
-regard to its conflict-of-laws rules. The courts of [FILL IN: city,
-country] have jurisdiction, except where mandatory law provides
-otherwise.
-
-## 11. Acceptance
+## 10. Acceptance
 
 The Contributor must explicitly accept this Agreement using
 a written or electronic signature process approved by

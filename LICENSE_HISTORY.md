@@ -51,10 +51,10 @@ This license:
 ## 3. License transition record
 
 Date of adoption:
-[FILL IN ACTUAL DATE AFTER MERGE]
+29 October 2026
 
 First applicable commit SHA:
-[FILL IN FULL COMMIT SHA AFTER MERGE]
+9a5a491a306fbecc490417f02fcc4dc74b34e25a
 
 Current license:
 [LICENSE](LICENSE)
