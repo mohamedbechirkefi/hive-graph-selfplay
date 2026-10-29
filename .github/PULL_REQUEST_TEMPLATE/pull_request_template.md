@@ -34,7 +34,8 @@ Explain the implementation, methodology, and relevant trade-offs.
       is required before copyrightable contributions are merged
 - [ ] I confirm that I am authorized to submit this work
 
-Checking these boxes does not itself constitute a signed CLA.
+Checking these boxes does not itself constitute a signed CLA. To sign, post the
+comment requested by the CLA Assistant check on this Pull Request.
 
 ## Additional information
 

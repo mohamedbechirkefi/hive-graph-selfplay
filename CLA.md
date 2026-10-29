@@ -151,34 +151,36 @@ person or organization.
 
 ## 10. Acceptance
 
-The Contributor must explicitly accept this Agreement using
-a written or electronic signature process approved by
-the Maintainer (for example a CLA signing service that records
-acceptance against the Contributor's GitHub account).
+The Contributor accepts this Agreement electronically, on the pull
+request that contains their contribution, by posting this exact
+comment from their own GitHub account:
 
-The acceptance record must identify:
+> I have read the HiveMind CLA v1.0 and I hereby sign it
 
-- Contributor's legal name
-- GitHub username
-- Date of acceptance
-- Agreement version
-- Accepted agreement text
-- Signature or other verifiable evidence of assent
+Posting that comment is the Contributor's signature. It applies to
+the contribution in that pull request and to later contributions
+the Contributor submits to this repository, until a new version of
+this Agreement is published and accepted.
 
-The Maintainer should securely retain acceptance records
-before merging copyrightable contributions.
+The project's automated CLA check records each acceptance in a
+signature file kept in the repository (branch `cla-signatures`),
+identifying:
 
-## Contributor details
+- GitHub username and numeric GitHub account ID
+- Date and time of acceptance
+- Pull request number and the comment containing the signature
+- Agreement version (1.0), whose exact text is fixed at the
+  repository tag `cla-v1.0`
 
-Full legal name: _________________________________
+These records contain only public GitHub account information. Where
+the Maintainer needs the Contributor's legal name (for example for
+a substantial contribution, or where an employer or institution may
+hold rights), the Maintainer will ask for it privately, and the
+Contributor agrees to provide it on request. Legal names and email
+addresses are never recorded in the public signature file.
 
-GitHub username: _________________________________
-
-Email address: ___________________________________
-
-Date (YYYY-MM-DD): ________________________________
-
-Signature: _______________________________________
+A contribution is not merged until the Contributor's acceptance is
+recorded.
 
 CLA version: 1.0
 

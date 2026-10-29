@@ -62,11 +62,20 @@ Before submitting a Pull Request, please ensure that:
 
 ## 4. Contributor License Agreement
 
-A separately recorded acceptance of the Contributor License
-Agreement ([CLA.md](CLA.md)) is required before merging copyrightable
-code or documentation contributions. The maintainer will tell you how
-to accept it (for example through a CLA signing service linked to your
-GitHub account).
+A recorded acceptance of the Contributor License Agreement
+([CLA.md](CLA.md)) is required before merging copyrightable code or
+documentation contributions.
+
+How to sign: when you open a Pull Request, an automated "CLA Assistant"
+check comments on it. Read the CLA, then post this exact comment on
+your Pull Request:
+
+> I have read the HiveMind CLA v1.0 and I hereby sign it
+
+The check records your signature (your public GitHub username and
+account ID, the date and the PR) and turns green. You sign once; it
+covers your later contributions too. If the check does not update,
+comment `recheck`.
 
 The CLA allows the maintainer to use, modify, distribute,
 relicense, and commercially exploit accepted contributions.
@@ -77,7 +86,7 @@ Submitting a Pull Request does not automatically transfer
 ownership of your code.
 
 Checking a Pull Request checkbox is not, by itself, a
-verified signature of the CLA.
+signature of the CLA; the signing comment above is.
 
 ## 5. Attribution
 
