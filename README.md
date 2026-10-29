@@ -34,7 +34,8 @@ pooled (report chapter 15).
 
 The study was carried out by the author with an AI research assistant
 under a gated methodology that reserved every scientific decision to the
-author; the report's chapter 10 documents it. Licence: MIT.
+author; the report's chapter 10 documents it. Licensing: releases up to
+and including v2.1-report are MIT; see [License and contributions](#license-and-contributions).
 
 ## The engine
 
@@ -93,3 +94,51 @@ The rules kernel is validated three independent ways (see `scripts/nightly.sh`):
 3. **Differential fuzzing**: random games where after every ply our
    `validmoves` set must equal Mzinga's and nokamute's exactly, plus
    game-state cross-checks.
+
+## How to cite
+
+Use GitHub's **"Cite this repository"** button, or the metadata in
+[`CITATION.cff`](CITATION.cff). The preferred citation is the report:
+Kefi, M. B. (2026). *Grid vs. Graph Representations for Self-Play Learning in
+Hive: a Pre-Registered Comparison under Limited Compute* (version 2.1).
+
+## License and contributions
+
+**HiveMind is a source-available, non-commercial AI research project.**
+
+Copyright (c) 2026 Mohamed Bechir Kefi.
+All rights reserved except as expressly licensed.
+
+**Earlier releases remain MIT.** Everything up to and including release
+v2.1-report (both studies, the engine, the pipeline, the report and the
+records) was distributed under MIT, and those permissions, including
+commercial reuse, remain valid. [`NOTICE.md`](NOTICE.md) says exactly which
+material is under which license, and [`LICENSE_HISTORY.md`](LICENSE_HISTORY.md)
+records the transition.
+
+**New material** is under the
+[HiveMind Source-Available Non-Commercial Research License](LICENSE), which permits:
+
+- Reading and studying the source code
+- Non-commercial academic research
+- Personal educational use
+- Local execution and experimentation
+- Local modifications for research
+- Benchmarking and reproducibility studies
+- Proposing improvements through GitHub Issues and Pull Requests
+
+Commercial use of newly licensed material, including incorporating it into
+commercial software, paid applications, services or proprietary products,
+requires prior written authorization from the copyright holder. General
+redistribution and publication of modified versions of newly licensed
+material are also restricted.
+
+Bug reports, suggestions, experimental results and Pull Requests are welcome.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) first. Copyrightable
+contributions require separately recorded acceptance of the
+[Contributor License Agreement](CLA.md) before merging; contributors keep
+ownership of their original contributions while granting the maintainer broad
+reuse and relicensing rights.
+
+This is an independent research project and is not affiliated with or
+endorsed by the publisher of the Hive board game.

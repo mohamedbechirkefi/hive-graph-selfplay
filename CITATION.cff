@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the report as below."
+title: "HiveMind: a Hive engine and the study Grid vs. Graph Representations for Self-Play Learning in Hive"
+type: software
+authors:
+  - family-names: Kefi
+    given-names: Mohamed Bechir
+version: v2.1-report
+commit: e608452069475fd2e1459d24457a29a5d62f60bd
+date-released: 2026-10-27
+# The license of the version cited here (v2.1-report). Later material: see NOTICE.md.
+license: MIT
+repository-code: "https://github.com/mohamedbechirkefi/hive-graph-selfplay"
+url: "https://github.com/mohamedbechirkefi/hive-graph-selfplay/releases/tag/v2.1-report"
+abstract: >-
+  A UHP-compatible Hive engine in Rust and an AlphaZero-style self-play
+  pipeline, used for two pre-registered comparisons of a grid convolutional
+  network and a capacity-matched graph message-passing network in base-game
+  Hive, with five independent seeds per arm, frozen opponents and openings,
+  and two budget readings. Release v2.1-report contains both studies, the
+  code, the frozen protocols and the per-game records.
+keywords:
+  - Hive
+  - AlphaZero
+  - self-play
+  - reinforcement learning
+  - graph neural networks
+  - convolutional neural networks
+  - game AI
+  - pre-registration
+  - reproducibility
+preferred-citation:
+  type: report
+  title: "Grid vs. Graph Representations for Self-Play Learning in Hive: a Pre-Registered Comparison under Limited Compute"
+  authors:
+    - family-names: Kefi
+      given-names: Mohamed Bechir
+  year: 2026
+  month: 10
+  version: "2.1"
+  url: "https://github.com/mohamedbechirkefi/hive-graph-selfplay/releases/tag/v2.1-report"
